@@ -20,7 +20,7 @@ public class KoskIndividualPanel2 {
 	fm.setBounds(30, 40, 300, 400);
 	fm.setLayout(null);
 	
-	//===== ƒ√∑Ø =====
+	//===== Ïª¨Îü¨ =====
 
 	Color wallPapers = new Color(239,234,222);
 	Color textColor = new Color(127,118,104);
@@ -33,19 +33,19 @@ public class KoskIndividualPanel2 {
 		
 
 	
-	//===== ∆–≥Œ =======
+	//===== Ìå®ÎÑê =======
 	JPanel panel = new JPanel();
 	panel.setSize(300,400);
 	panel.setLayout(null);
 	panel.setBackground(wallPapers);
 	
-	//===== ∂Û∫ß =========
-	JLabel logo = new JLabel("±‚∞£±«");
+	//===== ÎùºÎ≤® =========
+	JLabel logo = new JLabel("Í∏∞Í∞ÑÍ∂å");
 	logo.setBounds(100,30,200,30);
 	logo.setFont(inputtext);
 	logo.setForeground(textColor);
 	
-	JLabel Rt = new JLabel("¿ÃøÎ«œΩ« ±‚∞£ 7¿œ");// ¿‹ø©Ω√∞£
+	JLabel Rt = new JLabel("Ïù¥Ïö©ÌïòÏã§ Í∏∞Í∞Ñ 7Ïùº");// ÏûîÏó¨ÏãúÍ∞Ñ
 	Rt.setBounds(60,80, 150, 60);
 	Rt.setFont(checktext);
 	Rt.setForeground(textColor);
@@ -55,7 +55,7 @@ public class KoskIndividualPanel2 {
 	
 	//====== textField =======
 	
-	JTextField time = new JTextField("7¿œ");
+	JTextField time = new JTextField("7Ïùº");
 	time.setBounds(85,175,110,40);
 	time.setFont(checktext);
 	time.setForeground(textColor);
@@ -65,7 +65,7 @@ public class KoskIndividualPanel2 {
 	
 	//================================
 	
-	//==== πˆ∆∞ ========
+	//==== Î≤ÑÌäº ========
 	Image plusimg = new ImageIcon("img/plusbtnimg.png").getImage().getScaledInstance(120, 40, 0);
 	JButton plus = new JButton(new ImageIcon(plusimg));
 	plus.setBounds(85, 130, 110, 40);

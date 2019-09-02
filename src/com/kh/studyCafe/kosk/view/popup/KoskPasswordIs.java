@@ -32,13 +32,13 @@ public class KoskPasswordIs {
 	
 	JLabel label = new JLabel();
 	label.setFont(font);
-	label.setText("5252ÀÔ´Ï´Ù");
+	label.setText("5252ì…ë‹ˆë‹¤");
 	label.setBounds(5,60,280,40);
 	label.setHorizontalAlignment(JLabel.CENTER);
 	
 	JLabel label1= new JLabel();
 	label1.setFont(font);
-	label1.setText("È¸¿ø´ÔÀÇ ºñ¹Ğ¹øÈ£");
+	label1.setText("íšŒì›ë‹˜ì˜ ë¹„ë°€ë²ˆí˜¸");
 	label1.setBounds(5,45,280,40);
 	label1.setHorizontalAlignment(JLabel.CENTER);
 	
