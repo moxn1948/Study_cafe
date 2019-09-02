@@ -14,7 +14,7 @@ import javax.swing.border.Border;
  
 public class KoskSeatManagement extends JPanel{
 	
-	private JPanel seatManagement;
+//	private JPanel seatManagement;
 	
 	public KoskSeatManagement() {
 		
