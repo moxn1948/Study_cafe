@@ -35,7 +35,7 @@ public class KoskSignUpCancle {
 			button.setBackground(paper);
 			button.setForeground(paper1);
 			
-			JLabel label = new JLabel("È¸¿ø°¡ÀÔÀÌ Ãë¼Ò µÇ¾ú½À´Ï´Ù.");
+			JLabel label = new JLabel("íšŒì›ê°€ì…ì´ ì·¨ì†Œ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 			label.setBounds(5,60,280,40);
 			label.setFont(font);
 			label.setHorizontalAlignment(JLabel.CENTER);

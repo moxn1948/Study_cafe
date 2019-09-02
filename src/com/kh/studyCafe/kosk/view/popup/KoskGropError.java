@@ -32,13 +32,13 @@ public class KoskGropError {
 		
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("»ç¿ë°¡´É ÇÕ´Ï´Ù");
+		label.setText("ì‚¬ìš©ê°€ëŠ¥ í•©ë‹ˆë‹¤");
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
 		JLabel label1= new JLabel();
 		label.setFont(font);
-		label1.setText("4¾È·ëÀº 2ÀÎÀÌ»ó 4ÀÎÀÌÇÏ");
+		label1.setText("4ì•ˆë£¸ì€ 2ì¸ì´ìƒ 4ì¸ì´í•˜");
 		label1.setBounds(5,45,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		
