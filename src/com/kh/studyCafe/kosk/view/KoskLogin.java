@@ -121,7 +121,7 @@ public class KoskLogin extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ChangePanel.changePanel(mf, mainpage, new GroupPanel());
+			ChangePanel.changePanel(mf, mainpage, new KoskGroupPanel());
 			
 		}	
 	}

@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class GroupPanel extends JPanel{
+public class KoskGroupPanel extends JPanel{
 	 
-	public GroupPanel() { 
+	public KoskGroupPanel() { 
 		
 		JFrame fm = new JFrame();
 		fm.setBounds(30, 40, 300, 400);
