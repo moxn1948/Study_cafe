@@ -25,7 +25,7 @@ public class KoskIndividualPanel2 {
 	Color wallPapers = new Color(239,234,222);
 	Color textColor = new Color(127,118,104);
 					
-	
+	  
 
 	Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
 	Font inputtext = new Font("Noto Sans KR",Font.BOLD,25);

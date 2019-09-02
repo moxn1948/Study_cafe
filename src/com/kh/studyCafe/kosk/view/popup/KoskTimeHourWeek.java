@@ -20,7 +20,7 @@ public class KoskTimeHourWeek extends JPanel{
 		JFrame jm = new JFrame();
 		jm.setSize(310,250);
 		
-		
+	   	
 		JPanel panel = new JPanel();
 		panel.setSize(310,250);
 		panel.setBackground(wallPapers);

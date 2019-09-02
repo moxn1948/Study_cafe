@@ -18,7 +18,7 @@ public class KoskCashButton {
 		
 		JFrame mf =new JFrame();
 		mf.setSize(320,150);
-		
+		  
 		JPanel panel = new JPanel();
 		panel.setSize(320,150);
 		panel.setBackground(wallPapers);

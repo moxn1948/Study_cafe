@@ -21,7 +21,7 @@ public class KoskGroupPanel extends JPanel{
 		fm.setBounds(30, 40, 300, 400);
 		fm.setLayout(null);
 		
-		
+		 
 
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);

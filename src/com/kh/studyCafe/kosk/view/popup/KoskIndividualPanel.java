@@ -26,12 +26,12 @@ public class KoskIndividualPanel {
 	Color textColor = new Color(127,118,104);
 					
 	
-
+     
 	Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
 	Font inputtext = new Font("Noto Sans KR",Font.BOLD,25);
 	Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
 		
-
+   
 	
 	//===== ÆÐ³Î =======
 	JPanel panel = new JPanel();
