@@ -24,7 +24,7 @@ public class KoskCardButton {
 		panel.setLayout(null);
 		
 		
-		JButton button = new JButton("Çö±İÀ» ³Ö¾îÁÖ¼¼¿ä");
+		JButton button = new JButton("í˜„ê¸ˆì„ ë„£ì–´ì£¼ì„¸ìš”");
 		button.setFont(font);
 		button.setBounds(0,0,320,100);
 		button.setBackground(paper);

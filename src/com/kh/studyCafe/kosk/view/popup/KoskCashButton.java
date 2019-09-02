@@ -25,7 +25,7 @@ public class KoskCashButton {
 		panel.setLayout(null);
 		
 		
-		JButton button = new JButton("Ä«µåÀ» ³Ö¾îÁÖ¼¼¿ä");
+		JButton button = new JButton("ì¹´ë“œì„ ë„£ì–´ì£¼ì„¸ìš”");
 		button.setBounds(0,0,320,100);
 		button.setFont(font);
 		button.setBackground(paper);
