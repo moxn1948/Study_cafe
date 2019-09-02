@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class KoskSeatTable extends KoskMainFrame/*JFrame*/ implements MouseListener{
+public class KoskSeatTable extends JPanel implements MouseListener{
 	
 	private JButton[] iuser = new JButton[25];
 	private JButton[] dfuser = new JButton[2];
@@ -22,7 +22,6 @@ public class KoskSeatTable extends KoskMainFrame/*JFrame*/ implements MouseListe
 	private boolean[] grfs = new boolean[2];
 	private boolean[] grss = new boolean[2];
 	private boolean[] gres = new boolean[1];
-	private boolean seat = false;
 	private JPanel panel = new JPanel();
 	
 public KoskSeatTable() {
@@ -220,6 +219,8 @@ public KoskSeatTable() {
 		this.repaint();
 	}
 
+
+
 @Override
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
@@ -309,8 +310,6 @@ public void mouseReleased(MouseEvent e) {
 		pre.setLocation(27, 531);
 		pre.setSize(148 ,53);
 		
-		
-		
 		panel.add(pre);
 
 		JButton confirm = new JButton("Confirm");
@@ -352,7 +351,7 @@ public void mouseReleased(MouseEvent e) {
 			public void mouseClicked(MouseEvent me) {
 			
 					new KoskSeatTable();
-					dispose();
+					setVisible(false);
 			}
 		});	
 
