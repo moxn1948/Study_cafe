@@ -34,13 +34,13 @@ public class KoskPasswordDoNot {
 	
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("Àß¸ø ÀÔ·ÂÇÏ¿´½À´Ï´Ù");
+		label.setText("ì˜ëª» ì…ë ¥í•˜ì˜€ìŠµë‹ˆë‹¤");
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
 	
 		JLabel label1= new JLabel();
 		label1.setFont(font);
-		label1.setText("ÀÌ¸§ È¤Àº ÀüÈ­¹øÈ£¸¦");
+		label1.setText("ì´ë¦„ í˜¹ì€ ì „í™”ë²ˆí˜¸ë¥¼");
 		label1.setBounds(5,45,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 	

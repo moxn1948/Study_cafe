@@ -25,7 +25,7 @@ public class KoskPaySuccess {
 		panel.setLayout(null);
 		
 		
-		JButton button = new JButton("°áÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù");
+		JButton button = new JButton("ê²°ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤");
 		button.setBounds(0,0,320,100);
 		button.setFont(font);
 		button.setBackground(paper);

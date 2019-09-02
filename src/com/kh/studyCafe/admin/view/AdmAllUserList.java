@@ -87,7 +87,7 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		};
 
 		//이미지 파일 불러오기
-		Image icon = new ImageIcon("images/logo.PNG").getImage().getScaledInstance(41, 54, 0);
+		Image icon = new ImageIcon("img/logo.png").getImage().getScaledInstance(41, 54, 0);
 		JLabel logoLabel = new JLabel(new ImageIcon(icon));
 		logoLabel.setLocation(470, 35);
 		logoLabel.setSize(41, 54);

@@ -32,7 +32,7 @@ public class KoskSignUp {
 		button.setBackground(paper);
 		button.setForeground(paper1);
 		
-		JLabel label = new JLabel("È¸¿ø°¡ÀÔÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.");
+		JLabel label = new JLabel("íšŒì›ê°€ì…ì´ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		label.setFont(font);
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
