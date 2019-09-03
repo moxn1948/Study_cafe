@@ -22,7 +22,7 @@ public class KoskLogin extends JPanel{
 		this.mf = mf; 
 		mainpage = this;
 		
-		//======= �깋�긽 ====
+		//======= 색상 설정 ====
 		
 		Color wallPapers = new Color(239,234,222); //諛곌꼍�깋
 		Color textColor = new Color(127,118,104); //湲��옄�깋
@@ -30,15 +30,15 @@ public class KoskLogin extends JPanel{
 		//=================
 		
 		
-		//================ Frame 占쏙옙占쏙옙 ======================
+		//================ 패널 설정 ======================
 		this.setSize(360,640);
 		this.setLayout(null);
 		this.setBackground(wallPapers);
 		//================================================
 		
-		//============== font 占쏙옙占쏙옙 =========
+		//============== font 폰트 설정 =========
 		
-		Font f1 = new Font("Noto Sans KR",Font.BOLD,25);
+		Font f1 = new Font("",Font.BOLD,25);
 		
 		//============================
 		

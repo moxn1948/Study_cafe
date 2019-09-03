@@ -16,25 +16,26 @@ public class KoskMypage extends JPanel{
 	public KoskMypage() {
 		this.setSize(360,640);
 		
-		//===== ���� ���� =====
+		//===== 색상 설정 =====
+		
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 				 
 		//===============
 				
-		//===== JPanel ���� =======
+		//===== JPanel 설정 =======
 		this.setLayout(null);
 		this.setBackground(wallPapers);
 		//=======================
 				
-		//============ font ���� ==========
+		//============ font 설정 ==========
 		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
 		Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
 		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
 	
 		//===============================
 		
-		//==== ���͵� ī�� ������ ���� ===============
+		//==== 마이페이지 제목  ===============
 		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(60, 80, 0);
 		JLabel ib = new JLabel("  마이 페이지",(new ImageIcon(imgicon)),SwingUtilities.CENTER);
 		ib.setBounds(10,0,250,80);
@@ -42,7 +43,7 @@ public class KoskMypage extends JPanel{
 		ib.setFont(siguptext);
 		//===============================
 		
-		//==== �Է¶� ====================
+		//==== 라벨 설정 ====================
 		
 		 JLabel name = new JLabel("이름"); //�̸� ��
 		   name.setBounds(30, 100, 40, 30);
@@ -132,7 +133,7 @@ public class KoskMypage extends JPanel{
 		   rating1.setForeground(textColor);
 		 //======================================
 		   
-		 //=== ��ư ===========================
+		 //=== 확인 버튼  ===========================
 
 		   Image findimg = new ImageIcon("img/okbtnimg.png").getImage().getScaledInstance(100, 40, 0);
 		   

@@ -15,31 +15,32 @@ public class KoskPsswdFind extends JPanel{
 	
 	public KoskPsswdFind() {
 		
-		// ============= ���� ===============
+		// ============= 색상 설정 ===============
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 		//===============================
 		 
-		//============ font ���� ==========
+		//============ font 설정 ==========
 		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
 		Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
 		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
 			
 		//===============================
 		
-		//============= �г� ���� ===============
+		//============= 패널 설정 ===============
 		this.setSize(360,640);
 		this.setLayout(null);
 		this.setBackground(wallPapers);
 		//=================================
 		
-		//==== ���͵� ī�� ������ ���� ===============
+		//==== 아이콘 이미지  ===============
 		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(30, 30, 0);
-		JLabel ib = new JLabel("",(new ImageIcon(imgicon)),SwingUtilities.CENTER);			ib.setBounds(150,0,50,50);
+		JLabel ib = new JLabel("",(new ImageIcon(imgicon)),SwingUtilities.CENTER);			
+		ib.setBounds(150,0,50,50);
 		
 		//===============================
 	
-		//=======  ȸ�� ����  ���� ================
+		//======= 제목  ================
 		   JLabel text = new JLabel("비밀번호 찾기");
 		   text.setBounds(75,80,300,50);
 		   text.setLayout(null);
@@ -47,9 +48,9 @@ public class KoskPsswdFind extends JPanel{
 		   text.setForeground(textColor);
 			//===================================
 
-		   //=== �Է� ĭ  =========
+		   //=== 라벨 설정 =========
 		   
-		   JLabel name = new JLabel("이름"); //�̸� ��
+		   JLabel name = new JLabel("이름");
 		   name.setBounds(30, 230, 40, 30);
 		   name.setFont(inputtext);
 		   name.setForeground(textColor);
