@@ -46,7 +46,7 @@ public class KoskSeatManagement extends JPanel{
 				
 		//===============================
 		
-		//== ��ư ���� =========
+		//== 버튼 설정  =========
 		Image logoutimg = new ImageIcon("img/logoutbtnimg.png").getImage().getScaledInstance(80, 30, 0);
 		
 		JButton logout = new JButton(new ImageIcon(logoutimg));

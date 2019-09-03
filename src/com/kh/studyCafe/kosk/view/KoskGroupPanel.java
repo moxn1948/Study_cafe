@@ -16,28 +16,29 @@ public class KoskGroupPanel extends JPanel{
 	 
 	public KoskGroupPanel() { 
 		
-		JFrame fm = new JFrame();
-		fm.setBounds(30, 40, 300, 400);
-		fm.setLayout(null);
 		
-		//===== 컬러 =====
+		//===== 컬러설정 =====
 
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 						 
 		//===============
 		
+		//====  패널 설정 =====
+		
 		this.setLayout(null);
 		this.setBackground(wallPapers);
 		
-		//============ font ���� ==========
-		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
-		Font inputtext = new Font("Noto Sans KR",Font.BOLD,25);
-		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
+		//================
+		
+		//============ font 설정 ==========
+		Font siguptext = new Font("맑은고딕",Font.BOLD,30);
+		Font inputtext = new Font("맑은고딕",Font.BOLD,25);
+		Font checktext = new Font("맑은고딕",Font.BOLD,14);
 			
 		//===============================
 		
-		//===== 패널 =======
+		//===== 패널 설정 =======
 		JPanel panel = new JPanel();
 		panel.setSize(300,400);
 		panel.setLayout(null);
@@ -122,7 +123,7 @@ public class KoskGroupPanel extends JPanel{
 		confirm.setBounds(139, 280, 117, 50);
 		
 		//============
-		fm.add(panel);
+		this.add(panel);
 		panel.add(logo);
 		panel.add(Rt);
 		panel.add(et);
@@ -136,8 +137,5 @@ public class KoskGroupPanel extends JPanel{
 		panel.add(minus2);
 		panel.add(cancel);
 		panel.add(confirm);
-		
-		fm.setVisible(true);
-		fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
