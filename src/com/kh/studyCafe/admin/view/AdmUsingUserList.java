@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -24,21 +25,34 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+
 public class AdmUsingUserList extends JPanel implements ActionListener {
 	
 	
-	public AdmUsingUserList() {
+	public AdmUsingUserList(ArrayList<AdmUserTable> utList) {
+		
 		
 		//테이블 헤더 목록
-		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석관리","좌석관리","좌석관리" };
+		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴장"};
 		
 		//테이블 내용
-		Object[][] data = {
-				{1, "서범수", "010-9876-6543", "12번", "02:30AM", "-", "25일", "개인", "연장","이동","퇴실"},
-				{2, "조문정", "010-9876-6543", "12번", "02:30AM", "-", "25일", "개인", "연장","이동","퇴실"},
-				{3, "서범수", "010-9876-6543", "12번", "02:30AM", "-", "25일", "개인",  "연장","이동","퇴실"},
-				{4, "서범수", "010-9876-6543", "12번", "02:30AM", "-", "25일", "개인",  "연장","이동","퇴실"}
-		};
+		Object[][] data = new Object[utList.size()][columnNames.length];
+		
+		for (int i = 0; i < utList.size(); i++) {
+			data[i][0] = i + 1 + "";
+			data[i][1] = utList.get(i).getName();
+			data[i][2] = utList.get(i).getPhoneNum();
+			data[i][3] = utList.get(i).getSeatNum();
+			data[i][4] = utList.get(i).getInTime() + "";
+			data[i][5] = utList.get(i).getOutTime() + "";
+			data[i][6] = utList.get(i).getRemainTime() + "";
+			data[i][7] = utList.get(i).getSeatType();
+			data[i][8] = "연장";
+			data[i][9] = "이동";
+			data[i][10] = "퇴실";
+			
+		}
 		
 		//this.은 panel 설정
 		this.setBounds(0, 0, 978, 700);

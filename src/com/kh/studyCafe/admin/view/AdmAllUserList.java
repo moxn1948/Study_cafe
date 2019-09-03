@@ -178,7 +178,7 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		searchForm.setBorder(BorderFactory.createLineBorder(new Color(127,118,104)));
 
 		//회원검색용 이미지 파일 불러오기
-		Image icon2 = new ImageIcon("images/search.PNG").getImage().getScaledInstance(32, 39, 0);
+		Image icon2 = new ImageIcon("img/search.PNG").getImage().getScaledInstance(32, 39, 0);
 		JLabel searchLabel = new JLabel(new ImageIcon(icon2));
 		searchLabel.setLocation(23, 75);
 		searchLabel.setSize(32, 39);
