@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class KoskPasswordDoNot {
 	public KoskPasswordDoNot() {
 		
-		Font font = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,15);
+		Font font = new Font("Noto Sans KR",Font.BOLD,15);
 
 		Color textColor = new Color(127,118,104);
 		Color wallPapers = new Color(205, 201, 191);
@@ -34,13 +34,13 @@ public class KoskPasswordDoNot {
 	
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("ï¿½ß¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+		label.setText("Àß¸ø ÀÔ·ÂÇÏ¿´½À´Ï´Ù");
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
 	
 		JLabel label1= new JLabel();
 		label1.setFont(font);
-		label1.setText("ï¿½Ì¸ï¿½ È¤ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½");
+		label1.setText("ÀÌ¸§ È¤Àº ÀüÈ­¹øÈ£¸¦");
 		label1.setBounds(5,45,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 	
@@ -52,5 +52,7 @@ public class KoskPasswordDoNot {
 		mf.setVisible(true);
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
-
+public static void main(String[] args) {
+	new KoskPasswordDoNot();
+}
 }   

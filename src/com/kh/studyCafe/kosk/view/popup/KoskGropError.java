@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class KoskGropError {
 	public KoskGropError() {
-		Font font = new Font("К╖▒Л²─ ЙЁ═К■∙",Font.BOLD,15);
+		Font font = new Font("Noto Sans KR",Font.BOLD,15);
 		Color textColor = new Color(127,118,104);
 		Color wallPapers = new Color(205, 201, 191);
 		Color paper = new Color(170, 162, 142);
@@ -32,13 +32,13 @@ public class KoskGropError {
 		
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("О©╫О©╫К╟║О©╫О©╫ О©╫у╢о╢О©╫");
+		label.setText("╩Г©К╟║╢и гу╢о╢ы");
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
 		JLabel label1= new JLabel();
 		label.setFont(font);
-		label1.setText("4О©╫х╥О©╫О©╫О©╫ 2О©╫О©╫О©╫л╩О©╫ 4О©╫О©╫О©╫О©╫О©╫О©╫");
+		label1.setText("4╬х╥Кю╨ 2юнюл╩С 4юнюлго");
 		label1.setBounds(5,45,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -50,5 +50,7 @@ public class KoskGropError {
 		mf.setVisible(true);
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
- 
+	public static void main(String[] args) {
+		new KoskGropError();
+	}
 	}   

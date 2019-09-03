@@ -16,7 +16,7 @@ public class KoskSignUpCancle {
 		
 		public KoskSignUpCancle() {
 			
-			Font font = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,15);
+			Font font = new Font("Noto Sans KR",Font.BOLD,15);
 			Color textColor = new Color(127,118,104);
 			Color wallPapers = new Color(205, 201, 191);
 			Color paper = new Color(170, 162, 142);
@@ -35,7 +35,7 @@ public class KoskSignUpCancle {
 			button.setBackground(paper);
 			button.setForeground(paper1);
 			
-			JLabel label = new JLabel("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+			JLabel label = new JLabel("È¸¿ø°¡ÀÔÀÌ Ãë¼Ò µÇ¾ú½À´Ï´Ù.");
 			label.setBounds(5,60,280,40);
 			label.setFont(font);
 			label.setHorizontalAlignment(JLabel.CENTER);
@@ -47,6 +47,8 @@ public class KoskSignUpCancle {
 			mf.setVisible(true);
 			mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
-	
+		public static void main(String[] args) {
+			new KoskSignUpCancle();
+		}
 	}   
 

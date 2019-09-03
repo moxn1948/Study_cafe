@@ -20,37 +20,37 @@ public class KoskIndividualPanel {
 	fm.setBounds(30, 40, 300, 400);
 	fm.setLayout(null);
 	
-	//===== ï¿½Ã·ï¿½ =====
+	//===== ÄÃ·¯ =====
 
 	Color wallPapers = new Color(239,234,222);
 	Color textColor = new Color(127,118,104);
 					
 	
      
-	Font siguptext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,30);
-	Font inputtext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,25);
-	Font checktext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,14);
+	Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
+	Font inputtext = new Font("Noto Sans KR",Font.BOLD,25);
+	Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
 		
    
 	
-	//===== ï¿½Ğ³ï¿½ =======
+	//===== ÆĞ³Î =======
 	JPanel panel = new JPanel();
 	panel.setSize(300,400);
 	panel.setLayout(null);
 	panel.setBackground(wallPapers);
 	
-	//===== ï¿½ï¿½ =========
-	JLabel logo = new JLabel("1ï¿½Ï±ï¿½");
+	//===== ¶óº§ =========
+	JLabel logo = new JLabel("1ÀÏ±Ç");
 	logo.setBounds(100,30,200,30);
 	logo.setFont(inputtext);
 	logo.setForeground(textColor);
 	
-	JLabel Rt = new JLabel("ï¿½Ü¿ï¿½ ï¿½Ã°ï¿½");// ï¿½Ü¿ï¿½ï¿½Ã°ï¿½
+	JLabel Rt = new JLabel("ÀÜ¿© ½Ã°£");// ÀÜ¿©½Ã°£
 	Rt.setBounds(40,80, 100, 30);
 	Rt.setFont(checktext);
 	Rt.setForeground(textColor);
 	
-	JLabel et = new JLabel("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½"); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½
+	JLabel et = new JLabel("¿¬Àå ÈÄ ½Ã°£"); // ¿¬Àå ÈÄ ½Ã°£
 	et.setBounds(40, 100, 100, 30);
 	et.setFont(checktext);
 	et.setForeground(textColor);
@@ -89,7 +89,7 @@ public class KoskIndividualPanel {
 	
 	//================================
 	
-	//==== ï¿½ï¿½Æ° ========
+	//==== ¹öÆ° ========
 	Image plusimg = new ImageIcon("img/plusbtnimg.png").getImage().getScaledInstance(120, 40, 0);
 	JButton plus = new JButton(new ImageIcon(plusimg));
 	plus.setBounds(85, 130, 110, 40);
@@ -124,7 +124,9 @@ public class KoskIndividualPanel {
 	fm.setVisible(true);
 	fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
-
+public static void main(String[] args) {
+	new KoskIndividualPanel();
+}
 }
 
 
