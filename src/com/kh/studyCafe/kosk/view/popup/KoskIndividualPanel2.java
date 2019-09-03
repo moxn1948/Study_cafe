@@ -20,32 +20,32 @@ public class KoskIndividualPanel2 {
 	fm.setBounds(30, 40, 300, 400);
 	fm.setLayout(null);
 	
-	//===== ÄÃ·¯ =====
+	//===== ì»¬ëŸ¬ =====
 
 	Color wallPapers = new Color(239,234,222);
 	Color textColor = new Color(127,118,104);
 					
 	  
-
-	Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
-	Font inputtext = new Font("Noto Sans KR",Font.BOLD,25);
-	Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
+     
+	Font siguptext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,30);
+	Font inputtext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,25);
+	Font checktext = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,14);
 		
 
 	
-	//===== ÆĞ³Î =======
+	//===== íŒ¨ë„ =======
 	JPanel panel = new JPanel();
 	panel.setSize(300,400);
 	panel.setLayout(null);
 	panel.setBackground(wallPapers);
 	
-	//===== ¶óº§ =========
-	JLabel logo = new JLabel("±â°£±Ç");
+	//===== ë¼ë²¨ =========
+	JLabel logo = new JLabel("ê¸°ê°„ê¶Œ");
 	logo.setBounds(100,30,200,30);
 	logo.setFont(inputtext);
 	logo.setForeground(textColor);
 	
-	JLabel Rt = new JLabel("ÀÌ¿ëÇÏ½Ç ±â°£ 7ÀÏ");// ÀÜ¿©½Ã°£
+	JLabel Rt = new JLabel("ì´ìš©í•˜ì‹¤ ê¸°ê°„ 7ì¼");// ì”ì—¬ì‹œê°„
 	Rt.setBounds(60,80, 150, 60);
 	Rt.setFont(checktext);
 	Rt.setForeground(textColor);
@@ -55,7 +55,7 @@ public class KoskIndividualPanel2 {
 	
 	//====== textField =======
 	
-	JTextField time = new JTextField("7ÀÏ");
+	JTextField time = new JTextField("7ì¼");
 	time.setBounds(85,175,110,40);
 	time.setFont(checktext);
 	time.setForeground(textColor);
@@ -65,7 +65,7 @@ public class KoskIndividualPanel2 {
 	
 	//================================
 	
-	//==== ¹öÆ° ========
+	//==== ë²„íŠ¼ ========
 	Image plusimg = new ImageIcon("img/plusbtnimg.png").getImage().getScaledInstance(120, 40, 0);
 	JButton plus = new JButton(new ImageIcon(plusimg));
 	plus.setBounds(85, 130, 110, 40);
@@ -97,8 +97,6 @@ public class KoskIndividualPanel2 {
 	fm.setVisible(true);
 	fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
-public static void main(String[] args) {
-	new KoskIndividualPanel2();
-}
+
 }
 

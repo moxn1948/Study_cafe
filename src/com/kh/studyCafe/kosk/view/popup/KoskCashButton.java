@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class KoskCashButton {
 	public KoskCashButton() {
 		
-		Font font = new Font("Noto Sans KR",Font.BOLD,15);
+		Font font = new Font("ë§‘ì€ ê³ ë”•",Font.BOLD,15);
 		Color textColor = new Color(127,118,104);
 		Color wallPapers = new Color(205, 201, 191);
 		Color paper = new Color(170, 162, 142);
@@ -25,7 +25,7 @@ public class KoskCashButton {
 		panel.setLayout(null);
 		
 		
-		JButton button = new JButton("Ä«µåÀ» ³Ö¾îÁÖ¼¼¿ä");
+		JButton button = new JButton("í˜„ê¸ˆì„ ë„£ì–´ì£¼ì„¸ìš”");
 		button.setBounds(0,0,320,100);
 		button.setFont(font);
 		button.setBackground(paper);
@@ -35,9 +35,6 @@ public class KoskCashButton {
 		
 		mf.setVisible(true);
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	public static void main(String[] args) {
-		new KoskCardButton();
 	}
 
 }

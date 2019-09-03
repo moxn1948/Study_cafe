@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class KoskGropError {
-	public KoskGropError() {
+public class KoskExit {
+	public KoskExit() {
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		Color textColor = new Color(127,118,104);
 		Color wallPapers = new Color(205, 201, 191);
@@ -32,14 +32,16 @@ public class KoskGropError {
 		
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("��밡�� �մϴ�");
+		label.setText("안녕히 가세요");
 		label.setBounds(5,60,280,40);
+		label.setForeground(textColor);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
 		JLabel label1= new JLabel();
 		label.setFont(font);
-		label1.setText("4�ȷ��� 2���̻� 4������");
+		label1.setText("퇴실이 완료되었습니다");
 		label1.setBounds(5,45,280,40);
+		label1.setForeground(textColor);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		
 		
@@ -50,5 +52,6 @@ public class KoskGropError {
 		mf.setVisible(true);
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
- 
-	}   
+
+	}  
+

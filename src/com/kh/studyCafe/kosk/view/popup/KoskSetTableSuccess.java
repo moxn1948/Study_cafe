@@ -8,8 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class KoskGropError {
-	public KoskGropError() {
+public class KoskSetTableSuccess {
+	public KoskSetTableSuccess() {
+		
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		Color textColor = new Color(127,118,104);
 		Color wallPapers = new Color(205, 201, 191);
@@ -24,31 +25,25 @@ public class KoskGropError {
 		panel.setBackground(wallPapers);
 		panel.setLayout(null);
 		
-		JButton button = new JButton("OK");
-		button.setBounds(5,140,280,40);
-		button.setFont(font);
+		JButton button = new JButton("Confirm");
+		button.setBounds(65,140,150,40);
 		button.setBackground(paper);
 		button.setForeground(paper1);
 		
-		JLabel label = new JLabel();
-		label.setFont(font);
-		label.setText("��밡�� �մϴ�");
+		JLabel label = new JLabel("좌석변경이 완료되었습니다");
 		label.setBounds(5,60,280,40);
-		label.setHorizontalAlignment(JLabel.CENTER);
-		
-		JLabel label1= new JLabel();
+		label.setForeground(textColor);
 		label.setFont(font);
-		label1.setText("4�ȷ��� 2���̻� 4������");
-		label1.setBounds(5,45,280,40);
-		label1.setHorizontalAlignment(JLabel.CENTER);
-		
+		label.setHorizontalAlignment(JLabel.CENTER);
 		
 		mf.add(panel);
 		panel.add(button);
 		panel.add(label);
-		panel.add(label1);
+		
 		mf.setVisible(true);
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
- 
-	}   
+
+}   
+		
+

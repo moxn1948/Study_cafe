@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class KoskPasswordIs {
 	public KoskPasswordIs() {
-	Font font = new Font("Noto Sans KR",Font.BOLD,15);	
+	Font font = new Font("ÎßëÏùÄ Í≥†Îîï",Font.BOLD,15);	
 	Color textColor = new Color(127,118,104);
 	Color wallPapers = new Color(205, 201, 191);
 	Color paper = new Color(170, 162, 142);
@@ -32,13 +32,13 @@ public class KoskPasswordIs {
 	
 	JLabel label = new JLabel();
 	label.setFont(font);
-	label.setText("5252¿‘¥œ¥Ÿ");
+	label.setText("5252ÔøΩ‘¥œ¥ÔøΩ");
 	label.setBounds(5,60,280,40);
 	label.setHorizontalAlignment(JLabel.CENTER);
 	
 	JLabel label1= new JLabel();
 	label1.setFont(font);
-	label1.setText("»∏ø¯¥‘¿« ∫Òπ–π¯»£");
+	label1.setText("»∏ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ–πÔøΩ»£");
 	label1.setBounds(5,45,280,40);
 	label1.setHorizontalAlignment(JLabel.CENTER);
 	
@@ -50,7 +50,5 @@ public class KoskPasswordIs {
 	mf.setVisible(true);
 	mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
-public static void main(String[] args) {
-	new KoskPasswordIs();
-}
+
 }  
