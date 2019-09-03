@@ -46,7 +46,7 @@ public class KoskSetTableOkCancel {
 			label.setForeground(paper);
 			label.setHorizontalAlignment(JLabel.CENTER);
 			
-		   
+		
 			
 			
 			mf.add(panel);

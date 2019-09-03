@@ -24,7 +24,7 @@ public class KoskCashButton {
 		panel.setBackground(wallPapers);
 		panel.setLayout(null);
 		
-		 
+		
 		JButton button = new JButton("현금을 넣어주세요");
 		button.setBounds(0,0,320,100);
 		button.setFont(font);

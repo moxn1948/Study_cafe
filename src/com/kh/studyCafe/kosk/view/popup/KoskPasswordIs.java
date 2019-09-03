@@ -35,7 +35,7 @@ public class KoskPasswordIs {
 	label.setText("5252�Դϴ�");
 	label.setBounds(5,60,280,40);
 	label.setHorizontalAlignment(JLabel.CENTER);
-	 
+	
 	JLabel label1= new JLabel();
 	label1.setFont(font);
 	label1.setText("ȸ������ ��й�ȣ");

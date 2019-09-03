@@ -40,7 +40,7 @@ public class KoskTimeHourWeek extends JPanel{
 		JLabel label = new JLabel();
 		label.setForeground(textColor);
 		
-		  
+		
 		jm.add(panel);
 		panel.add(button);
 		panel.add(button1);

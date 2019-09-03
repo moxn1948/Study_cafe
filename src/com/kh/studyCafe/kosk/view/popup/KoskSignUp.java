@@ -36,7 +36,7 @@ public class KoskSignUp {
 		label.setFont(font);
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
-		  
+		
 		mf.add(panel);
 		panel.add(button);
 		panel.add(label);

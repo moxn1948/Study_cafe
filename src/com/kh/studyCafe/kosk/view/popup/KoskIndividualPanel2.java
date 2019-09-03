@@ -61,7 +61,7 @@ public class KoskIndividualPanel2 {
 	time.setForeground(textColor);
 	time.setHorizontalAlignment(JTextField.CENTER);
 	
-	 
+	
 	
 	//================================
 	

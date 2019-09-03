@@ -56,7 +56,7 @@ public class KoskGroupPanel extends JPanel{
 		et.setForeground(textColor);
 		
 		
-		 
+		
 		JTextField Rttime = new JTextField("02:30") {
 			  @Override
 			   public void setBorder(Border border) {

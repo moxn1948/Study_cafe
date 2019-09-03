@@ -44,7 +44,7 @@ public class KoskExit {
 		label1.setForeground(textColor);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		
-		 
+		
 		mf.add(panel);
 		panel.add(button);
 		panel.add(label);

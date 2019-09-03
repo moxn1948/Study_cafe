@@ -37,7 +37,7 @@ public class KoskPasswordDoNot {
 		label.setText("�߸� �Է��Ͽ����ϴ�");
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
-	     
+	
 		JLabel label1= new JLabel();
 		label1.setFont(font);
 		label1.setText("�̸� Ȥ�� ��ȭ��ȣ��");

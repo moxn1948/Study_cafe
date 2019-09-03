@@ -24,7 +24,7 @@ public class KoskPaySuccess {
 		panel.setBackground(wallPapers);
 		panel.setLayout(null);
 		
-		 
+		
 		JButton button = new JButton("������ �Ϸ�Ǿ����ϴ�");
 		button.setBounds(0,0,320,100);
 		button.setFont(font);
