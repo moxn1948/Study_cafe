@@ -1,26 +1,27 @@
 package com.kh.studyCafe.model.vo;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class User {
-	private String name;
-	private String phoneNum;
-	private String password;
-	private int seatNum;
-	private Date inTime;
-	private Date outTime;
-	private Date remainTime;
-	private final int NOSEAT = 0; // 좌석 사용 안할 때
-	private final int INDVSEAT = 1; // 개인좌석 사용할 때
-	private final int GRPSEAT = 2; // 그룹좌석 사용할 때
-	private int seatType = NOSEAT;
-	private int point;
-	private Date pointTime; // 누적 결제시간
-	private String rank;
+public class User implements Serializable{
+
+	private String name; // 회원이름
+	private String phoneNum; // 전화번호
+	private String password; // 비밀번호
+	private String seatNum; // 좌석번호
+	private long inTime; // 입실시간
+	private long outTime; // 퇴실시간
+	private long remainTime; // 남은시간
+	public final static int NOSEAT = 0; // 좌석 사용 안할 때
+	public final static int INDVSEAT = 1; // 개인좌석 사용할 때
+	public final static int GRPSEAT = 2; // 그룹좌석 사용할 때
+	private int seatType = NOSEAT; // 시트타입
+	private int point; // 포인트
+	private long pointTime; // 누적 결제시간
+	private String rank; // 등급
 	
 	public User() {}
 	
-	public User(String name, Date inTime, Date outTime, int seatType) {
+	public User(String name, long inTime, long outTime, int seatType) {
 		super();
 		this.name = name;
 		this.inTime = inTime;
@@ -29,8 +30,8 @@ public class User {
 	}
 
 	// 모든 필드 초기화 생성자
-	public User(String name, String phoneNum, String password, int seatNum, Date inTime, Date outTime, Date remainTime,
-			int seatType, int point, Date pointTime, String rank) {
+	public User(String name, String phoneNum, String password, String seatNum, long inTime, long outTime, long remainTime,
+			int seatType, int point, long pointTime, String rank) {
 		super();
 		this.name = name;
 		this.phoneNum = phoneNum;
@@ -70,35 +71,35 @@ public class User {
 		this.password = password;
 	}
 
-	public int getSeatNum() {
+	public String getSeatNum() {
 		return seatNum;
 	}
 
-	public void setSeatNum(int seatNum) {
+	public void setSeatNum(String seatNum) {
 		this.seatNum = seatNum;
 	}
 
-	public Date getInTime() {
+	public long getInTime() {
 		return inTime;
 	}
 
-	public void setInTime(Date inTime) {
+	public void setInTime(long inTime) {
 		this.inTime = inTime;
 	}
 
-	public Date getOutTime() {
+	public long getOutTime() {
 		return outTime;
 	}
 
-	public void setOutTime(Date outTime) {
+	public void setOutTime(long outTime) {
 		this.outTime = outTime;
 	}
 
-	public Date getRemainTime() {
+	public long getRemainTime() {
 		return remainTime;
 	}
 
-	public void setRemainTime(Date remainTime) {
+	public void setRemainTime(long remainTime) {
 		this.remainTime = remainTime;
 	}
 
@@ -118,11 +119,11 @@ public class User {
 		this.point = point;
 	}
 	
-	public Date getPointTime() {
+	public long getPointTime() {
 		return pointTime;
 	}
 
-	public void setPointTime(Date pointTime) {
+	public void setPointTime(long pointTime) {
 		this.pointTime = pointTime;
 	}
 
@@ -132,6 +133,13 @@ public class User {
 
 	public void setRank(String rank) {
 		this.rank = rank;
+	}
+
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", phoneNum=" + phoneNum + ", password=" + password + ", seatNum=" + seatNum
+				+ ", inTime=" + inTime + ", outTime=" + outTime + ", remainTime=" + remainTime + ", seatType="
+				+ seatType + ", point=" + point + ", pointTime=" + pointTime + ", rank=" + rank + "]";
 	}
 	
 }
