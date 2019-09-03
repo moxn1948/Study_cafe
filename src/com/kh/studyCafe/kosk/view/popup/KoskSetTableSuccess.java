@@ -29,7 +29,7 @@ public class KoskSetTableSuccess {
 		button.setBounds(65,140,150,40);
 		button.setBackground(paper);
 		button.setForeground(paper1);
-		
+		  
 		JLabel label = new JLabel("좌석변경이 완료되었습니다");
 		label.setBounds(5,60,280,40);
 		label.setForeground(textColor);

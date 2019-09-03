@@ -23,8 +23,8 @@ public class KoskCardButton {
 		panel.setSize(320,150);
 		panel.setBackground(wallPapers);
 		panel.setLayout(null);
-		
-		
+		     
+		 
 		JButton button = new JButton("카드를 넣어주세요");
 		button.setFont(font);
 		button.setBounds(0,0,320,100);

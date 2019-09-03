@@ -55,7 +55,7 @@ public class KoskIndividualPanel {
 	et.setFont(checktext);
 	et.setForeground(textColor);
 	//===================
-	
+	 
 	//====== textField =======
 	JTextField Rttime = new JTextField("02:30") {
 		  @Override
