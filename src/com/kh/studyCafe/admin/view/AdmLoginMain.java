@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 //import org.jdesktop.swingx.prompt.PromptSupport;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+
 public class AdmLoginMain extends MouseAdapter implements ActionListener{ // MouseAdapter는 예시이고, 필요한 이벤트에다 ControlPanel 선언해주면 됩니다.
 	private JPanel login = new JPanel();
 	private AdmMainFrame mf;
@@ -77,7 +79,7 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		loginBtn.setForeground(Color.WHITE);
 		loginBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		loginBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
-		loginBtn.addActionListener(this); 
+		loginBtn.addMouseListener(this); 
 		login.add(logoTxt);
 		login.add(versionTxt);
 		
@@ -98,7 +100,14 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		ControlPanel cp = new ControlPanel();
+		
+		if(e.getSource() == loginBtn) {
+			AdmManager am = new AdmManager();
+			
+			cp.changeTablePanel(mf, login, new AdmUsingUserList(am.usingUserManager()));
+		}
+		
 		if(e.getSource() == loginTextField) {
 			if(resultId == 0) {
 				loginTextField.setText("");
@@ -120,7 +129,6 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		}
 		
 		
-		ControlPanel cp = new ControlPanel();
     //		cp.changePanel(mf, login, new AdmExitTimeHour()); // 3번째 인자는 테스트 용입니다.
     //		cp.changePanel(mf, login, new AdmExitTimeWeek()); // 3번째 인자는 테스트 용입니다.
     //		cp.changePanel(mf, login, new AdmChkUserDelete()); // 3번째 인자는 테스트 용입니다.
@@ -128,9 +136,9 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
     //		cp.changePanel(mf, login, new AdmNewIndvSelectTime()); // 3번째 인자는 테스트 용입니다.
     //		cp.changePanel(mf, login, new AdmNewGrpSelectTime()); // 3번째 인자는 테스트 용입니다.
 		//사용중인 유저 리스트 화면입니다.
-		//cp.changeTablePanel(mf, login, new AdmUsingUserList());
+//		cp.changeTablePanel(mf, login, new AdmUsingUserList());
 		//전체 회원보기 했을때 나오는 전체회원 화면입니다.
-		//cp.changeTablePanel(mf, login, new AdmAllUserList());
+//		cp.changeTablePanel(mf, login, new AdmAllUserList());
 	}
 
 }
