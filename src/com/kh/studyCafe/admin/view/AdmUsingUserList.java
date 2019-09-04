@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -39,14 +41,50 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		//테이블 내용
 		Object[][] data = new Object[utList.size()][columnNames.length];
 		
+
 		for (int i = 0; i < utList.size(); i++) {
+			String timeEdit[] = new String[3];
+
+			Date dateEdit[] = new Date[3];
+				
+			dateEdit[0] = new Date(utList.get(i).getInTime());
+			dateEdit[1] = new Date(utList.get(i).getOutTime());
+			dateEdit[2] = new Date(utList.get(i).getRemainTime());
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd일 hh : mmaa");
+			for (int j = 0; j < timeEdit.length; j++) {
+				timeEdit[j] = sdf.format(dateEdit[j]); 
+				
+			}
+			
+			
+			data[i][4] = timeEdit[0].split("일 ")[1];
+			data[i][5] = timeEdit[1].split("일 ")[1];
+			
+			for (int j = 0; j < 2; j++) {
+
+				if(timeEdit[j].split("일 ")[1].substring(7).equals("오전")) {
+					
+					data[i][4+j] = timeEdit[j].split("일 ")[1].substring(0, 7) + " AM";
+				}else {					
+					data[i][4+j] = timeEdit[j].split("일 ")[1].substring(0, 7) + " PM";
+				}
+					
+			}
+			
+			if(Integer.parseInt(timeEdit[2].split("일")[0]) > 1) {
+				data[i][6] = timeEdit[2].split("일")[0] + "일";
+			}else {
+				String[] timeStr = timeEdit[2].split("일 ")[1].substring(0, 7).split(" : ");
+				data[i][6] = timeStr[0] + "시 " + timeStr[1] + "분";
+				
+			}
+			
+			
 			data[i][0] = i + 1 + "";
 			data[i][1] = utList.get(i).getName();
 			data[i][2] = utList.get(i).getPhoneNum();
 			data[i][3] = utList.get(i).getSeatNum();
-			data[i][4] = utList.get(i).getInTime() + "";
-			data[i][5] = utList.get(i).getOutTime() + "";
-			data[i][6] = utList.get(i).getRemainTime() + "";
 			data[i][7] = utList.get(i).getSeatType();
 			data[i][8] = "연장";
 			data[i][9] = "이동";
@@ -54,6 +92,35 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 			
 		}
 		
+			
+			
+
+			
+/*			timeEdit[0] = ((utList.get(i).getInTime() / (1000*60*60)) % 24) + " : ";
+			timeEdit[0] += (((utList.get(i).getInTime() / (1000*60*60))) + "");
+
+			timeEdit[1] = ((utList.get(i).getOutTime() / (1000*60*60)) % 24) + " : ";
+			timeEdit[1] += (((utList.get(i).getOutTime() / (1000*60*60))) + "");
+
+			timeEdit[2] = ((utList.get(i).getRemainTime() / (1000*60*60))) + " : ";
+			timeEdit[2] += (((utList.get(i).getRemainTime() / (1000*60))) + "");
+			
+			if(((utList.get(i).getRemainTime() / (1000*60*60))) > 24) {
+				System.out.println("기간권");
+			}
+			for (int j = 0; j < 3; j++) {
+				System.out.println(j + " => " + (timeEdit[j]));
+				
+				
+//				System.out.println(Integer.parseInt((timeEdit[j].split(" : ")[0])));
+//				if(Integer.parseInt((timeEdit[j].split(" : ")[0])) > 24) {
+//					System.out.println("기간권");
+//				}
+					
+			}
+			*/
+			
+			
 		//this.은 panel 설정
 		this.setBounds(0, 0, 978, 700);
 		
@@ -86,10 +153,10 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		
 		table.getColumnModel().getColumn(0).setPreferredWidth(36);
 		table.getColumnModel().getColumn(1).setPreferredWidth(63);
-		table.getColumnModel().getColumn(2).setPreferredWidth(178);
+		table.getColumnModel().getColumn(2).setPreferredWidth(78);
 		table.getColumnModel().getColumn(3).setPreferredWidth(74);
-		table.getColumnModel().getColumn(4).setPreferredWidth(82);
-		table.getColumnModel().getColumn(5).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(122);
+		table.getColumnModel().getColumn(5).setPreferredWidth(120);
 		table.getColumnModel().getColumn(6).setPreferredWidth(73);
 		table.getColumnModel().getColumn(7).setPreferredWidth(83);
 		table.getColumnModel().getColumn(8).setPreferredWidth(68);
