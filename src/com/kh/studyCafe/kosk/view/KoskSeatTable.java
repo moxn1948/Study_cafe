@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 
 public class KoskSeatTable extends JPanel implements MouseListener{
 	
-	private JButton[] iuser = new JButton[25];
-	private JButton[] dfuser = new JButton[2];
+	private JButton[] iuser = new JButton[25]; //개인 좌석 버튼
+	private JButton[] dfuser = new JButton[2]; //
 	private JButton[] dsuser = new JButton[2];
 	private JButton[] deuser = new JButton[1];
 	private boolean[] inds = new boolean[25];
@@ -23,10 +23,11 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	private boolean[] grss = new boolean[2];
 	private boolean[] gres = new boolean[1];
 	private JPanel panel = new JPanel();
-	
+	private KoskSeatTable mf;
 public KoskSeatTable() {
+		mf = this;
 		
-		this.setBounds(500, 0, 360, 640);
+		this.setSize(360, 640);
 
 		int x = 29;
 		int y = 152;
@@ -34,8 +35,9 @@ public KoskSeatTable() {
 		String name = null;
 		
 		this.setLayout(null);
-		
+
 		// ========= 패널 배경 색 설정, 패널 사이즈 설정 ============
+
 		panel.setBackground(new Color(239, 234, 222));
 		panel.setSize(700, 1000);
 		
@@ -56,7 +58,11 @@ public KoskSeatTable() {
 		
 		panel.add(imageLabel);
 		
+		
+		//=======  로그아웃 ===============
+
 		// ================== 로그아웃 버튼 설정  =====================
+
 		JButton logOut = new JButton("로그아웃");
 		logOut.setBorderPainted(false);
 		logOut.setFont(new Font("맑은 고딕", Font.BOLD, 16));
@@ -65,7 +71,11 @@ public KoskSeatTable() {
 		logOut.setLocation(11, 12);
 		logOut.setSize(100, 27);
 		
+		
+	//==================== 로그아웃 버튼 이벤트 부분 ===================
+
 		// ============== 로그아웃 버튼 클릭스 이벤트 =================
+
 		logOut.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -95,12 +105,16 @@ public KoskSeatTable() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				ChangePanel.changePanel(panel,new KoskLogin());
 			}
 		});
 		panel.add(logOut);
 		
+		
+		//=========== 마이이지 ==============
+
 		// ========== 마이페이지 버튼 설정 ===================
+
 		JButton myPage = new JButton("마이페이지");
 		myPage.setBorderPainted(false);
 		myPage.setFont(new Font("맑은 고딕", Font.BOLD, 16));
@@ -108,8 +122,9 @@ public KoskSeatTable() {
 		myPage.setBackground(new Color(239, 234, 222));
 		myPage.setLocation(220, 12);
 		myPage.setSize(140, 27);
-		
+
 		// ============== 마이페이지 버튼 누를 시 이벤트 ================
+
 		myPage.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -137,11 +152,13 @@ public KoskSeatTable() {
 			}
 			
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked (MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+					
+				ChangePanel.changePanel(panel, new KoskMypage());
 			}
 		});
+		
 		panel.add(myPage);
 		
 		panel.setLayout(null);
@@ -339,8 +356,7 @@ public void mouseReleased(MouseEvent e) {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+			
 			}
 			
 			@Override
@@ -363,9 +379,7 @@ public void mouseReleased(MouseEvent e) {
 			
 			@Override
 			public void mouseClicked(MouseEvent me) {
-			
-					new KoskSeatTable();
-					setVisible(false);
+		
 			}
 		});	
 

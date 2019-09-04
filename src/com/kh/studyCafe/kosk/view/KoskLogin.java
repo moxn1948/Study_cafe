@@ -5,27 +5,27 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.model.service.KoskLoginService;
  
  
 public class KoskLogin extends JPanel{
-	private KoskMainFrame mf;
-	private JPanel mainpage;
+	private JPanel Login;
 	
-	public KoskLogin(KoskMainFrame mf) {
-		this.mf = mf; 
-		mainpage = this;
-		
+	public KoskLogin() {
+		Login = this;
 		//======= 색상 설정 ====
 		
-		Color wallPapers = new Color(239,234,222); //諛곌꼍�깋
-		Color textColor = new Color(127,118,104); //湲��옄�깋
+		Color wallPapers = new Color(239,234,222); 
+		Color textColor = new Color(127,118,104); 
 		
 		//=================
 		
@@ -42,28 +42,27 @@ public class KoskLogin extends JPanel{
 		
 		//============================
 		
-		// panel 크占쏙옙 占쏙옙占쏙옙
 		
-		//============== 占쏙옙占쏙옙 占쏙옙占쏙옙 占싸븝옙 ========================
+		//============== 제목 설정 ========================
 		
 		JLabel title1 = new JLabel("스터디카페를 다니고");
 		JLabel title2 = new JLabel("나의 성공 시대 ");
 		JLabel title3 = new JLabel("시작됐다");
 		
-		title1.setBounds(65,150,600,60);// 크占쏙옙 占쏙옙占쏙옙
-		title1.setForeground(textColor);// 占쏙옙占쏙옙
+		title1.setBounds(65,150,600,60);
+		title1.setForeground(textColor);
 		title2.setBounds(65,180,600,60);
 		title2.setForeground(textColor);
 		title3.setBounds(65,210,600,60);
 		title3.setForeground(textColor);
 		
-		// font 占쏙옙占쏙옙
+		// font 설정
 		title1.setFont(f1);
 		title2.setFont(f1);
 		title3.setFont(f1);
 		//=================================================
 		
-		//==================== 占쌔쏙옙트 占십듸옙 占쏙옙占쏙옙 ==============
+		//==================== 텍스트 필드 설정  ==============
 		
 		JTextField phonenumber = new JTextField("Phone Number");
 		JTextField password = new JTextField("password.");
@@ -77,7 +76,7 @@ public class KoskLogin extends JPanel{
 		
 		//===================================================
 		
-		//===============  占쏙옙튼 占쏙옙占쏙옙 =================
+		//===============  제목설정 =================
 		
 		Image loginicon = new ImageIcon("img/loginimg.png").getImage().getScaledInstance(230, 50, 0);
 		Image singUpicon = new ImageIcon("img/singUpimg.png").getImage().getScaledInstance(110, 40, 0);
@@ -88,7 +87,7 @@ public class KoskLogin extends JPanel{
 		JButton findPwd = new JButton(new ImageIcon(findPwdicon));
 		findPwd.setBorderPainted(false);
 		
-		loginButton.setBounds(65,365,230,50); //占싸깍옙占쏙옙 占쏙옙튼 크占쏙옙 占쏙옙占쏙옙
+		loginButton.setBounds(65,365,230,50); 
 		signUp.setBounds(65,420,110,40);
 		findPwd.setBounds(185,420,110,40);
 		
@@ -104,17 +103,36 @@ public class KoskLogin extends JPanel{
 		this.add(loginButton);
 		this.add(findPwd);
 		this.add(signUp);
-		mf.add(this);
+		
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ChangePanel.changePanel(Login, new KoskSeatTable());
+				
+			}
+		});
 		
 		findPwd.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				//ChangePanel.changePanel(Login, new KoskPsswdFind());
+
 				ChangePanel.changePanel(mf, mainpage, new KoskPsswdFind());
+
 			}
 		});
 	
 		signUp.addActionListener(new ActionListener() {
+
+	//	@Override
+		//public void actionPerformed(ActionEvent e) {
+			//ChangePanel.changePanel(Login, new KoskSignUp());
+			
+		//}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

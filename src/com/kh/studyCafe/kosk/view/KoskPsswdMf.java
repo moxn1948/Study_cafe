@@ -3,6 +3,8 @@ package com.kh.studyCafe.kosk.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,8 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class KoskPsswdMf extends JPanel{
-
+	private JPanel KoskPsswdmf;
 	public KoskPsswdMf() {
+		KoskPsswdmf = this;
 		// ============= 색상 설정 ===============
 				Color wallPapers = new Color(239,234,222);
 				Color textColor = new Color(127,118,104);
@@ -97,5 +100,14 @@ public class KoskPsswdMf extends JPanel{
 				   this.add(phtf);
 				   this.add(cancel);
 				   this.add(find);
+				   
+				   cancel.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						ChangePanel.changePanel(KoskPsswdmf, new KoskLogin());
+					}
+				});
 	}
 }
