@@ -55,17 +55,9 @@ public class AdmUserInfoChk {
 		
 		return utList;
 	}
-	
-}
-
-
-
-	/*
-	 * 
-	 * 
 
 public void infoWrite() {
-	ArrayList<User> userList = new ArrayList<User> ();
+//	ArrayList<User> userList = new ArrayList<User> ();
 
 	long inTime = new Date(new GregorianCalendar(2019, 8, 4, 0, 0, 0).getTimeInMillis()).getTime();
 	
@@ -85,17 +77,29 @@ public void infoWrite() {
 	User u3 = new User("팥쥐", "010-1441-2222", "pass623", "12", inTime, outTime, remainTime, User.NOSEAT, 1000, pointTime, "silver");
 	User u4 = new User("콩쥐", "010-1551-2222", "pass723", "0", 0, 0, 0, User.NOSEAT, 0, 0, "bronze");
 	
-	userList.add(u);
+/*	userList.add(u);
 	userList.add(u1);
 	userList.add(u2);
 	userList.add(u3);
-	userList.add(u4);
+	userList.add(u4);*/
 	
 //	return userList;
 	
 	AdmDao ad = new AdmDao();
-	ad.admWrite(userList);
+	ad.admWrite(u);
+	ad.admWrite(u1);
+	ad.admWrite(u2);
+	ad.admWrite(u3);
+	ad.admWrite(u4);
 }
+
+}
+
+
+
+	/*
+	 * 
+	 * 
 
 
 	public void infoWrite() {
