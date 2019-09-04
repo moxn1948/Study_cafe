@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2919301810429862199L;
+	
 	private String name; // 회원이름
 	private String phoneNum; // 전화번호
 	private String password; // 비밀번호
@@ -14,19 +19,26 @@ public class User implements Serializable{
 	public final static int NOSEAT = 0; // 좌석 사용 안할 때
 	public final static int INDVSEAT = 1; // 개인좌석 사용할 때
 	public final static int GRPSEAT = 2; // 그룹좌석 사용할 때
-	private int seatType = NOSEAT; // 시트타입
+	private int seatType; // 시트타입
 	private int point; // 포인트
 	private long pointTime; // 누적 결제시간
 	private String rank; // 등급
 	
 	public User() {}
 	
-	public User(String name, long inTime, long outTime, int seatType) {
-		super();
+	public User(String name, String phoneNum, String password) {
 		this.name = name;
-		this.inTime = inTime;
-		this.outTime = outTime;
-		this.seatType = seatType;
+		this.phoneNum = phoneNum;
+		this.password = password;
+		this.seatNum = "0";
+		this.inTime = 0;
+		this.outTime = 0;
+		this.remainTime = 0;
+		this.seatType = NOSEAT;
+		this.point = 0;
+		this.pointTime = 0;
+		this.rank = "bronze";
+		
 	}
 
 	// 모든 필드 초기화 생성자
