@@ -3,6 +3,8 @@ package com.kh.studyCafe.kosk.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,10 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
   
 public class KoskMypage extends JPanel{
-	
+		private KoskMypage mf;
+		private JPanel panel = new JPanel();
 	public KoskMypage() {
-		this.setSize(360,640);
+		mf = this;
 		
+		this.setSize(360,640);
 		//===== 색상 설정 =====
 		
 		Color wallPapers = new Color(239,234,222);
@@ -139,24 +143,34 @@ public class KoskMypage extends JPanel{
 		   
 		   JButton find = new JButton(new ImageIcon(findimg));
 		   find.setBounds(220,530,100,40);
+		   
+		   	this.add(ib);
+			this.add(name);
+			this.add(nametf);
+			this.add(phtf);
+			this.add(hou);
+			this.add(atime);
+			this.add(dtime);
+			this.add(point);
+			this.add(rating);
+			this.add(hou1);
+			this.add(phnumber);
+			this.add(phnumber2);
+			this.add(atime1);
+			this.add(rating1);
+			this.add(point1);
+			this.add(dtime1);
+			this.add(find);
+			
+			
+		   find.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			ChangePanel.changePanel(mf, new KoskSeatTable());
+			}
+		});
 		
 		
-		this.add(ib);
-		this.add(name);
-		this.add(nametf);
-		this.add(phtf);
-		this.add(hou);
-		this.add(atime);
-		this.add(dtime);
-		this.add(point);
-		this.add(rating);
-		this.add(hou1);
-		this.add(phnumber);
-		this.add(phnumber2);
-		this.add(atime1);
-		this.add(rating1);
-		this.add(point1);
-		this.add(dtime1);
-		this.add(find);
 	}
 }
