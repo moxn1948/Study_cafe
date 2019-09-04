@@ -110,20 +110,31 @@ public class KoskLogin extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainpage, new KoskMypage());
+				ChangePanel.changePanel(mf, mainpage, new KoskPsswdFind());
 			}
 		});
 	
-		signUp.addActionListener(new MyActionListener());
+		signUp.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, mainpage, new KoskSignUp());
+				
+			}
+			
+		});
+		
+		loginButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, mainpage, new KoskSeatTable());
+				
+			}
+			
+		});
 	}
 	
-	class MyActionListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ChangePanel.changePanel(mf, mainpage, new KoskGroupPanel());
-			
-		}	
-	}
 	
 }
