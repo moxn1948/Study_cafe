@@ -18,9 +18,20 @@ import javax.swing.SwingUtilities;
 import com.kh.studyCafe.kosk.controller.KoskManager;
   
 public class KoskSignUp extends JPanel{
+
 	private JPanel signup;
 	public KoskSignUp() {
 		signup = this;
+
+	private KoskMainFrame mf;
+	private JPanel mainpage;
+	
+	public KoskSignUp() {
+		public KoskSignUp(KoskMainFrame mf) {
+			this.mf = mf; 
+			mainpage = this;
+		
+
 		//===== 컬러 설정 =====
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
@@ -57,7 +68,7 @@ public class KoskSignUp extends JPanel{
 		//===================================
 	
 		//========= 라벨 설정 ===================
-	   JLabel name = new JLabel("이름"); //�̸� ��
+	   JLabel name = new JLabel("이름");
 	   name.setBounds(30, 170, 40, 30);
 	   name.setFont(inputtext);
 	   name.setForeground(textColor);
@@ -132,7 +143,7 @@ public class KoskSignUp extends JPanel{
 		this.add(cancel);
 		this.add(confirm);
 		this.add(checkbox);
-		
+		mf.add(this);
 		confirm.addActionListener(new ActionListener() {
 			
 			@Override
@@ -149,8 +160,18 @@ public class KoskSignUp extends JPanel{
 				// TODO Auto-generated method stub
 				ChangePanel.changePanel(signup, new KoskLogin());
 			}
+
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ChangePanel.changePanel(mf, mainpage, new KoskLogin(mf));
+			}
+			
 		});
 		
 	}
+
 
 }
