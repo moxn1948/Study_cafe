@@ -34,7 +34,8 @@ public KoskSeatTable() {
 		String name = null;
 		
 		this.setLayout(null);
-				
+		
+		// ========= 패널 배경 색 설정, 패널 사이즈 설정 ============
 		panel.setBackground(new Color(239, 234, 222));
 		panel.setSize(700, 1000);
 		
@@ -47,13 +48,15 @@ public KoskSeatTable() {
 				
 		panel.add(label);
 		
-		Image image = new ImageIcon("image/logo.png").getImage().getScaledInstance(26, 34, 0);
+		// =========== 상단 로고 이미지 설정 ==================
+		Image image = new ImageIcon("imag/logo.png").getImage().getScaledInstance(26, 34, 0);
 		JLabel imageLabel = new JLabel(new ImageIcon(image));
 		imageLabel.setLocation(167, 12);
 		imageLabel.setSize(26, 34);
 		
 		panel.add(imageLabel);
 		
+		// ================== 로그아웃 버튼 설정  =====================
 		JButton logOut = new JButton("로그아웃");
 		logOut.setBorderPainted(false);
 		logOut.setFont(new Font("맑은 고딕", Font.BOLD, 16));
@@ -62,6 +65,7 @@ public KoskSeatTable() {
 		logOut.setLocation(11, 12);
 		logOut.setSize(100, 27);
 		
+		// ============== 로그아웃 버튼 클릭스 이벤트 =================
 		logOut.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -96,6 +100,7 @@ public KoskSeatTable() {
 		});
 		panel.add(logOut);
 		
+		// ========== 마이페이지 버튼 설정 ===================
 		JButton myPage = new JButton("마이페이지");
 		myPage.setBorderPainted(false);
 		myPage.setFont(new Font("맑은 고딕", Font.BOLD, 16));
@@ -104,6 +109,7 @@ public KoskSeatTable() {
 		myPage.setLocation(220, 12);
 		myPage.setSize(140, 27);
 		
+		// ============== 마이페이지 버튼 누를 시 이벤트 ================
 		myPage.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -140,6 +146,7 @@ public KoskSeatTable() {
 		
 		panel.setLayout(null);
 		
+		// =============== 개인 좌석 버튼 설정 ===================
 		for(int i = 0; i < iuser.length; i++) {
 			String num = i + "";
 			iuser[i] = new JButton(num);
@@ -165,6 +172,7 @@ public KoskSeatTable() {
 			
 		}
 		
+		// ================= 4인실룸 버튼 설정 ==================
 		for(int i = 0; i < 2; i++) {
 			if(i == 0) {
 				name = "4-A";
@@ -184,7 +192,8 @@ public KoskSeatTable() {
 			dfuser[i].addMouseListener(this); 
 			panel.add(dfuser[i]);
 		}	
-					
+				
+		//================== 8인실룸 버튼 설정 =====================
 		    deuser[0] =new JButton("8-A");
 		    deuser[0].setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		    deuser[0].setBackground(Color.WHITE);
@@ -195,6 +204,7 @@ public KoskSeatTable() {
 			deuser[0].addMouseListener(this); 
 			panel.add(deuser[0]);
 			
+			// =============== 6인실룸 버튼 설정 ======================
 			for(int i = 0; i < 2; i++) {
 				if(i == 0) {
 					name = "6-A";
@@ -220,7 +230,7 @@ public KoskSeatTable() {
 	}
 
 
-
+//============== 좌석 버튼 클릭시 이벤트 ===================
 @Override
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
@@ -249,6 +259,7 @@ public void mousePressed(MouseEvent e) {
 public void mouseReleased(MouseEvent e) {
 	Font font = new Font("맑은 고딕", Font.BOLD, 16);
 	
+	// ================= 좌석 선택시 좌석 색깔 변경 설정 =======================
 	for(int a = 0; a < inds.length; a++) {
 		if(e.getSource() == iuser[a]) {
 			if(inds[a] != true) {
@@ -303,6 +314,7 @@ public void mouseReleased(MouseEvent e) {
 	}
 		gres[0] = true;
 		
+		//============== 좌석 선택시 나타나는 선택취소 버튼 설정 ====================
 		JButton pre = new JButton("선택취소");
 		pre.setFont(font);
 		pre.setBackground(new Color(189, 177, 157));
@@ -312,6 +324,7 @@ public void mouseReleased(MouseEvent e) {
 		
 		panel.add(pre);
 
+		//==================== 좌석 선택시 나타나는 confirm버튼 설정=========================
 		JButton confirm = new JButton("Confirm");
 		confirm.setFont(font);
 		confirm.setBackground(new Color(163, 152, 134));
@@ -321,6 +334,7 @@ public void mouseReleased(MouseEvent e) {
 
 		panel.add(confirm);
 		
+		//================= 선택취소 버튼 누를시 이벤트 =======================
 		pre.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -355,6 +369,7 @@ public void mouseReleased(MouseEvent e) {
 			}
 		});	
 
+		//================ 확인 버튼 누를시 이벤트 =================
 		confirm.addMouseListener(new MouseListener() {
 			
 			@Override
