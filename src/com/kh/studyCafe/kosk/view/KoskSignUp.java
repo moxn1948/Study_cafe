@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,10 +14,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import com.kh.studyCafe.kosk.controller.KoskManager;
   
 public class KoskSignUp extends JPanel{
+	private KoskMainFrame mf;
+	private JPanel mainpage;
 	
 	public KoskSignUp() {
+		public KoskSignUp(KoskMainFrame mf) {
+			this.mf = mf; 
+			mainpage = this;
 		
 		//===== 컬러 설정 =====
 		Color wallPapers = new Color(239,234,222);
@@ -129,8 +137,20 @@ public class KoskSignUp extends JPanel{
 		this.add(cancel);
 		this.add(confirm);
 		this.add(checkbox);
+		mf.add(this);
 		
+
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ChangePanel.changePanel(mf, mainpage, new KoskLogin(mf));
+			}
+			
+		});
 		
 	}
+
 
 }
