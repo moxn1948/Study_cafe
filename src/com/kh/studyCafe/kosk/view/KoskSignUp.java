@@ -16,20 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
-
 	private JPanel signup;
 	public KoskSignUp() {
-		signup = this;
-
-	private KoskMainFrame mf;
-	private JPanel mainpage;
-	
-	public KoskSignUp() {
-		public KoskSignUp(KoskMainFrame mf) {
-			this.mf = mf; 
-			mainpage = this;
+			
+			signup = this;
 		
 
 		//===== 컬러 설정 =====
@@ -143,7 +136,7 @@ public class KoskSignUp extends JPanel{
 		this.add(cancel);
 		this.add(confirm);
 		this.add(checkbox);
-		mf.add(this);
+		
 		confirm.addActionListener(new ActionListener() {
 			
 			@Override
@@ -152,7 +145,6 @@ public class KoskSignUp extends JPanel{
 				
 			}
 		});
-		
 		cancel.addActionListener(new ActionListener() {
 			
 			@Override
@@ -160,18 +152,9 @@ public class KoskSignUp extends JPanel{
 				// TODO Auto-generated method stub
 				ChangePanel.changePanel(signup, new KoskLogin());
 			}
-
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				ChangePanel.changePanel(mf, mainpage, new KoskLogin(mf));
-			}
-			
 		});
-		
 	}
-
-
 }
+
+		
+

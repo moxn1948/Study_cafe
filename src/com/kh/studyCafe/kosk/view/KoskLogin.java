@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.kh.studyCafe.kosk.controller.KoskManager;
-import com.kh.studyCafe.kosk.model.service.KoskLoginService;
  
  
 public class KoskLogin extends JPanel{
@@ -121,7 +118,7 @@ public class KoskLogin extends JPanel{
 
 				//ChangePanel.changePanel(Login, new KoskPsswdFind());
 
-				ChangePanel.changePanel(mf, mainpage, new KoskPsswdFind());
+				ChangePanel.changePanel(Login, new KoskPsswdFind());
 
 			}
 		});
@@ -136,7 +133,7 @@ public class KoskLogin extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainpage, new KoskSignUp());
+				ChangePanel.changePanel(Login, new KoskSignUp());
 				
 			}
 			
@@ -146,7 +143,7 @@ public class KoskLogin extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainpage, new KoskSeatTable());
+				ChangePanel.changePanel(Login, new KoskSeatTable());
 				
 			}
 			
