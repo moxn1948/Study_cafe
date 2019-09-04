@@ -3,6 +3,8 @@ package com.kh.studyCafe.kosk.view.popup;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,13 +12,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
-public class KoskIndividualPanel2 {
+public class KoskIndividualPanel2 implements MouseListener{
+	
+	private JFrame fm = new JFrame();
+	private JTextField time  = new JTextField("7일");
+	private JButton plus;
+	private JButton	minus;
+	private JButton cancel;
+	private JButton confirm;
+	private int day = 7;
+	private JPanel panel;
+	private JLabel Rt;
 	
 	public KoskIndividualPanel2() {
 	
-	JFrame fm = new JFrame();
+	
 	fm.setBounds(30, 40, 300, 400);
 	fm.setLayout(null);
 	
@@ -34,7 +45,7 @@ public class KoskIndividualPanel2 {
 
 	
 	//===== 패널 =======
-	JPanel panel = new JPanel();
+	panel = new JPanel();
 	panel.setSize(300,400);
 	panel.setLayout(null);
 	panel.setBackground(wallPapers);
@@ -45,7 +56,18 @@ public class KoskIndividualPanel2 {
 	logo.setFont(inputtext);
 	logo.setForeground(textColor);
 	
-	JLabel Rt = new JLabel("이용하실 기간 7일");// 잔여시간
+	//====== textField =======
+	
+	time = new JTextField(day + "일");
+	time.setBounds(85,175,110,40);
+	time.setFont(checktext);
+	time.setForeground(textColor);
+	time.setHorizontalAlignment(JTextField.CENTER);
+	time.setEditable(false);	 
+	
+	//================================
+	
+	Rt = new JLabel("이용하실 기간  " + day + "일");// 잔여시간
 	Rt.setBounds(60,80, 150, 60);
 	Rt.setFont(checktext);
 	Rt.setForeground(textColor);
@@ -53,36 +75,32 @@ public class KoskIndividualPanel2 {
 	
 	//===================
 	
-	//====== textField =======
 	
-	JTextField time = new JTextField("7일");
-	time.setBounds(85,175,110,40);
-	time.setFont(checktext);
-	time.setForeground(textColor);
-	time.setHorizontalAlignment(JTextField.CENTER);
-	
-	 
-	
-	//================================
 	
 	//==== 버튼 ========
 	Image plusimg = new ImageIcon("img/plusbtnimg.png").getImage().getScaledInstance(120, 40, 0);
-	JButton plus = new JButton(new ImageIcon(plusimg));
+	plus = new JButton(new ImageIcon(plusimg));
 	plus.setBounds(85, 130, 110, 40);
 	
-	
+	plus.addMouseListener(this);
+		
 	Image minusimg = new ImageIcon("img/minusbtnimg.png").getImage().getScaledInstance(120, 40, 0);
-	JButton	minus = new JButton(new ImageIcon(minusimg));
+	minus = new JButton(new ImageIcon(minusimg));
 	minus.setBounds(85, 220, 110, 40);
 	
+	minus.addMouseListener(this);
 
 	Image cancelimg = new ImageIcon("img/Cancelbtnimg.png").getImage().getScaledInstance(117, 50, 0);
-	JButton cancel = new JButton(new ImageIcon(cancelimg));
+	cancel = new JButton(new ImageIcon(cancelimg));
 	cancel.setBounds(20, 280, 117, 50);
 	
+	cancel.addMouseListener(this);
+	
 	Image confirmimg = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(117, 50, 0);
-	JButton confirm = new JButton(new ImageIcon(confirmimg));
+	confirm = new JButton(new ImageIcon(confirmimg));
 	confirm.setBounds(139, 280, 117, 50);
+	
+	confirm.addMouseListener(this);
 	
 	//============
 	fm.add(panel);
@@ -98,5 +116,54 @@ public class KoskIndividualPanel2 {
 	fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
 
-}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == plus) {
+			if(day >= 7 && day < 28) {
+				day += 7;
+				time.setText(day + "일");
+				Rt.setText("이용하실 기간  " + day + "일");
+			}
+		}
+		if(e.getSource() == minus) {
+			if(day > 7 && day <= 28) {
+				day -= 7;
+				time.setText(day + "일");
+				Rt.setText("이용하실 기간  " + day + "일");
+			}
+		}
+		if(e.getSource() == cancel) {
+			fm.setVisible(false);
+		}
+		if(e.getSource() == confirm) {
+			fm.setVisible(false);
+			//confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
+		}
+		
+	}
 
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
