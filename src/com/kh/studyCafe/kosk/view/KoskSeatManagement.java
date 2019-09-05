@@ -15,9 +15,9 @@ import javax.swing.border.Border;
 public class KoskSeatManagement extends JPanel{
 	
 //	private JPanel seatManagement;
-	
-	public KoskSeatManagement() {
-		
+	private KoskMainFrame mf;
+	public KoskSeatManagement(KoskMainFrame mf) {
+		this.mf = mf;
 		//======= 컬러 설정 ====	
 		
 		Color wallPapers = new Color(239,234,222);

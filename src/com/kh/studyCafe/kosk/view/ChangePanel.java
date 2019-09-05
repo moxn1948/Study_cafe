@@ -5,10 +5,13 @@ import javax.swing.JPanel;
 
 public class ChangePanel{
  
-	public static void changePanel(JPanel op, JPanel np) {
-		op.removeAll();
-		op.add(np);
-		op.repaint();
+	public static void changePanel(KoskMainFrame mf, JPanel op, JPanel np) {
+		
+		
+		mf.remove(op);		
+		mf.add(np);
+		mf.repaint();
+	
 	}
 
 }

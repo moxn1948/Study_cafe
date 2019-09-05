@@ -12,9 +12,9 @@ import javax.swing.SwingUtilities;
 
 public class KoskPayment extends JPanel{
 
-	private JPanel Payment;
-	public KoskPayment() {
-		
+	private KoskMainFrame mf;
+	public KoskPayment(KoskMainFrame mf) {
+		this.mf = mf;
 		//======= 컬러 설정 ====	
 		
 		Color wallPapers = new Color(239,234,222);
