@@ -121,17 +121,11 @@ public class KoskLogin extends JPanel{
 				//ChangePanel.changePanel(Login, new KoskPsswdFind());
 
 				ChangePanel.changePanel(mf, Login, new KoskPsswdFind(mf));
-
+     
 			}
 		});
 	
 		signUp.addActionListener(new ActionListener() {
-
-	//	@Override
-		//public void actionPerformed(ActionEvent e) {
-			//ChangePanel.changePanel(Login, new KoskSignUp());
-			
-		//}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -141,15 +135,6 @@ public class KoskLogin extends JPanel{
 			
 		});
 		
-		loginButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
-				
-			}
-			
-		});
 	}
 	
 

@@ -55,7 +55,7 @@ public class KoskManager {
 					try {
 						br = new BufferedReader(new FileReader("userlist.txt"));
 						
-						bw = new BufferedWriter(new FileWriter("userlist.txt",true));
+						bw = new BufferedWriter(new FileWriter("userlist.txt",true)); 
 						//bw.write(seatnum+"\n");
 						String str = null;
 						str = br.readLine();
@@ -64,6 +64,7 @@ public class KoskManager {
 						} else {
 							bw.write("\n"+seatnum);
 						}
+						
 						
 							bw.flush();
 					} catch (IOException e) {
@@ -77,11 +78,12 @@ public class KoskManager {
 	public ArrayList seat() {
 		
 		BufferedReader br = null;
-		String read ="";
+		String read =null;
 		ArrayList seatlist = new ArrayList();
 		try {
 			br = new BufferedReader(new FileReader("userlist.txt"));
 			while((read = br.readLine())!= null) {
+			
 				seatlist.add(read);
 			}
 			
@@ -89,7 +91,7 @@ public class KoskManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return seatlist;
+		return seatlist; 
 		
 	}
 	public int[] seatint() {
