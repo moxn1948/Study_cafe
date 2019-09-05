@@ -16,6 +16,13 @@ import javax.swing.SwingUtilities;
 public class KoskPsswdFind extends JPanel{
 	private KoskMainFrame mf;
 	private JPanel pssfind = new JPanel();
+	private JTextField nametf;
+	private JTextField phtf;
+	private JButton cancel;
+	private JButton find;
+	
+	//User에서 값을 이름, 핸드폰 번호 , 비밀번호 값 받아와서 저장
+	
 	public KoskPsswdFind(KoskMainFrame mf) {
 		this.mf = mf;
 		
@@ -59,8 +66,9 @@ public class KoskPsswdFind extends JPanel{
 		   name.setFont(inputtext);
 		   name.setForeground(textColor);
 		   
-		   JTextField nametf = new JTextField("내용을 입력해주세요");
+		   nametf = new JTextField(11);
 		   nametf.setBounds(120,230,200,40);
+		   pssfind.add(nametf);
 
 		   JLabel phnumber = new JLabel("휴대폰");
 		   JLabel phnumber2 = new JLabel("번호");
@@ -71,16 +79,17 @@ public class KoskPsswdFind extends JPanel{
 		   phnumber.setForeground(textColor);
 		   phnumber2.setForeground(textColor);
 		   
-		   JTextField phtf = new JTextField("내용을 입력해주세요");
+		   phtf = new JTextField("내용을 입력해주세요");
 		   phtf.setBounds(120,295,200,40);
+		   pssfind.add(phtf);
 		   
 		   Image cancelimg2 = new ImageIcon("img/cancelbtnimg2.png").getImage().getScaledInstance(100, 40, 0);
 		   Image findimg = new ImageIcon("img/findbtnimg.png").getImage().getScaledInstance(100, 40, 0);
 		   
-		   JButton cancel = new JButton(new ImageIcon(cancelimg2));
+		  cancel = new JButton(new ImageIcon(cancelimg2));
 		   cancel.setBorderPainted(false);
 		   cancel.setBounds(20,530,100,40);
-		   JButton find = new JButton(new ImageIcon(findimg));
+		   find = new JButton(new ImageIcon(findimg));
 		   find.setBorderPainted(false);
 		   find.setBounds(220,530,100,40);
 		   //===============================
@@ -108,6 +117,7 @@ public class KoskPsswdFind extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//등록되어 있는 정보와 입력된 값바 비교 후 맞을 시 이름과 전화번호, 비밀번호 값 전달 / 패널 전환
 				ChangePanel.changePanel(mf, pssfind, new KoskPsswdMf(mf));
 				
 			}
