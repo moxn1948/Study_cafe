@@ -24,7 +24,7 @@ import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
 	private JPanel signup;
-	public KoskSignUp() {
+	public KoskSignUp(KoskMainFrame mf) {
 			
 			signup = this;
 		
@@ -145,7 +145,7 @@ public class KoskSignUp extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ChangePanel.changePanel(signup, new KoskLogin());
+				ChangePanel.changePanel(mf,signup, new KoskLogin(mf));
 				
 			}
 			
@@ -163,7 +163,7 @@ public class KoskSignUp extends JPanel{
 				
 				new KoskManager(number);
 				
-				ChangePanel.changePanel(signup, new KoskLogin());
+				ChangePanel.changePanel(mf, signup, new KoskLogin(mf));
 				
 			}
 			
