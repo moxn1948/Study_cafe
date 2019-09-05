@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,19 +34,18 @@ public KoskSeatTable(KoskMainFrame mf) {
 	
 	User user = new User();
 		
-		this.setSize(360, 640);
-
+	 
+		
 		int x = 5;
 		int y = 152;
 
 		String name = null;
 		
-		this.setLayout(null);
 
 		// ========= 패널 배경 색 설정, 패널 사이즈 설정 ============
 
 		panel.setBackground(new Color(239, 234, 222));
-		panel.setSize(700, 1000);
+		panel.setSize(360, 640);
 		
 		Font font1 = new Font("맑은 고딕", Font.BOLD, 32);
 		JLabel label = new JLabel("좌석표");
@@ -57,7 +54,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 		label.setLocation(131, 50);
 		label.setSize(200, 90);
 				
-		panel.add(label);
+	
 		
 		// =========== 상단 로고 이미지 설정 ==================
 		Image image = new ImageIcon("imag/logo.png").getImage().getScaledInstance(26, 34, 0);
@@ -65,7 +62,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 		imageLabel.setLocation(167, 12);
 		imageLabel.setSize(26, 34);
 		
-		panel.add(imageLabel);
+	
 		
 		
 		//=======  로그아웃 ===============
@@ -80,46 +77,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 		logOut.setLocation(11, 12);
 		logOut.setSize(100, 27);
 		
-		
-	//==================== 로그아웃 버튼 이벤트 부분 ===================
-		
-		
 
-		// ============== 로그아웃 버튼 클릭스 이벤트 =================
-
-		logOut.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf,panel,new KoskLogin(mf));
-			}
-		});
-		panel.add(logOut);
 		
 		
 		//=========== 마이이지 ==============
@@ -136,43 +94,8 @@ public KoskSeatTable(KoskMainFrame mf) {
 
 		// ============== 마이페이지 버튼 누를 시 이벤트 ================
 
-		myPage.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked (MouseEvent e) {
-				// TODO Auto-generated method stub
-					
-				ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
-			}
-		});
 		
-		panel.add(myPage);
 		
-		panel.setLayout(null);
 		
 		// =============== 개인 좌석 버튼 설정 ===================
 		for(int i = 0; i < iuser.length; i++) {
@@ -185,7 +108,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 			iuser[i].setSize(47,47);
 			
 			iuser[i].addMouseListener(this);
-			panel.add(iuser[i]);
+			
 			
 			x += 48;
 
@@ -218,7 +141,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 			dfuser[i].setSize(90, 64);
 			
 			dfuser[i].addMouseListener(this); 
-			panel.add(dfuser[i]);
+			
 		}	
 				
 		//================== 8인실룸 버튼 설정 =====================
@@ -230,7 +153,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 			deuser[0].setSize(90, 140);
 			
 			deuser[0].addMouseListener(this); 
-			panel.add(deuser[0]);
+		
 			
 			// =============== 6인실룸 버튼 설정 ======================
 			for(int i = 0; i < 2; i++) {
@@ -250,8 +173,10 @@ public KoskSeatTable(KoskMainFrame mf) {
 				dsuser[i].setSize(160 , 65);
 				
 				dsuser[i].addMouseListener(this); 
-				panel.add(dsuser[i]);
+				
 			}
+			
+			
 			
 			//========  해당 좌석 정보를 읽어 좌석 색 칠하고 선택 불가능 ==========
 			KoskManager kkm = new KoskManager();
@@ -265,28 +190,121 @@ public KoskSeatTable(KoskMainFrame mf) {
 				} else if(num>24 && num <27) {
 					int num2 = 0;
 					if(num == 25) {
-						num2 = 0;
+						num2 = 0; 
 					} else {
 						num2 = 1;
 					}
 					dfuser[num2].setBackground(new Color(163, 152, 134));
 					dfuser[num2].setForeground(Color.WHITE);
+				} else if(num >26 && num <29) {
+					int num2 = 0;
+					if(num == 28) {
+						num2 = 1;
+					}
+					dsuser[num2].setBackground(new Color(163, 152, 134));
+					dsuser[num2].setForeground(Color.WHITE);
+				} else {
+					deuser[0].setBackground(new Color(163, 152, 134));
+					deuser[0].setForeground(Color.WHITE);
 				}
 				
 				
 				//iuser[num].setEnabled(false);
 			}
 			
+			panel.add(myPage);
+			panel.add(logOut);
+			panel.add(label);
+			panel.add(imageLabel);
+			
+			for(int i=0; i<25;i++) {
+				panel.add(iuser[i]);
+			}
+			for(int i=0; i<2; i++) {
+				panel.add(dfuser[i]);
+				panel.add(dsuser[i]);
+			}
+			panel.add(deuser[0]);
+			mf.add(panel);
+		
 			
 			
 			//================================================
 		
-		this.add(panel);
-		this.repaint();
-}
+	
 		
+			
+	logOut.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	myPage.addMouseListener(new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseClicked (MouseEvent e) {
+			// TODO Auto-generated method stub
+				
+			ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
+		}
+	});
+	
+	
 	
 
+	
+}
 //============== 좌석 버튼 클릭시 이벤트 ===================
 @Override
 public void mouseClicked(MouseEvent e) {
@@ -314,6 +332,8 @@ public void mousePressed(MouseEvent e) {
 
 @Override
 public void mouseReleased(MouseEvent e) {
+	
+	
 	User user = new User();
 	Font font = new Font("맑은 고딕", Font.BOLD, 16);
 	int num = 0;
@@ -329,7 +349,7 @@ public void mouseReleased(MouseEvent e) {
 			} 
 		}
 	}
-   // ======  4인실  ======
+ // ======  4인실  ======
 	for(int b = 0; b < grfs.length; b++) {
 		if(e.getSource() == dfuser[b]) {
 			if(grfs[b] != true) {
@@ -350,29 +370,37 @@ public void mouseReleased(MouseEvent e) {
 			}
 		}
 	
-	//  ====  6인실 ======
+	//  ====  6인실 ====== 
 	for(int c = 0; c < grss.length; c++) {
 		if(e.getSource() == dsuser[c]) {
 			if(grss[c] != true) {
 				((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 				((JComponent) e.getSource()).setForeground(Color.WHITE);
+				String groupseat;
 				if(c == 0) {
-					
+					groupseat = "27";
+				} else {
+					groupseat = "28";
 				}
+				user.setSeatNum(groupseat);
+				System.out.println(user.getSeatNum());
 				}
-
+			
 			}
 		}
 	
 	// == 8인실  ====
 	for(int d = 0; d < gres.length; d++) {
-		if(e.getSource() == deuser[d]) {
+		if(e.getSource() == deuser[d]) { 
 			if(gres[d] != true) {
 				((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 				((JComponent) e.getSource()).setForeground(Color.WHITE);
-				
-				}
-
+				String groupseat2;
+				groupseat2 = "29";
+				user.setSeatNum(groupseat2);
+				System.out.println(user.getSeatNum());
+			}
+			
 			}
 		}
 	
@@ -389,7 +417,8 @@ public void mouseReleased(MouseEvent e) {
 	}
 		gres[0] = true;
 		
-		//============== 좌석 선택시 나타나는 선택취소 버튼 설정 ====================
+		//============== 좌석 선택시 나타나는 선택취소 버튼 설정 ==================== 
+		
 		JButton pre = new JButton("선택취소");
 		pre.setFont(font);
 		pre.setBackground(new Color(189, 177, 157));
@@ -397,7 +426,8 @@ public void mouseReleased(MouseEvent e) {
 		pre.setLocation(5, 531);
 		pre.setSize(160 ,53);
 		
-		panel.add(pre);
+		
+		
 
 		//==================== 좌석 선택시 나타나는 confirm버튼 설정=========================
 		JButton confirm = new JButton("Confirm");
@@ -406,9 +436,12 @@ public void mouseReleased(MouseEvent e) {
 		confirm.setForeground(Color.WHITE);
 		confirm.setLocation(175, 531);
 		confirm.setSize(160,53);
-
+		
+		panel.repaint();
+	
+		panel.add(pre);
 		panel.add(confirm);
-		mf.add(panel);
+		
 		
 		//================= 선택취소 버튼 누를시 이벤트 =======================
 		pre.addMouseListener(new MouseListener() {
@@ -451,7 +484,7 @@ public void mouseReleased(MouseEvent e) {
 			
 			
 				new KoskManager().seatManger((user.getSeatNum()));
-				ChangePanel.changePanel(mf,panel, new KoskLogin(mf));
+				ChangePanel.changePanel(mf,panel, new KoskSeatManagement(mf));
 				
 			}
 			
@@ -478,7 +511,12 @@ public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
 			}
+			
 		});
-}	
 
-}
+		}
+	}	
+
+		
+	
+
