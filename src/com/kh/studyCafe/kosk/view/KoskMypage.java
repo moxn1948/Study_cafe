@@ -14,12 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
   
 public class KoskMypage extends JPanel{
-		private KoskMypage mf;
 		private JPanel panel = new JPanel();
-	public KoskMypage() {
-		mf = this;
+		private KoskMainFrame mf;
+	public KoskMypage(KoskMainFrame mf) {
+		this.mf = mf;
 		
-		this.setSize(360,640);
+		panel.setSize(360,640);
 		//===== 색상 설정 =====
 		
 		Color wallPapers = new Color(239,234,222);
@@ -28,8 +28,8 @@ public class KoskMypage extends JPanel{
 		//===============
 				
 		//===== JPanel 설정 =======
-		this.setLayout(null);
-		this.setBackground(wallPapers);
+		panel.setLayout(null);
+		panel.setBackground(wallPapers);
 		//=======================
 				
 		//============ font 설정 ==========
@@ -144,30 +144,32 @@ public class KoskMypage extends JPanel{
 		   JButton find = new JButton(new ImageIcon(findimg));
 		   find.setBounds(220,530,100,40);
 		   
-		   	this.add(ib);
-			this.add(name);
-			this.add(nametf);
-			this.add(phtf);
-			this.add(hou);
-			this.add(atime);
-			this.add(dtime);
-			this.add(point);
-			this.add(rating);
-			this.add(hou1);
-			this.add(phnumber);
-			this.add(phnumber2);
-			this.add(atime1);
-			this.add(rating1);
-			this.add(point1);
-			this.add(dtime1);
-			this.add(find);
+		   	panel.add(ib);
+			panel.add(name);
+			panel.add(nametf);
+			panel.add(phtf);
+			panel.add(hou);
+			panel.add(atime);
+			panel.add(dtime);
+			panel.add(point);
+			panel.add(rating);
+			panel.add(hou1);
+			panel.add(phnumber);
+			panel.add(phnumber2);
+			panel.add(atime1);
+			panel.add(rating1);
+			panel.add(point1);
+			panel.add(dtime1);
+			panel.add(find);
+			
+			mf.add(panel);
 			
 			
 		   find.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			ChangePanel.changePanel(mf, new KoskSeatTable());
+			ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
 			}
 		});
 		

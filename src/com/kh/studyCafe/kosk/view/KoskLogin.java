@@ -15,10 +15,11 @@ import javax.swing.JTextField;
  
  
 public class KoskLogin extends JPanel{
-	private JPanel Login;
-	
-	public KoskLogin() {
-		Login = this;
+	private JPanel Login = new JPanel();
+	private KoskMainFrame mf;
+	public KoskLogin(KoskMainFrame mf) {
+		this.mf = mf;
+
 		//======= 색상 설정 ====
 		
 		Color wallPapers = new Color(239,234,222); 
@@ -28,9 +29,9 @@ public class KoskLogin extends JPanel{
 		
 		
 		//================ 패널 설정 ======================
-		this.setSize(360,640);
-		this.setLayout(null);
-		this.setBackground(wallPapers);
+		Login.setSize(360,640);
+		Login.setLayout(null);
+		Login.setBackground(wallPapers);
 		//================================================
 		
 		//============== font 폰트 설정 =========
@@ -92,21 +93,22 @@ public class KoskLogin extends JPanel{
 		//=======================================
 		
 		
-		this.add(title1);
-		this.add(title2);
-		this.add(title3);
-		this.add(phonenumber);
-		this.add(password);
-		this.add(loginButton);
-		this.add(findPwd);
-		this.add(signUp);
+		Login.add(title1);
+		Login.add(title2);
+		Login.add(title3);
+		Login.add(phonenumber);
+		Login.add(password);
+		Login.add(loginButton);
+		Login.add(findPwd);
+		Login.add(signUp);
 		
+		mf.add(Login);
 		loginButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ChangePanel.changePanel(Login, new KoskSeatTable());
+				ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
 				
 			}
 		});
@@ -118,7 +120,7 @@ public class KoskLogin extends JPanel{
 
 				//ChangePanel.changePanel(Login, new KoskPsswdFind());
 
-				ChangePanel.changePanel(Login, new KoskPsswdFind());
+				ChangePanel.changePanel(mf, Login, new KoskPsswdFind(mf));
 
 			}
 		});
@@ -133,7 +135,7 @@ public class KoskLogin extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(Login, new KoskSignUp());
+				ChangePanel.changePanel(mf, Login, new KoskSignUp(mf));
 				
 			}
 			
@@ -143,7 +145,7 @@ public class KoskLogin extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(Login, new KoskSeatTable());
+				ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
 				
 			}
 			

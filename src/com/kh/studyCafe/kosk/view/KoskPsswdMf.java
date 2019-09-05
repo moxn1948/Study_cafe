@@ -14,9 +14,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class KoskPsswdMf extends JPanel{
-	private JPanel KoskPsswdmf;
-	public KoskPsswdMf() {
-		KoskPsswdmf = this;
+	private KoskMainFrame mf;
+	private JPanel pssmf = new JPanel() ;
+	public KoskPsswdMf(KoskMainFrame mf) {
+		this.mf = mf;
+		
 		// ============= 색상 설정 ===============
 				Color wallPapers = new Color(239,234,222);
 				Color textColor = new Color(127,118,104);
@@ -106,7 +108,7 @@ public class KoskPsswdMf extends JPanel{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						ChangePanel.changePanel(KoskPsswdmf, new KoskLogin());
+						ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
 					}
 				});
 	}

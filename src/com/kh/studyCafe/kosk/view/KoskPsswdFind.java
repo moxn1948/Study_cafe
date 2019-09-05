@@ -14,9 +14,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
   
 public class KoskPsswdFind extends JPanel{
-		private JPanel psswdfind;
-	public KoskPsswdFind() {
-		psswdfind = this;
+	private KoskMainFrame mf;
+	private JPanel pssfind = new JPanel();
+	public KoskPsswdFind(KoskMainFrame mf) {
+		this.mf = mf;
 		
 		// ============= 색상 설정 ===============
 		Color wallPapers = new Color(239,234,222);
@@ -99,7 +100,7 @@ public class KoskPsswdFind extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(psswdfind, new KoskLogin());
+				ChangePanel.changePanel(mf, pssfind, new KoskLogin(mf));
 			}
 		});
 		   
@@ -107,7 +108,7 @@ public class KoskPsswdFind extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(psswdfind, new KoskPsswdMf());
+				ChangePanel.changePanel(mf, pssfind, new KoskPsswdMf(mf));
 				
 			}
 		});
