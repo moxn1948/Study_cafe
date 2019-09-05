@@ -17,5 +17,22 @@ public class AdmManager {
 		
 		return userInfo.usingUserInfo(u);
 	}
-
+	
+	public String findPhoneToName(String phoneNum) {
+		ArrayList<User> u = ad.admRead();
+		AdmUserInfoChk userInfo = new AdmUserInfoChk(); 
+		
+		return userInfo.toPhoneInfo(phoneNum, u);
+	}
+	
+	public long findPhoneToRemain(String phoneNum) {
+		ArrayList<User> u = ad.admRead();
+		AdmUserInfoChk userInfo = new AdmUserInfoChk(); 
+		
+		return userInfo.toRemainInfo(phoneNum, u);
+	}
+	
+	public ArrayList<User> addRemainTime(String name, int term) {
+		return ad.admReadLine(name, term);
+	}
 }

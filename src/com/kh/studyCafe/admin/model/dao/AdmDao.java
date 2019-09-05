@@ -37,13 +37,52 @@ public class AdmDao {
 			oos.writeObject(uTemp);
 			
 			oos.flush();
+			result++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return result;
 	}
+
+	public int admWrite(ArrayList<User> user) {
+		int result = 0;
+		
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
+			oos.writeObject(user);
+			
+			oos.flush();
+			result++;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+
 	
+	// 1일권 잔여시간 수정
+	public ArrayList<User> admReadLine(String name, int term){
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+			
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getName().equals(name)) {
+					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000);
+					admWrite(userList);
+				}
+			}
+			
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+		
+		return userList;
+	}
+
 }
 
 

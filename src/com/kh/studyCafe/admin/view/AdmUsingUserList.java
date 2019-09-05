@@ -269,7 +269,7 @@ class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRe
 //        	System.out.println(table.getSelectedRow());
         	int row = table.getSelectedRow();
         	String tablePhone = table.getValueAt(row, 2) + "";
-        	new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf));
+        	new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, tablePhone));
         	
         	
         	
