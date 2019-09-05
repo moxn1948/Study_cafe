@@ -16,6 +16,11 @@ import javax.swing.SwingUtilities;
 public class KoskPsswdMf extends JPanel{
 	private KoskMainFrame mf;
 	private JPanel pssmf = new JPanel() ;
+	private JTextField nametf;
+	private JTextField phtf;
+	private JButton cancel;
+	private JButton find;
+	
 	public KoskPsswdMf(KoskMainFrame mf) {
 		this.mf = mf;
 		
@@ -64,8 +69,9 @@ public class KoskPsswdMf extends JPanel{
 				   psswdcg.setForeground(textColor);
 				   psswdcg2.setForeground(textColor);
 				   
-				   JTextField nametf = new JTextField("내용을 입력해주세요");
+				   nametf = new JTextField(4);
 				   nametf.setBounds(120,230,200,40);
+				   pssmf.add(nametf);
 
 				   JLabel psswdch = new JLabel("비밀번호");
 				   JLabel psswdch2 = new JLabel("확인");
@@ -76,15 +82,16 @@ public class KoskPsswdMf extends JPanel{
 				   psswdch.setForeground(textColor);
 				   psswdch2.setForeground(textColor);
 				   
-				   JTextField phtf = new JTextField("내용을 입력해주세요");
+				   phtf = new JTextField(4);
 				   phtf.setBounds(120,295,200,40);
+				   pssmf.add(phtf);
 				   
 				   Image cancelimg2 = new ImageIcon("img/cancelbtnimg2.png").getImage().getScaledInstance(100, 40, 0);
 				   
-				   JButton cancel = new JButton(new ImageIcon(cancelimg2));
+				   cancel = new JButton(new ImageIcon(cancelimg2));
 				   cancel.setBorderPainted(false);
 				   cancel.setBounds(20,530,100,40);
-				   JButton find = new JButton("확인버튼");
+				   find = new JButton("확인버튼");
 				   find.setFont(checktext);
 				   find.setHorizontalAlignment(JButton.CENTER);
 				   find.setBackground(findbtnColor);
@@ -109,6 +116,16 @@ public class KoskPsswdMf extends JPanel{
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
+					}
+				});
+				   find.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(nametf.getText() == phtf.getText()) {
+							// 전달 받은 중 비밀번호로 저장
+						}
+						
 					}
 				});
 	}
