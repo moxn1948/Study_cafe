@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class AdmChkUserDelete extends JPanel implements ActionListener{
 	
-	public AdmChkUserDelete() {
+	public AdmChkUserDelete(AdmMainFrame mf) {
 		// 패널 설정
 		int w = 410;
 		int h = 192;

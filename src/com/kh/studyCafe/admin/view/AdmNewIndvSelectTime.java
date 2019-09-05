@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 
-   public AdmNewIndvSelectTime() {
+   public AdmNewIndvSelectTime(AdmMainFrame mf) {
 		// 패널 설정
 		int w = 540;
 		int h = 467;
