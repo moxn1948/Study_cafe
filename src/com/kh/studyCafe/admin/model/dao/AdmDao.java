@@ -18,10 +18,9 @@ public class AdmDao {
 			userList = (ArrayList<User>) ois.readObject();
 			
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			System.out.println("user.dat에 첫번째 입력");
 		}
 		
-//		System.out.println("dao : " + userList.size());
 		return userList;
 	}
 
