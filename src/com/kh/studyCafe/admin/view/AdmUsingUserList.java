@@ -30,9 +30,9 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 
 public class AdmUsingUserList extends JPanel implements ActionListener {
+//	JTable table = null;
 	
-	
-	public AdmUsingUserList(ArrayList<AdmUserTable> utList) {
+	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList) {
 		
 		
 		//테이블 헤더 목록
@@ -93,32 +93,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		}
 		
 			
-			
-
-			
-/*			timeEdit[0] = ((utList.get(i).getInTime() / (1000*60*60)) % 24) + " : ";
-			timeEdit[0] += (((utList.get(i).getInTime() / (1000*60*60))) + "");
-
-			timeEdit[1] = ((utList.get(i).getOutTime() / (1000*60*60)) % 24) + " : ";
-			timeEdit[1] += (((utList.get(i).getOutTime() / (1000*60*60))) + "");
-
-			timeEdit[2] = ((utList.get(i).getRemainTime() / (1000*60*60))) + " : ";
-			timeEdit[2] += (((utList.get(i).getRemainTime() / (1000*60))) + "");
-			
-			if(((utList.get(i).getRemainTime() / (1000*60*60))) > 24) {
-				System.out.println("기간권");
-			}
-			for (int j = 0; j < 3; j++) {
-				System.out.println(j + " => " + (timeEdit[j]));
-				
-				
-//				System.out.println(Integer.parseInt((timeEdit[j].split(" : ")[0])));
-//				if(Integer.parseInt((timeEdit[j].split(" : ")[0])) > 24) {
-//					System.out.println("기간권");
-//				}
-					
-			}
-			*/
+		
 			
 			
 		//this.은 panel 설정
@@ -244,8 +219,9 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		
-		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime());
-        table.getColumnModel().getColumn(8).setCellEditor(new AddTime());
+		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table));
+        table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table));
+     
         
         table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove());
         table.getColumnModel().getColumn(9).setCellEditor(new SeatMove());
@@ -278,8 +254,9 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 //연장 버튼을 만들때 필요한 클래스
 class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
     JButton jb;
-
-    public AddTime() {
+    
+    
+    public AddTime(AdmMainFrame mf,JPanel op,JTable table) {
         jb = new JButton("연장");
         jb.setForeground(Color.WHITE);
 		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -289,6 +266,13 @@ class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRe
         jb.addActionListener(e -> {
         	jb.setBackground(Color.WHITE);
         	jb.setForeground(new Color(127, 118, 104));
+//        	System.out.println(table.getSelectedRow());
+        	int row = table.getSelectedRow();
+        	String tablePhone = table.getValueAt(row, 2) + "";
+        	new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf));
+        	
+        	
+        	
         });
     }
     

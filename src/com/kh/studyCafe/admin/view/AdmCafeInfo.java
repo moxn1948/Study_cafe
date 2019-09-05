@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class AdmCafeInfo extends JPanel implements ActionListener {
 
-	public AdmCafeInfo() {
+	public AdmCafeInfo(AdmMainFrame mf) {
 		
 		this.setBounds(270, 120, 391, 440);
 		this.setBackground(new Color(239, 234, 222));

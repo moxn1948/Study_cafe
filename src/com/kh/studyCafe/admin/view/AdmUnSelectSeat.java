@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class AdmUnSelectSeat extends JPanel implements ActionListener{
 //좌석을 선택해주세요 팝업1번 
 	      
-	public AdmUnSelectSeat() {
+	public AdmUnSelectSeat(AdmMainFrame mf) {
 		
 		this.setBounds(270,203,410,193);
 		this.setBackground(new Color(239,234,222));

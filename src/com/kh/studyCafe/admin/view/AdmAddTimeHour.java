@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class AdmAddTimeHour extends JPanel implements ActionListener {
 	
 	
-	public AdmAddTimeHour() {
+	public AdmAddTimeHour(AdmMainFrame mf) {
 		this.setBounds(300, 120, 370, 452);
 		this.setBackground(new Color(239,234,222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));

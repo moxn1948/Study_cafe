@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 	
-	public AdmNewGrpSelectTime() {
+	public AdmNewGrpSelectTime(AdmMainFrame mf) {
 	      // 패널 설정
 	      int w = 731;
 	      int h = 474;

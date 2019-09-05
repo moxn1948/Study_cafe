@@ -14,7 +14,7 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 	//기간권  4번???
 	//+,-위치만 수정하면됨
 	
-	public AdmAddTimeWeek() {
+	public AdmAddTimeWeek(AdmMainFrame mf) {
 
 		this.setBounds(300,120,370,452);
 		this.setBackground(new Color(239,234,222));

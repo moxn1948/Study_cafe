@@ -105,7 +105,7 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		if(e.getSource() == loginBtn) {
 			AdmManager am = new AdmManager();
 			
-			cp.changeTablePanel(mf, login, new AdmUsingUserList(am.usingUserManager()));
+			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager()));
 		}
 		
 		if(e.getSource() == loginTextField) {

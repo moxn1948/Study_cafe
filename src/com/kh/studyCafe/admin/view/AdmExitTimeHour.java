@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class AdmExitTimeHour extends JPanel implements ActionListener{
 	
-	public AdmExitTimeHour() {
+	public AdmExitTimeHour(AdmMainFrame mf) {
 		// 패널 설정
 		int w = 410;
 		int h = 250;

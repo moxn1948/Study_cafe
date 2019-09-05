@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
 public class AdmAllUserList extends JPanel implements ActionListener {
 
 
-	public AdmAllUserList() {
+	public AdmAllUserList(AdmMainFrame mf) {
 
 		//테이블 헤더 목록
 		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석관리","좌석관리","좌석관리","좌석관리" };
@@ -159,8 +159,8 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		table.getTableHeader().setResizingAllowed(false);
 		
 		//테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함
-		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime());
-		table.getColumnModel().getColumn(8).setCellEditor(new AddTime());
+		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table));
+		table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table));
 
 		table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove());
 		table.getColumnModel().getColumn(9).setCellEditor(new SeatMove());
