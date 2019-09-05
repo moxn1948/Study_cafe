@@ -55,10 +55,43 @@ public class AdmUserInfoChk {
 			
 		}
 		
-		// 정렬코드 추가
+		// 정렬코드 추가 해야함
 		
 		return utList;
 	}
+	
+	public String toPhoneInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름 찾는 서비스
+		String name = null;
+		for (int i = 0; i < u.size(); i++) {
+			if(u.get(i).getPhoneNum().equals(phoneNum)) {
+				name = u.get(i).getName();
+				break;
+			}
+			
+		}
+		
+		return name;
+	}
+	
+	public long toRemainInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름 찾는 서비스
+		long remainTime = 0L;
+		for (int i = 0; i < u.size(); i++) {
+			if(u.get(i).getPhoneNum().equals(phoneNum)) {
+				remainTime = u.get(i).getRemainTime();
+				break;
+			}
+			
+		}
+		
+		return remainTime;
+	}
+
+//	public void editRemainTime(int term, Object userLine) {
+//		System.out.println(userLine);
+//	}
+}
+
+/*
 
 public void infoWrite() {
 //	ArrayList<User> userList = new ArrayList<User> ();
@@ -82,11 +115,11 @@ public void infoWrite() {
 	User u4 = new User("콩쥐", "010-1551-2222", "pass723", "0", 0, 0, 0, User.NOSEAT, 0, 0, "bronze");
 	User u5 = new User("팥쥐1", "010-1441-2222", "pass623", "12", inTime, outTime, remainTime, User.NOSEAT, 1000, pointTime, "silver");
 	
-/*	userList.add(u);
+	userList.add(u);
 	userList.add(u1);
 	userList.add(u2);
 	userList.add(u3);
-	userList.add(u4);*/
+	userList.add(u4);
 	
 //	return userList;
 	
@@ -97,12 +130,7 @@ public void infoWrite() {
 	ad.admWrite(u3);
 	ad.admWrite(u4);
 	ad.admWrite(u5);
-}
-
-}
-
-
-
+}*/
 	/*
 	 * 
 	 * 
