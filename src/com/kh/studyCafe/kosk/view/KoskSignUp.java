@@ -1,10 +1,14 @@
 package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -137,24 +141,42 @@ public class KoskSignUp extends JPanel{
 		this.add(confirm);
 		this.add(checkbox);
 		
-		confirm.addActionListener(new ActionListener() {
-			
+		cancel.addActionListener(new ActionListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-								
+			public void actionPerformed(ActionEvent arg0) {
+				ChangePanel.changePanel(signup, new KoskLogin());
 				
 			}
-		});
-		cancel.addActionListener(new ActionListener() {
 			
+		});
+		
+		confirm.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				ArrayList number = new ArrayList();
+				number.add(nametf.getText());
+				number.add(phtf.getText());
+				number.add(pstf.getText());
+				number.add(psch.getText());
+				
+				new KoskManager(number);
+				
 				ChangePanel.changePanel(signup, new KoskLogin());
+				
 			}
+			
 		});
+	
 	}
+	
+	
+
+
 }
+
+	
 
 		
 
