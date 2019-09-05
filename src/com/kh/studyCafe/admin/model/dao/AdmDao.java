@@ -15,23 +15,28 @@ public class AdmDao {
 		ArrayList<User> userList = null;
 		
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
-			
 			userList = (ArrayList<User>) ois.readObject();
 			
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			System.out.println("user.dat에 첫번째 입력");
 		}
 		
 		return userList;
 	}
 
-	public int admWrite(ArrayList<User> userList) {
+	public int admWrite(User u) {
 		int result = 0;
-
+		
+		ArrayList<User> uTemp = admRead();
+		if(uTemp == null) {
+			uTemp = new ArrayList<User> ();
+		}
+		
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
+			uTemp.add(u);
+			oos.writeObject(uTemp);
 			
-			oos.writeObject(userList);
-			
+			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,3 +45,19 @@ public class AdmDao {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

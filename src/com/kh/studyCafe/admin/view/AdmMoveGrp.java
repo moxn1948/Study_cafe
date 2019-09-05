@@ -14,7 +14,7 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 //자리이동 팝업 2번
 //이거하나됨...	
 	
-	public AdmMoveGrp() {
+	public AdmMoveGrp(AdmMainFrame mf) {
 		
 		//패널 설정
 		this.setBounds(270,203,410,193); //오븐

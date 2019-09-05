@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class AdmUsingSeat extends JPanel implements ActionListener {
 
 	     
-	public AdmUsingSeat() {
+	public AdmUsingSeat(AdmMainFrame mf) {
 		//패널 설정
 		      
 		this.setBounds(270,203,410,193);
