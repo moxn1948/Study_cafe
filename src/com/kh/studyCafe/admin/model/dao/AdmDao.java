@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.kh.studyCafe.model.vo.User;
@@ -60,7 +61,6 @@ public class AdmDao {
 		return result;
 	}
 
-
 	
 	// 1일권 잔여시간 수정
 	public ArrayList<User> admReadLine(String name, int term){
@@ -71,6 +71,7 @@ public class AdmDao {
 			
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getName().equals(name)) {
+					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*3600000);
 					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000);
 					admWrite(userList);
 				}

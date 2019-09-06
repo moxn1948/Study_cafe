@@ -1,11 +1,11 @@
-	package com.kh.studyCafe.admin.view;
+package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,9 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
-import com.kh.studyCafe.server.Server;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 
 public class AdmAddTimeHour extends JPanel implements ActionListener {
+	
 	
 	private AdmMainFrame mf;
 	private int term = 1;
@@ -28,20 +29,20 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 	private JButton confirmBtn = null;
 	private String phoneNum;
 	private String name;
+	private JPanel op = null;
 	
-	
-	public AdmAddTimeHour(AdmMainFrame mf, String phoneNum) {
+	public AdmAddTimeHour(AdmMainFrame mf, JPanel op, String phoneNum) {
 		this.mf = mf;
+		this.op = op;
 		this.phoneNum = phoneNum;
 		name = new AdmManager().findPhoneToName(phoneNum);
-		
+
 		System.out.println(new AdmManager().findPhoneToRemain(phoneNum));
 		Date remainEdit = new Date(new AdmManager().findPhoneToRemain(phoneNum));
 		SimpleDateFormat sdf = new SimpleDateFormat("hh : mmaa");
-		String timeEdit = sdf.format(remainEdit).split("오")[0]; 
-//		System.out.println(timeEdit);
-		
-		
+		String timeEdit = sdf.format(remainEdit).split("오")[0];
+		// System.out.println(timeEdit);
+
 		this.setLayout(null);
 		this.setBounds(300, 120, 370, 452);
 		this.setBackground(new Color(239, 234, 222));
@@ -96,7 +97,6 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		showAdd.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		showAdd.setBackground(Color.WHITE);
 
-		
 		num = new JLabel("0" + term + " : 00"); // 숫자 수정
 		num.setLocation(158, 258);
 		num.setForeground(new Color(163, 152, 134));
@@ -109,7 +109,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		minusBtn.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		minusBtn.setForeground(Color.WHITE);
 		minusBtn.addActionListener(this);
-		
+
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setBounds(20, 385, 160, 50);
 		cancelBtn.setBackground(new Color(189, 177, 157));
@@ -143,41 +143,43 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
-		if(e.getSource() == plusBtn) {
-			if(term < 9 && term > 0) {
+
+		if (e.getSource() == plusBtn) {
+			if (term < 9 && term > 0) {
 				++term;
-				
-				System.out.println("a  : "  + term);
-				num.setText("0"+ term + " : 00");
-			}else if(term < 23 && term > 8){
+
+				System.out.println("a  : " + term);
+				num.setText("0" + term + " : 00");
+			} else if (term < 23 && term > 8) {
 				++term;
-				
-				System.out.println("b  : "  + term);
+
+				System.out.println("b  : " + term);
 				num.setText(term + " : 00");
 			}
 		}
-		
-		if(e.getSource() == minusBtn) {
-			if(term < 9 && term > 1) {
+
+		if (e.getSource() == minusBtn) {
+			if (term < 9 && term > 1) {
 
 				--term;
-				System.out.println("c  : "  + term);
-				num.setText("0"+ term + " : 00");
-			}else if(term < 24 && term > 8){
+				System.out.println("c  : " + term);
+				num.setText("0" + term + " : 00");
+			} else if (term < 24 && term > 8) {
 
 				--term;
-				System.out.println("d  : "  + term);
+				System.out.println("d  : " + term);
 				num.setText(term + " : 00");
 			}
-		}	
+		}
 
-		if(e.getSource() == confirmBtn) {
-	
+		if (e.getSource() == confirmBtn) {
+
+			AdmManager ad = new AdmManager();
+			ad.addRemainTime(name, term);
 			
+			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead()));
 		}
-		
+
 	}
-	
+
 }

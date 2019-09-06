@@ -162,11 +162,11 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table));
 		table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table));
 
-		table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove());
-		table.getColumnModel().getColumn(9).setCellEditor(new SeatMove());
+		table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove(mf,this,table));
+		table.getColumnModel().getColumn(9).setCellEditor(new SeatMove(mf,this,table));
 
-		table.getColumnModel().getColumn(10).setCellRenderer(new ExitSeat());
-		table.getColumnModel().getColumn(10).setCellEditor(new ExitSeat());
+		table.getColumnModel().getColumn(10).setCellRenderer(new ExitSeat(mf,this,table));
+		table.getColumnModel().getColumn(10).setCellEditor(new ExitSeat(mf,this,table));;
 
 		table.getColumnModel().getColumn(11).setCellRenderer(new EnterSeat());
 		table.getColumnModel().getColumn(11).setCellEditor(new EnterSeat());

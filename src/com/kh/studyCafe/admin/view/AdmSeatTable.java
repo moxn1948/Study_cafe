@@ -20,8 +20,11 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 	private boolean seatIndvToggle[] = new boolean[25];
 	private boolean seatGrpToggle[] = new boolean[5];
 	private boolean seatToggle;
-			
-	public AdmSeatTable(AdmMainFrame mf) {
+	private JPanel op = null;
+	
+	public AdmSeatTable(AdmMainFrame mf, JPanel op) {
+		this.op = op;
+		
 		// 패널 설정
 		int w = 404;
 		int h = 548;

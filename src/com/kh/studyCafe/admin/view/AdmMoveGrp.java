@@ -13,8 +13,10 @@ import javax.swing.JPanel;
 public class AdmMoveGrp extends JPanel implements ActionListener{
 //자리이동 팝업 2번
 //이거하나됨...	
+	private JPanel op = null;
 	
-	public AdmMoveGrp(AdmMainFrame mf) {
+	public AdmMoveGrp(AdmMainFrame mf, JPanel op) {
+		this.op = op;
 		
 		//패널 설정
 		this.setBounds(270,203,410,193); //오븐

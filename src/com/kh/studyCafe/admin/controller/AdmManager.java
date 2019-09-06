@@ -13,7 +13,6 @@ public class AdmManager {
 	public ArrayList<AdmUserTable> usingUserManager() {
 		ArrayList<User> u = ad.admRead();
 		AdmUserInfoChk userInfo = new AdmUserInfoChk(); 
-//		userInfo.usingUserInfo(u); // AdmUserInfoChk 리턴받아옴
 		
 		return userInfo.usingUserInfo(u);
 	}

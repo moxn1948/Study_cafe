@@ -17,8 +17,8 @@ public class User implements Serializable{
 	private long outTime; // 퇴실시간
 	private long remainTime; // 남은시간
 	public final static int NOSEAT = 0; // 좌석 사용 안할 때
-	public final static int INDVSEAT = 1; // 개인좌석 사용할 때
-	public final static int GRPSEAT = 2; // 그룹좌석 사용할 때
+	public final static int HOURSEAT = 1; // 1일권 사용할 때
+	public final static int WEEKSEAT = 2; // 기간권 사용할 때
 	private int seatType; // 시트타입
 	private int point; // 포인트
 	private long pointTime; // 누적 결제시간
