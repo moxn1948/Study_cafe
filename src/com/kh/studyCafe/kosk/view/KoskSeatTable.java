@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskSeatTable extends JPanel implements MouseListener{
@@ -46,6 +47,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 
 		panel.setBackground(new Color(239, 234, 222));
 		panel.setSize(360, 640);
+		panel.setLayout(null);
 		
 		Font font1 = new Font("맑은 고딕", Font.BOLD, 32);
 		JLabel label = new JLabel("좌석표");
@@ -481,11 +483,9 @@ public void mouseReleased(MouseEvent e) {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
+			 
+				ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
 			
-			
-				new KoskManager().seatManger((user.getSeatNum()));
-				ChangePanel.changePanel(mf,panel, new KoskSeatManagement(mf));
-				
 			}
 			
 			@Override
