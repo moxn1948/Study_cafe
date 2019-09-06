@@ -1,8 +1,12 @@
 package com.kh.studyCafe.kosk.view;
 
-import java.awt.Color; 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,11 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
  
 public class KoskSeatManagement extends JPanel{
 	
-//	private JPanel seatManagement;
+	private JPanel panel = new JPanel();
 	private KoskMainFrame mf;
+	private JButton[] button = new JButton[3];
 	public KoskSeatManagement(KoskMainFrame mf) {
 		this.mf = mf;
 		//======= 컬러 설정 ====	
@@ -61,14 +68,17 @@ public class KoskSeatManagement extends JPanel{
 		Image outbtnimg = new ImageIcon("img/outbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		JButton out = new JButton(new ImageIcon(outbtnimg));
 		out.setBounds(20,200,95,96);
+		button[0] = out;
 		
 		Image exbtnimg = new ImageIcon("img/exbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		JButton ex = new JButton(new ImageIcon(exbtnimg));
 		ex.setBounds(122,200,95,96);
-		 
+		button[1] = ex; 
+		
 		Image setmvimg = new ImageIcon("img/seatmvbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		JButton seatmv = new JButton(new ImageIcon(setmvimg));
 		seatmv.setBounds(225, 200, 95, 96);
+		button[2] = seatmv;
 		
 		//==================
 		
@@ -113,5 +123,31 @@ public class KoskSeatManagement extends JPanel{
 		this.add(out);
 		this.add(ex);
 		this.add(seatmv);
+		
+	
+		ex.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				for(int i = 0; i < button.length; i++) {
+					button[i].setEnabled(false);
+					button[i].setVisible(false);
+				}
+				
+				KoskTimeHourWeek kth = new KoskTimeHourWeek();
+				add(kth.KoskTimeHourWeek(),1,0);
+				repaint();
+				
+			}
+		});
+		
+		
+		
+		this.add(panel);
+		this.repaint();
+		
 	}
+	
 }
+
