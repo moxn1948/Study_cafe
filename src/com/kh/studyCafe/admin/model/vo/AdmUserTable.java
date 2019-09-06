@@ -9,12 +9,12 @@ public class AdmUserTable {
 	private long inTime; // 입실시간
 	private long outTime; // 퇴실시간
 	private long remainTime; // 남은시간
-	private String seatType; // 시트타입
+	private int seatType; // 시트타입
 
 	public AdmUserTable() {}
 
 	public AdmUserTable(String name, String phoneNum, String seatNum, long inTime, long outTime,
-			long remainTime, String seatType) {
+			long remainTime, int seatType) {
 		super();
 		this.name = name;
 		this.phoneNum = phoneNum;
@@ -73,11 +73,11 @@ public class AdmUserTable {
 		this.remainTime = remainTime;
 	}
 
-	public String getSeatType() {
+	public int getSeatType() {
 		return seatType;
 	}
 
-	public void setSeatType(String seatType) {
+	public void setSeatType(int seatType) {
 		this.seatType = seatType;
 	}
 

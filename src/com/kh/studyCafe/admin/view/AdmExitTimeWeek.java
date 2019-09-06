@@ -12,8 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class AdmExitTimeWeek extends JPanel implements ActionListener{
-	
-	public AdmExitTimeWeek(AdmMainFrame mf) {
+	private JPanel op = null;
+			
+	public AdmExitTimeWeek(AdmMainFrame mf, JPanel op) {
+		this.op = op;
+		
 		// 패널 설정
 		int w = 410;
 		int h = 274;

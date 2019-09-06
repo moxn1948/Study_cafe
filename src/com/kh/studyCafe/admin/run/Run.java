@@ -7,8 +7,7 @@ public class Run {
 	public static void main(String[] args) {
 		new AdmMainFrame();
 		
-//		new AdmUserInfo().infoWrite();
-//		new AdmUserInfo().infoRead();
+//		new AdmUserInfoChk().infoWrite();
 	}
 
 }
