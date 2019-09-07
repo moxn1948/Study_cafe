@@ -3,24 +3,30 @@ package com.kh.studyCafe.kosk.view.popup;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
-public class KoskIndividualPanel implements MouseListener{
+import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.view.KoskMainFrame;
+import com.kh.studyCafe.model.vo.User;
+
+public class KoskIndividualPanel extends JPanel implements MouseListener{
 	
-	JFrame fm = new JFrame();
 	private JButton plus;
 	private JButton	minus;
 	private JButton cancel;
-	private JButton confirm;
+	public JButton confirm;
 	private JPanel panel = new JPanel();
 	private JTextField time;
 	private JTextField Rttime;
@@ -28,25 +34,24 @@ public class KoskIndividualPanel implements MouseListener{
 	private int hour = 0;    //결제시 출력되는 시간
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
+	public boolean a = true;
+
+	private KoskMainFrame mf;
 	
-	public KoskIndividualPanel(){
-	
-	
-	fm.setBounds(30, 40, 300, 400);
-	fm.setLayout(null);
+	public JPanel KoskIndividualPanel(KoskMainFrame mf){
+	this.mf = mf;
 	
 	//===== 컬러 =====
 
 	Color wallPapers = new Color(239,234,222);
 	Color textColor = new Color(127,118,104);
 					
-	
-     
 	Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
-	Font inputtext = new Font("맑은 고딕",Font.BOLD,25);
+	Font inputtext = new Font("맑은 고딕",Font.BOLD,25); 
 	Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 		
-   
+	TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
+	panel.setBorder(oneTb);
 	
 	//===== 패널 =======
 	
@@ -138,8 +143,20 @@ public class KoskIndividualPanel implements MouseListener{
 	
 	confirm.addMouseListener(this);
 	
+	
+
+	confirm.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			mf.dispose();
+		}
+	});
+	
+	
 	//============
-	fm.add(panel);
+	
 	panel.add(logo);
 	panel.add(Rt);
 	panel.add(et);
@@ -148,15 +165,26 @@ public class KoskIndividualPanel implements MouseListener{
 	panel.add(plus);
 	panel.add(time);
 	panel.add(minus);
-	panel.add(cancel);
-	panel.add(confirm);
+//	panel.add(confirm);
 	
-	fm.setVisible(true);
-	fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	mf.add(panel);
+	
+	
+	
+	
+	panel.repaint();
+	
+	return panel;
+	
+	
 }
-
+	
+	public int hourtie = 0;
+	User user = new User();
+	KoskManager kkm = new KoskManager();
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		timeHour = 0;
 		if(e.getSource() == plus) {
 			if(hour >= 1 && hour < 9) {
 				hour++;
@@ -165,6 +193,8 @@ public class KoskIndividualPanel implements MouseListener{
 				String th = Integer.valueOf(timeHour).toString();   
 				String tm = Integer.valueOf(timeMinute).toString();  
 				ettime.setText(th + ":" + tm);
+				hourtie = timeHour;
+				
 				
 			} else if(hour >= 9 && hour < 23) {
 				hour++;
@@ -183,7 +213,7 @@ public class KoskIndividualPanel implements MouseListener{
 				timeHour -= 1;
 				String th = Integer.valueOf(timeHour).toString();   
 				String tm = Integer.valueOf(timeMinute).toString();  
-				
+				hourtie = timeHour;
 				ettime.setText(th + ":" + tm);
 			} else if(hour >= 9 && hour <= 24) {
 				hour--;
@@ -191,17 +221,16 @@ public class KoskIndividualPanel implements MouseListener{
 				timeHour -= 1;
 				String th = Integer.valueOf(timeHour).toString();   
 				String tm = Integer.valueOf(timeMinute).toString();  
+			} else if(e.getSource() == null) {
+				hour = 1;
 			}
 		}
-		
-		if(e.getSource() == cancel) {
-			fm.dispose();
-		}
-		if(e.getSource() == confirm) {
-			fm.dispose();
+		 kkm.intime(hour);
+	/*	if(e.getSource() == confirm) {
+			mf.dispose();
 			//ChangePanel.changePanel(kst.panel, new KoskPayment());
 			//confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
-		}
+		}*/
 		
 	}
 
