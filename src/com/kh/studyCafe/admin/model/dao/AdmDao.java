@@ -60,7 +60,6 @@ public class AdmDao {
 
 		return result;
 	}
-
 	
 	// 1일권 잔여시간 수정
 	public ArrayList<User> admReadLine(String name, int term){
@@ -73,7 +72,7 @@ public class AdmDao {
 				if(userList.get(i).getName().equals(name)) {
 					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*3600000);
 					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000);
-					admWrite(userList);
+					admWrite(userList); // 
 				}
 			}
 			

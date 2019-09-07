@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,6 +14,7 @@ import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 
 public class AdmAddTimeHour extends JPanel implements ActionListener {
 	
@@ -30,14 +28,17 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 	private String phoneNum;
 	private String name;
 	private JPanel op = null;
+	private ClientBack client;
 	
-	public AdmAddTimeHour(AdmMainFrame mf, JPanel op, String phoneNum) {
+	public AdmAddTimeHour(AdmMainFrame mf, JPanel op, String phoneNum, ClientBack client) {
 		this.mf = mf;
 		this.op = op;
 		this.phoneNum = phoneNum;
+		this.client = client;
+		
 		name = new AdmManager().findPhoneToName(phoneNum);
 
-		System.out.println(new AdmManager().findPhoneToRemain(phoneNum));
+//		System.out.println(new AdmManager().findPhoneToRemain(phoneNum));
 		Date remainEdit = new Date(new AdmManager().findPhoneToRemain(phoneNum));
 		SimpleDateFormat sdf = new SimpleDateFormat("hh : mmaa");
 		String timeEdit = sdf.format(remainEdit).split("오")[0];
@@ -173,11 +174,14 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == confirmBtn) {
-
+//			System.out.println("여긴가..?");
 			AdmManager ad = new AdmManager();
-			ad.addRemainTime(name, term);
 			
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead()));
+			// 본인 클라이언트 스트림으로 보냄
+			System.out.println("b");
+			client.sendUser(ad.addRemainTime(name, term));
+			
+			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 
 	}
