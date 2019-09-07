@@ -26,11 +26,15 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import com.kh.studyCafe.client.ClientBack;
+
 public class AdmAllUserList extends JPanel implements ActionListener {
 
-
-	public AdmAllUserList(AdmMainFrame mf) {
-
+	private ClientBack client;
+	
+	public AdmAllUserList(AdmMainFrame mf, ClientBack client) {
+		this.client = client;
+		
 		//테이블 헤더 목록
 		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석관리","좌석관리","좌석관리","좌석관리" };
 
@@ -159,8 +163,8 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		table.getTableHeader().setResizingAllowed(false);
 		
 		//테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함
-		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table));
-		table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table));
+		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table, client));
+		table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table, client));
 
 		table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove(mf,this,table));
 		table.getColumnModel().getColumn(9).setCellEditor(new SeatMove(mf,this,table));
@@ -189,13 +193,13 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		this.add(logoLabel);
 		this.add(allUserInfoButton);
 		this.add(scrollpane);
+		
 	}
 
-
-
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+
 
 	}
 

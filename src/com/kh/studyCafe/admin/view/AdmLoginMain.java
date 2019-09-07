@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 
 public class AdmLoginMain extends MouseAdapter implements ActionListener{ // MouseAdapter는 예시이고, 필요한 이벤트에다 ControlPanel 선언해주면 됩니다.
 	private JPanel login = new JPanel();
@@ -28,8 +29,12 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	private int resultId;
 	private int resultPw;
 	
-	public AdmLoginMain(AdmMainFrame mf) {
+	private ClientBack client;
+	
+	public AdmLoginMain(AdmMainFrame mf, ClientBack client) {
+		AdmMainFrame.watchPanel = login;
 		this.mf = mf;
+		this.client = client;
 		
 		login.setLayout(null);
 		login.setSize(978, 700);
@@ -106,7 +111,7 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		if(e.getSource() == loginBtn) {
 			AdmManager am = new AdmManager();
 			
-			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead()));
+			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
 		}
 		
 		if(e.getSource() == loginTextField) {

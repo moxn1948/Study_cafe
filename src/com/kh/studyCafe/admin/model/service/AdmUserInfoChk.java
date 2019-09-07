@@ -22,9 +22,9 @@ public class AdmUserInfoChk {
 			}
 		}
 
-		for (int i = 0; i < user.size(); i++) {
-			System.out.println(user.get(i));
-		}
+//		for (int i = 0; i < user.size(); i++) {
+//			System.out.println(user.get(i));
+//		}
 
 		String[] name = new String[user.size()];
 		String[] phoneNum = new String[user.size()];

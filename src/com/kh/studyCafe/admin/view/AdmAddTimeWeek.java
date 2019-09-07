@@ -4,21 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+import com.kh.studyCafe.client.ClientBack;
 
 public class AdmAddTimeWeek extends JPanel implements ActionListener {
 	//기간권  4번???
 	//+,-위치만 수정하면됨
+	private ClientBack client;
 	
-	public AdmAddTimeWeek(AdmMainFrame mf, JPanel op, String table) {
-
+	public AdmAddTimeWeek(AdmMainFrame mf, JPanel op, String table, ClientBack client) {
+		this.client = client;
+		
 		this.setBounds(300,120,370,452);
 		this.setBackground(new Color(239,234,222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189,177,157)));

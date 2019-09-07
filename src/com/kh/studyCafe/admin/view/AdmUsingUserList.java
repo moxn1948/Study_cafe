@@ -27,15 +27,21 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUsingUserList extends JPanel implements ActionListener {
 	private JButton allUserInfoButton = null;
 	private AdmMainFrame mf;
+	private ClientBack client;
 	
-	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u) {
+	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
+		this.client = client;
+		AdmMainFrame.watchPanel = this;
 		
 		//테이블 헤더 목록
 		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴장"};
@@ -191,7 +197,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		TableColumnModel tcmSchedule = table.getColumnModel();
 		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
 		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
-		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
 		
 		//매장정보보기 버튼 생성
@@ -244,8 +250,8 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		
-		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table));
-        table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table));
+		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table, client));
+        table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table, client));
      
         
         table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove(mf,this,table));
@@ -265,9 +271,12 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		this.add(allUserInfoButton);
 		this.add(cafeInfo);
 		this.add(scrollpane);
+		
 	}
 	
-	
+	public void watchPaint() {
+		new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client);
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -276,7 +285,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		if(e.getSource() == allUserInfoButton) {
 			ControlPanel cp = new ControlPanel();
 			
-			cp.changeTablePanel(mf, this, new AdmAllUserList(mf));
+			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, client));
 			
 		}
 		
@@ -287,7 +296,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
     private JButton jb;
     
-    public AddTime(AdmMainFrame mf,JPanel op,JTable table) {
+    public AddTime(AdmMainFrame mf,JPanel op,JTable table, ClientBack client) {
         jb = new JButton("연장");
         jb.setForeground(Color.WHITE);
 		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -304,13 +313,13 @@ class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRe
         	// 회원에 따라 연장 버튼 연결 구분
         	if(table.getValueAt(row, 7).equals("개인")) { // 개인일 때
         		if(seatTimeType.contains("일")) { // 기간권일 때
-            		new ControlPanel().addPanel(mf, op, new AdmAddTimeWeek(mf, op, tablePhone));
+            		new ControlPanel().addPanel(mf, op, new AdmAddTimeWeek(mf, op, tablePhone, client));
         		}else { // 1일권일 떄
-            		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone));
+            		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone, client));
         		}
         		
         	}else { // 그룹일 때
-        		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone));
+        		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone, client));
         	}
         	
         });
