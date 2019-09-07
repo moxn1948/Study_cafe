@@ -12,8 +12,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
-public class KoskIndividualPanel2 implements MouseListener{
+import com.kh.studyCafe.kosk.view.KoskMainFrame;
+
+public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 	
 	private JFrame fm = new JFrame();
 	private JTextField time  = new JTextField("7일");
@@ -22,14 +26,15 @@ public class KoskIndividualPanel2 implements MouseListener{
 	private JButton cancel;
 	private JButton confirm;
 	private int day = 7;
-	private JPanel panel;
+	public JPanel panel = new JPanel();
 	private JLabel Rt;
 	
-	public KoskIndividualPanel2() {
+	private KoskMainFrame mf;
+	public JPanel KoskIndividualPanel2(KoskMainFrame mf) {
+	this.mf = mf;
 	
-	
-	fm.setBounds(30, 40, 300, 400);
-	fm.setLayout(null);
+	panel.setSize(300,400);
+	panel.setLayout(null);
 	
 	//===== 컬러 =====
 
@@ -42,13 +47,16 @@ public class KoskIndividualPanel2 implements MouseListener{
 	Font inputtext = new Font("맑은 고딕",Font.BOLD,25);
 	Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 		
-
+	TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
+	
 	
 	//===== 패널 =======
+
 	panel = new JPanel();
 	panel.setSize(300,400);
 	panel.setLayout(null);
 	panel.setBackground(wallPapers);
+	panel.setBorder(oneTb);
 	
 	//===== 라벨 =========
 	JLabel logo = new JLabel("기간권");
@@ -102,6 +110,8 @@ public class KoskIndividualPanel2 implements MouseListener{
 	
 	confirm.addMouseListener(this);
 	
+	
+	
 	//============
 	fm.add(panel);
 	panel.add(logo);
@@ -109,11 +119,15 @@ public class KoskIndividualPanel2 implements MouseListener{
 	panel.add(plus);
 	panel.add(time);
 	panel.add(minus);
-	panel.add(cancel);
-	panel.add(confirm);
+	//panel.add(cancel);
+	//panel.add(confirm);
 	
-	fm.setVisible(true);
-	fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	mf.add(panel);
+	
+	panel.repaint();
+	
+	return panel;
+	
 }
 
 	@Override

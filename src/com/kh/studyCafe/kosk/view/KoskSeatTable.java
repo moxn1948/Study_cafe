@@ -6,49 +6,57 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseListener;import java.beans.PropertyChangeListener;
 
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
-import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskSeatTable extends JPanel implements MouseListener{
 	
-	private JButton[] iuser = new JButton[25]; //개인 좌석 버튼
-	private JButton[] dfuser = new JButton[2]; //
-	private JButton[] dsuser = new JButton[2];
-	private JButton[] deuser = new JButton[1];
-	private boolean[] inds = new boolean[25];
-	private boolean[] grfs = new boolean[2];
-	private boolean[] grss = new boolean[2];
-	private boolean[] gres = new boolean[1];
+	public JButton[] iuser = new JButton[25]; //개인 좌석 버튼
+	public JButton[] dfuser = new JButton[2]; //
+	public JButton[] dsuser = new JButton[2];
+	public JButton[] deuser = new JButton[1];
+	 boolean[] inds = new boolean[25];
+	 boolean[] grfs = new boolean[2];
+	 boolean[] grss = new boolean[2];
+	 boolean[] gres = new boolean[1];
 	private JPanel panel = new JPanel();
 	private KoskMainFrame  mf;
 public KoskSeatTable(KoskMainFrame mf) {
 	this.mf = mf;
-	
-	User user = new User();
-		
-	 
-		
 		int x = 5;
 		int y = 152;
 
 		String name = null;
 		
-
+		//===========   컬러 설정 ================
+		Color wallPapers = new Color(239,234,222);
+		Color textColor = new Color(127,118,104);
+		
+	
+		Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
+		Font inputtext = new Font("맑은 고딕",Font.BOLD,25);
+		Font checktext = new Font("맑은 고딕",Font.BOLD,14);
+		
+		//==============================
+		
+		
 		// ========= 패널 배경 색 설정, 패널 사이즈 설정 ============
 
 		panel.setBackground(new Color(239, 234, 222));
 		panel.setSize(360, 640);
 		panel.setLayout(null);
-		
+		 
 		Font font1 = new Font("맑은 고딕", Font.BOLD, 32);
 		JLabel label = new JLabel("좌석표");
 		label.setForeground(new Color(127, 118, 104));
@@ -178,8 +186,6 @@ public KoskSeatTable(KoskMainFrame mf) {
 				
 			}
 			
-			
-			
 			//========  해당 좌석 정보를 읽어 좌석 색 칠하고 선택 불가능 ==========
 			KoskManager kkm = new KoskManager();
 			for(int i=0; i<kkm.seat().size();i++) {
@@ -189,6 +195,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 				if(num>=0 && num<25) {
 					iuser[num].setBackground(new Color(163, 152, 134));
 					iuser[num].setForeground(Color.WHITE);
+					iuser[num].setEnabled(false);
 				} else if(num>24 && num <27) {
 					int num2 = 0;
 					if(num == 25) {
@@ -198,6 +205,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 					}
 					dfuser[num2].setBackground(new Color(163, 152, 134));
 					dfuser[num2].setForeground(Color.WHITE);
+					dfuser[num2].setEnabled(false);
 				} else if(num >26 && num <29) {
 					int num2 = 0;
 					if(num == 28) {
@@ -205,13 +213,13 @@ public KoskSeatTable(KoskMainFrame mf) {
 					}
 					dsuser[num2].setBackground(new Color(163, 152, 134));
 					dsuser[num2].setForeground(Color.WHITE);
+					dsuser[num2].setEnabled(false);
 				} else {
 					deuser[0].setBackground(new Color(163, 152, 134));
 					deuser[0].setForeground(Color.WHITE);
+					deuser[0].setEnabled(false);
 				}
 				
-				
-				//iuser[num].setEnabled(false);
 			}
 			
 			panel.add(myPage);
@@ -299,10 +307,367 @@ public KoskSeatTable(KoskMainFrame mf) {
 			// TODO Auto-generated method stub
 				
 			ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
+			
 		}
 	});
 	
 	
+	User user2 = new User();
+	Font font = new Font("맑은 고딕", Font.BOLD, 16);
+	for(int i=0; i<25; i++) {
+		iuser[i].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				int num = 0;
+				// ================= 좌석 선택시 좌석 색깔 변경 설정 =======================
+				// 개인석
+				String seatnum = null;
+				for(int a = 0; a < inds.length; a++) {
+					if(e.getSource() == iuser[a]) {
+						if(inds[a] != true) {
+							
+							((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
+							((JComponent) e.getSource()).setForeground(Color.WHITE);
+							num = a;
+							user2.setSeatNum(Integer.toString(a));
+							seatnum = user2.getSeatNum();
+							if(seatnum == null) {
+							} else {
+								for(int i = 0; i < inds.length; i++) {
+									if(i == a) {
+										inds[a] = false;
+									} else {
+										inds[i] = true;
+										for(int f = 0; f < grfs.length; f++) {
+											grfs[f] = true;
+										}
+										for(int s = 0; s < grss.length; s++) {
+											grss[s] = true;
+										}
+											gres[0] = true;
+										
+									}
+									
+								}
+								System.out.println(seatnum+"좌석");
+								KoskManager km = new KoskManager();
+								JButton pre = new JButton("선택취소");
+								pre.setFont(font);
+								pre.setBackground(new Color(189, 177, 157));
+								pre.setForeground(Color.WHITE);
+								pre.setLocation(5, 531);
+								pre.setSize(160 ,53);
+								panel.add(pre);
+								
+								JButton confirm = new JButton("Confirm");
+								confirm.setFont(font);
+								confirm.setBackground(new Color(163, 152, 134));
+								confirm.setForeground(Color.WHITE);
+								confirm.setLocation(175, 531);
+								confirm.setSize(160,53);
+								//confirm.setVisible(b);
+								
+								panel.repaint();
+								/*panel.add(pre);*/
+								panel.add(confirm);
+								
+								confirm.addActionListener(new ActionListener() {
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										kkm.seatManger(user2.getSeatNum());
+										ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
+										
+									}
+								});
+								pre.addActionListener(new ActionListener() {
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf));
+									}
+								});
+							}
+						} 
+					}
+					
+				}
+				
+			}
+		});
+	}
+	//6인실
+	for(int i=0; i<2; i++) {
+		dfuser[i].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				for(int b = 0; b < grfs.length; b++) {
+					if(e.getSource() == dfuser[b]) {
+						if(grfs[b] != true) {
+							((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
+							((JComponent) e.getSource()).setForeground(Color.WHITE);
+							
+							String seatnum = null;
+							if(b == 0) {
+								seatnum = "25";
+							} else {
+								seatnum = "26";
+							} 
+							user2.setSeatNum((seatnum));
+							if(seatnum == null) {
+							} else {
+								for(int i = 0; i < inds.length; i++) {
+									if(i == b) {
+										grfs[b] = false;
+									} else {
+										
+										grfs[i] = true;
+										for( i = 0; i < inds.length; i++) {
+											inds[i] = true;
+										}
+										for(int s = 0; s < grss.length; s++) {
+											grss[s] = true;
+											gres[0] = true;
+										}
+									}
+								}
+								System.out.println(seatnum+"좌석");
+								KoskManager km = new KoskManager();
+								JButton pre = new JButton("선택취소");
+								pre.setFont(font);
+								pre.setBackground(new Color(189, 177, 157));
+								pre.setForeground(Color.WHITE);
+								pre.setLocation(5, 531);
+								pre.setSize(160 ,53);
+								panel.add(pre);
+
+								JButton confirm = new JButton("Confirm");
+								confirm.setFont(font);
+								confirm.setBackground(new Color(163, 152, 134));
+								confirm.setForeground(Color.WHITE);
+								confirm.setLocation(175, 531);
+								confirm.setSize(160,53);
+								//confirm.setVisible(b);
+
+								panel.repaint();
+								/*panel.add(pre);*/
+								panel.add(confirm);
+
+
+								/*confirm.addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										kkm.seatManger(user2.getSeatNum());
+										ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+									}
+								});*/
+								pre.addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf));
+									}
+								});
+							}
+						}
+
+					}
+				}
+			}
+		});
+	}
+	//6인석
+	for(int i=0; i<2; i++) {
+		dsuser[i].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				for(int c = 0; c < grss.length; c++) {
+					if(e.getSource() == dsuser[c]) {
+						if(grss[c] != true) {
+							((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
+							((JComponent) e.getSource()).setForeground(Color.WHITE);
+							String seatnum;
+							if(c == 0) {
+								seatnum = "27";
+							} else {
+								seatnum = "28";
+							} if(seatnum == null) {
+							} else {
+								for(int i = 0; i < inds.length; i++) {
+									if(i == c) {
+										grss[c] = false;
+									} else {
+										grss[i] = true;
+										for( i = 0; i < inds.length; i++) {
+											inds[i] = true;
+										}
+										for(int f = 0; f < grfs.length; f++) {
+											grfs[f] = true;
+											gres[0] = true;
+										}
+									}
+								}
+								user2.setSeatNum((seatnum));
+								System.out.println(seatnum+"좌석");
+								KoskManager km = new KoskManager();
+								JButton pre = new JButton("선택취소");
+								pre.setFont(font);
+								pre.setBackground(new Color(189, 177, 157));
+								pre.setForeground(Color.WHITE);
+								pre.setLocation(5, 531);
+								pre.setSize(160 ,53);
+								panel.add(pre);
+
+								JButton confirm = new JButton("Confirm");
+								confirm.setFont(font);
+								confirm.setBackground(new Color(163, 152, 134));
+								confirm.setForeground(Color.WHITE);
+								confirm.setLocation(175, 531);
+								confirm.setSize(160,53);
+								//confirm.setVisible(b);
+
+								panel.repaint();
+								/*panel.add(pre);*/
+								panel.add(confirm);
+
+
+								confirm.addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										kkm.seatManger(user2.getSeatNum());
+										ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
+									}
+								});
+								pre.addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf));
+									}
+								});
+								
+							}
+						
+						}
+					}
+				}
+			}
+		});
+	}
+	deuser[0].addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			for(int d = 0; d < gres.length; d++) {
+				if(e.getSource() == deuser[d]) { 
+					if(gres[d] != true) {
+						((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
+						((JComponent) e.getSource()).setForeground(Color.WHITE);
+						String seatnum = null;
+						seatnum = "29";
+						if(seatnum == null) {
+						} else {
+							gres[0] = true;
+							for(int i = 0; i < inds.length; i++) {
+								inds[i] = true;
+							}
+							for(int f = 0; f < grfs.length; f++) {
+								grfs[f] = true;
+							}
+							for(int s = 0; s < grss.length; s++) {
+								grss[s] = true;
+							}
+						}
+						user2.setSeatNum((seatnum));
+						System.out.println(seatnum+"좌석");
+						KoskManager km = new KoskManager();
+						JButton pre = new JButton("선택취소");
+						pre.setFont(font);
+						pre.setBackground(new Color(189, 177, 157));
+						pre.setForeground(Color.WHITE);
+						pre.setLocation(5, 531);
+						pre.setSize(160 ,53);
+						panel.add(pre);
+
+						JButton confirm = new JButton("Confirm");
+						confirm.setFont(font);
+						confirm.setBackground(new Color(163, 152, 134));
+						confirm.setForeground(Color.WHITE);
+						confirm.setLocation(175, 531);
+						confirm.setSize(160,53);
+						//confirm.setVisible(b);
+
+						panel.repaint();
+						/*panel.add(pre);*/
+						panel.add(confirm);
+						
+						//==== border 태두리 설정 =====================
+						
+						TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
+						
+						//====================================
+						// ============= group패널 ===============
+						JPanel group = new JPanel();
+						group.setBounds(30, 40, 300, 400);
+						group.setLayout(null);
+						group.setBackground(wallPapers);
+						KoskGroupPanel kkg = new KoskGroupPanel();
+						group.add(kkg);
+						group.setBorder(oneTb);
+						confirm.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								kkm.seatManger(user2.getSeatNum());
+								group.add(new KoskGroupPanel());
+								
+								for(int i=0; i<iuser.length; i++) {
+									iuser[i].setEnabled(false);
+									//iuser[i].setVisible(false);
+								}
+								for(int i=0; i<deuser.length; i++) {
+									deuser[i].setEnabled(false);
+								}
+								for(int i=0; i<dfuser.length; i++) {
+									dfuser[i].setEnabled(false);
+									deuser[0].setEnabled(false);
+								}
+							
+								panel.add(group,1);
+								panel.repaint();
+							}
+							
+						});
+						pre.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf));
+							}
+						});
+
+					}
+				}
+			}
+		}
+	});
 	
 
 	
@@ -335,24 +700,24 @@ public void mousePressed(MouseEvent e) {
 @Override
 public void mouseReleased(MouseEvent e) {
 	
-	
-	User user = new User();
-	Font font = new Font("맑은 고딕", Font.BOLD, 16);
-	int num = 0;
+	/*int num = 0;
 	// ================= 좌석 선택시 좌석 색깔 변경 설정 =======================
+	
 	for(int a = 0; a < inds.length; a++) {
 		if(e.getSource() == iuser[a]) {
 			if(inds[a] != true) {
+				
 				((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 				((JComponent) e.getSource()).setForeground(Color.WHITE);
 				num = a;
+				
 				user.setSeatNum(Integer.toString(a));
 				System.out.println(user.getSeatNum()+"번째 좌석");
 			} 
 		}
-	}
+	}*/
  // ======  4인실  ======
-	for(int b = 0; b < grfs.length; b++) {
+	/*for(int b = 0; b < grfs.length; b++) {
 		if(e.getSource() == dfuser[b]) {
 			if(grfs[b] != true) {
 				((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
@@ -370,10 +735,10 @@ public void mouseReleased(MouseEvent e) {
 				}
 
 			}
-		}
+		}*/
 	
 	//  ====  6인실 ====== 
-	for(int c = 0; c < grss.length; c++) {
+	/*for(int c = 0; c < grss.length; c++) {
 		if(e.getSource() == dsuser[c]) {
 			if(grss[c] != true) {
 				((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
@@ -404,11 +769,11 @@ public void mouseReleased(MouseEvent e) {
 			}
 			
 			}
-		}
+		}*/
 	
 	this.repaint();
 	
-	for(int i = 0; i < inds.length; i++) {
+	/*for(int i = 0; i < inds.length; i++) {
 		inds[i] = true;
 	}
 	for(int f = 0; f < grfs.length; f++) {
@@ -417,36 +782,39 @@ public void mouseReleased(MouseEvent e) {
 	for(int s = 0; s < grss.length; s++) {
 		grss[s] = true;
 	}
-		gres[0] = true;
+		gres[0] = true;*/
 		
 		//============== 좌석 선택시 나타나는 선택취소 버튼 설정 ==================== 
-		
+		/*KoskManager km = new KoskManager();
 		JButton pre = new JButton("선택취소");
 		pre.setFont(font);
 		pre.setBackground(new Color(189, 177, 157));
 		pre.setForeground(Color.WHITE);
 		pre.setLocation(5, 531);
-		pre.setSize(160 ,53);
+		pre.setSize(160 ,53);*/
+		//pre.setVisible(b);
 		
 		
 		
 
 		//==================== 좌석 선택시 나타나는 confirm버튼 설정=========================
-		JButton confirm = new JButton("Confirm");
+		
+		
+	/*	JButton confirm = new JButton("Confirm");
 		confirm.setFont(font);
 		confirm.setBackground(new Color(163, 152, 134));
 		confirm.setForeground(Color.WHITE);
 		confirm.setLocation(175, 531);
 		confirm.setSize(160,53);
+		confirm.setVisible(b);
 		
 		panel.repaint();
-	
 		panel.add(pre);
-		panel.add(confirm);
+		panel.add(confirm);*/
 		
 		
 		//================= 선택취소 버튼 누를시 이벤트 =======================
-		pre.addMouseListener(new MouseListener() {
+	/*	pre.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -475,16 +843,16 @@ public void mouseReleased(MouseEvent e) {
 			public void mouseClicked(MouseEvent me) {
 		
 			}
-		});	
+		});	*/
 
 		//================ 확인 버튼 누를시 이벤트 =================
-		confirm.addMouseListener(new MouseListener() {
+		/*confirm.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-			 
-				ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
+				
+				
 			
 			}
 			
@@ -512,11 +880,7 @@ public void mouseReleased(MouseEvent e) {
 				
 			}
 			
-		});
+		});*/
 
 		}
 	}	
-
-		
-	
-

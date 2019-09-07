@@ -3,6 +3,8 @@ package com.kh.studyCafe.kosk.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,9 +14,11 @@ import javax.swing.SwingUtilities;
 
 public class KoskPayment extends JPanel{
 
-	private KoskMainFrame mf;
-	public KoskPayment(KoskMainFrame mf) {
+	public KoskMainFrame mf;
+	public JPanel panel = new JPanel();
+	public  KoskPayment(KoskMainFrame mf) {
 		this.mf = mf;
+		
 		//======= 컬러 설정 ====	
 		
 		Color wallPapers = new Color(239,234,222);
@@ -23,9 +27,9 @@ public class KoskPayment extends JPanel{
 		//=================
 		
 		//================ Frame 설정 ======================
-			this.setSize(360,640);
-			this.setLayout(null);
-			this.setBackground(wallPapers);
+			panel.setSize(360,640);
+			panel.setLayout(null);
+			panel.setBackground(wallPapers);
 		//================================================
 			
 		//============== font 설정 =========
@@ -33,6 +37,9 @@ public class KoskPayment extends JPanel{
 			Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
 			Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
 			Font f1 = new Font("Noto Sans KR",Font.BOLD,25);
+			Color paper = new Color(163, 152, 134);
+			Color paper1 = new Color(255,255,255);
+			Font font = new Font("맑은 고딕",Font.BOLD,15);	 	
 					
 		//============================
 			
@@ -56,12 +63,16 @@ public class KoskPayment extends JPanel{
 			mypage.setBounds(259, 1, 80, 30);
 			mypage.setBorderPainted(false);
 			
-			Image outbtnimg = new ImageIcon("img/outbtnimg.png").getImage().getScaledInstance(95, 96, 0);
-			JButton money = new JButton(new ImageIcon(outbtnimg));
+			JButton money = new JButton("현금");
+			money.setFont(font);
+			money.setBackground(paper);
+			money.setForeground(paper1);
 			money.setBounds(60,250,95,96);
 			
-			Image exbtnimg = new ImageIcon("img/exbtnimg.png").getImage().getScaledInstance(95, 96, 0);
-			JButton card = new JButton(new ImageIcon(exbtnimg));
+			JButton card = new JButton("카드");
+			card.setFont(font);
+			card.setBackground(paper);
+			card.setForeground(paper1);
 			card.setBounds(190,250,95,96);
 			
 			Image backimg = new ImageIcon("img/backbtnimg.png").getImage().getScaledInstance(100, 40, 0);
@@ -85,14 +96,26 @@ public class KoskPayment extends JPanel{
 			
 			//============
 			   
-			   this.add(ib);
-			   this.add(logout);
-			   this.add(mypage);
-			   this.add(paytext);
-			   this.add(seat2);
-			   this.add(card);
-			   this.add(money);
-			   this.add(back);
+			   back.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
+				}
+			});
+			   
+			   panel.add(ib);
+			   panel.add(logout);
+			   panel.add(mypage);
+			   panel.add(paytext);
+			   panel.add(seat2);
+			   panel.add(card);
+			   panel.add(money);
+			   panel.add(back);
+			   panel.repaint();
+			 
+			   mf.add(panel,1);
 		
 	}
 }

@@ -105,4 +105,52 @@ public class KoskManager {
 		
 		return a;
 	}
+	public int a;
+	public void intime(int time) {
+		BufferedWriter bw = null;
+		BufferedReader br = null;
+			
+					try {
+						br = new BufferedReader(new FileReader("time.txt"));
+						
+						bw = new BufferedWriter(new FileWriter("time.txt")); 
+						//bw.write(seatnum+"\n");
+						String str = null;
+						
+							bw.write(time);
+							bw.flush();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		
+		System.out.println(time+"시 선택시간 Manager로 이동완료");	
+	}
+	
+	public int gettime() {
+		BufferedReader br = null;
+			
+		try {
+			br = new BufferedReader(new FileReader("time.txt"));
+			
+			a = br.read();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		return a;
+	}
 	}

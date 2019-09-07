@@ -14,8 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import com.kh.studyCafe.kosk.view.KoskMainFrame;
 
-public class KoskGroupPanel implements MouseListener{
+
+public class KoskGroupPanel extends JPanel implements MouseListener{
 	
 	private JFrame fm = new JFrame();
 	private JTextField Rttime;
@@ -32,13 +34,12 @@ public class KoskGroupPanel implements MouseListener{
 	private int hour;    //결제시 출력되는 시간
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
-		
-	public KoskGroupPanel() {
-				
-		fm.setBounds(30, 40, 300, 400);
-		fm.setLayout(null);
-		
-		
+	
+	private KoskMainFrame mf;
+	
+	public JPanel KoskGroupPanel(KoskMainFrame mf) {
+		this.mf = mf;
+		JPanel panel = new JPanel();
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 		
@@ -47,9 +48,7 @@ public class KoskGroupPanel implements MouseListener{
 		Font inputtext = new Font("맑은 고딕",Font.BOLD,25);
 		Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 			
-		
-		JPanel panel = new JPanel();
-		panel.setSize(300,400);
+		panel.setBounds(30, 40, 300, 400);
 		panel.setLayout(null);
 		panel.setBackground(wallPapers);
 		
@@ -157,7 +156,7 @@ public class KoskGroupPanel implements MouseListener{
 		confirm.addMouseListener(this);
 				
 	
-		fm.add(panel);
+		
 		panel.add(logo);
 		panel.add(Rt);
 		panel.add(et);
@@ -172,8 +171,8 @@ public class KoskGroupPanel implements MouseListener{
 		panel.add(cancel);
 		panel.add(confirm);
 		
-		fm.setVisible(true);
-		fm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		return panel;
 	}
 
 	@Override

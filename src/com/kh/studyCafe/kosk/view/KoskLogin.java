@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
  
  
-public class KoskLogin extends JPanel{
+public class  KoskLogin extends JPanel{
 	private JPanel Login = new JPanel();
 	private KoskMainFrame mf;
 	public KoskLogin(KoskMainFrame mf) {
@@ -102,7 +102,7 @@ public class KoskLogin extends JPanel{
 		Login.add(findPwd);
 		Login.add(signUp);
 		
-		mf.add(Login);
+		mf.add(Login,0);
 		loginButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -137,6 +137,5 @@ public class KoskLogin extends JPanel{
 		
 	}
 	
-
 	
 }
