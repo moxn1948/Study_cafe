@@ -2,6 +2,7 @@ package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
 
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -20,13 +21,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
 import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
-	private JPanel signup;
+	
+	private JPanel panel = new JPanel();
+	private KoskMainFrame mf;
+	private JButton[] button = new JButton[2];
 	public KoskSignUp(KoskMainFrame mf) {
-			
-			signup = this;
+			this.mf = mf;
+	
 		
 
 		//===== 컬러 설정 =====
@@ -93,16 +98,16 @@ public class KoskSignUp extends JPanel{
 	   psswdch.setForeground(textColor);
 	   psswdch2.setForeground(textColor);
 	   
-	   JTextField nametf = new JTextField("내용을 입력해주세요");
+	   JTextField nametf = new JTextField("");
 	   nametf.setBounds(120,165,200,40);
 
-	   JTextField phtf = new JTextField("내용을 입력해주세요");
+	   JTextField phtf = new JTextField("");
 	   phtf.setBounds(120,235,200,40);
 	   
-	   JTextField pstf = new JTextField("내용을 입력해주세요");
+	   JTextField pstf = new JTextField("");
 	   pstf.setBounds(120,305,200,40);
 	   
-	   JTextField psch = new JTextField("내용을 입력해주세요");
+	   JTextField psch = new JTextField("");
 	   psch.setBounds(120,375,200,40);
 	   //===================================
 	   
@@ -111,8 +116,11 @@ public class KoskSignUp extends JPanel{
 	   Image confirmbtn = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(140, 50, 0);
 	   	JButton cancel = new JButton(new ImageIcon(cancelbtn));
 	   	cancel.setBounds(20,500,140,50);
+		button[0] = cancel;
 	   	JButton confirm = new JButton(new ImageIcon(confirmbtn));
 	   	confirm.setBounds(180,500,140,50);
+	   	button[1] = confirm;
+	   	
 	   
 	   //=====================================
 	   	
@@ -141,15 +149,30 @@ public class KoskSignUp extends JPanel{
 		this.add(confirm);
 		this.add(checkbox);
 		
-		cancel.addActionListener(new ActionListener() {
+		cancel.addActionListener(new ActionListener() { 
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ChangePanel.changePanel(mf,signup, new KoskLogin(mf));
+			public void actionPerformed(ActionEvent e) {
+				for(int i =0; i<button.length; i++) {
+					button[i].setEnabled(false);
+					button[i].setVisible(false);
+					
+				}
 				
+				
+				
+				KoskSignUpCancle ksc = new KoskSignUpCancle();
+				repaint();
 			}
-			
+
 		});
+		this.add(panel);
+		this.repaint();
+		
+		
+		
+		
+		
 		
 		confirm.addActionListener(new ActionListener() {
 
@@ -163,11 +186,12 @@ public class KoskSignUp extends JPanel{
 				
 				new KoskManager(number);
 				
-				ChangePanel.changePanel(mf, signup, new KoskLogin(mf));
+				//ChangePanel.changePanel(mf, signup, new KoskLogin(mf));
 				
 			}
 			
 		});
+
 	
 	}
 	
