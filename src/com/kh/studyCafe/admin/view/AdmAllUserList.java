@@ -27,6 +27,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
@@ -38,7 +40,8 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 	private JScrollPane scrollpane;
 	// private ArrayList<AdmUserTable> utList;
 	// private ArrayList<User> u;
-
+	private JButton allUserInfoButton;
+	
 	public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
 		this.client = client;
@@ -124,9 +127,6 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 			data[i][1] = utList.get(i).getName();
 			data[i][2] = utList.get(i).getPhoneNum();
 			data[i][3] = utList.get(i).getSeatNum();
-//			data[i][8] = "연장";
-//			data[i][9] = "이동";
-//			data[i][10] = "퇴실";
 
 		}
 
@@ -134,18 +134,21 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		// 스터디카페에 없는 회원
 		for (int i = 0; i < allUserList.size(); i++) {
 
-			if(!allUserList.get(i).getSeatNum().equals("0")) {
-				data[i+utList.size()][3] = allUserList.get(i).getSeatNum();
-			}else {
-				data[i+utList.size()][3] = "-";
-			}
-			
 			data[i+utList.size()][0] = i+utList.size() + 1 + "";
 			data[i+utList.size()][1] = allUserList.get(i).getName();
 			data[i+utList.size()][2] = allUserList.get(i).getPhoneNum();
-//			data[i+utList.size()][8] = "연장";
-//			data[i+utList.size()][9] = "이동";
-//			data[i+utList.size()][10] = "퇴실";
+			data[i+utList.size()][4] = "-";
+			data[i+utList.size()][5] = "-";
+			data[i+utList.size()][6] = "-";
+			
+			if(!allUserList.get(i).getSeatNum().equals("0")) { // 기간권 이용 중일 때
+				data[i+utList.size()][3] = allUserList.get(i).getSeatNum();
+				data[i+utList.size()][7] = "개인";
+			}else { // 기간권 이용 중이지 않을 때
+				data[i+utList.size()][3] = "-";
+				data[i+utList.size()][7] = "-";
+			}
+			
 		}
 			
 		// 테이블 내용 뿌리기 End
@@ -158,9 +161,17 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 			public boolean isCellEditable(int row, int column) {
 				if (column >= 8) {
-					return true;
+					if(row > utList.size()-1 && column != columnNames.length -1) {
+						return false;
+					}else if(row < utList.size()  && column == columnNames.length -1){
+						return false;
+					}else{
+						return true;
+					}
+					
+				}else {
+					return false;
 				}
-				return false;
 			}
 		};
 
@@ -181,9 +192,11 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 					return component;
 				} else {
 					JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
-					component.setBackground(Color.WHITE);
 					if (column == columnNames.length - 1) {
 						component.setBackground(new Color(127, 118, 104));
+					}else {
+						component.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+						component.setBackground(Color.WHITE);
 					}
 					return component;
 				}
@@ -221,8 +234,8 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		JScrollPane scrollpane = new JScrollPane(table);
 
 		// 전체 테이블 크기설정
-		scrollpane.setPreferredSize(new Dimension(920, 504));
-		// 테이블 모양 설정rgb(239, 234, 222)
+//		scrollpane.setPreferredSize(new Dimension(920, 504));
+		// 테이블 모양 설정
 		scrollpane.setBounds(21, 118, 920, 504);
 		scrollpane.getViewport().setBackground(Color.WHITE);
 		scrollpane.setBackground(Color.WHITE);
@@ -249,31 +262,32 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
 
-		// 전체 회원보기 버튼생성
-		JButton allUserInfoButton = new JButton("이용 중인 회원 보기");
+		// 이용중인 회원보기 버튼생성
+		allUserInfoButton = new JButton("이용 중인 회원 보기");
 		allUserInfoButton.setBounds(780, 70, 160, 42);
 		allUserInfoButton.setBackground(new Color(189, 177, 157));
 		allUserInfoButton.setForeground(Color.WHITE);
 		allUserInfoButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		allUserInfoButton.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+		allUserInfoButton.addActionListener(this);
 
 		// 테이블의 크기를 조절하지 못하도록 함
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 
-		// 테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함
+		// 테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함      
 		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
-		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
+	      table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
 
-		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client,scrollpane, utList));
+	      table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
+	      table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client,scrollpane, utList));
 
-		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane));
-		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane));
-		;
+	      table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
+	      table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
+	      
 
-		table.getColumnModel().getColumn(11).setCellRenderer(new AdmTableEnterSeat(scrollpane));
-		table.getColumnModel().getColumn(11).setCellEditor(new AdmTableEnterSeat(scrollpane));
+	      table.getColumnModel().getColumn(11).setCellRenderer(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
+	         table.getColumnModel().getColumn(11).setCellEditor(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
 
 		// 회원검색용 텍스트 필드 생성
 		JTextField searchForm = new JTextField();
@@ -296,7 +310,15 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
+		
+		// 이용중인 회원 버튼 클릭 시 패널 변경
+		if (e.getSource() == allUserInfoButton) {
+			ControlPanel cp = new ControlPanel();
+
+			cp.changeTablePanel(mf, this,  new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+
+		}
 
 	}
 
