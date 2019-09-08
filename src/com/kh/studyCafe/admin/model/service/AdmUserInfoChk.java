@@ -13,7 +13,7 @@ public class AdmUserInfoChk {
 
 	public ArrayList<AdmUserTable> usingUserInfo(ArrayList<User> u) {
 
-		// 데이터 가공
+		// 이용중인 회원 데이터 가공
 		ArrayList<User> user = new ArrayList<User>();
 
 		for (int i = 0; i < u.size(); i++) {
@@ -59,6 +59,49 @@ public class AdmUserInfoChk {
 		return utList;
 	}
 
+	// 전체 회원 리스트에 맞게 데이터 가공
+	public ArrayList<AdmUserTable> AllUserInfo(ArrayList<User> u) {
+
+	
+		// 데이터 가공
+		ArrayList<User> user = new ArrayList<User>();
+		for (int i = 0; i < u.size(); i++) {
+			if (u.get(i).getInTime() == 0) {
+				user.add(u.get(i));
+			}
+		}
+		
+		String[] name = new String[user.size()];
+		String[] phoneNum = new String[user.size()];
+		String[] seatNum = new String[user.size()];
+		long[] inTime = new long[user.size()];
+		long[] outTime = new long[user.size()];
+		long[] remainTime = new long[user.size()];
+		int[] seatType = new int[user.size()];
+
+		ArrayList<AdmUserTable> utList = new ArrayList<AdmUserTable>();
+
+		for (int i = 0; i < user.size(); i++) {
+			name[i] = user.get(i).getName();
+			phoneNum[i] = user.get(i).getPhoneNum();
+			seatNum[i] = user.get(i).getSeatNum();
+			inTime[i] = user.get(i).getInTime();
+			outTime[i] = user.get(i).getOutTime();
+			remainTime[i] = user.get(i).getRemainTime();
+			seatType[i] = user.get(i).getSeatType();
+
+			AdmUserTable ut = new AdmUserTable(name[i], phoneNum[i], seatNum[i], inTime[i], outTime[i], remainTime[i],
+					seatType[i]);
+
+			utList.add(ut);
+
+		}
+
+		// 이름순 정렬
+		utList.sort(new AscendingName());
+		return utList;
+	}
+	
 	/*
 	 * public String toPhoneInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름
 	 * 찾는 서비스 String name = null; for (int i = 0; i < u.size(); i++) { if

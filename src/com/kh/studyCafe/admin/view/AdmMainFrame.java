@@ -32,7 +32,7 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		this.setResizable(false);
 		try {
 			ipName = InetAddress.getLocalHost().getHostAddress();
 			client.setGui(this);
