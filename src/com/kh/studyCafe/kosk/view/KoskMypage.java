@@ -15,10 +15,11 @@ import javax.swing.SwingUtilities;
   
 public class KoskMypage extends JPanel{
 		private JPanel panel = new JPanel();
+		private JPanel panel2;
 		private KoskMainFrame mf;
-	public KoskMypage(KoskMainFrame mf) {
+	public KoskMypage(KoskMainFrame mf, JPanel panel2) {
 		this.mf = mf;
-		
+		this.panel2 = panel2;
 		panel.setSize(360,640);
 		//===== 색상 설정 =====
 		
@@ -169,7 +170,7 @@ public class KoskMypage extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
+			ChangePanel.changePanel(mf,panel, panel2);
 			}
 		});
 		
