@@ -17,12 +17,12 @@ public class AdmManager {
 		return userInfo.usingUserInfo(u);
 	}
 	
-	public String findPhoneToName(String phoneNum) {
-		ArrayList<User> u = ad.admRead();
-		AdmUserInfoChk userInfo = new AdmUserInfoChk(); 
-		
-		return userInfo.toPhoneInfo(phoneNum, u);
-	}
+	/*
+	 * public String findPhoneToName(String phoneNum) { ArrayList<User> u =
+	 * ad.admRead(); AdmUserInfoChk userInfo = new AdmUserInfoChk();
+	 * 
+	 * return userInfo.toPhoneInfo(phoneNum, u); }
+	 */
 	
 	public long findPhoneToRemain(String phoneNum) {
 		ArrayList<User> u = ad.admRead();
@@ -31,7 +31,11 @@ public class AdmManager {
 		return userInfo.toRemainInfo(phoneNum, u);
 	}
 	
-	public ArrayList<User> addRemainTime(String name, int term) {
-		return ad.admReadLine(name, term);
+	public ArrayList<User> addRemainTime(String phoneNum, int term) {
+		return ad.admReadLine(phoneNum, term);
+	}
+	
+	public ArrayList<User> moveSeatNum(String phoneNum, String seatNum) {
+		return ad.admLineSeat(phoneNum, seatNum);
 	}
 }

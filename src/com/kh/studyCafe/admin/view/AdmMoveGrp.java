@@ -10,13 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
+
 public class AdmMoveGrp extends JPanel implements ActionListener{
 //자리이동 팝업 2번
 //이거하나됨...	
 	private JPanel op = null;
+	private AdmMainFrame mf;
+	private ClientBack client;
 	
-	public AdmMoveGrp(AdmMainFrame mf, JPanel op) {
+	public AdmMoveGrp(AdmMainFrame mf, JPanel op, ClientBack client) {
+		this.mf = mf;
 		this.op = op;
+		this.client = client;
 		
 		//패널 설정
 		this.setBounds(270,203,410,193); //오븐
@@ -56,6 +64,7 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		closeBtn.setForeground(Color.WHITE);
 		closeBtn.setBorderPainted(false);
 		
+		closeBtn.addActionListener(this);
 		
 		//패널에 올리기
 		this.add(title);
@@ -70,8 +79,8 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+
 	}
 	
 	

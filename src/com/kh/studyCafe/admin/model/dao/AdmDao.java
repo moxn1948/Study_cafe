@@ -62,17 +62,39 @@ public class AdmDao {
 	}
 	
 	// 1일권 잔여시간 수정
-	public ArrayList<User> admReadLine(String name, int term){
+	public ArrayList<User> admReadLine(String phoneNum, int term){
 		ArrayList<User> userList = null;
 		
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 			
 			for (int i = 0; i < userList.size(); i++) {
-				if(userList.get(i).getName().equals(name)) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*3600000);
 					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000);
 					admWrite(userList); // 
+				}
+			}
+			
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+		
+		return userList;
+	}
+	// 좌석번호 수정
+	public ArrayList<User> admLineSeat(String phoneNum, String seatNum){
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+			
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setSeatNum(seatNum);
+					System.out.println(userList);
+					admWrite(userList); // 
+					System.out.println(userList + "2");
 				}
 			}
 			

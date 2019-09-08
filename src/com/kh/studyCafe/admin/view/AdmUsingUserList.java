@@ -37,10 +37,14 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 	private JButton allUserInfoButton = null;
 	private AdmMainFrame mf;
 	private ClientBack client;
+	private ArrayList<AdmUserTable> utList;
+	private ArrayList<User> u;
 	
 	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
 		this.client = client;
+		this.utList = utList;
+		this.u = u;
 		AdmMainFrame.watchPanel = this;
 		
 		//테이블 헤더 목록
@@ -217,48 +221,48 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		allUserInfoButton.setBorder(BorderFactory.createLineBorder(new Color(189,177,157)));
 		allUserInfoButton.addActionListener(this);
 		
-		//사용중인 단체석보는 라벨생성
-		JLabel usingSeatGrp = new JLabel("단체석    / 5");
-		usingSeatGrp.setLocation(23, 83);
-		usingSeatGrp.setForeground(new Color(127, 118, 104));
-		usingSeatGrp.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		usingSeatGrp.setSize(usingSeatGrp.getPreferredSize());
-		
-		//사용중인 개인석보는 라벨 생성
-		JLabel usingSeat = new JLabel("개인석    / 25");
-		usingSeat.setLocation(23, 98);
-		usingSeat.setForeground(new Color(127, 118, 104));
-		usingSeat.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		usingSeat.setSize(usingSeat.getPreferredSize());
-		
-		//사용중인 단체석 표시할 라벨(수정해야함)
-		JLabel usingInfoGrp = new JLabel(grpCount + "");
-		usingInfoGrp.setLocation(63, 83);
-		usingInfoGrp.setForeground(new Color(127, 118, 104));
-		usingInfoGrp.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		usingInfoGrp.setSize(usingInfoGrp.getPreferredSize());
-		
-		//사용중인 개인석 표시할 라벨(수정해야함)
-		JLabel usingInfo = new JLabel(indvCount + "");
-		usingInfo.setLocation(63, 98);
-		usingInfo.setForeground(new Color(127, 118, 104));
-		usingInfo.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		usingInfo.setSize(usingInfo.getPreferredSize());
+		   //사용중인 개인석보는 라벨 생성
+	      JLabel usingSeat = new JLabel("개인석    / 25");
+	      usingSeat.setLocation(23, 78);
+	      usingSeat.setForeground(new Color(127, 118, 104));
+	      usingSeat.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+	      usingSeat.setSize(usingSeat.getPreferredSize());
+	      
+	      //사용중인 단체석보는 라벨생성
+	      JLabel usingSeatGrp = new JLabel("단체석    / 5");
+	      usingSeatGrp.setLocation(23, 95);
+	      usingSeatGrp.setForeground(new Color(127, 118, 104));
+	      usingSeatGrp.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+	      usingSeatGrp.setSize(usingSeatGrp.getPreferredSize());
+
+	      //사용중인 개인석 표시할 라벨(수정해야함)
+	      JLabel usingInfo = new JLabel(indvCount + "");
+	      usingInfo.setLocation(67, 78);
+	      usingInfo.setForeground(new Color(127, 118, 104));
+	      usingInfo.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+	      usingInfo.setSize(usingInfo.getPreferredSize());
+	      
+	      //사용중인 단체석 표시할 라벨(수정해야함)
+	      JLabel usingInfoGrp = new JLabel(grpCount + "");
+	      usingInfoGrp.setLocation(67, 95);
+	      usingInfoGrp.setForeground(new Color(127, 118, 104));
+	      usingInfoGrp.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+	      usingInfoGrp.setSize(usingInfoGrp.getPreferredSize());
 		
 		//테이블 내용 수정못하도록 바꿈
 		//table.setEnabled(false);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);
-		
-		table.getColumnModel().getColumn(8).setCellRenderer(new AddTime(mf,this,table, client));
-        table.getColumnModel().getColumn(8).setCellEditor(new AddTime(mf,this,table, client));
-     
-        
-        table.getColumnModel().getColumn(9).setCellRenderer(new SeatMove(mf,this,table));
-        table.getColumnModel().getColumn(9).setCellEditor(new SeatMove(mf,this,table));
-		
-        table.getColumnModel().getColumn(10).setCellRenderer(new ExitSeat(mf,this,table));
-        table.getColumnModel().getColumn(10).setCellEditor(new ExitSeat(mf,this,table));
+	      table.getTableHeader().setReorderingAllowed(false);
+	      table.getTableHeader().setResizingAllowed(false);
+	      
+	      table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf,this,table, client, scrollpane));
+	        table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf,this,table, client, scrollpane));
+	     
+	        
+	        table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf,this,table,client ,scrollpane, utList));
+	        table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf,this,table,client ,scrollpane, utList));
+	      
+	        table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf,this,table, scrollpane));
+	        table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf,this,table, scrollpane));
 		
         
 		
@@ -285,156 +289,18 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		if(e.getSource() == allUserInfoButton) {
 			ControlPanel cp = new ControlPanel();
 			
-			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, client));
+			cp.changeTablePanel(mf, this, new AdmAllUserList(mf,utList, u ,client));
 			
 		}
 		
 	}
 	
 }
-//연장 버튼을 만들때 필요한 클래스
-class AddTime extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
-    private JButton jb;
-    
-    public AddTime(AdmMainFrame mf,JPanel op,JTable table, ClientBack client) {
-        jb = new JButton("연장");
-        jb.setForeground(Color.WHITE);
-		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-        jb.setBackground(new Color(127, 118, 104));
-        
-        //클릭시 팝업 
-        jb.addActionListener(e -> {
-        	jb.setBackground(Color.WHITE);
-        	jb.setForeground(new Color(127, 118, 104));
-        	int row = table.getSelectedRow();
-        	String tablePhone = table.getValueAt(row, 2) + "";
-        	String seatTimeType = table.getValueAt(row, 6) + "";
-        	
-        	// 회원에 따라 연장 버튼 연결 구분
-        	if(table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-        		if(seatTimeType.contains("일")) { // 기간권일 때
-            		new ControlPanel().addPanel(mf, op, new AdmAddTimeWeek(mf, op, tablePhone, client));
-        		}else { // 1일권일 떄
-            		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone, client));
-        		}
-        		
-        	}else { // 그룹일 때
-        		new ControlPanel().addPanel(mf, op, new AdmAddTimeHour(mf, op, tablePhone, client));
-        	}
-        	
-        });
-    }
-    
-    @Override
-    public Object getCellEditorValue() {
-        return null;
-    }
 
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-            int row, int column) {
-        return jb;
-    }
 
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-            int column) {
-        return jb;
-    }
-}
-//자리이동을 할때 필요한 버튼을 만드는 클래스
-class SeatMove extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
-    private JButton jb;
-
-    public SeatMove(AdmMainFrame mf,JPanel op,JTable table) {
-        jb = new JButton("이동");
-        jb.setForeground(Color.WHITE);
-		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-        jb.setBackground(new Color(127, 118, 104));
-        
-        jb.addActionListener(e -> {
-        	jb.setBackground(Color.WHITE);
-        	jb.setForeground(new Color(127, 118, 104));
-        	
-
-        	int row = table.getSelectedRow();
-        	
-        	// 회원에 따라 이동 버튼 연결 구분
-        	if(table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-        		new ControlPanel().addPanel(mf, op, new AdmSeatTable(mf, op));
-        	}else { // 그룹일 때
-        		new ControlPanel().addPanel(mf, op, new AdmMoveGrp(mf, op));
-        	}
-        	
-        });
-    }
-
-    @Override
-    public Object getCellEditorValue() {
-        return null;
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-            int row, int column) {
-        return jb;
-    }
-
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-            int column) {
-        return jb;
-    }
-} 
-
-//퇴실을 할때 필요한 버튼을 만드는 클래스
-class ExitSeat extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
-    private JButton jb;
-
-    public ExitSeat(AdmMainFrame mf,JPanel op,JTable table) {
-        jb = new JButton("퇴장");
-        jb.setForeground(Color.WHITE);
-		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-        jb.setBackground(new Color(127, 118, 104));
-        
-        jb.addActionListener(e -> {
-        	jb.setBackground(Color.WHITE);
-        	jb.setForeground(new Color(127, 118, 104));
-        	
-
-        	int row = table.getSelectedRow();
-        	String seatTimeType = table.getValueAt(row, 6) + "";
-        	
-        	// 회원에 따라 퇴실 버튼 연결 구분
-    		if(seatTimeType.contains("일")) { // 기간권일 때
-        		new ControlPanel().addPanel(mf, op, new AdmExitTimeWeek(mf, op));
-    		}else { // 1일권일 떄
-        		new ControlPanel().addPanel(mf, op, new AdmExitTimeHour(mf, op));
-    		}
-        		
-        	
-        });
-    }
-
-    @Override
-    public Object getCellEditorValue() {
-        return null;
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-            int row, int column) {
-        return jb;
-    }
-
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-            int column) {
-        return jb;
-    }
     
     
-} 
+
 
 
 

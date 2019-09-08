@@ -36,7 +36,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		this.phoneNum = phoneNum;
 		this.client = client;
 		
-		name = new AdmManager().findPhoneToName(phoneNum);
+		//name = new AdmManager().findPhoneToName(phoneNum);
 
 //		System.out.println(new AdmManager().findPhoneToRemain(phoneNum));
 		Date remainEdit = new Date(new AdmManager().findPhoneToRemain(phoneNum));
@@ -175,13 +175,14 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 		if (e.getSource() == confirmBtn) {
 //			System.out.println("여긴가..?");
-			AdmManager ad = new AdmManager();
 			
 			// 본인 클라이언트 스트림으로 보냄
 			System.out.println("b");
-			client.sendUser(ad.addRemainTime(name, term));
+			AdmManager ad = new AdmManager();
+			client.sendUser(ad.addRemainTime(phoneNum, term));
 			
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			mf.remove(this);
+			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 
 	}
