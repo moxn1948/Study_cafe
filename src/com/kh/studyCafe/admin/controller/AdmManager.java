@@ -41,4 +41,7 @@ public class AdmManager {
 	public ArrayList<User> exitSeatTime(String phoneNum) {
 		return ad.admExitSeat(phoneNum);
 	}
+	public ArrayList<User> enterSeatTime(String phoneNum) {
+		return ad.admEnterSeat(phoneNum);
+	}
 }

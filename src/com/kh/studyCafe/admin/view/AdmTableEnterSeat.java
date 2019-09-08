@@ -34,11 +34,20 @@ public class AdmTableEnterSeat extends AbstractCellEditor implements TableCellEd
 
 			int row = table.getSelectedRow();
 			String tablePhone = table.getValueAt(row, 2) + "";
-			
+			String seatNum = table.getValueAt(row, 3) + "";
+			String inTime = table.getValueAt(row, 4)+ "";
+			System.out.println(seatNum);
+			System.out.println(inTime);
 			// 회원에 따라 이동 버튼 연결 구분
-			new ControlPanel().addPanel(mf, op, new AdmSeatTable(mf, op, client, tablePhone, utList));
-
+			//if 만약 셀렉트 로우 좌석번호 0이아니고 입실시간 0이면 새로운 입실확인창으로 가 정보가지고
+			// 만약 좌석번호도 0이고 입실시간도 0이면 좌서ㅏㄱ표 로 감 이해?
+			if(seatNum.equals("-") && inTime.equals("-")) {
+				new ControlPanel().addPanel(mf, op, new AdmSeatTable(mf, op, client, tablePhone, utList));				
+			} else/* if(!(seatNum.equals("0")) && inTime.equals("0")) */{
+				new ControlPanel().addPanel(mf, op, new AdmEnterTimeWeek(mf, op, client, tablePhone));				
+			}
 			
+
 		});
 	}
 
