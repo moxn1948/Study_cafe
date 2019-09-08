@@ -59,20 +59,18 @@ public class AdmUserInfoChk {
 		return utList;
 	}
 
-	public String toPhoneInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름 찾는 서비스
-		String name = null;
-		for (int i = 0; i < u.size(); i++) {
-			if (u.get(i).getPhoneNum().equals(phoneNum)) {
-				name = u.get(i).getName();
-				break;
-			}
+	/*
+	 * public String toPhoneInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름
+	 * 찾는 서비스 String name = null; for (int i = 0; i < u.size(); i++) { if
+	 * (u.get(i).getPhoneNum().equals(phoneNum)) { name = u.get(i).getName(); break;
+	 * }
+	 * 
+	 * }
+	 * 
+	 * return name; }
+	 */
 
-		}
-
-		return name;
-	}
-
-	public long toRemainInfo(String phoneNum, ArrayList<User> u) { // 전화번호로 이름 찾는 서비스
+	public long toRemainInfo(String phoneNum, ArrayList<User> u) { 
 		long remainTime = 0L;
 		for (int i = 0; i < u.size(); i++) {
 			if (u.get(i).getPhoneNum().equals(phoneNum)) {

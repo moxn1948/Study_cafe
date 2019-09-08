@@ -61,6 +61,7 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 			this.add(new AdmUsingUserList(this, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 		
+		
 		this.repaint();
 	}
 	

@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,24 +14,41 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+import com.kh.studyCafe.client.ClientBack;
+
 public class AdmSeatTable extends JPanel implements ActionListener, MouseListener{
 	private JButton seatIndv[] = new JButton[25];
 	private JButton seatGrp[] = new JButton[5];
-	private boolean seatIndvToggle[] = new boolean[25];
-	private boolean seatGrpToggle[] = new boolean[5];
-	private boolean seatToggle;
+	private int light;
 	private JPanel op = null;
-	
-	public AdmSeatTable(AdmMainFrame mf, JPanel op) {
+	private JButton cancelBtn = null;
+	private JButton confirmBtn = null;
+	private boolean seatToggle;
+	private AdmMainFrame mf;
+	private ClientBack client;
+	private String phoneNum;
+	private String seatNum;
+	private ArrayList<AdmUserTable> utList;
+
+	public AdmSeatTable(AdmMainFrame mf, JPanel op, ClientBack client,String phoneNum, ArrayList<AdmUserTable> utList) {
 		this.op = op;
+		this.mf = mf;
+		this.client = client;
+		this.phoneNum = phoneNum;
+		this.utList = utList;
 		
+		
+
 		// 패널 설정
 		int w = 404;
 		int h = 548;
 		int x = popPosition(w, h)[0];
 		int y = popPosition(w, h)[1];
-		
-		this.setBounds(x, y, w, h); 	
+
+		this.setBounds(x, y, w, h);    
 
 		this.setBackground(new Color(239, 234, 222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
@@ -43,13 +60,13 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		title.setForeground(new Color(127, 118, 104));
 		title.setFont(new Font("맑은 고딕", Font.BOLD, 32));
 		title.setSize(title.getPreferredSize());
-		
+
 		// 좌석표 설정
 		JLayeredPane seat = new JLayeredPane();
 		seat.setBounds(26, 104, 354, 350);
 
 		// 좌석표 배치
-		
+
 		for (int i = 0; i < seatIndv.length; i++) {
 			String seatNo = i + 1 + "";
 			seatIndv[i] = new JButton(seatNo);
@@ -59,7 +76,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 			seatIndv[i].setFont(new Font("맑은 고딕", Font.BOLD, 13));
 			seatIndv[i].setBorder(BorderFactory.createEmptyBorder());
 			seat.add(seatIndv[i]);
-			
+
 			if(i < 5) {
 				seatGrp[i] = new JButton(seatNo);
 				seatGrp[i].setBackground(Color.WHITE);
@@ -69,7 +86,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 				seat.add(seatGrp[i]);
 			}
 		}
-		
+
 		seatIndv[0].setLocation(0, 0);
 		seatIndv[1].setLocation(45, 0);
 		seatIndv[2].setLocation(90, 0);
@@ -101,33 +118,50 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		seatGrp[2].setText("8-A");
 		seatGrp[3].setText("6-A");
 		seatGrp[4].setText("6-B");
-		
+
 		seatGrp[0].setSize(104, 60);
 		seatGrp[1].setSize(104, 60);
 		seatGrp[2].setSize(104, 140);
 		seatGrp[3].setSize(172, 62);
 		seatGrp[4].setSize(172, 62);
-		
+
 		seatGrp[0].setLocation(246, 0);
 		seatGrp[1].setLocation(246, 65);
 		seatGrp[2].setLocation(246, 130);
 		seatGrp[3].setLocation(0, 287);
 		seatGrp[4].setLocation(179, 287);
-		
-		
+
+
 		for (int i = 0; i < seatIndv.length; i++) {
 			seatIndv[i].addMouseListener(this);
+			for(int j = 0; j < utList.size(); j++) {
+				if(utList.get(j).getSeatNum().equals((i+1) + "")) {
+					seatIndv[i].setBackground(new Color(127, 118, 104));
+					seatIndv[i].setForeground(Color.WHITE);
+					seatIndv[i].setEnabled(false);
+					seatIndv[i].removeMouseListener(this);
+				}
+			}
+			
 		}
-		
+
 		for (int i = 0; i < seatGrp.length; i++) {
 			seatGrp[i].addMouseListener(this);
+			for(int j = 0; j < utList.size(); j++) {
+				if(utList.get(j).getSeatNum().equals(seatGrp[i].getText())) {
+					seatGrp[i].setBackground(new Color(127, 118, 104));
+					seatGrp[i].setForeground(Color.WHITE);
+					seatGrp[i].setEnabled(false);
+					seatGrp[i].removeMouseListener(this);					
+				}
+			}
 		}
-		
-		
+
+
 		// 버튼 설정
-		JButton cancelBtn = new JButton("Cancel");
-		JButton confirmBtn = new JButton("Confirm");
-		
+		cancelBtn = new JButton("Cancel");
+		confirmBtn = new JButton("Confirm");
+
 		cancelBtn.setBounds(26, 470, 172, 50);
 		confirmBtn.setBounds(204, 470, 173, 50);
 		cancelBtn.setBackground(new Color(189, 177, 157));
@@ -138,107 +172,157 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
-		
+		confirmBtn.addActionListener(this);
+		cancelBtn.addActionListener(this);
+
 		// 패널에 올림
 		this.add(title);
 		this.add(seat);
 		this.add(cancelBtn);
 		this.add(confirmBtn);
 	}
-	
+
 	public int[] popPosition(int w, int h) {
 		int[] position = new int[2];
-		
+
 		position[0] = (962 - w) / 2;
 		position[1] = (662 - h) / 2;
-		
+
 		return position;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource() == cancelBtn) {
+			//cp.changePanel(mf, this, op);
+			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+
+		}
+		if(e.getSource() == confirmBtn) {
+			AdmManager ad = new AdmManager();
+			client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
+
+			mf.remove(this);
+			
+			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
+			//new AdmDao().admRead(), client));
+
+
+		}
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
-			
+
+
 		for (int i = 0; i < seatIndv.length; i++) {
 
 			if(e.getSource() == seatIndv[i]) {
-					if(!seatIndvToggle[i]) {
-						if(!seatToggle) {
-	
-							seatIndv[i].setBackground(new Color(127, 118, 104));
-							seatIndv[i].setForeground(Color.WHITE);
-							
-							seatIndvToggle[i] = true;
-							seatToggle = true;
-						}
-					}else {
-	
-						seatIndv[i].setBackground(Color.WHITE);
-						seatIndv[i].setForeground(new Color(127, 118, 104));
-						
-						seatIndvToggle[i] = false;
-						seatToggle = false;
+				if(seatToggle == false) { // 처음 선택 했을 때
+					for(int j = 0; j < utList.size(); j++) {
+
 					}
-					
+					seatIndv[i].setBackground(new Color(127, 118, 104));
+					seatIndv[i].setForeground(Color.WHITE);       
+					seatNum = (i+1) + "";
+					System.out.println("1선택한 좌석 : " + seatNum);
+					light = i;
+					seatToggle = true;            
+				}else { // 이미 선택한 좌석이 있을 경우
+					if(light >= seatIndv.length) {
+						// 기존의 선택 좌석을 선택 해제함
+						seatGrp[light-seatIndv.length].setBackground(Color.WHITE);
+						seatGrp[light-seatIndv.length].setForeground(new Color(127, 118, 104));   
+
+						// 새로 선택한 좌석 선택함
+						seatIndv[i].setBackground(new Color(127, 118, 104));
+						seatIndv[i].setForeground(Color.WHITE);
+						seatNum = (i+1) + "";
+						System.out.println("2선택한 좌석 : " + seatNum);
+						light = i;
+					}else {
+						// 기존의 선택 좌석을 선택 해제함
+						seatIndv[light].setBackground(Color.WHITE);
+						seatIndv[light].setForeground(new Color(127, 118, 104));   
+
+						// 새로 선택한 좌석 선택함
+						seatIndv[i].setBackground(new Color(127, 118, 104));
+						seatIndv[i].setForeground(Color.WHITE);
+						seatNum = (i+1) + "";
+						System.out.println("3선택한 좌석 : " + seatNum);
+						light = i;
+					}
+
+				}
+
 			}
 		}
-		
 
 		for (int i = 0; i < seatGrp.length; i++) {
 
 			if(e.getSource() == seatGrp[i]) {
-				if(!seatGrpToggle[i]) {
-					if(!seatToggle) {
+				if(seatToggle == false) { // 처음 선택 했을 때
+					seatGrp[i].setBackground(new Color(127, 118, 104));
+					seatGrp[i].setForeground(Color.WHITE);
+
+					light = i + seatIndv.length;
+					seatToggle = true;
+
+				}else { // 이미 선택한 좌석이 있을 경우
+					if(light >= seatIndv.length) {
+						// 기존의 선택 좌석을 선택 해제함
+						seatGrp[light-seatIndv.length].setBackground(Color.WHITE);
+						seatGrp[light-seatIndv.length].setForeground(new Color(127, 118, 104));   
+
+						// 새로 선택한 좌석 선택함
 						seatGrp[i].setBackground(new Color(127, 118, 104));
 						seatGrp[i].setForeground(Color.WHITE);
-						
-						seatGrpToggle[i] = true;
-						seatToggle = true;
+
+						light = i + seatIndv.length;
+					}else {
+						// 기존의 선택 좌석을 선택 해제함
+						seatIndv[light].setBackground(Color.WHITE);
+						seatIndv[light].setForeground(new Color(127, 118, 104));   
+
+						// 새로 선택한 좌석 선택함
+						seatGrp[i].setBackground(new Color(127, 118, 104));
+						seatGrp[i].setForeground(Color.WHITE);
+
+						light = i + seatIndv.length;
 					}
-				}else {
-					seatGrp[i].setBackground(Color.WHITE);
-					seatGrp[i].setForeground(new Color(127, 118, 104));
-					
-					seatGrpToggle[i] = false;
-					seatToggle = false;
+
 				}
+
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
-	}
-	
 
-	
-	
+	}
+
+
+
 }

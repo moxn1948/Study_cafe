@@ -1,5 +1,7 @@
 package com.kh.studyCafe.admin.view;
 
+import java.awt.Component;
+
 import javax.swing.JPanel;
 
 public class ControlPanel{
@@ -8,10 +10,14 @@ public class ControlPanel{
 		mf.remove(op);
 		mf.add(np);
 		mf.repaint();
+		mf.revalidate();
 
 	}
 	
 	public void addPanel(AdmMainFrame mf, JPanel op, JPanel np) { // 있던 패널 유지하고 새 패널 올리긴
+		for (Component cp : op.getComponents()){
+	           cp.setEnabled(false);
+	      }
 		mf.add(np, 1, 0);
 		mf.repaint();
 	}
