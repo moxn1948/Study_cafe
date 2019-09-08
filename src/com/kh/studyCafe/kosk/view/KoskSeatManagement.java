@@ -115,7 +115,6 @@ public class KoskSeatManagement extends JPanel{
 		JButton ticancel2 = new JButton(new ImageIcon(cancelimg));
 		ticancel2.setBounds(20, 280, 117, 50);
 		
-		
 		pp2.add(indicon);
 		pp2.add(ticancel);
 		pp2.setSize(300,400);
@@ -202,8 +201,9 @@ public class KoskSeatManagement extends JPanel{
 		panel.add(ex);
 		panel.add(seatmv);
 		
+		//=============== 테두리 선언 부분 ========================
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
-		
+		//=====================================================
 		mf.add(panel,1);
 		mf.repaint();
 		
