@@ -58,10 +58,10 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		// 개인석, 단체석 개수 변수
 		int grpCount = 0;
 		int indvCount= 0;
-		for (int i = 0; i < u.size(); i++) {
+		for (int i = 0; i < utList.size(); i++) {
 			// 개인석, 단체석 개수 표시
-			if(!u.get(i).getSeatNum().equals("0")) {
-				if(u.get(i).getSeatNum().contains("-")) { // 그룹일 때
+			if(!utList.get(i).getSeatNum().equals("0")) {
+				if(utList.get(i).getSeatNum().contains("-")) { // 그룹일 때
 					grpCount++;
 				}else {
 					indvCount++;

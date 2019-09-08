@@ -5,8 +5,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,24 +38,31 @@ import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
-public class AdmAllUserList extends JPanel implements ActionListener {
+public class AdmAllUserList extends JPanel implements ActionListener, KeyListener {
 	private AdmMainFrame mf;
 	private ClientBack client;
 	private JScrollPane scrollpane;
-	// private ArrayList<AdmUserTable> utList;
-	// private ArrayList<User> u;
+	private ArrayList<AdmUserTable> utList;
+	private ArrayList<AdmUserTable> allUserList;
+	private ArrayList<User> u;
 	private JButton allUserInfoButton;
+	private JTextField searchForm;
+	private JTable table;
+	private DefaultTableModel model;
+	private JLabel srchChk;
 	
 	public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
 		this.client = client;
-		ArrayList<AdmUserTable> allUserList = new AdmUserInfoChk().AllUserInfo(u);
+		allUserList = new AdmUserInfoChk().AllUserInfo(u);
 		int allListNum = utList.size() + allUserList.size();
+		this.utList = utList;
+		this.u = u;
 		AdmMainFrame.watchPanel = this;
 
 		// 테이블 헤더 목록
 		String[] columnNames = { "No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴실",
-				"좌석입실"};
+				"좌석입실" };
 
 		// 테이블 내용 부분 크기
 		Object[][] data = new Object[allListNum][columnNames.length];
@@ -134,23 +145,28 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		// 스터디카페에 없는 회원
 		for (int i = 0; i < allUserList.size(); i++) {
 
-			data[i+utList.size()][0] = i+utList.size() + 1 + "";
-			data[i+utList.size()][1] = allUserList.get(i).getName();
-			data[i+utList.size()][2] = allUserList.get(i).getPhoneNum();
-			data[i+utList.size()][4] = "-";
-			data[i+utList.size()][5] = "-";
-			data[i+utList.size()][6] = "-";
-			
-			if(!allUserList.get(i).getSeatNum().equals("0")) { // 기간권 이용 중일 때
-				data[i+utList.size()][3] = allUserList.get(i).getSeatNum();
-				data[i+utList.size()][7] = "개인";
-			}else { // 기간권 이용 중이지 않을 때
-				data[i+utList.size()][3] = "-";
-				data[i+utList.size()][7] = "-";
+			data[i + utList.size()][0] = i + utList.size() + 1 + "";
+			data[i + utList.size()][1] = allUserList.get(i).getName();
+			data[i + utList.size()][2] = allUserList.get(i).getPhoneNum();
+			data[i + utList.size()][4] = "-";
+			data[i + utList.size()][5] = "-";
+
+			if (!allUserList.get(i).getSeatNum().equals("0")) { // 기간권 이용 중일 때
+				data[i + utList.size()][3] = allUserList.get(i).getSeatNum();
+				data[i + utList.size()][7] = "개인";
+			} else { // 기간권 이용 중이지 않을 때
+				data[i + utList.size()][3] = "-";
+				data[i + utList.size()][7] = "-";
 			}
-			
+
+			if (data[i + utList.size()][3].equals("-")) {
+				data[i + utList.size()][6] = "-";
+			} else {
+				data[i + utList.size()][6] = allUserList.get(i).getRemainTime() / 86400000 + "일";
+			}
+
 		}
-			
+
 		// 테이블 내용 뿌리기 End
 
 		// this.은 panel 설정
@@ -158,18 +174,17 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 
 		// 테이블 모델만들기
 		// 버튼부분빼고 셀의 내용 수정불가하도록 설정
-		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+		model = new DefaultTableModel(data, columnNames) {
 			public boolean isCellEditable(int row, int column) {
-				if (column >= 8) {
-					if(row > utList.size()-1 && column != columnNames.length -1) {
+				if (column >= 8) { // 버튼 쪽 부분
+					if (row > utList.size() - 1 && column != columnNames.length - 1) { // 스터디카페에 없는 회원의 이동, 연장, 퇴실
 						return false;
-					}else if(row < utList.size()  && column == columnNames.length -1){
+					} else if (row < utList.size() && column == columnNames.length - 1) { // 이용중인 회원의 입실
 						return false;
-					}else{
+					} else {
 						return true;
 					}
-					
-				}else {
+				} else { // 버튼 아닌 부분
 					return false;
 				}
 			}
@@ -180,7 +195,7 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		// 테이블 생성
 		// 이용중인 회원일 경우 셀의 색을 바꾸어서 표시함
 		// 버튼 부분은 백그라운드 색으로 흰색으로 칠하여 없는것처럼 보이게 해놓았으나 수정이필요함
-		JTable table = new JTable(model) {
+		table = new JTable(model) {
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 				if (row < utList.size()) { // 이용 중인 회원 셀 색 바꾸기
@@ -194,7 +209,7 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 					JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
 					if (column == columnNames.length - 1) {
 						component.setBackground(new Color(127, 118, 104));
-					}else {
+					} else {
 						component.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 						component.setBackground(Color.WHITE);
 					}
@@ -234,7 +249,7 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		JScrollPane scrollpane = new JScrollPane(table);
 
 		// 전체 테이블 크기설정
-//		scrollpane.setPreferredSize(new Dimension(920, 504));
+//		 scrollpane.setPreferredSize(new Dimension(920, 504));
 		// 테이블 모양 설정
 		scrollpane.setBounds(21, 118, 920, 504);
 		scrollpane.getViewport().setBackground(Color.WHITE);
@@ -275,24 +290,24 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 
-		// 테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함      
+		// 테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함
 		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
-	      table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
+		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
 
-	      table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-	      table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client,scrollpane, utList));
+		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
+		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
 
-	      table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-	      table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-	      
+		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
+		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
 
-	      table.getColumnModel().getColumn(11).setCellRenderer(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
-	         table.getColumnModel().getColumn(11).setCellEditor(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
+		table.getColumnModel().getColumn(11).setCellRenderer(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
+		table.getColumnModel().getColumn(11).setCellEditor(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
 
 		// 회원검색용 텍스트 필드 생성
-		JTextField searchForm = new JTextField();
+		searchForm = new JTextField();
 		searchForm.setBounds(59, 74, 178, 40);
 		searchForm.setBorder(BorderFactory.createLineBorder(new Color(127, 118, 104)));
+		searchForm.addKeyListener(this);
 
 		// 회원검색용 이미지 파일 불러오기
 		Image icon2 = new ImageIcon("img/search.PNG").getImage().getScaledInstance(32, 39, 0);
@@ -300,6 +315,15 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 		searchLabel.setLocation(23, 75);
 		searchLabel.setSize(32, 39);
 
+
+		srchChk = new JLabel();
+		srchChk.setBounds(22, 168, 627, 40);
+		srchChk.setBackground(Color.RED);
+		srchChk.setBorder(BorderFactory.createEmptyBorder());
+//		.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+//		searchForm.addKeyListener(this);
+		
+		this.add(srchChk, new Integer(10));
 		// 패널에 추가하기
 		this.add(searchForm);
 		this.add(searchLabel);
@@ -311,14 +335,63 @@ public class AdmAllUserList extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		// 이용중인 회원 버튼 클릭 시 패널 변경
 		if (e.getSource() == allUserInfoButton) {
 			ControlPanel cp = new ControlPanel();
 
-			cp.changeTablePanel(mf, this,  new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			cp.changeTablePanel(mf, this,
+					new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 
 		}
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			System.out.println("enter");
+			// System.out.println(searchForm.getText());
+			for (int i = 0; i < utList.size(); i++) {
+				if (utList.get(i).getName().contains(searchForm.getText())) {
+					System.out.println(i);
+					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+					srchChk.setLocation(22, (168+ i*40));;
+				}
+			}
+			for (int i = 0; i < allUserList.size(); i++) {
+				if (allUserList.get(i).getName().contains(searchForm.getText())) {
+					System.out.println(i + utList.size());
+					System.out.println(i);
+					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+					srchChk.setLocation(22, (168+ (i + utList.size())*40));;
+				}
+			}
+			for (int i = 0; i < utList.size(); i++) {
+				if (utList.get(i).getPhoneNum().contains(searchForm.getText())) {
+					System.out.println(i);
+				}
+			}
+			for (int i = 0; i < allUserList.size(); i++) {
+				if (allUserList.get(i).getPhoneNum().contains(searchForm.getText())) {
+					System.out.println(i + utList.size());
+				}
+			}
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			System.out.println("esc");
+			srchChk.setBorder(BorderFactory.createEmptyBorder());
+			searchForm.setText("");
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 
 	}
 
