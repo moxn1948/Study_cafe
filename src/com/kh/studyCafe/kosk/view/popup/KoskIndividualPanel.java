@@ -27,7 +27,7 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	private JButton	minus;
 	private JButton cancel;
 	public JButton confirm;
-	private JPanel panel = new JPanel();
+	public JPanel panel = new JPanel();
 	private JTextField time;
 	private JTextField Rttime;
 	private JTextField ettime;
@@ -184,7 +184,7 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	KoskManager kkm = new KoskManager();
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		timeHour = 0;
+		/*timeHour = 0;*/
 		if(e.getSource() == plus) {
 			if(hour >= 1 && hour < 9) {
 				hour++;
@@ -192,8 +192,9 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 				timeHour += 1;
 				String th = Integer.valueOf(timeHour).toString();   
 				String tm = Integer.valueOf(timeMinute).toString();  
-				ettime.setText(th + ":" + tm);
 				hourtie = timeHour;
+				ettime.setText(th + ":" + tm);
+				
 				
 				
 			} else if(hour >= 9 && hour < 23) {

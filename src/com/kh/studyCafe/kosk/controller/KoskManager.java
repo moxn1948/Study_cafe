@@ -17,7 +17,7 @@ import com.kh.studyCafe.model.service.SignUpService;
 public class KoskManager {
 	public KoskManager() {}
 	public KoskManager(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
-		Iterator it = (Iterator) number2.iterator();
+		//Iterator it = (Iterator) number2.iterator();
 		
 		String[] value = new String[4]; // 0번부터 3번까지 순서대로 정보를 value에 저장함
 		
@@ -27,7 +27,7 @@ public class KoskManager {
 			if(ss.signupservice(value)== true) {
 				
 				try {
-					bw = new BufferedWriter(new FileWriter("userlist.txt",true));
+					bw = new BufferedWriter(new FileWriter("user.dat",true));
 					bw.write(value[0]+"/");
 					bw.write(value[1]+"/");
 					bw.write(value[2]+"/");
@@ -74,6 +74,85 @@ public class KoskManager {
 		
 		System.out.println(seatnum+"번 좌석 Manager로 이동완료");
 		
+	}
+	private String num ;
+	
+	
+	public void seatsv(String seatnum) {
+		BufferedWriter bw = null;
+		BufferedReader br = null;
+		
+					try {
+						br = new BufferedReader(new FileReader("userlist.txt"));
+						
+						bw = new BufferedWriter(new FileWriter("userlist.txt",true)); 
+						//bw.write(seatnum+"\n");
+						String str = null;
+						str = br.readLine();
+						if(str == null) {
+							bw.write(seatnum);
+						} else {
+							bw.write("\n"+seatnum);
+						}
+							bw.flush();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						try {
+							bw.close();
+							br.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+		
+		System.out.println(seatnum+"번 좌석 Manager로 이동완료");
+	}
+	//== 파일 저장 ===
+	public void seatss(String seatim) {
+		BufferedWriter bw = null;
+		String seat = null;
+
+		seat = seatim;
+		try {
+			bw = new BufferedWriter(new FileWriter("seatsv.txt")); 
+				bw.write(seat);
+				bw.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println(seat+"저장됨");
+
+	}
+	
+	//====   파일 읽어오는 것 =============
+	public String seatim() {
+		String seatim = null;
+		BufferedWriter bw = null;
+		BufferedReader br = null;
+		
+					try {
+						br = new BufferedReader(new FileReader("seatsv.txt"));
+						
+						seatim = br.readLine();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(seatim+"파일 읽어옴");
+		
+		return seatim;
 	}
 	public ArrayList seat() {
 		
@@ -153,4 +232,22 @@ public class KoskManager {
 		
 		return a;
 	}
+	
+	public void Reader() {
+	      try {
+	         BufferedReader br = new BufferedReader(new FileReader("user.dat"));
+	         String temp;
+	         while((temp = br.readLine())!= null) {
+	            System.out.println(temp);
+	         }
+	      } catch (FileNotFoundException e) {
+	         
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         
+	         e.printStackTrace();
+	      }finally {
+	         
+	      }
+	   }
 	}

@@ -13,13 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 
 
 public class KoskGroupPanel extends JPanel implements MouseListener{
 	
-	private JFrame fm = new JFrame();
 	private JTextField Rttime;
 	private JTextField ettime;
 	private JTextField time;
@@ -35,11 +36,13 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	
+	
+	public JPanel panel = new JPanel();
 	private KoskMainFrame mf;
 	
 	public JPanel KoskGroupPanel(KoskMainFrame mf) {
 		this.mf = mf;
-		JPanel panel = new JPanel();
+		
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 		
@@ -48,7 +51,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		Font inputtext = new Font("맑은 고딕",Font.BOLD,25);
 		Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 			
-		panel.setBounds(30, 40, 300, 400);
+		panel.setSize(300,400);
 		panel.setLayout(null);
 		panel.setBackground(wallPapers);
 		
@@ -155,7 +158,8 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		
 		confirm.addMouseListener(this);
 				
-	
+		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
+		panel.setBorder(oneTb);
 		
 		panel.add(logo);
 		panel.add(Rt);
@@ -168,10 +172,12 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		panel.add(psn);
 		panel.add(minus);
 		panel.add(minus2);
-		panel.add(cancel);
-		panel.add(confirm);
+		//panel.add(cancel);
+		//panel.add(confirm);
 		
+		mf.add(panel);
 		
+		panel.repaint();
 		return panel;
 	}
 
@@ -226,11 +232,9 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 			}
 		}
 		if(e.getSource() == cancel) {
-			fm.dispose();
 		}
 		if(e.getSource() == confirm) {
 			//좌석표 패널에서 결제 선택 패널로 전환 추가
-			fm.dispose();
 		}
 		
 	}
