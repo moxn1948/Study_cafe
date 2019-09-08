@@ -12,12 +12,15 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import com.kh.studyCafe.client.ClientBack;
+
 //좌석 퇴실을 할때 필요한 버튼을 만드는 클래스
 public class AdmTableExitSeat extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private JButton jb;
-
-	public AdmTableExitSeat(AdmMainFrame mf, JPanel op, JTable table, JScrollPane scrollpane) {
-		jb = new JButton("퇴장");
+	public AdmTableExitSeat(AdmMainFrame mf, JPanel op, JTable table, JScrollPane scrollpane, ClientBack client) {
+		
+		
+		jb = new JButton("퇴실");
 		jb.setForeground(Color.WHITE);
 		jb.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		jb.setBackground(new Color(127, 118, 104));
@@ -29,12 +32,13 @@ public class AdmTableExitSeat extends AbstractCellEditor implements TableCellEdi
 
 			int row = table.getSelectedRow();
 			String seatTimeType = table.getValueAt(row, 6) + "";
+			String phoneNum = table.getValueAt(row, 2) + "";
 
 			// 회원에 따라 퇴실 버튼 연결 구분
 			if (seatTimeType.contains("일")) { // 기간권일 때
-				new ControlPanel().addPanel(mf, op, new AdmExitTimeWeek(mf, op));
+				new ControlPanel().addPanel(mf, op, new AdmExitTimeWeek(mf, op, client, phoneNum));
 			} else { // 1일권일 떄
-				new ControlPanel().addPanel(mf, op, new AdmExitTimeHour(mf, op));
+				new ControlPanel().addPanel(mf, op, new AdmExitTimeHour(mf, op, client, phoneNum));
 			}
 
 		});

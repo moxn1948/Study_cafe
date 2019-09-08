@@ -79,8 +79,13 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
-
+		String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+		if(tempClass.equals("AdmUsingUserList")) {
+			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+		}
+		if(tempClass.equals("AdmAllUserList")) {
+			new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+		}
 	}
 	
 	

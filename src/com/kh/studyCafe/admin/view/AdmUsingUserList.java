@@ -39,6 +39,8 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 	private ClientBack client;
 	private ArrayList<AdmUserTable> utList;
 	private ArrayList<User> u;
+	private JScrollPane scrollpane = null;
+	private JButton cafeInfo = null;
 	
 	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
@@ -48,7 +50,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		AdmMainFrame.watchPanel = this;
 		
 		//테이블 헤더 목록
-		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴장"};
+		String[] columnNames = {"No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴실"};
 		
 		//테이블 내용 부분 크기
 		Object[][] data = new Object[utList.size()][columnNames.length];
@@ -173,12 +175,12 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		table.getColumnModel().getColumn(10).setPreferredWidth(66);
 		
 		//테이블 스크롤 기능 추가해서 넣기
-		JScrollPane scrollpane = new JScrollPane(table);
+		scrollpane = new JScrollPane(table);
 		
-		//전체 테이블 크기설정
-		scrollpane.setPreferredSize(new Dimension(920, 504));
-		//테이블 모양 설정
-		scrollpane.setBounds(21, 118, 920, 504);
+	      // 전체 테이블 크기설정
+//      scrollpane.setPreferredSize(new Dimension(920, 504));
+      // 테이블 모양 설정
+        scrollpane.setBounds(21, 118, 920, 478);
 		scrollpane.getViewport().setBackground(Color.WHITE); 
 		scrollpane.setBackground(Color.WHITE);
 		scrollpane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -205,7 +207,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		}
 		
 		//매장정보보기 버튼 생성
-		JButton cafeInfo = new JButton("매장 정보 보기");
+		cafeInfo = new JButton("매장 정보 보기");
 		cafeInfo.setBounds(801, 603, 140, 42);
 		cafeInfo.setBackground(new Color(189,177,157));
 		cafeInfo.setForeground(Color.WHITE);
@@ -261,8 +263,8 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 	        table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf,this,table,client ,scrollpane, utList));
 	        table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf,this,table,client ,scrollpane, utList));
 	      
-	        table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf,this,table, scrollpane));
-	        table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf,this,table, scrollpane));
+	        table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf,this,table, scrollpane, client));
+	        table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf,this,table, scrollpane, client));
 		
         
 		
@@ -278,23 +280,33 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		
 	}
 	
-	public void watchPaint() {
-		new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		// 전체회원보기 버튼 클릭 시 패널 변경
-		if(e.getSource() == allUserInfoButton) {
-			ControlPanel cp = new ControlPanel();
-			
-			cp.changeTablePanel(mf, this, new AdmAllUserList(mf,utList, u ,client));
-			
-		}
-		
-	}
-	
+
+	   @Override
+	   public void actionPerformed(ActionEvent e) {
+	      ControlPanel cp = new ControlPanel();
+
+	      // 전체회원보기 버튼 클릭 시 패널 변경
+	      if(e.getSource() == allUserInfoButton) {
+	         
+	         cp.changeTablePanel(mf, this, new AdmAllUserList(mf, utList, u, client));
+	         
+	         scrollpane.getHorizontalScrollBar().setEnabled(false);
+	         scrollpane.getVerticalScrollBar().setEnabled(false);
+	         scrollpane.getViewport().getView().setEnabled(false);
+	         
+	      }
+	      
+	      // 매장정보보기 버튼 클릭 시 패널 변경
+	      if(e.getSource() == cafeInfo) {
+	         
+	         cp.addPanel(mf, this, new AdmCafeInfo(mf));
+	         
+	         scrollpane.getHorizontalScrollBar().setEnabled(false);
+	         scrollpane.getVerticalScrollBar().setEnabled(false);
+	         scrollpane.getViewport().getView().setEnabled(false);
+	         
+	      }
+	   }
 }
 
 
