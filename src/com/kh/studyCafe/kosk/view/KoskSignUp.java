@@ -3,6 +3,7 @@ package com.kh.studyCafe.kosk.view;
 import java.awt.Color;
 
 
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -22,31 +23,48 @@ import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
+import com.kh.studyCafe.kosk.view.popup.KoskSignUpPop;
 import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
 	
 	private JPanel panel = new JPanel();
 	private KoskMainFrame mf;
-	private JButton[] button = new JButton[2];
 	public KoskSignUp(KoskMainFrame mf) {
-			this.mf = mf;
-	
+		this.mf = mf;
 		
+
+		JPanel pp =new JPanel();
+		JPanel pp2 = new JPanel();
+		JPanel pp3 = new JPanel();
 
 		//===== 컬러 설정 =====
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
+		Color paper = new Color(170, 162, 142);
+		Color paper1 = new Color(255,255,255);
 				 
 		//==================
 				   
 		
 		//===== JPanel 설정 =======
-		this.setLayout(null);
-		this.setBackground(wallPapers);
-		this.setSize(360,640);
-		//=======================
+		pp.setLayout(null);
+		pp.setBackground(wallPapers);
+		pp.setSize(360,640);
 		
+		
+		//===========회원가입완료  팝업==========
+		KoskSignUpPop ksp = new KoskSignUpPop();
+		pp2.setLayout(null);
+		pp2.setBounds(20, 100, 292, 200);
+		pp2.add(ksp.KoskSignUpPop(mf));
+		
+		
+		//===========회원취소 팝업 =============
+		KoskSignUpCancle ksc = new KoskSignUpCancle();
+		pp3.setLayout(null);
+		pp3.setBounds(20, 100, 292, 200);
+		pp3.add(ksc.KoskSignUpCancle(mf));
 		
 		//============ font 설정 ==========
 		Font siguptext = new Font("맑은고딕",Font.BOLD,30);
@@ -116,13 +134,46 @@ public class KoskSignUp extends JPanel{
 	   Image confirmbtn = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(140, 50, 0);
 	   	JButton cancel = new JButton(new ImageIcon(cancelbtn));
 	   	cancel.setBounds(20,500,140,50);
-		button[0] = cancel;
+		
 	   	JButton confirm = new JButton(new ImageIcon(confirmbtn));
 	   	confirm.setBounds(180,500,140,50);
-	   	button[1] = confirm;
 	   	
-	   
-	   //=====================================
+	   //=================popup버튼 완료 설정==============
+	   	
+	   	JButton button = new JButton("OK");
+	   	button.setBounds(5,140,280,40);
+		button.setBackground(paper);
+		button.setForeground(paper1);
+		pp2.add(button,0);
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pp.remove(pp2);
+				pp.repaint();
+				ChangePanel.changePanel(mf, pp,new KoskLogin(mf));
+				mf.repaint();
+			}
+			
+		});
+		//===============Popup버튼 취소 설정==================
+		JButton button1 = new JButton("OK");
+		button1.setBounds(5,140,280,40);
+		button1.setBackground(paper);
+		button1.setForeground(paper1);
+		pp3.add(button1,0);
+		button1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pp.remove(pp3);
+				pp.repaint();
+				ChangePanel.changePanel(mf, pp, new KoskLogin(mf));
+				mf.repaint();
+				
+			}
+		});
+	   //=====ㅓ===============================
 	   	
 	   	//====== 체크박스 설정 ======================
 	   	JCheckBox checkbox = new JCheckBox("   [필수] 제 3자 이용자 동의 약관");
@@ -133,71 +184,56 @@ public class KoskSignUp extends JPanel{
 	   	
 	   	
 	   	//====================================
-		this.add(text);
-		this.add(ib);
-		this.add(name);
-		this.add(nametf);
-		this.add(phnumber);
-		this.add(phnumber2);
-		this.add(phtf);
-		this.add(psswd);
-		this.add(pstf);
-		this.add(psswdch);
-		this.add(psswdch2);
-		this.add(psch);
-		this.add(cancel);
-		this.add(confirm);
-		this.add(checkbox);
-		
-		cancel.addActionListener(new ActionListener() { 
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for(int i =0; i<button.length; i++) {
-					button[i].setEnabled(false);
-					button[i].setVisible(false);
-					
-				}
-				
-				
-				
-				KoskSignUpCancle ksc = new KoskSignUpCancle();
-				repaint();
-			}
-
-		});
-		this.add(panel);
-		this.repaint();
-		
-		
-		
-		
-		
+		pp.add(text);
+		pp.add(ib);
+		pp.add(name);
+		pp.add(nametf);
+		pp.add(phnumber);
+		pp.add(phnumber2);
+		pp.add(phtf);
+		pp.add(psswd);
+		pp.add(pstf);
+		pp.add(psswdch);
+		pp.add(psswdch2);
+		pp.add(psch);
+		pp.add(cancel);
+		pp.add(confirm);
+		pp.add(checkbox);
+		mf.add(pp);
 		
 		confirm.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList number = new ArrayList();
+				/*ArrayList number = new ArrayList();
 				number.add(nametf.getText());
 				number.add(phtf.getText());
 				number.add(pstf.getText());
 				number.add(psch.getText());
 				
-				new KoskManager(number);
+				new KoskManager(number);*/
+				pp.add(pp2,0);
+				mf.repaint();
 				
-				//ChangePanel.changePanel(mf, signup, new KoskLogin(mf));
+
 				
 			}
 			
+		});
+		cancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pp.add(pp3,0);
+				mf.repaint();
+				
+			}
 		});
 
 	
 	}
 	
 	
-
-
 }
 
 	
