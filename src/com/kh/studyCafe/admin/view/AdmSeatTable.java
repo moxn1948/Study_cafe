@@ -203,10 +203,16 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 			}
 		}
 		if(e.getSource() == confirmBtn) {
-			AdmManager ad = new AdmManager();
-			client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
+			AdmDao ao = new AdmDao();
+			if(ao.toEnterInfo(phoneNum).equals("0")) {
+				
+			}else {
+				AdmManager ad = new AdmManager();
+				client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
 
-			mf.remove(this);
+				mf.remove(this);
+			}
+			
 			
 			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
 			//new AdmDao().admRead(), client));
