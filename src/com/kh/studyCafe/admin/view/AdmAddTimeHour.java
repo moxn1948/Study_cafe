@@ -25,6 +25,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 	private JButton plusBtn = null;
 	private JButton minusBtn = null;
 	private JButton confirmBtn = null;
+	private JButton cancelBtn = null;
 	private String phoneNum;
 	private String name;
 	private JPanel op = null;
@@ -111,12 +112,13 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		minusBtn.setForeground(Color.WHITE);
 		minusBtn.addActionListener(this);
 
-		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn = new JButton("Cancel");
 		cancelBtn.setBounds(20, 385, 160, 50);
 		cancelBtn.setBackground(new Color(189, 177, 157));
 		cancelBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setForeground(Color.WHITE);
 		cancelBtn.setBorderPainted(false);
+		cancelBtn.addActionListener(this);
 
 		confirmBtn = new JButton("Confirm");
 		confirmBtn.setBounds(192, 385, 160, 50);
@@ -144,6 +146,16 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == cancelBtn) {
+			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			if(tempClass.equals("AdmUsingUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+			if(tempClass.equals("AdmAllUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+		}
 
 		if (e.getSource() == plusBtn) {
 			if (term < 9 && term > 0) {

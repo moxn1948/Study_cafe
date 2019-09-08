@@ -11,11 +11,24 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
+
 public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	private JPanel op = null;
-			
-	public AdmExitTimeWeek(AdmMainFrame mf, JPanel op) {
+	private ClientBack client;
+	private AdmMainFrame mf;
+	private JButton cancelBtn;
+	private JButton confirmBtn;
+	private String phoneNum;
+	
+	public AdmExitTimeWeek(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
 		this.op = op;
+		this.client = client;
+		this.mf = mf;
+		this.phoneNum = phoneNum;
+	
 		
 		// 패널 설정
 		int w = 410;
@@ -60,8 +73,8 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		refundChk.setSize(refundChk.getPreferredSize());
 		
 		// 버튼 설정
-		JButton cancelBtn = new JButton("Cancel");
-		JButton confirmBtn = new JButton("Confirm");
+		cancelBtn = new JButton("Cancel");
+		confirmBtn = new JButton("Confirm");
 		
 		cancelBtn.setBounds(16, 209, 184, 50);
 		confirmBtn.setBounds(210, 209, 184, 50);
@@ -73,6 +86,9 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
+		cancelBtn.addActionListener(this);
+		confirmBtn.addActionListener(this);
+		
 		
 		// 패널에 올리기
 		this.add(title);
@@ -94,7 +110,15 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() == cancelBtn) {
+			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			if(tempClass.equals("AdmUsingUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+			if(tempClass.equals("AdmAllUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}		
+		}
 		
 	}
 

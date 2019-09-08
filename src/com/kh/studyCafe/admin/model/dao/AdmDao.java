@@ -104,6 +104,29 @@ public class AdmDao {
 		
 		return userList;
 	}
+	
+	public ArrayList<User> admExitSeat(String phoneNum){
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+			
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setInTime(0);
+					userList.get(i).setOutTime(0);
+					userList.get(i).setRemainTime(0);
+					System.out.println(userList);
+					admWrite(userList); // 
+				}
+			}
+			
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+		
+		return userList;
+	}
 
 }
 
