@@ -140,18 +140,29 @@ public class AdmUserInfoChk {
 		long pointTime = outTime - inTime;
 		long pointTime2 = outTime2 - inTime;
 
-		User u = new User("별님그룹", "010-1111-2222", "pass123", "4-A", inTime, outTime, remainTime, User.HOURSEAT, 1000,
+		User u = new User("별님그룹", "010-1111-2211", "pass123", "4-A", inTime, outTime, remainTime, User.HOURSEAT, 1000,
 				pointTime, "silver");
-		User u1 = new User("달님기간권", "010-1221-2222", "pass4", "1", inTime, outTime2, remainTime2, User.WEEKSEAT, 1000,
+		User u1 = new User("달님기간권", "010-1221-2212", "pass4", "1", inTime, outTime2, remainTime2, User.WEEKSEAT, 1000,
 				pointTime2, "gold");
-		User u2 = new User("햇님그룹", "010-1331-2222", "pass523", "6-A", inTime, outTime, remainTime, User.HOURSEAT, 1000,
+		User u2 = new User("햇님그룹", "010-1331-2213", "pass523", "6-A", inTime, outTime, remainTime, User.HOURSEAT, 1000,
 				pointTime, "silver");
-		User u3 = new User("팥쥐개인", "010-1441-2222", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000,
+		User u3 = new User("팥쥐개인", "010-1441-2214", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u4 = new User("콩쥐사용안함", "010-1551-2215", "pass723", "0", 0, 0, 0, User.NOSEAT, 0, 0, "bronze");
+		User u5 = new User("팥쥐기간퇴실", "010-1441-2216", "pass623", "12", 0, 0, remainTime2, User.WEEKSEAT, 1000,
 				pointTime, "silver");
-		User u4 = new User("콩쥐사용안함", "010-1551-2222", "pass723", "0", 0, 0, 0, User.NOSEAT, 0, 0, "bronze");
-		User u5 = new User("팥쥐기간퇴실", "010-1441-2222", "pass623", "12", 0, 0, remainTime2, User.WEEKSEAT, 1000,
-				pointTime, "silver");
-
+		User u6 = new User("팥쥐개인u6", "010-1441-2217", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");User u7 = new User("팥쥐개인u7", "010-1441-2218", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u8 = new User("팥쥐개인u8", "010-1441-2219", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u9 = new User("팥쥐개인u9", "010-1441-2110", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u10 = new User("팥쥐개인u10", "010-1441-2111", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u11 = new User("팥쥐개인u11", "010-1441-2112", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u12 = new User("팥쥐개인u12", "010-1441-2113", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u13 = new User("팥쥐개인u13", "010-1441-2114", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u14 = new User("팥쥐개인u14", "010-1441-2115", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u15 = new User("팥쥐개인u15", "010-1441-2116", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u16 = new User("팥쥐개인u16", "010-1441-2117", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u17 = new User("팥쥐개인u17", "010-1441-2118", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		User u18 = new User("팥쥐개인u18", "010-1441-2119", "pass623", "12", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+		
 		AdmDao ad = new AdmDao();
 		ad.admWrite(u);
 		ad.admWrite(u1);
@@ -159,6 +170,19 @@ public class AdmUserInfoChk {
 		ad.admWrite(u3);
 		ad.admWrite(u4);
 		ad.admWrite(u5);
+		ad.admWrite(u6);
+		ad.admWrite(u7);
+		ad.admWrite(u8);
+		ad.admWrite(u9);
+		ad.admWrite(u10);
+		ad.admWrite(u11);
+		ad.admWrite(u12);
+		ad.admWrite(u13);
+		ad.admWrite(u14);
+		ad.admWrite(u15);
+		ad.admWrite(u16);
+		ad.admWrite(u17);
+		ad.admWrite(u18);
 	}
 
 }
