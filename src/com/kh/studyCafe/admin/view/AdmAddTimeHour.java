@@ -30,6 +30,8 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 	private String name;
 	private JPanel op = null;
 	private ClientBack client;
+	private String addTimeEdit;
+	private JLabel afterNum;
 	
 	public AdmAddTimeHour(AdmMainFrame mf, JPanel op, String phoneNum, ClientBack client) {
 		this.mf = mf;
@@ -37,13 +39,16 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		this.phoneNum = phoneNum;
 		this.client = client;
 		
-		//name = new AdmManager().findPhoneToName(phoneNum);
+		// 잔여시간 표시
+		String timeEdit = "";
 
-//		System.out.println(new AdmManager().findPhoneToRemain(phoneNum));
-		Date remainEdit = new Date(new AdmManager().findPhoneToRemain(phoneNum));
-		SimpleDateFormat sdf = new SimpleDateFormat("hh : mmaa");
-		String timeEdit = sdf.format(remainEdit).split("오")[0];
-		// System.out.println(timeEdit);
+		timeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + "시간 ";
+		timeEdit += new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
+
+		addTimeEdit = "";
+		
+		addTimeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
+		addTimeEdit += new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
 
 		this.setLayout(null);
 		this.setBounds(300, 120, 370, 452);
@@ -59,26 +64,25 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		title.setSize(title.getPreferredSize());
 
 		JLabel remainTime = new JLabel("잔여시간");
-
-		remainTime.setLocation(90, 100);
+		remainTime.setLocation(70, 100);
 		remainTime.setForeground(new Color(127, 118, 104));
-		remainTime.setFont(new Font("맑은 고딕", Font.BOLD, 21));
+		remainTime.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		remainTime.setSize(remainTime.getPreferredSize());
 
 		JLabel remainNum = new JLabel(timeEdit); // 잔여시간
-		remainNum.setLocation(224, 98);
+		remainNum.setLocation(212, 98);
 		remainNum.setForeground(new Color(127, 118, 104));
 		remainNum.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		remainNum.setSize(remainNum.getPreferredSize());
 
 		JLabel afterTime = new JLabel("연장 후 시간");
-		afterTime.setLocation(90, 143);
+		afterTime.setLocation(70, 143);
 		afterTime.setForeground(new Color(127, 118, 104));
-		afterTime.setFont(new Font("맑은 고딕", Font.BOLD, 21));
+		afterTime.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		afterTime.setSize(afterTime.getPreferredSize());
 
-		JLabel afterNum = new JLabel("03:30");
-		afterNum.setLocation(224, 141);
+		afterNum = new JLabel(addTimeEdit); // 연장후 시간
+		afterNum.setLocation(212, 141);
 		afterNum.setForeground(new Color(127, 118, 104));
 		afterNum.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		afterNum.setSize(afterNum.getPreferredSize());
@@ -147,6 +151,75 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+
+		if (e.getSource() == plusBtn) {
+
+			if (term < 9 && term > 0) {
+				
+				++term;
+
+				System.out.println("a  : " + term);
+				num.setText("0" + term + " : 00");	
+				
+				
+				String[] addTimeEditTemp = addTimeEdit.split("시간");
+				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 1 + "시간";
+				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
+				afterNum.setText(addTimeEdit);
+
+				afterNum.setSize(afterNum.getPreferredSize());
+				
+			} else if (term < 23 && term > 8) {
+				
+				++term;
+
+				System.out.println("b  : " + term);
+				num.setText(term + " : 00");
+
+				
+				String[] addTimeEditTemp = addTimeEdit.split("시간");
+				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 1 + "시간";
+				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1]; 
+				afterNum.setText(addTimeEdit);
+
+				afterNum.setSize(afterNum.getPreferredSize());
+			}
+			
+		}
+
+		if (e.getSource() == minusBtn) {
+
+			
+			if (term < 9 && term > 1) {
+
+				--term;
+				System.out.println("c  : " + term);
+				num.setText("0" + term + " : 00");
+				
+				String[] addTimeEditTemp = addTimeEdit.split("시간");
+				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) - 1 + "시간";
+				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
+				afterNum.setText(addTimeEdit);
+
+				afterNum.setSize(afterNum.getPreferredSize());
+				
+			} else if (term < 24 && term > 8) {
+
+				--term;
+				System.out.println("d  : " + term);
+				num.setText(term + " : 00");
+				
+
+				String[] addTimeEditTemp = addTimeEdit.split("시간");
+				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) - 1 + "시간";
+				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
+				afterNum.setText(addTimeEdit);
+				
+				afterNum.setSize(afterNum.getPreferredSize());
+				
+			}
+		}
+
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
@@ -157,36 +230,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 			}
 		}
 
-		if (e.getSource() == plusBtn) {
-			if (term < 9 && term > 0) {
-				++term;
-
-				System.out.println("a  : " + term);
-				num.setText("0" + term + " : 00");
-			} else if (term < 23 && term > 8) {
-				++term;
-
-				System.out.println("b  : " + term);
-				num.setText(term + " : 00");
-			}
-		}
-
-		if (e.getSource() == minusBtn) {
-			if (term < 9 && term > 1) {
-
-				--term;
-				System.out.println("c  : " + term);
-				num.setText("0" + term + " : 00");
-			} else if (term < 24 && term > 8) {
-
-				--term;
-				System.out.println("d  : " + term);
-				num.setText(term + " : 00");
-			}
-		}
-
 		if (e.getSource() == confirmBtn) {
-//			System.out.println("여긴가..?");
 			
 			// 본인 클라이언트 스트림으로 보냄
 			System.out.println("b");
