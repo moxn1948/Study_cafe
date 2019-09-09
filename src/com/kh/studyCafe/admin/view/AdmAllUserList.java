@@ -5,12 +5,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -50,6 +49,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 	private JTable table;
 	private DefaultTableModel model;
 	private JLabel srchChk;
+	private JScrollBar vertical;
 	
 	public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
@@ -322,6 +322,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		srchChk.setBorder(BorderFactory.createEmptyBorder());
 //		.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 //		searchForm.addKeyListener(this);
+		vertical = scrollpane.getVerticalScrollBar();
 		
 		this.add(srchChk, new Integer(10));
 		// 패널에 추가하기
@@ -330,6 +331,8 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		this.add(logoLabel);
 		this.add(allUserInfoButton);
 		this.add(scrollpane);
+		
+		System.out.println(vertical.getSize());
 
 	}
 
@@ -349,36 +352,68 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.out.println("enter");
-			// System.out.println(searchForm.getText());
-			for (int i = 0; i < utList.size(); i++) {
-				if (utList.get(i).getName().contains(searchForm.getText())) {
-					System.out.println(i);
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) { // 검색 기능
+			srchChk.setBorder(BorderFactory.createEmptyBorder());
+			
+			for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
+				if (utList.get(i).getName().contains(searchForm.getText().trim())) {
+					if(i>10) {
+						System.out.println("a지역");
+						vertical.setValue((i-10)*40-12);
+						srchChk.setLocation(22, (181+ 10*40));
+					}else {
+						System.out.println("c지역");
+						vertical.setValue(0);
+						srchChk.setLocation(22, (168+ i*40));
+					}
 					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-					srchChk.setLocation(22, (168+ i*40));;
 				}
 			}
-			for (int i = 0; i < allUserList.size(); i++) {
-				if (allUserList.get(i).getName().contains(searchForm.getText())) {
-					System.out.println(i + utList.size());
-					System.out.println(i);
+			for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 이름 검색 시
+				if (allUserList.get(i).getName().contains(searchForm.getText().trim())) {
+					int num = i + utList.size();
+					if(num>10) {
+						System.out.println("1a지역");
+						vertical.setValue((num-10)*40 - 12);
+						srchChk.setLocation(22, (181+ 10*40));
+					}else {
+						System.out.println("1c지역");
+						vertical.setValue(0);
+						srchChk.setLocation(22, (168+ num*40));
+					}
+					
 					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-					srchChk.setLocation(22, (168+ (i + utList.size())*40));;
 				}
 			}
-			for (int i = 0; i < utList.size(); i++) {
-				if (utList.get(i).getPhoneNum().contains(searchForm.getText())) {
-					System.out.println(i);
+			for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
+				if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
+					if(i>10) {
+						System.out.println("a지역");
+						vertical.setValue((i-10)*40-12);
+						srchChk.setLocation(22, (181+ 10*40));
+					}else {
+						System.out.println("c지역");
+						vertical.setValue(0);
+						srchChk.setLocation(22, (168+ i*40));
+					}
+					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 				}
 			}
-			for (int i = 0; i < allUserList.size(); i++) {
-				if (allUserList.get(i).getPhoneNum().contains(searchForm.getText())) {
-					System.out.println(i + utList.size());
+			for (int i = 0; i < allUserList.size(); i++) { // 이용 중인 전화번호 이름 검색 시
+				if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
+					if(i>10) {
+						System.out.println("a지역");
+						vertical.setValue((i-10)*40-12);
+						srchChk.setLocation(22, (181+ 10*40));
+					}else {
+						System.out.println("c지역");
+						vertical.setValue(0);
+						srchChk.setLocation(22, (168+ i*40));
+					}
+					srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 				}
 			}
-		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			System.out.println("esc");
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // 검색 취소 기능
 			srchChk.setBorder(BorderFactory.createEmptyBorder());
 			searchForm.setText("");
 		}
