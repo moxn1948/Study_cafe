@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,18 +20,27 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.model.service.SignUpService;
+import com.kh.studyCafe.kosk.view.popup.KoskPassWordNo;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpPop;
 import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
+
 	
-	private JPanel panel = new JPanel();
+	private JPanel Sign = new JPanel();
 	private KoskMainFrame mf;
+	private JPanel pp4 = new JPanel();
+	private String nam;
+	private String ph;
+	private String ps;
+	private String pss;
 	public KoskSignUp(KoskMainFrame mf) {
 		this.mf = mf;
 		
@@ -37,6 +48,7 @@ public class KoskSignUp extends JPanel{
 		JPanel pp =new JPanel();
 		JPanel pp2 = new JPanel();
 		JPanel pp3 = new JPanel();
+		
 
 		//===== 컬러 설정 =====
 		Color wallPapers = new Color(239,234,222);
@@ -66,6 +78,8 @@ public class KoskSignUp extends JPanel{
 		pp3.setBounds(20, 100, 292, 200);
 		pp3.add(ksc.KoskSignUpCancle(mf));
 		
+		
+		
 		//============ font 설정 ==========
 		Font siguptext = new Font("맑은고딕",Font.BOLD,30);
 		Font inputtext = new Font("맑은고딕",Font.BOLD,17);
@@ -73,7 +87,7 @@ public class KoskSignUp extends JPanel{
 	
 		//===============================
 		
-		//==== 로고 이미지아이콘 ===============
+		//====== 로고 이미지아이콘 ===============
 		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(30, 30, 0);
 		JLabel ib = new JLabel("",(new ImageIcon(imgicon)),SwingUtilities.CENTER);
 		ib.setBounds(150,0,50,50);
@@ -118,17 +132,58 @@ public class KoskSignUp extends JPanel{
 	   
 	   JTextField nametf = new JTextField("");
 	   nametf.setBounds(120,165,200,40);
+	  // nametf.setEnabled(false);
+	  // nametf.addMouseListener(null);
+	   
 
 	   JTextField phtf = new JTextField("");
 	   phtf.setBounds(120,235,200,40);
+//	   phtf.setEnabled(false);
+//	   phtf.addMouseListener(null);
 	   
-	   JTextField pstf = new JTextField("");
+	   
+	   JTextField pstf = new JPasswordField("");
 	   pstf.setBounds(120,305,200,40);
+	   pstf.setEditable(true);
+//	   pstf.setEnabled(false);
+//	   pstf.addMouseListener(null);
 	   
-	   JTextField psch = new JTextField("");
+	   
+	   
+	   JTextField psch = new JPasswordField("");
 	   psch.setBounds(120,375,200,40);
+//	   psch.setEnabled(false);
+//	   psch.addMouseListener(null);
+	  
 	   //===================================
 	   
+	 //==========비밀번호 불일치 팝업=========
+	 		String num1 = pstf.getText();
+	 		String num2 = psch.getText();
+	 		if(num1.equals(num2)) {
+	 			
+	 			KoskPassWordNo ksn = new KoskPassWordNo();
+	 			pp4.setLayout(null);
+	 			pp4.setBounds(20, 100, 292, 200);
+	 			pp4.add(ksn.KoskPassWordNo(mf));
+	 			
+	 			JButton button2 = new JButton("OK");
+	 			button2.setBounds(5, 140, 280, 40);
+	 			button2.setBackground(paper);
+	 			button2.setForeground(paper1);
+	 			pp4.add(button2,0);
+	 			button2.addActionListener(new ActionListener() {
+	 				
+	 				@Override
+	 				public void actionPerformed(ActionEvent e) {
+	 					pp.remove(pp4);
+	 					pp.repaint();
+	 					mf.repaint();
+	 					
+	 				}
+	 			});
+	 			
+	 		}
 	   //====== cancel, confirm 버튼 설정 ========================
 	   Image cancelbtn = new ImageIcon("img/cancelbtnimg.png").getImage().getScaledInstance(140, 50, 0);
 	   Image confirmbtn = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(140, 50, 0);
@@ -173,7 +228,10 @@ public class KoskSignUp extends JPanel{
 				
 			}
 		});
-	   //=====ㅓ===============================
+	   //=============비밀번호 일치 버튼 ======================
+		
+		
+		
 	   	
 	   	//====== 체크박스 설정 ======================
 	   	JCheckBox checkbox = new JCheckBox("   [필수] 제 3자 이용자 동의 약관");
@@ -205,16 +263,21 @@ public class KoskSignUp extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*ArrayList number = new ArrayList();
+				ArrayList number = new ArrayList();
 				number.add(nametf.getText());
 				number.add(phtf.getText());
 				number.add(pstf.getText());
 				number.add(psch.getText());
-				
-				new KoskManager(number);*/
-				pp.add(pp2,0);
-				mf.repaint();
-				
+			
+				KoskManager km =  new KoskManager();
+				km.KoskManager(number);
+				if(km.KoskManager(number) == true) {
+					pp.add(pp2,0);
+					mf.repaint();
+				} else if(km.KoskManager(number) == false){
+					pp.add(pp4,0);
+					mf.repaint();
+				}
 
 				
 			}
@@ -229,6 +292,7 @@ public class KoskSignUp extends JPanel{
 				
 			}
 		});
+		
 
 	
 	}

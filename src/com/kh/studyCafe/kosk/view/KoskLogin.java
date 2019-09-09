@@ -5,18 +5,28 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.view.AdmUsingUserList;
+import com.kh.studyCafe.admin.view.ControlPanel;
 
  
  
 public class  KoskLogin extends JPanel{
 	private JPanel Login = new JPanel();
 	private KoskMainFrame mf;
+	private int resultphone;
+	private int resultpassw;
 	public KoskLogin(KoskMainFrame mf) {
 		this.mf = mf;
 
@@ -63,12 +73,20 @@ public class  KoskLogin extends JPanel{
 		//==================== 텍스트 필드 설정  ==============
 		
 		JTextField phonenumber = new JTextField("Phone Number");
-		JTextField password = new JTextField("password.");
-		
+		JTextField password = new JPasswordField("Pawd");
+		phonenumber.setEnabled(false);
+		phonenumber.addMouseListener(null);
 		phonenumber.setBounds(65,275,230,40);
 		phonenumber.setLayout(null);
+		
+		password.setEnabled(false);
+		password.addMouseListener(null);
 		password.setBounds(65,320,230,40);
 		password.setLayout(null);
+		
+		
+
+		
 		
 		
 		
@@ -103,6 +121,11 @@ public class  KoskLogin extends JPanel{
 		Login.add(signUp);
 		
 		mf.add(Login,0);
+		
+		Login.addMouseListener(null);
+		
+		
+		
 		loginButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -122,6 +145,7 @@ public class  KoskLogin extends JPanel{
 
 				ChangePanel.changePanel(mf, Login, new KoskPsswdFind(mf));
      
+				
 			}
 		});
 	
@@ -134,8 +158,107 @@ public class  KoskLogin extends JPanel{
 			}
 			
 		});
+		phonenumber.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(e.getSource() == phonenumber) {
+					if(resultphone == 0) {
+						phonenumber.setText("");
+						phonenumber.setEnabled(true);
+						phonenumber.requestFocus();
+						
+						resultphone++;
+					}	
+					
+				}
+				
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+		});
+		password.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getSource() == password) {
+					if(resultpassw == 0) {
+						password.setText("");
+						password.setEnabled(true);
+						password.requestFocus();
+						
+						resultpassw++;
+					}	
+					
+				}
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+
+		});
+	
+
+
+	
 		
 	}
 	
 	
+
+		
 }
+	
+	
+
