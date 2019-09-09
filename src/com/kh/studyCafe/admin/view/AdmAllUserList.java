@@ -101,13 +101,13 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
 			// 잔여시간 형식 수정해서 테이블에 뿌리기
 			if (utList.get(i).getSeatType() == User.WEEKSEAT) { // 기간권일 때
-				data[i][6] = utList.get(i).getRemainTime() / 86400000 + "일";
+				data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
 			} else if (utList.get(i).getSeatType() == User.HOURSEAT) { // 1일권일 때
 				// 밀리세컨드를 시간 분으로 표시하기 위해 변
 				String timeResult = "";
 
 				timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
-				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + "분";
+				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000  + 1 + "분";
 
 				data[i][6] = timeResult;
 			}
@@ -320,8 +320,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		srchChk.setBounds(22, 168, 627, 40);
 		srchChk.setBackground(Color.RED);
 		srchChk.setBorder(BorderFactory.createEmptyBorder());
-//		.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-//		searchForm.addKeyListener(this);
 		vertical = scrollpane.getVerticalScrollBar();
 		
 		this.add(srchChk, new Integer(10));
@@ -332,7 +330,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		this.add(allUserInfoButton);
 		this.add(scrollpane);
 		
-		System.out.println(vertical.getSize());
+//		System.out.println(vertical.getSize());
 
 	}
 
@@ -358,11 +356,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 			for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
 				if (utList.get(i).getName().contains(searchForm.getText().trim())) {
 					if(i>10) {
-						System.out.println("a지역");
+//						System.out.println("a지역");
 						vertical.setValue((i-10)*40-12);
 						srchChk.setLocation(22, (181+ 10*40));
 					}else {
-						System.out.println("c지역");
+//						System.out.println("c지역");
 						vertical.setValue(0);
 						srchChk.setLocation(22, (168+ i*40));
 					}
@@ -373,11 +371,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 				if (allUserList.get(i).getName().contains(searchForm.getText().trim())) {
 					int num = i + utList.size();
 					if(num>10) {
-						System.out.println("1a지역");
+//						System.out.println("1a지역");
 						vertical.setValue((num-10)*40 - 12);
 						srchChk.setLocation(22, (181+ 10*40));
 					}else {
-						System.out.println("1c지역");
+//						System.out.println("1c지역");
 						vertical.setValue(0);
 						srchChk.setLocation(22, (168+ num*40));
 					}
@@ -388,11 +386,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 			for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
 				if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
 					if(i>10) {
-						System.out.println("a지역");
+//						System.out.println("a지역");
 						vertical.setValue((i-10)*40-12);
 						srchChk.setLocation(22, (181+ 10*40));
 					}else {
-						System.out.println("c지역");
+//						System.out.println("c지역");
 						vertical.setValue(0);
 						srchChk.setLocation(22, (168+ i*40));
 					}
@@ -402,11 +400,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 			for (int i = 0; i < allUserList.size(); i++) { // 이용 중인 전화번호 이름 검색 시
 				if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
 					if(i>10) {
-						System.out.println("a지역");
+//						System.out.println("a지역");
 						vertical.setValue((i-10)*40-12);
 						srchChk.setLocation(22, (181+ 10*40));
 					}else {
-						System.out.println("c지역");
+//						System.out.println("c지역");
 						vertical.setValue(0);
 						srchChk.setLocation(22, (168+ i*40));
 					}

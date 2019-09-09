@@ -31,6 +31,7 @@ import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUsingUserList extends JPanel implements ActionListener {
@@ -41,6 +42,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 	private ArrayList<User> u;
 	private JScrollPane scrollpane = null;
 	private JButton cafeInfo = null;
+	private static boolean threadControl;
 
 	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
@@ -48,7 +50,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		this.utList = utList;
 		this.u = u;
 		AdmMainFrame.watchPanel = this;
-
+		
 		// 테이블 헤더 목록
 		String[] columnNames = { "No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동",
 				"좌석퇴실" };
@@ -92,13 +94,13 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 
 			// 잔여시간 형식 수정해서 테이블에 뿌리기
 			if (utList.get(i).getSeatType() == 2) { // 기간권일 때
-				data[i][6] = utList.get(i).getRemainTime() / 86400000 + "일";
+				data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
 			} else if (utList.get(i).getSeatType() == 1) { // 1일권일 때
 				// 밀리세컨드를 시간 분으로 표시하기 위해 변
 				String timeResult = "";
 
 				timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
-				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + "분";
+				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
 
 				data[i][6] = timeResult;
 			}
@@ -274,6 +276,15 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		this.add(cafeInfo);
 		this.add(scrollpane);
 
+		if(!threadControl) {
+
+			// 시계스레드 start
+			MinTimeThread timeThread = new MinTimeThread(client);
+			timeThread.setDaemon(true);
+			timeThread.start();
+			
+			threadControl = true;
+		}
 	}
 
 	@Override
