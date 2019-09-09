@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel;
 import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
@@ -31,14 +34,19 @@ public class KoskSeatManagement extends JPanel{
 	JPanel backpanel = new JPanel();
 	private KoskMainFrame mf;
 	private JButton[] button = new JButton[3];
-	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel) {
-		
+	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phnum) {
+	
+		KoskManager km = new KoskManager();
+			
 		// 패널 2개 생성
 		JPanel pp = new JPanel(); // 시간 기간 선택
 		JPanel pp2 = new JPanel();// 1일권
 		JPanel pp3 = new JPanel();// 기간권
 		this.mf = mf;
 		this.backpanel = backpanel;
+		
+		
+		
 		//======= 컬러 설정 ====	
 		
 		//============== font 설정 =========
@@ -217,7 +225,7 @@ public class KoskSeatManagement extends JPanel{
 					KoskManager kkm = new KoskManager();
 					System.out.println(kkm.gettime()+"시간 선택함");
 					
-					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel));
+					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum));
 				}
 			});
 		 indi2con.addActionListener(new ActionListener() {
@@ -225,7 +233,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel));
+				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum));
 			}
 		});
 		 mf.repaint();
@@ -254,10 +262,14 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				mf.remove(panel);
+				/*mf.remove(panel);
 				mf.repaint();
 				mf.add(new KoskLogin(mf));
-				mf.repaint();
+				mf.repaint();*/
+				
+				koskDao.KoskExitSeat(phnum);// 퇴실 
+				
+					
 			}
 		});
 		seatmv.addActionListener(new ActionListener() {
