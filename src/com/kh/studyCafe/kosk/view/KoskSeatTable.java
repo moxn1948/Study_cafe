@@ -310,7 +310,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 		public void mouseClicked (MouseEvent e) {
 			// TODO Auto-generated method stub
 				
-			ChangePanel.changePanel(mf,panel, new KoskMypage(mf));
+			ChangePanel.changePanel(mf,panel, new KoskMypage(mf,panel));
 			
 		}
 	});
@@ -379,7 +379,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 								panel.add(confirm);
 								//==== 개인좌석 선택 패널 =====
 								JPanel thw = new JPanel();
-								thw.setBounds(20, 100, 310, 250);
+								thw.setBounds(10, 100, 400, 250);
 								thw.setBackground(wallPapers);
 								thw.setLayout(null);
 								KoskTimeHourWeek kth = new KoskTimeHourWeek();
@@ -388,18 +388,27 @@ public KoskSeatTable(KoskMainFrame mf) {
 								//== 버튼============
 								JButton thwcf = new JButton("1일권");
 								thwcf.setFont(font);
-								thwcf.setBounds(20, 70, 125, 68);
+								thwcf.setBounds(0, 70, 100, 68);
 								thwcf.setBackground(paper);
 								thwcf.setForeground(paper1);
 								
-								panel.repaint();
+								
 								JButton thwcc = new JButton("기간권");
 								thwcc.setFont(font);
-								thwcc.setBounds(165, 70, 125, 68);
+								thwcc.setBounds(105, 70, 100, 68);
 								thwcc.setBackground(paper);
 								thwcc.setForeground(paper1);
+								
+								
+								JButton rtime = new JButton("잔여시간");
+								rtime.setFont(font);
+								rtime.setBounds(210,70,100,68);
+								rtime.setBackground(paper);
+								rtime.setForeground(paper1);
 								thw.add(thwcc,0); // 개인 기간권
 								thw.add(thwcf,0); // 개인 1일권 버튼
+								thw.add(rtime,0);
+								panel.repaint();
 								//===================================
 								//=== 시간권 패널 ====================
 								JPanel tmch = new JPanel();
@@ -441,7 +450,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
 										panel.remove(tmch);
-										ChangePanel.changePanel(mf, panel, new KoskPayment2(mf));
+										ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel));
 										panel.repaint();
 									}
 								});
@@ -471,7 +480,21 @@ public KoskSeatTable(KoskMainFrame mf) {
 										panel.repaint();
 									}
 								});
+								//===== 잔여시간 버튼 ========================
+								rtime.addActionListener(new ActionListener() {
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										//===== if문으로 잔여시간 확인후 true면 좌석 선택 완료 false면 잔여시간 없음을 출력==
+										
+										KoskManager kkm = new KoskManager();
+										System.out.println(kkm.seatim()+"좌석 선택 완료");
+										kkm.seatsv(kkm.seatim());
+									}
+								});
 								//=============================================
+								
 								//=============================================
 								
 								//===================================
@@ -557,7 +580,7 @@ public KoskSeatTable(KoskMainFrame mf) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskPayment2(mf));
+			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel));
 		}
 	});
 	//=====================================================

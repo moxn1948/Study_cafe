@@ -28,15 +28,17 @@ import com.kh.studyCafe.model.vo.User;
 public class KoskSeatManagement extends JPanel{
 	
 	public JPanel panel = new JPanel();
+	JPanel backpanel = new JPanel();
 	private KoskMainFrame mf;
 	private JButton[] button = new JButton[3];
-	public KoskSeatManagement(KoskMainFrame mf) {
+	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel) {
 		
 		// 패널 2개 생성
 		JPanel pp = new JPanel(); // 시간 기간 선택
 		JPanel pp2 = new JPanel();// 1일권
 		JPanel pp3 = new JPanel();// 기간권
 		this.mf = mf;
+		this.backpanel = backpanel;
 		//======= 컬러 설정 ====	
 		
 		//============== font 설정 =========
@@ -215,7 +217,7 @@ public class KoskSeatManagement extends JPanel{
 					KoskManager kkm = new KoskManager();
 					System.out.println(kkm.gettime()+"시간 선택함");
 					
-					ChangePanel.changePanel(mf, panel, new KoskPayment(mf));
+					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel));
 				}
 			});
 		 indi2con.addActionListener(new ActionListener() {
@@ -223,7 +225,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskPayment(mf));
+				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel));
 			}
 		});
 		 mf.repaint();
@@ -233,7 +235,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				seat.enable(false);
+				seat.setEnabled(false);
 				for(int i = 0; i < button.length; i++) {
 					button[i].setEnabled(false);
 					button[i].setVisible(false);
@@ -327,6 +329,22 @@ public class KoskSeatManagement extends JPanel{
 					
 				}
 			});
+		   logout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+			}
+		});
+		   mypage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel) );
+			}
+		});
 		   
 		  
 		   

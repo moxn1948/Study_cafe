@@ -14,14 +14,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.kosk.controller.KoskManager;
+
 public class KoskPayment extends JPanel{
 
 	private KoskMainFrame mf;
 	private JPanel panel = new JPanel();
 	private JPanel panel2 = new JPanel();
-	public  KoskPayment(KoskMainFrame mf) {
+	private JPanel backpanel = new JPanel();
+	public  KoskPayment(KoskMainFrame mf, JPanel backpanel) {
 		this.mf = mf;
-		
+		this.backpanel = backpanel;
 		//======= 컬러 설정 ====	
 
 		Color wallPapers = new Color(239,234,222);
@@ -129,7 +132,7 @@ public class KoskPayment extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskSeatManagement(mf));
+				ChangePanel.changePanel(mf, panel, backpanel);
 			}
 		});
 
@@ -153,12 +156,15 @@ public class KoskPayment extends JPanel{
 				button.setForeground(paper1);
 				panel2.add(button);
 								
+				KoskManager kkm = new KoskManager();
+				System.out.println(kkm.seatim()+"좌석 결제 완료");
+				kkm.seatsv(kkm.seatim());
 				
 				back2.addActionListener(new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel));
 						
 					}
 				});
@@ -197,7 +203,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel));
 						
 					}
 				});

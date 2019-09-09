@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 
 public class KoskIndividualPanel2 extends JPanel implements MouseListener{
@@ -128,8 +129,8 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 	
 	return panel;
 	
-}
-
+}	
+	KoskManager kkm = new KoskManager();
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == plus) {
@@ -153,7 +154,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 			fm.setVisible(false);
 			//confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
 		}
-		
+		 kkm.intime(day);
 	}
 
 	@Override
