@@ -11,10 +11,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 
-   public AdmNewIndvSelectTime(AdmMainFrame mf) {
-		// 패널 설정
+public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
+	private AdmMainFrame mf = null;
+	private JPanel op = null;
+	private ClientBack client = null;
+	private String phoneNum = null;
+	JButton cancelBtn = null;
+	JButton confirmBtn = null;
+	private int term = 1;
+	private JButton countUpBtn = null;
+	private JButton countDownBtn = null;
+
+   public AdmNewIndvSelectTime(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
+		this.mf = mf;
+		this.op = op;
+		this.client = client;
+		this.phoneNum = phoneNum;
+	   
+	   // 패널 설정
 		int w = 540;
 		int h = 467;
 		int x = popPosition(w, h)[0];
@@ -83,8 +101,8 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 
 
 		// +, - 버튼 설정
-		JButton countUpBtn = new JButton("+");
-		JButton countDownBtn = new JButton("-");
+		countUpBtn = new JButton("+");
+		countDownBtn = new JButton("-");
 		
 		countUpBtn.setBounds(44, 234, 200, 44);
 		countDownBtn.setBounds(44, 330, 200, 44);
@@ -134,8 +152,8 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 		
 		
 		// 버튼 설정
-		JButton cancelBtn = new JButton("Cancel");
-		JButton confirmBtn = new JButton("Confirm");
+		cancelBtn = new JButton("Cancel");
+		confirmBtn = new JButton("Confirm");
 		
 		cancelBtn.setBounds(25, 394, 240, 50);
 		confirmBtn.setBounds(275,394, 240, 50);
@@ -147,6 +165,7 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
+		
 		
 		
 
@@ -182,7 +201,19 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      // TODO Auto-generated method stub
+      if(e.getSource() == cancelBtn) {
+		new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(
+				mf, new AdmManager().usingUserManager(),new AdmDao().admRead(), client));				
+      }
+      
+     
+      
+      if(e.getSource() == confirmBtn) {
+			AdmManager ad = new AdmManager();
+			client.sendUser(ad.addRemainTime(phoneNum, term));
+			
+			mf.remove(this);
+      }
       
    }
 

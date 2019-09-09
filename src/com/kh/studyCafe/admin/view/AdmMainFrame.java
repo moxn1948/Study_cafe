@@ -59,6 +59,8 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 		if(tempClass.equals("AdmUsingUserList")) {
 			this.add(new AdmUsingUserList(this, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+		}else if(tempClass.equals("AdmAllUserList")) {
+			this.add(new AdmAllUserList(this, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 		
 		
