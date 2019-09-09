@@ -12,12 +12,48 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
+import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
 import com.kh.studyCafe.model.service.SignUpService;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskManager {
 	public KoskManager() {}
+	
+	private KoskDao kd = new KoskDao();
+	
+	
+	public ArrayList<User> moveSeatNum(String phoneNum, String seatNum) {
+		return kd.KoskLineSeat(phoneNum, seatNum);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public KoskManager(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
 	      Iterator it = number2.iterator();
 	      
@@ -119,12 +155,12 @@ public class KoskManager {
 	//== 파일 저장 ===
 	public void seatss(String seatim) {
 		BufferedWriter bw = null;
-		String seat = null;
+		ArrayList seat = new ArrayList();
 
-		seat = seatim;
+		seat.add(seatim);
 		try {
 			bw = new BufferedWriter(new FileWriter("seatsv.txt")); 
-				bw.write(seat);
+			//	bw.write(  );(seat);
 				bw.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -275,7 +311,5 @@ public class KoskManager {
 
 			return userList;
 		}
-	  public void seatnum(String seatnum) {
-		
-	  }
+	  
 	}

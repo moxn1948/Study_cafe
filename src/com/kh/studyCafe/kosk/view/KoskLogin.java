@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,10 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.kh.studyCafe.admin.controller.AdmManager;
-import com.kh.studyCafe.admin.model.dao.AdmDao;
-import com.kh.studyCafe.admin.view.AdmUsingUserList;
-import com.kh.studyCafe.admin.view.ControlPanel;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.model.vo.User;
 
  
  
@@ -85,7 +84,7 @@ public class  KoskLogin extends JPanel{
 		password.setLayout(null);
 		
 		
-
+		
 		
 		
 		
@@ -124,15 +123,35 @@ public class  KoskLogin extends JPanel{
 		
 		Login.addMouseListener(null);
 		
-		
+		ArrayList userList = new ArrayList<>();
 		
 		loginButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				KoskDao kd = new KoskDao();
+				//ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
+				/*for(int i=0; i<kd.seatin().size(); i++) {
+					System.out.println("i : " + i);
+					System.out.println(kd.seatin().size());
+					System.out.println(kd.seatin().get(i));
+					
+					//System.out.println(kd.login(phonenumber.getText(), password.getText()));
+					
+				}*/
+				String phnum = phonenumber.getText();
+				System.out.println(phnum);
 				
-				ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
+				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
+					
+					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum));
+				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
+					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum));
+				} else {
+					
+				}
 				
+			//	System.out.println(kd.KoskRead());	
 			}
 		});
 		
