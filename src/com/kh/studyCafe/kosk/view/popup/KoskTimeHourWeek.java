@@ -41,15 +41,23 @@ public class KoskTimeHourWeek extends JPanel{
 		
 		JButton button = new JButton("1일권");
 		button.setFont(font);
-		button.setBounds(20,70,125,68); 
+		button.setBounds(20,70,100,68); 
 		button.setBackground(paper);
 		button.setForeground(paper1);
 		
 		JButton button1 = new JButton("기간권");
 		button1.setFont(font);
-		button1.setBounds(165,70,125,68);
+		button1.setBounds(140,70,100,68);
 		button1.setBackground(paper);
 		button1.setForeground(paper1);
+		
+		
+		JButton button2 = new JButton("잔여시간");
+		button2.setFont(font);
+		button2.setBounds(210,70,100,68);
+		button2.setBackground(paper);
+		button2.setForeground(paper1);
+		
 		JLabel label = new JLabel();
 		label.setForeground(textColor);
 		panel.setOpaque(true);
@@ -82,7 +90,7 @@ public class KoskTimeHourWeek extends JPanel{
 		
 		
 	
-		panel.add(button);
+		//panel.add(button);
 		//panel.add(button1);
 		
 		return panel;

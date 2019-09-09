@@ -3,51 +3,56 @@ package com.kh.studyCafe.kosk.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Iterator;
 
 import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
 import com.kh.studyCafe.model.service.SignUpService;
+import com.kh.studyCafe.model.vo.User;
 
 public class KoskManager {
 	public KoskManager() {}
 	public KoskManager(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
-		//Iterator it = (Iterator) number2.iterator();
-		
-		String[] value = new String[4]; // 0번부터 3번까지 순서대로 정보를 value에 저장함
-		
-		SignUpService ss = new SignUpService();
-		ss.signupservice(value);
-			BufferedWriter bw = null;
-			if(ss.signupservice(value)== true) {
-				
-				try {
-					bw = new BufferedWriter(new FileWriter("user.dat",true));
-					bw.write(value[0]+"/");
-					bw.write(value[1]+"/");
-					bw.write(value[2]+"/");
-					bw.write(value[3]+"\r\n");// 파일 입력하는 부분
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				} finally {
-					try {
-						bw.close();
-					} catch (IOException e) {
-						
-						e.printStackTrace();
-					}
-				}
-			} else {
-				new KoskPasswordDoNot(); // false 이면 팝업창 뜸
-			}
-			
-		}
+	      Iterator it = number2.iterator();
+	      
+	      String[] value = new String[4];// 0번부터 3번까지 순서대로 정보를 value에 저장함
+	      int i =0;
+	      while(it.hasNext()) {
+	         value[i] =(String)it.next();
+	         i++;
+	      }
+	      SignUpService ss = new SignUpService();
+	      ss.signupservice(value);
+	         BufferedWriter bw = null;
+	         if(ss.signupservice(value)== true) {
+	            
+	            try {
+	               bw = new BufferedWriter(new FileWriter("user.dat",true));
+	               bw.write(value[0]+"/");
+	               bw.write(value[1]+"/");
+	               bw.write(value[2]+"/");// 파일 입력하는 부분
+	               bw.write(value[3]+"\r\n");
+	               
+	            } catch (IOException e) {
+	               
+	               e.printStackTrace();
+	            } finally {
+	               try {
+	                  bw.close();
+	               } catch (IOException e) {
+	                  
+	               }
+	            }
+	         }
+//	         return ss.signupservice(value);
+	         
+	      }
 	public void seatManger(String seatnum) {
 		BufferedWriter bw = null;
 		BufferedReader br = null;
@@ -233,7 +238,7 @@ public class KoskManager {
 		return a;
 	}
 	
-	public void Reader() {
+	  public void Reader() {
 	      try {
 	         BufferedReader br = new BufferedReader(new FileReader("user.dat"));
 	         String temp;
@@ -250,4 +255,27 @@ public class KoskManager {
 	         
 	      }
 	   }
+	  public ArrayList<User> userdat() {
+			ArrayList<User> userList = null;
+
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+				userList = (ArrayList<User>) ois.readObject();
+				
+				String[] aa = new String[userList.size()];
+				int a = 0;
+				while(a < userList.size()) {
+					aa[a] = userList.get(a).toString();
+					System.out.println(aa[a]);
+					a++;
+				}
+				
+			} catch (ClassNotFoundException | IOException e) {
+				System.out.println("user.dat에 첫번째 입력");
+			}
+
+			return userList;
+		}
+	  public void seatnum(String seatnum) {
+		
+	  }
 	}
