@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -94,9 +93,9 @@ public class AdmDao {
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
-					System.out.println(userList);
+//					System.out.println(userList);
 					admWrite(userList); // 
-					System.out.println(userList + "2");
+//					System.out.println(userList + "2");
 				}
 			}
 
@@ -118,7 +117,7 @@ public class AdmDao {
 					userList.get(i).setInTime(0);
 					userList.get(i).setOutTime(0);
 					userList.get(i).setRemainTime(0);
-					System.out.println(userList);
+//					System.out.println(userList);
 					admWrite(userList); // 
 				}
 			}
@@ -153,7 +152,7 @@ public class AdmDao {
 		long inTime = 0;
 		ArrayList<User> userList = null;
 	    long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-	    System.out.println(timeNow);
+//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 			
@@ -165,6 +164,41 @@ public class AdmDao {
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+		return userList;
+	}
+
+
+	public ArrayList<User> admEnterSeat() { // 잔여시간을 현재시간 기준으로 변경하는 메소드
+		long inTime = 0;
+		ArrayList<User> userList = null;
+	    long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+//	    System.out.println(timeNow);
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+			
+			
+			for (int i = 0; i < userList.size(); i++) {
+
+				long remainTime = userList.get(i).getOutTime() - timeNow;
+				
+				if(userList.get(i).getInTime() != 0) {
+					userList.get(i).setRemainTime(remainTime);
+				}
+				
+				
+				if(remainTime < 0) { // 퇴실 시간 지난 사람 퇴실 처리
+					userList.get(i).setSeatNum("0");
+					userList.get(i).setInTime(0);
+					userList.get(i).setOutTime(0);
+					userList.get(i).setRemainTime(0);
+					userList.get(i).setSeatType(User.NOSEAT);
+				}
+			}
+			
+		}catch (ClassNotFoundException | IOException e) {
+			System.out.println("admEnterSeat 오류");
+		}
+		
 		return userList;
 	}
 

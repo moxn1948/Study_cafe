@@ -1,6 +1,5 @@
 package com.kh.studyCafe.admin.view;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.Watcher;
 import com.kh.studyCafe.model.vo.User;
 
@@ -24,6 +24,7 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	
 	// 메인 프레임
 	public AdmMainFrame() {
+		
 
 		this.setBounds(0, 0, 978, 700); 
 		this.setLayout(null);
@@ -41,6 +42,7 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+		
 		
 		
 	}

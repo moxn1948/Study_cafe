@@ -23,9 +23,9 @@ public class AdmUserInfoChk {
 	         }
 	      }
 
-	      for (int i = 0; i < user.size(); i++) {
+	      /*for (int i = 0; i < user.size(); i++) {
 	         System.out.println(user.get(i));
-	      }
+	      }*/
 
 	      String[] name = new String[user.size()];
 	      String[] phoneNum = new String[user.size()];
@@ -132,31 +132,28 @@ public class AdmUserInfoChk {
 	public void infoWrite() {
 		// ArrayList<User> userList = new ArrayList<User> ();
 
-	      long inTime = new Date(new GregorianCalendar(2019, 8, 8, 1, 22, 0).getTimeInMillis()).getTime();
+	      long inTime = new Date(new GregorianCalendar(2019, 8, 10, 0, 22, 0).getTimeInMillis()).getTime();
 
-	      long outTime = new Date(new GregorianCalendar(2019, 8, 8, 22, 0, 0).getTimeInMillis()).getTime();
-	      long outTime2 = new Date(new GregorianCalendar(2019, 8, 10, 3, 0, 0).getTimeInMillis()).getTime();
+	      long outTime = new Date(new GregorianCalendar(2019, 8, 10, 18, 0, 0).getTimeInMillis()).getTime();
+	      long outTime3 = new Date(new GregorianCalendar(2019, 8, 10, 1, 22, 0).getTimeInMillis()).getTime();
+	      long outTime2 = new Date(new GregorianCalendar(2019, 8, 13, 0, 0, 0).getTimeInMillis()).getTime();
 	      long currentTime = new Date().getTime();
 
 	      long remainTime = outTime - currentTime;
 	      long remainTime2 = outTime2 - currentTime;
+	      long remainTime3 = outTime3 - currentTime;
 	      long pointTime = outTime - inTime;
 	      long pointTime2 = outTime2 - inTime;
+	      long pointTime3 = outTime3 - inTime;
 
 	      User u = new User("별님", "010-1111-2211", "pass123", "4-A", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
 	      User u1 = new User("달님", "010-1121-2212", "pas24", "0", 0, 0, 0, User.NOSEAT, 1000, pointTime2, "gold");
-	      User u2 = new User("햇님", "010-1131-2213", "pass323", "6-A", inTime, outTime, remainTime, User.HOURSEAT, 1000,   pointTime, "silver");
-	      User u3 = new User("팥쥐", "010-1141-2214", "pass423", "11", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
-	      User u4 = new User("콩쥐", "010-1151-2215", "pass523", "0", 0, 0, 0, User.NOSEAT, 0, 0, "bronze");
-	      User u5 = new User("대한", "010-1161-2214", "pass623", "22", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
+	      User u2 = new User("햇님", "010-1131-2213", "pass323", "6-A", inTime, outTime3, remainTime3, User.HOURSEAT, 1000,   pointTime, "silver");
+	      User u3 = new User("팥쥐", "010-1141-2214", "pass423", "11", inTime, outTime3, remainTime3, User.HOURSEAT, 1000, pointTime, "silver");
+	      User u4 = new User("콩쥐", "010-1151-2215", "pass523", "12", 0, 0, remainTime2, User.WEEKSEAT, 0, pointTime2, "bronze");
+	      User u5 = new User("대한", "010-1161-2214", "pass623", "22", inTime, outTime2, remainTime2, User.WEEKSEAT, 1000, pointTime, "silver");
 	      User u6 = new User("민국", "010-1171-2214", "pass723", "13", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
 	      User u7 = new User("만세", "010-1181-2214", "pass823", "4", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
-	      User u8 = new User("담초", "010-1191-2214", "pass923", "5", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
-	      User u9 = new User("안녕", "010-1201-2214", "pass1023", "16", 0, 0, 0, User.WEEKSEAT, 1000, pointTime, "silver");
-	      User u10 = new User("자바", "010-1211-2214", "pass1123", "7", inTime, outTime2, remainTime2, User.WEEKSEAT, 1000, pointTime, "silver");
-	      User u11 = new User("abc", "010-1221-2214", "pass1223", "8", inTime, outTime2, remainTime2, User.WEEKSEAT, 1000, pointTime, "silver");
-	      User u12 = new User("사람", "010-1231-2214", "pass1323", "8-A", inTime, outTime, remainTime, User.HOURSEAT, 1000, pointTime, "silver");
-	      User u13 = new User("이름", "010-1241-2214", "pass1423", "0", 0, 0, 0, User.NOSEAT, 1000, pointTime, "silver");
 	      
 	      AdmDao ad = new AdmDao();
 	      ad.admWrite(u);
@@ -167,12 +164,6 @@ public class AdmUserInfoChk {
 	      ad.admWrite(u5);
 	      ad.admWrite(u6);
 	      ad.admWrite(u7);
-	      ad.admWrite(u8);
-	      ad.admWrite(u9);
-	      ad.admWrite(u10);
-	      ad.admWrite(u11);
-	      ad.admWrite(u12);
-	      ad.admWrite(u13);
 	}
 
 }
