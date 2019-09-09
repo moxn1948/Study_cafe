@@ -39,9 +39,10 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 	
 	public JPanel panel = new JPanel();
 	private KoskMainFrame mf;
-	
-	public JPanel KoskGroupPanel(KoskMainFrame mf) {
+	private String seatName;
+	public JPanel KoskGroupPanel(KoskMainFrame mf, String seatName) {
 		this.mf = mf;
+		this.seatName = seatName;
 		
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
@@ -111,7 +112,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		ettime.setForeground(textColor);
 		ettime.setEditable(false);
 		
-		personNum = 2;
+		personNum = (Integer.parseInt(seatName) - 2);
 		psn = new JTextField(personNum + "명");
 		psn.setBounds(144,175,110,40);
 		psn.setFont(checktext);
@@ -219,14 +220,14 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 			}
 		}
 		if(e.getSource() == plus2) {
-			if(personNum >= 2 && personNum < 4) {
+			if(personNum >=  (Integer.parseInt(seatName) - 2) && personNum < Integer.parseInt(seatName)) {
 				personNum++;
 				psn.setText(personNum + "명");
 				
 			}
 		}
 		if(e.getSource() == minus2) {
-			if(personNum > 2 && personNum <= 4) {
+			if(personNum > (Integer.parseInt(seatName) - 2) && personNum <= Integer.parseInt(seatName)) {
 				personNum--;
 				psn.setText(personNum + "명");
 			}
