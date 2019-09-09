@@ -1,6 +1,7 @@
 package com.kh.studyCafe.kosk.view.popup;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
