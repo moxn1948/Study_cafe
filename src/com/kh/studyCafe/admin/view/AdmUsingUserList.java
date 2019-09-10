@@ -28,6 +28,7 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUsingUserList extends JPanel implements ActionListener, MouseListener {
@@ -97,8 +98,14 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 				String timeResult = "";
 
 				timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
-				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
-
+//				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
+				if(utList.get(i).getRemainTime() % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
+	               timeResult += "0분";
+	            }else {
+	               timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
+	            }
+				
+				
 				data[i][6] = timeResult;
 			}
 
@@ -252,16 +259,17 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		// 테이블 내용 수정못하도록 바꿈
 		// table.setEnabled(false);
 		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);			
+		table.getTableHeader().setResizingAllowed(false);
 		
-		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
-		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
 		
-		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-
-		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
+//		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
+//		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
+//		
+//		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
+//		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
+//
+//		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
+//		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
 
 		table.addMouseListener(this);
 		
@@ -274,6 +282,16 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(allUserInfoButton);
 		this.add(cafeInfo);
 		this.add(scrollpane);
+		
+		 if(!threadControl) {
+
+	         // 시계스레드 start
+	         MinTimeThread timeThread = new MinTimeThread(client);
+	         timeThread.setDaemon(true);
+	         timeThread.start();
+	         
+	         threadControl = true;
+	      }
 
 
 	}
@@ -312,7 +330,70 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		AdmDao ad = new AdmDao();
 		ControlPanel cp = new ControlPanel();
 		if(table.getSelectedColumn() == 1) {
-			cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone)));			
+			cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone),this,client));			
+		}
+		if(table.getSelectedColumn() == 8) {//연장
+			scrollpane.getHorizontalScrollBar().setEnabled(false);
+			scrollpane.getVerticalScrollBar().setEnabled(false);
+			scrollpane.getViewport().getView().setEnabled(false);
+
+			int row = table.getSelectedRow();
+			tablePhone = table.getValueAt(row, 2) + "";
+//			String seatTimeType = table.getValueAt(row, 6) + "";
+			String remainTimeChk = table.getValueAt(row, 6) + "";
+//			remainTimeChk = remainTimeChk.split("시간 ")[0];
+//			System.out.println();
+		
+			// 회원에 따라 연장 버튼 연결 구분
+			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
+				if(remainTimeChk.contains("일")) { // 기간권일때
+					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
+				}else {
+//					System.out.println(remainTimeChk.split("시간 ")[0]);
+//					sysout
+					if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) { // 잔여시간이 30분 미만일 때
+						cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+					}else {
+						cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
+					}	
+				}
+			} else { // 그룹일 때
+				cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+			}
+
+		}
+		
+		if(table.getSelectedColumn() == 9) {//이동
+			scrollpane.getHorizontalScrollBar().setEnabled(false);
+			scrollpane.getVerticalScrollBar().setEnabled(false);
+			scrollpane.getViewport().getView().setEnabled(false);
+
+			int row = table.getSelectedRow();
+			tablePhone = table.getValueAt(row, 2) + "";
+			
+
+			// 회원에 따라 이동 버튼 연결 구분
+			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
+				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList ));
+			} else { // 그룹일 때
+				cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
+			}
+		}
+		if(table.getSelectedColumn() == 10) {//퇴실
+			scrollpane.getHorizontalScrollBar().setEnabled(false);
+			scrollpane.getVerticalScrollBar().setEnabled(false);
+			scrollpane.getViewport().getView().setEnabled(false);
+
+			int row = table.getSelectedRow();
+			String seatTimeType = table.getValueAt(row, 6) + "";
+			String phoneNum = table.getValueAt(row, 2) + "";
+
+			// 회원에 따라 퇴실 버튼 연결 구분
+			if (seatTimeType.contains("일")) { // 기간권일 때
+				cp.addPanel(mf, this, new AdmExitTimeWeek(mf, this, client, phoneNum));
+			} else { // 1일권일 떄
+				cp.addPanel(mf, this, new AdmExitTimeHour(mf, this, client, phoneNum));
+			}
 		}
 	}
 
