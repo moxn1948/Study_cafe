@@ -245,6 +245,25 @@ public class AdmDao {
 
 	      return userList;
 	   }
+	   
+		public User toUserInfo(String phoneNum) { 
+			ArrayList<User> userList = null;
+
+			User u = new User();
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+				userList = (ArrayList<User>) ois.readObject();
+
+				for (int i = 0; i < userList.size(); i++) {
+					if(userList.get(i).getPhoneNum().equals(phoneNum)) 
+						u = userList.get(i);
+					break;
+				}
+			}catch (ClassNotFoundException | IOException e) {
+				System.out.println("user.dat에 첫번째 입력");
+			}
+
+			return u;
+		}
 
 }
 
