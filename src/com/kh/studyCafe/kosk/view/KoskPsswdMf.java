@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
+import com.kh.studyCafe.model.vo.User;
 
 public class KoskPsswdMf extends JPanel{
 	private KoskMainFrame mf;
@@ -24,10 +27,12 @@ public class KoskPsswdMf extends JPanel{
 	private JButton cancel;
 	private JButton find;
 	private JButton button;
-
-	public KoskPsswdMf(KoskMainFrame mf) {
+	private String phoneNum;
+	
+	public KoskPsswdMf(KoskMainFrame mf, String phoneNum) {
 		this.mf = mf;
-
+		this.phoneNum = phoneNum;
+		
 		// ============= 색상 설정 ===============
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
@@ -149,7 +154,7 @@ public class KoskPsswdMf extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
 			}
 		});
@@ -162,7 +167,8 @@ public class KoskPsswdMf extends JPanel{
 				String newPasswd = phtf.getText();
 
 				if(nowPasswd.equals(newPasswd)) {
-
+					ArrayList<User> userList = null;
+					
 					ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
 				}else {
 					cancel.setEnabled(false);
