@@ -38,6 +38,7 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 		int x = popPosition(w, h)[0];
 		int y = popPosition(w, h)[1];
 		
+		this.setLayout(null);
 		this.setBounds(x, y, w, h); 
 		this.setBackground(new Color(239, 234, 222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));

@@ -21,6 +21,13 @@ public class ControlPanel{
 		mf.add(np, 1, 0);
 		mf.repaint();
 	}
+	public void addPanel2(AdmMainFrame mf, JPanel op, JPanel np) { // 있던 패널 유지하고 새 패널 올리긴
+		for (Component cp : op.getComponents()){
+	           cp.setEnabled(false);
+	      }
+		mf.add(np, 2, 0);
+		mf.repaint();
+	}
 
 	public void changeTablePanel(AdmMainFrame mf, JPanel op, JPanel np) { // 있던 패널 지우고 새 패널 올리기
 		mf.remove(op);

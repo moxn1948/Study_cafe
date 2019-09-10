@@ -39,8 +39,8 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		this.client = client;
 		this.phoneNum = phoneNum;
 		this.utList = utList;
-		
-		
+
+
 
 		// 패널 설정
 		int w = 404;
@@ -142,7 +142,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 					seatIndv[i].removeMouseListener(this);
 				}
 			}
-			
+
 		}
 
 		for (int i = 0; i < seatGrp.length; i++) {
@@ -193,6 +193,9 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
+		
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
@@ -204,23 +207,30 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		}
 		if(e.getSource() == confirmBtn) {
 			AdmDao ao = new AdmDao();
-			if(ao.toEnterInfo(phoneNum).equals("0")) {
-				
-			}else {
-				AdmManager ad = new AdmManager();
+			AdmManager ad = new AdmManager();
+			int sn = Integer.parseInt(seatNum);
+			System.out.println(sn);
+			System.out.println("phone" + phoneNum);
+			if(ao.toEnterInfo(phoneNum).equals("0")) { // 자리입실
+				System.out.println("ddddddd");
+				if(sn >= 1 && sn <= 25) {
+					System.out.println("ddd");
+					new ControlPanel().addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op,client,phoneNum));
+				}else {
+					new ControlPanel().addPanel2(mf, op, new AdmNewGrpSelectTime(mf, op,client,phoneNum));
+				}
+			}else { // 자리이동
 				client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
-
 				mf.remove(this);
 			}
-			
-			
-			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
-			//new AdmDao().admRead(), client));
-
-
 		}
+		//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
+		//new AdmDao().admRead(), client));
+
 
 	}
+
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

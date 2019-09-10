@@ -14,15 +14,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.kh.studyCafe.client.ClientBack;
+
 public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
+	private JButton cancelBtn = null;
 	
-	public AdmNewGrpSelectTime(AdmMainFrame mf) {
+	public AdmNewGrpSelectTime(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
 	      // 패널 설정
 	      int w = 731;
 	      int h = 474;
 	      int x = popPosition(w, h)[0];
 	      int y = popPosition(w, h)[1];
 	      
+	      
+	      this.setLayout(null);
 	      this.setBounds(x, y, w, h); 
 	      this.setBackground(new Color(239, 234, 222));
 	      this.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
@@ -156,7 +161,7 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 	      weekLayer.add(timeDisplay);   
 	      
 	      // 버튼 설정
-	      JButton cancelBtn = new JButton("Cancel");
+	      cancelBtn = new JButton("Cancel");
 	      JButton confirmBtn = new JButton("Confirm");
 
 	      cancelBtn.setBounds(30, 390, 334, 50);
