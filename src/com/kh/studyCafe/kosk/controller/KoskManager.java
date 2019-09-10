@@ -54,7 +54,7 @@ public class KoskManager {
 	
 	
 	
-	public KoskManager(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
+	public boolean KoskSgin(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
 	      Iterator it = number2.iterator();
 	      
 	      String[] value = new String[4];// 0번부터 3번까지 순서대로 정보를 value에 저장함
@@ -72,9 +72,8 @@ public class KoskManager {
 	               bw = new BufferedWriter(new FileWriter("user.dat",true));
 	               bw.write(value[0]+"/");
 	               bw.write(value[1]+"/");
-	               bw.write(value[2]+"/");// 파일 입력하는 부분
-	               bw.write(value[3]+"\r\n");
-	               
+	               bw.write(value[2]+"\r\n");// 파일 입력하는 부분
+	      
 	            } catch (IOException e) {
 	               
 	               e.printStackTrace();
@@ -86,7 +85,7 @@ public class KoskManager {
 	               }
 	            }
 	         }
-//	         return ss.signupservice(value);
+	         	return ss.signupservice(value);
 	         
 	      }
 	public void seatManger(String seatnum) {
@@ -290,26 +289,27 @@ public class KoskManager {
 	      }finally {
 	         
 	      }
-	   }
-	  public ArrayList<User> userdat() {
-			ArrayList<User> userList = null;
-
-			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
-				userList = (ArrayList<User>) ois.readObject();
-				
-				String[] aa = new String[userList.size()];
-				int a = 0;
-				while(a < userList.size()) {
-					aa[a] = userList.get(a).toString();
-					System.out.println(aa[a]);
-					a++;
-				}
-				
-			} catch (ClassNotFoundException | IOException e) {
-				System.out.println("user.dat에 첫번째 입력");
-			}
-
-			return userList;
-		}
-	  
-	}
+	  }
+}
+//	  public ArrayList<User> userdat() {
+//			ArrayList<User> userList = null;
+//
+//			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+//				userList = (ArrayList<User>) ois.readObject();
+//				
+//				String[] aa = new String[userList.size()];
+//				int a = 0;
+//				while(a < userList.size()) {
+//					aa[a] = userList.get(a).toString();
+//					System.out.println(aa[a]);
+//					a++;
+//				}
+//				
+//			} catch (ClassNotFoundException | IOException e) {
+//				System.out.println("user.dat에 첫번째 입력");
+//			}
+//
+//			return userList;
+//		}
+//	  
+//	}
