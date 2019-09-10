@@ -4,6 +4,7 @@ import java.awt.Color;
 
 
 
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
-import com.kh.studyCafe.kosk.model.service.SignUpService;
 import com.kh.studyCafe.kosk.view.popup.KoskPassWordNo;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpPop;
@@ -270,11 +270,11 @@ public class KoskSignUp extends JPanel{
 				number.add(psch.getText());
 			
 				KoskManager km =  new KoskManager();
-				km.KoskManager(number);
-				if(km.KoskManager(number) == true) {
+				km.KoskSgin(number);
+				if(km.KoskSgin(number) == true) {
 					pp.add(pp2,0);
 					mf.repaint();
-				} else if(km.KoskManager(number) == false){
+				} else if(km.KoskSgin(number) == false){
 					pp.add(pp4,0);
 					mf.repaint();
 				}
@@ -299,7 +299,6 @@ public class KoskSignUp extends JPanel{
 	
 	
 }
-
 	
 
 		
