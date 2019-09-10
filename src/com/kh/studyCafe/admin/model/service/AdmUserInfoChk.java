@@ -135,7 +135,7 @@ public class AdmUserInfoChk {
 	      long inTime = new Date(new GregorianCalendar(2019, 8, 10, 0, 22, 0).getTimeInMillis()).getTime();
 
 	      long outTime = new Date(new GregorianCalendar(2019, 8, 10, 18, 0, 0).getTimeInMillis()).getTime();
-	      long outTime3 = new Date(new GregorianCalendar(2019, 8, 10, 1, 22, 0).getTimeInMillis()).getTime();
+	      long outTime3 = new Date(new GregorianCalendar(2019, 8, 10, 17, 0, 0).getTimeInMillis()).getTime();
 	      long outTime2 = new Date(new GregorianCalendar(2019, 8, 13, 0, 0, 0).getTimeInMillis()).getTime();
 	      long currentTime = new Date().getTime();
 
