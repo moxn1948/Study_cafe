@@ -1,17 +1,17 @@
 package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,18 +23,14 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
-public class AdmUsingUserList extends JPanel implements ActionListener {
+public class AdmUsingUserList extends JPanel implements ActionListener, MouseListener {
 	private JButton allUserInfoButton = null;
 	private AdmMainFrame mf;
 	private ClientBack client;
@@ -43,6 +39,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 	private JScrollPane scrollpane = null;
 	private JButton cafeInfo = null;
 	private static boolean threadControl;
+	private JTable table;
 
 	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
@@ -148,7 +145,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 		// 테이블 생성
-		JTable table = new JTable(model);
+		table = new JTable(model);
 
 		// 이미지 파일 불러오기
 		Image icon = new ImageIcon("img/logo.png").getImage().getScaledInstance(41, 54, 0);
@@ -255,17 +252,19 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		// 테이블 내용 수정못하도록 바꿈
 		// table.setEnabled(false);
 		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);
-
+		table.getTableHeader().setResizingAllowed(false);			
+		
 		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
 		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
-
+		
 		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
 		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
 
 		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
 		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
 
+		table.addMouseListener(this);
+		
 		// 패널에 추가하기
 		this.add(logoLabel);
 		this.add(usingInfo);
@@ -276,15 +275,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 		this.add(cafeInfo);
 		this.add(scrollpane);
 
-		if(!threadControl) {
 
-			// 시계스레드 start
-			MinTimeThread timeThread = new MinTimeThread(client);
-			timeThread.setDaemon(true);
-			timeThread.start();
-			
-			threadControl = true;
-		}
 	}
 
 	@Override
@@ -312,5 +303,40 @@ public class AdmUsingUserList extends JPanel implements ActionListener {
 			scrollpane.getViewport().getView().setEnabled(false);
 
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println(table.getSelectedRow());
+		String tablePhone = table.getValueAt(table.getSelectedRow(), 2) + "";
+		AdmDao ad = new AdmDao();
+		ControlPanel cp = new ControlPanel();
+		if(table.getSelectedColumn() == 1) {
+			cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone)));			
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

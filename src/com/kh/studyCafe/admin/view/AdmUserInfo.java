@@ -10,10 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.model.vo.User;
+
 public class AdmUserInfo extends JPanel implements ActionListener{
 
 	//패널설정
-	 public AdmUserInfo(AdmMainFrame mf) {
+	 public AdmUserInfo(AdmMainFrame mf, User u) {
 
 		 this.setBounds(300,120,362,484);
 		 this.setBackground(new Color(239,234,222));
