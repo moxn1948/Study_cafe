@@ -22,7 +22,7 @@ public class KoskPayment extends JPanel{
 	private JPanel panel = new JPanel();
 	private JPanel panel2 = new JPanel();
 	private JPanel backpanel = new JPanel();
-	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, int time, String seatnum) {
+	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, String seatnum) {
 		this.mf = mf;
 		this.backpanel = backpanel;
 		//======= 컬러 설정 ====	
@@ -167,7 +167,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
 						
 					}
 				});
@@ -206,7 +206,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
 						
 					}
 				});

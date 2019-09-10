@@ -37,6 +37,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	private KoskMainFrame  mf;
 	User user2 = new User();
 	private int num ; // 좌석 번호 가져오기
+	String seatnum = null;
 public KoskSeatTable(KoskMainFrame mf, String phnum) {
 	this.mf = mf;
 		int x = 5;
@@ -465,19 +466,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									}
 								});
 								//===============================================
-								//============ 개인석 1일권 confirm 버튼 =================
-								tmcfbtn.addActionListener(new ActionListener() {
-									
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										// TODO Auto-generated method stub
-										panel.remove(tmch);
-										ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,kip.hourtie,kkm.seatim()));
-										panel.repaint();
-										System.out.println(kip.hourtie+"추가 시간");
-									}
-								});
-								//=============================
+								
 								//================================================
 								//======== 1일권 버튼 ============================
 								thwcf.addActionListener(new ActionListener() {
@@ -584,6 +573,8 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 	group.add(groupcf);
 	group.add(groupcc);
 	
+	
+	
 	//==== (단체석)그룹 패널 cancel버튼  액션 ===================
 	groupcc.addActionListener(new ActionListener() {
 		
@@ -603,7 +594,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,S));
+			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
 		}
 	});
 	//=====================================================
@@ -620,7 +611,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 							((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 							((JComponent) e.getSource()).setForeground(Color.WHITE);
 							
-							String seatnum = null;
+							
 							if(b == 0) {
 								seatnum = "25";
 							} else {
