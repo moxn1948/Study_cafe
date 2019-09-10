@@ -124,7 +124,6 @@ public class KoskDao {
 	}
 	public int login(String phonenumber, String password) { 
 		
-		
 		//this.phonenumber = phonenumber;
 		ArrayList<User> userList = null;
 		ArrayList<String> seatnum = null;
@@ -258,21 +257,53 @@ public class KoskDao {
 
 			return userList;
 		}
+		
+		public boolean compare(String phonenumber, String name) { 
+			
+			//this.phonenumber = phonenumber;
+			ArrayList<User> userList = null;
+			ArrayList<String> seatnum = null;
+			
+			boolean a = false;
+			
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+				userList = (ArrayList<User>) ois.readObject();
+				
+				seatnum = new ArrayList<String>();
+				for (int i = 0; i < userList.size(); i++) {
+					if(userList.get(i).getPhoneNum().equals(phonenumber)) {
+						if(userList.get(i).getName().equals(name)) {
+								a = true; 	
+						} 				
+					}
+				}
+			}catch (ClassNotFoundException | IOException e) {
+				System.out.println("user.dat에 첫번째 입력");
+			}
+			System.out.println(a+"");
+			return a;
+		}
 
+		public ArrayList<User> KoskPsswdChange(String phoneNum, String passwd){
+			ArrayList<User> userList = null;
+
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+				userList = (ArrayList<User>) ois.readObject();
+
+				for (int i = 0; i < userList.size(); i++) {
+					if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+						if(userList.get(i).getPassword().equals(passwd)) {
+							userList.get(i).setPassword(passwd);
+							KoskWrite(userList); // 
+						}
+						
+					}
+				}
+
+			} catch (ClassNotFoundException | IOException e) {
+				System.out.println("user.dat에 첫번째 입력");
+			}
+
+			return userList;
+		}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
