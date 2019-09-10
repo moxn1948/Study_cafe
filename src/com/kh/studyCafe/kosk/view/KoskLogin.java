@@ -141,10 +141,10 @@ public class  KoskLogin extends JPanel{
 				}*/
 				String phnum = phonenumber.getText();
 				System.out.println(phnum);
-				
+				String seatnum = null;
 				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
 					
-					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum));
+					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,seatnum));
 				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
 					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum));
 				} else {

@@ -34,7 +34,7 @@ public class KoskSeatManagement extends JPanel{
 	JPanel backpanel = new JPanel();
 	private KoskMainFrame mf;
 	private JButton[] button = new JButton[3];
-	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phnum) {
+	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phnum,String seatnum) {
 	
 		KoskManager km = new KoskManager();
 			
@@ -225,7 +225,7 @@ public class KoskSeatManagement extends JPanel{
 					KoskManager kkm = new KoskManager();
 					System.out.println(kkm.gettime()+"시간 선택함");
 					
-					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum));
+					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum,seatnum));
 				}
 			});
 		 indi2con.addActionListener(new ActionListener() {
@@ -233,7 +233,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum));
+				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,backpanel,phnum,seatnum));
 			}
 		});
 		 mf.repaint();
