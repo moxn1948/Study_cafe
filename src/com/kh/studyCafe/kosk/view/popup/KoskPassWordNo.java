@@ -31,7 +31,7 @@ public class KoskPassWordNo extends JPanel{
 			panel.setSize(310,250);
 			panel.setBackground(wallPapers);
 			panel.setLayout(null);
-			
+			      
 			JButton button = new JButton("OK");
 			button.setBounds(5,140,280,40);
 			button.setBackground(paper);
