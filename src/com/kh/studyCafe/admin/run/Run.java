@@ -1,5 +1,6 @@
 package com.kh.studyCafe.admin.run;
 
+import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.admin.view.AdmMainFrame;
 
 public class Run {

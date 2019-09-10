@@ -268,7 +268,7 @@ public class KoskSignUp extends JPanel{
 				number.add(phtf.getText());
 				number.add(pstf.getText());
 				number.add(psch.getText());
-			
+			    
 				KoskManager km =  new KoskManager();
 				km.KoskSgin(number);
 				if(km.KoskSgin(number) == true) {
