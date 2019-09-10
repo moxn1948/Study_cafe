@@ -135,11 +135,14 @@ public class AdmDao {
 
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-
+			System.out.println(userList);
 			for (int i = 0; i < userList.size(); i++) {
-				if(userList.get(i).getPhoneNum().equals(phoneNum)) 
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					
 					seatNum = userList.get(i).getSeatNum();
+					System.out.println("111seatNum"+seatNum);
 				break;
+				}
 			}
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");

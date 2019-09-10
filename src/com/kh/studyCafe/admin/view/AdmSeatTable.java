@@ -48,6 +48,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		int x = popPosition(w, h)[0];
 		int y = popPosition(w, h)[1];
 
+		this.setLayout(null);
 		this.setBounds(x, y, w, h);    
 
 		this.setBackground(new Color(239, 234, 222));
@@ -175,11 +176,14 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		confirmBtn.addActionListener(this);
 		cancelBtn.addActionListener(this);
 
+		
 		// 패널에 올림
 		this.add(title);
 		this.add(seat);
 		this.add(cancelBtn);
 		this.add(confirmBtn);
+		
+		
 	}
 
 	public int[] popPosition(int w, int h) {
@@ -208,20 +212,28 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		if(e.getSource() == confirmBtn) {
 			AdmDao ao = new AdmDao();
 			AdmManager ad = new AdmManager();
-			int sn = Integer.parseInt(seatNum);
+			int sn = 0;
+			if(!seatNum.contains("-")) {
+				sn = Integer.parseInt(seatNum);
+			}
 			System.out.println(sn);
 			System.out.println("phone" + phoneNum);
+			
 			if(ao.toEnterInfo(phoneNum).equals("0")) { // 자리입실
-				System.out.println("ddddddd");
 				if(sn >= 1 && sn <= 25) {
-					System.out.println("ddd");
 					new ControlPanel().addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op,client,phoneNum));
 				}else {
 					new ControlPanel().addPanel2(mf, op, new AdmNewGrpSelectTime(mf, op,client,phoneNum));
 				}
 			}else { // 자리이동
-				client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
-				mf.remove(this);
+				if(!seatNum.contains("-")) {
+					client.sendUser(ad.moveSeatNum(phoneNum, seatNum));
+					mf.remove(this);	
+				}else {
+					System.out.println("그룹좌석으로 이동 안됨");
+
+//					new ControlPanel().changePanel(mf, this, new AdmMoveGrp(mf, op,client));
+				}
 			}
 		}
 		//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
@@ -240,13 +252,12 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 
 			if(e.getSource() == seatIndv[i]) {
 				if(seatToggle == false) { // 처음 선택 했을 때
-					for(int j = 0; j < utList.size(); j++) {
-
-					}
+//					for(int j = 0; j < utList.size(); j++) {
+//
+//					}
 					seatIndv[i].setBackground(new Color(127, 118, 104));
 					seatIndv[i].setForeground(Color.WHITE);       
 					seatNum = (i+1) + "";
-					System.out.println("1선택한 좌석 : " + seatNum);
 					light = i;
 					seatToggle = true;            
 				}else { // 이미 선택한 좌석이 있을 경우
@@ -259,7 +270,6 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 						seatIndv[i].setBackground(new Color(127, 118, 104));
 						seatIndv[i].setForeground(Color.WHITE);
 						seatNum = (i+1) + "";
-						System.out.println("2선택한 좌석 : " + seatNum);
 						light = i;
 					}else {
 						// 기존의 선택 좌석을 선택 해제함
@@ -270,7 +280,6 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 						seatIndv[i].setBackground(new Color(127, 118, 104));
 						seatIndv[i].setForeground(Color.WHITE);
 						seatNum = (i+1) + "";
-						System.out.println("3선택한 좌석 : " + seatNum);
 						light = i;
 					}
 
@@ -289,6 +298,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 					light = i + seatIndv.length;
 					seatToggle = true;
 
+					seatNum = seatGrp[i].getText();
 				}else { // 이미 선택한 좌석이 있을 경우
 					if(light >= seatIndv.length) {
 						// 기존의 선택 좌석을 선택 해제함
@@ -300,6 +310,8 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 						seatGrp[i].setForeground(Color.WHITE);
 
 						light = i + seatIndv.length;
+						
+						seatNum = seatGrp[i].getText();
 					}else {
 						// 기존의 선택 좌석을 선택 해제함
 						seatIndv[light].setBackground(Color.WHITE);
@@ -310,6 +322,8 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 						seatGrp[i].setForeground(Color.WHITE);
 
 						light = i + seatIndv.length;
+						
+						seatNum = seatGrp[i].getText();
 					}
 
 				}

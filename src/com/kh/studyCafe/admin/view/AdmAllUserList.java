@@ -317,7 +317,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
 
 		srchChk = new JLabel();
-		srchChk.setBounds(22, 168, 627, 40);
+		srchChk.setBounds(22, 168, 633, 40);
 		srchChk.setBackground(Color.RED);
 		srchChk.setBorder(BorderFactory.createEmptyBorder());
 		vertical = scrollpane.getVerticalScrollBar();
