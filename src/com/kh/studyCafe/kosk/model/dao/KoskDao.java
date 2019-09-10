@@ -207,7 +207,7 @@ public class KoskDao {
 						
 					}
 				}
-				System.out.println(user);
+				//System.out.println(user);
 
 			} catch (Exception e) {
 				System.out.println("user.dat에 첫번째 입력");
@@ -242,7 +242,6 @@ public class KoskDao {
 						userList.get(i).setSeatNum("0");
 						userList.get(i).setOutTime(0);
 						userList.get(i).setRemainTime(0);
-						System.out.println(userList);
 						KoskWrite(userList); // 
 					} else {
 						System.out.println(userList.get(i).getPhoneNum());
@@ -306,4 +305,130 @@ public class KoskDao {
 
 			return userList;
 		}
+		public void Kosktimeplus(String phone ,long time, String seatnum, int num) {
+			ArrayList<User> userList = null;
+			
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+				userList = (ArrayList<User>) ois.readObject();
+				
+				for(int i=0; i<userList.size(); i++) {
+					if(userList.get(i).getPhoneNum().equals(phone)) {
+						if(num == 0) {
+							userList.get(i).setRemainTime((((time)*3600000)*(time*24)) + userList.get(i).getRemainTime());
+							userList.get(i).setOutTime((((time)*3600000)*(time*24)) + userList.get(i).getOutTime());
+						} else if(num == 1) {
+							userList.get(i).setRemainTime(((time)*3600000) + userList.get(i).getRemainTime());
+							userList.get(i).setOutTime((time*3600000) + userList.get(i).getOutTime());
+						}
+							int a = Integer.parseInt(seatnum);
+							
+							if(a>=0 && a<25) {
+								userList.get(i).setSeatNum(seatnum);
+							} else if(a == 25) {
+								userList.get(i).setSeatNum("4-A");
+							} else if(a == 26) {
+								userList.get(i).setSeatNum("4-B");
+							} else if(a == 27) {
+								userList.get(i).setSeatNum("6-A");
+							} else if(a == 28) {
+								userList.get(i).setSeatNum("6-B");
+							} else if(a == 29) {
+								userList.get(i).setSeatNum("8-A");
+							}
+						
+						KoskWrite(userList);
+						System.out.println(userList.get(i).getSeatNum()+"저장");
+					}
+				}
+				
+			} catch (ClassNotFoundException |IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+		}
+		  public String myPage(String phonenumber) { 
+		         
+		         ArrayList<User> userList = null;
+		         ArrayList<String> seatnum = null;
+		         
+		         String myPageInfo = null;
+		         String name = null;
+		         String phoneNum = null;
+		         String remainTime = null;
+		         String point = null;
+		         String rank = null;
+		                     
+		         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+		            userList = (ArrayList<User>) ois.readObject();
+		   
+		            
+		            seatnum = new ArrayList<String>();
+		            
+		            for (int i = 0; i < userList.size(); i++) {
+		               if(userList.get(i).getPhoneNum().equals(phonenumber)) {
+		                  name = userList.get(i).getName();
+		                  phoneNum = userList.get(i).getPhoneNum();
+		                  remainTime = userList.get(i).getRemainTime() + "";
+		                  point = userList.get(i).getPoint() + "";
+		                  rank = userList.get(i).getRank();
+		               }
+		            }
+		         }catch (ClassNotFoundException | IOException e) {
+		            System.out.println("user.dat에 첫번째 입력");
+		         }
+		         System.out.println(myPageInfo + "");
+		         return name + "," + phoneNum + "," + remainTime + ","  + point + "," + rank;
+		      }
+		      
+		      public int myPage1(String phonenumber) { 
+		         
+		         ArrayList<User> userList = null;
+		         ArrayList<String> seatnum = null;
+		         
+		         int a = 0 ;
+		         
+		         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+		            userList = (ArrayList<User>) ois.readObject();
+		            
+		            seatnum = new ArrayList<String>();
+		            for (int i = 0; i < userList.size(); i++) {
+		               if(userList.get(i).getPhoneNum().equals(phonenumber)) {   
+		                     if(!userList.get(i).getSeatNum().equals("0")) {
+		                        a = 1; // 회원정보 있으면서 좌석까지 있음
+		                     } else {
+		                        a = 2; // 회원정보 있으나 좌석이 없음
+		                     }
+		                  } 
+		               }
+		            
+		         }catch (ClassNotFoundException | IOException e) {
+		            System.out.println("user.dat에 첫번째 입력");
+		         }
+		         return a;
+		      }
+		      
+		      public long remainTime(String phonenumber) { 
+		         
+		         ArrayList<User> userList = null;
+		         ArrayList<String> seatnum = null;
+		         
+		         long a = 0 ;
+		         
+		         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+		            userList = (ArrayList<User>) ois.readObject();
+		            
+		            seatnum = new ArrayList<String>();
+		            for (int i = 0; i < userList.size(); i++) {
+		               if(userList.get(i).getPhoneNum().equals(phonenumber)) {   
+		                     a = userList.get(i).getRemainTime();
+		                  } 
+		               }
+		            
+		         }catch (ClassNotFoundException | IOException e) {
+		            System.out.println("user.dat에 첫번째 입력");
+		         }
+		         return a;
+		      }
 }

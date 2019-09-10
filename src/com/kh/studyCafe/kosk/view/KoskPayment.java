@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 
 public class KoskPayment extends JPanel{
 
@@ -22,10 +23,11 @@ public class KoskPayment extends JPanel{
 	private JPanel panel = new JPanel();
 	private JPanel panel2 = new JPanel();
 	private JPanel backpanel = new JPanel();
-	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, String seatnum) {
+	KoskDao kd = new KoskDao();
+	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num) {
 		this.mf = mf;
 		this.backpanel = backpanel;
-		//======= 컬러 설정 ====	
+		//======= 컬러 설정 =  ===	
 
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
@@ -113,7 +115,7 @@ public class KoskPayment extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel));
+				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phnum));
 
 			}
 		});
@@ -148,6 +150,8 @@ public class KoskPayment extends JPanel{
 				panel.add(back2);
 				mf.add(panel);
 				
+				
+				
 				JButton button = new JButton("현금을 넣어주세요");
 				button.setFont(font);
 				button.setBounds(0,0,300,100);
@@ -156,18 +160,15 @@ public class KoskPayment extends JPanel{
 				button.setForeground(paper1);
 				panel2.add(button);
 								
-				KoskManager kkm = new KoskManager();
-				System.out.println(kkm.seatim()+"시간");
-				
-				
-				
+				kd.Kosktimeplus(phnum, time, seatnum,num);
+				System.out.println("폰 : "+phnum+" 시간 : "+time+" 좌석 : "+seatnum);
 				
 				
 				back2.addActionListener(new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
 						
 					}
 				});
@@ -206,7 +207,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
 						
 					}
 				});
@@ -231,4 +232,5 @@ public class KoskPayment extends JPanel{
 		mf.add(panel,1);
 
 	}
+	
 }

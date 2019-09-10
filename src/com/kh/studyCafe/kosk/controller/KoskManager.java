@@ -30,30 +30,6 @@ public class KoskManager {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public boolean KoskSgin(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
 	      Iterator it = number2.iterator();
 	      
@@ -85,7 +61,9 @@ public class KoskManager {
 	               }
 	            }
 	         }
-	         	return ss.signupservice(value);
+
+	         return ss.signupservice(value);
+
 	         
 	      }
 	public void seatManger(String seatnum) {
