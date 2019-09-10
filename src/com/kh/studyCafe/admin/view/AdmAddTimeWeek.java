@@ -18,16 +18,32 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 	//기간권  4번???
 	//+,-위치만 수정하면됨
 	private ClientBack client;
+	private int term = 7;
 	private JButton cancelBtn;
 	private JButton confirmBtn;
 	private JPanel op;
+	private String phoneNum;
 	private AdmMainFrame mf;
+	private JLabel num;
+	private JButton plusBtn;
+	private JButton minusBtn;
+	private String addTimeEdit;
+	private JLabel weekNum;
 	
-	public AdmAddTimeWeek(AdmMainFrame mf, JPanel op, String table, ClientBack client) {
+	public AdmAddTimeWeek(AdmMainFrame mf, JPanel op, String phoneNum, ClientBack client) {
 		this.client = client;
 		this.mf = mf;
 		this.op = op;
+		this.phoneNum = phoneNum;
+
+		// 잔여시간 표시
+		String timeEdit = new AdmManager().findPhoneToRemain(phoneNum) / 86400000 + 1 + "";
+
+		addTimeEdit = new AdmManager().findPhoneToRemain(phoneNum) / 86400000 + 8 + "";
 		
+
+
+		this.setLayout(null);
 		this.setBounds(300,120,370,452);
 		this.setBackground(new Color(239,234,222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189,177,157)));
@@ -47,7 +63,7 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		remainDay.setSize(remainDay.getPreferredSize());
 		
 		
-		JLabel dayNum = new JLabel("3");
+		JLabel dayNum = new JLabel(timeEdit); // 잔여일 표시
 		dayNum.setLocation(194, 120);
 		dayNum.setForeground(new Color(127,118,104));
 		dayNum.setFont(new Font("맑은 고딕",Font.BOLD,22));
@@ -63,16 +79,11 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		afterAdd.setSize(afterAdd.getPreferredSize());
 		
 		
-		JLabel weekNum = new JLabel("14");
+		weekNum = new JLabel(addTimeEdit); // 연장 후 기간
 		weekNum.setLocation(224, 156);
 		weekNum.setForeground(new Color(127,118,104));
 		weekNum.setFont(new Font("맑은 고딕",Font.BOLD,22));
 		weekNum.setSize(weekNum.getPreferredSize());
-		
-		
-		
-		
-		
 		
 		
 	
@@ -87,7 +98,7 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		showAdd.setBackground(Color.WHITE);
 		
 		
-		JLabel num =new JLabel("7");
+		num =new JLabel(term + "");
 //		showAdd.setLocation(200, 252);
 		
 //		num.setOpaque(false);
@@ -101,22 +112,21 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		
 		
 		
-		
-		
-		
 		//+버튼
-		JButton plusBtn = new JButton("+");
+		plusBtn = new JButton("+");
 		plusBtn.setBounds(87, 196, 200, 44);
 		plusBtn.setBackground(new Color(127,118,104));
 		plusBtn.setFont(new Font("맑은 고딕",Font.BOLD,30));
 		plusBtn.setForeground(Color.WHITE);
+		plusBtn.addActionListener(this);
 		
-		
-		JButton minusBtn = new JButton("-");
+		minusBtn = new JButton("-");
 		minusBtn.setBounds(87,306, 200, 44);
 		minusBtn.setBackground(new Color(127,118,104));
 		minusBtn.setFont(new Font("맑은 고딕",Font.BOLD,30));
 		minusBtn.setForeground(Color.WHITE);
+		minusBtn.addActionListener(this);
+		
 		
 		
 		cancelBtn = new JButton("Cancel");
@@ -157,6 +167,49 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+
+		if (e.getSource() == plusBtn) {
+			if (term < 28) {
+				
+				term += 7;
+				System.out.println(term);
+				num.setText(term + "");	
+				
+				
+				String[] addTimeEditTemp = addTimeEdit.split("일");
+				if(Integer.parseInt(addTimeEditTemp[0]) + 7 < 100) {
+					addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 7 + "";
+					addTimeEdit = addTimeEditTemp[0];  
+					weekNum.setText(addTimeEdit);
+	
+					weekNum.setSize(weekNum.getPreferredSize());
+					num.setSize(num.getPreferredSize());
+					
+				}
+				
+			} 
+		}
+
+		if (e.getSource() == minusBtn) {
+			if (term > 7) {
+				
+				term -= 7;
+				System.out.println(term);
+				num.setText(term + "");	
+				
+				
+				String[] addTimeEditTemp = addTimeEdit.split("일");
+				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) - 7 + "";
+				addTimeEdit = addTimeEditTemp[0];  
+				weekNum.setText(addTimeEdit);
+
+				weekNum.setSize(weekNum.getPreferredSize());
+				num.setSize(num.getPreferredSize());
+				
+			} 
+		}
+		
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
@@ -166,6 +219,16 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}
 		}
+		
+		if (e.getSource() == confirmBtn) {
+			
+			// 본인 클라이언트 스트림으로 보냄
+			AdmManager ad = new AdmManager();
+			client.sendUser(ad.addWeekRemainTime(phoneNum, term));
+			
+			mf.remove(this);
+		}
+
 		
 	}
 	

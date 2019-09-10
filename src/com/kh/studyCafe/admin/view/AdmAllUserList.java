@@ -232,18 +232,18 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		// 테이블 행 높이 설정
 		table.setRowHeight(40);
 
-		table.getColumnModel().getColumn(0).setPreferredWidth(36);
-		table.getColumnModel().getColumn(1).setPreferredWidth(63);
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(1).setPreferredWidth(60);
 		table.getColumnModel().getColumn(2).setPreferredWidth(110);
-		table.getColumnModel().getColumn(3).setPreferredWidth(74);
-		table.getColumnModel().getColumn(4).setPreferredWidth(82);
-		table.getColumnModel().getColumn(5).setPreferredWidth(100);
-		table.getColumnModel().getColumn(6).setPreferredWidth(73);
-		table.getColumnModel().getColumn(7).setPreferredWidth(83);
-		table.getColumnModel().getColumn(8).setPreferredWidth(68);
-		table.getColumnModel().getColumn(9).setPreferredWidth(68);
-		table.getColumnModel().getColumn(10).setPreferredWidth(68);
-		table.getColumnModel().getColumn(11).setPreferredWidth(68);
+		table.getColumnModel().getColumn(3).setPreferredWidth(66);
+		table.getColumnModel().getColumn(4).setPreferredWidth(78);
+		table.getColumnModel().getColumn(5).setPreferredWidth(90);
+		table.getColumnModel().getColumn(6).setPreferredWidth(80);
+		table.getColumnModel().getColumn(7).setPreferredWidth(74);
+		table.getColumnModel().getColumn(8).setPreferredWidth(66);
+		table.getColumnModel().getColumn(9).setPreferredWidth(66);
+		table.getColumnModel().getColumn(10).setPreferredWidth(66);
+		table.getColumnModel().getColumn(11).setPreferredWidth(66);
 
 		// 테이블 스크롤 기능 추가해서 넣기
 		JScrollPane scrollpane = new JScrollPane(table);
