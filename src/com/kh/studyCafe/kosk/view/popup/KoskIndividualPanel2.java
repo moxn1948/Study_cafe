@@ -167,7 +167,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		
 	}
 

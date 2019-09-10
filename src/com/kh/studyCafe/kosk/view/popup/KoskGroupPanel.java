@@ -30,7 +30,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 	private JButton plus2;
 	private JButton minus;
 	private JButton minus2;
-	private JButton cancel;
+	private JButton cancel; 
 	private JButton confirm;
 	private int personNum;    //결제시 출력되는 인원수
 	private int hour = 0;    //결제시 출력되는 시간

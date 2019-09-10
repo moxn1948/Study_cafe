@@ -202,7 +202,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 			//====== 수정해야함  =====
 			KoskManager kkm = new KoskManager();
 			KoskDao kd = new KoskDao();
-			int num2 = 0;
+			int num2 = 0; 
 			for(int i=0; i<kd.seatin().size();i++) {
 				if((kd.seatin().get(i)).length() < 3) {
 					if(Integer.parseInt(kd.seatin().get(i))<26) {

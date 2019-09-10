@@ -210,13 +210,13 @@ public class KoskSeatManagement extends JPanel{
 		panel.add(out);
 		panel.add(ex);
 		panel.add(seatmv);
-		
+		 
 		//=============== 테두리 선언 부분 ========================
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
 		//=====================================================
 		mf.add(panel,1);
 		mf.repaint();
-		int num=0;
+		int num=0; 
 		long time =0;
 		 indicon.addActionListener(new ActionListener() {
 				

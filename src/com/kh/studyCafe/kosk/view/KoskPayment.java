@@ -27,7 +27,7 @@ public class KoskPayment extends JPanel{
 	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num) {
 		this.mf = mf;
 		this.backpanel = backpanel;
-		//======= 컬러 설정 ====	
+		//======= 컬러 설정 =  ===	
 
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);

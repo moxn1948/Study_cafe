@@ -40,7 +40,7 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	public boolean a = true;
 	JPanel backpanel = new JPanel();
-	private KoskMainFrame mf;
+	private KoskMainFrame mf; 
 	String phnum;
 	public JPanel KoskIndividualPanel(KoskMainFrame mf){
 	this.mf = mf;
