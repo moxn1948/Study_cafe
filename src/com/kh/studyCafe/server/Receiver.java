@@ -20,22 +20,17 @@ public class Receiver extends Thread {
 	private ServerBack serverBack = new ServerBack();
 
 	public Receiver(Socket socket) throws IOException {
-		System.out.println("dd");
 		out = new ObjectOutputStream(socket.getOutputStream());
 		in = new ObjectInputStream(socket.getInputStream());
-		System.out.println("aa");
 		
 		try {
-			System.out.println("될까2");
 			ipName = in.readObject();
-			System.out.println("될까3");
 			
 		} catch (ClassNotFoundException e) {
-			System.out.println("될까");
 			e.printStackTrace();
 		} 
 		// 스트림에 있는 값을 읽어옴
-		System.out.println("4");
+		System.out.println("receiver class");
 		serverBack.addClient(ipName, out);	
 		
 	}

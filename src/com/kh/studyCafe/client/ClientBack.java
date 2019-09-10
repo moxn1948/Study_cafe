@@ -38,7 +38,7 @@ public class ClientBack {
 	public void connect() {
 		
 		try {
-			socket = new Socket("192.168.130.212", 8000);
+			socket = new Socket("192.168.1.121", 8000);
 			System.out.println("서버 연결됨");
 			
 			in = new ObjectInputStream(socket.getInputStream()); // 서버 측에서 전송 받음
@@ -68,7 +68,7 @@ public class ClientBack {
 	public void sendUser(ArrayList<User> user) {
 		try {
 			out.writeObject(user); // 클라이언트 스트림에 변경된 파일 올라가있음
-			
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
