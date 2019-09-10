@@ -140,7 +140,7 @@ public class  KoskLogin extends JPanel{
 					
 				}*/
 				String phnum = phonenumber.getText();
-				System.out.println(phnum);
+				//System.out.println(phnum);
 				String seatnum = null;
 				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
 					

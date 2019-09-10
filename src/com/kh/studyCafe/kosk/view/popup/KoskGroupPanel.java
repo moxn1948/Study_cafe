@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -16,7 +15,9 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
+import com.kh.studyCafe.model.vo.User;
 
 
 public class KoskGroupPanel extends JPanel implements MouseListener{
@@ -32,17 +33,26 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 	private JButton cancel;
 	private JButton confirm;
 	private int personNum;    //결제시 출력되는 인원수
-	private int hour;    //결제시 출력되는 시간
+	private int hour = 0;    //결제시 출력되는 시간
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	
-	
+	public long seattime = 0;
 	public JPanel panel = new JPanel();
 	private KoskMainFrame mf;
 	private String seatName;
-	public JPanel KoskGroupPanel(KoskMainFrame mf, String seatName) {
+	public JPanel KoskGroupPanel(KoskMainFrame mf,String seatnum) {
+		
 		this.mf = mf;
-		this.seatName = seatName;
+		int a = Integer.parseInt(seatnum);
+		if(a>24 && a<27) {
+			seatName = "4";
+		} else if(a>26 && a<29) {
+			seatName = "6";
+		} else {
+			seatName = "8";
+		}
+		
 		
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
@@ -181,7 +191,9 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		panel.repaint();
 		return panel;
 	}
-
+	User user = new User();
+	
+	KoskDao kd = new KoskDao();
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == plus) {
@@ -200,6 +212,8 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 				String tm = Integer.valueOf(timeMinute).toString();  
 				ettime.setText(th + ":" + tm);
 			}
+			seattime = hour;
+			System.out.println(seattime);
 			
 		}
 		if(e.getSource() == minus) {
@@ -218,6 +232,8 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 				String tm = Integer.valueOf(timeMinute).toString();  
 				ettime.setText(th + ":" + tm);
 			}
+			seattime = hour;
+			System.out.println(seattime);
 		}
 		if(e.getSource() == plus2) {
 			if(personNum >=  (Integer.parseInt(seatName) - 2) && personNum < Integer.parseInt(seatName)) {
@@ -238,6 +254,10 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 			//좌석표 패널에서 결제 선택 패널로 전환 추가
 		}
 		
+	}
+	public long grouptime() {
+		System.out.println(user.getSeatType()+"그룹패널");
+		return user.getSeatType();
 	}
 
 	@Override
@@ -263,5 +283,8 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
+	public long gptm() {
+		
+		return hour;
+	}
 }

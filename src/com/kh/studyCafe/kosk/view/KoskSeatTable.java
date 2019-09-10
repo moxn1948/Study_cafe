@@ -38,6 +38,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	User user2 = new User();
 	private int num ; // 좌석 번호 가져오기
 	String seatnum = null;
+	int hh = 0;
 public KoskSeatTable(KoskMainFrame mf, String phnum) {
 	this.mf = mf;
 		int x = 5;
@@ -46,9 +47,8 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		
 		KoskIndividualPanel kip = new KoskIndividualPanel();
 		KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
-		
+		KoskGroupPanel kgp = new KoskGroupPanel();
 		String name = null;
-		
 		
 		//===========   컬러 설정 ================
 		Color wallPapers = new Color(239,234,222);
@@ -199,6 +199,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 			}
 			
 			//========  해당 좌석 정보를 읽어 좌석 색 칠하고 선택 불가능 ==========
+			//====== 수정해야함  =====
 			KoskManager kkm = new KoskManager();
 			KoskDao kd = new KoskDao();
 			int num2 = 0;
@@ -334,13 +335,10 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void mouseClicked (MouseEvent e) {
 			// TODO Auto-generated method stub
 				
-			ChangePanel.changePanel(mf,panel, new KoskMypage(mf,panel));
+			ChangePanel.changePanel(mf,panel, new KoskMypage(mf,panel,phnum));
 			
 		}
 	});
-	
-	
-	
 	Font font = new Font("맑은 고딕", Font.BOLD, 16);
 	for(int i=0; i<25; i++) {
 		iuser[i].addActionListener(new ActionListener() {
@@ -352,7 +350,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 				
 				// ================= 좌석 선택시 좌석 색깔 변경 설정 =======================
 				// 개인석
-				String seatnum = null;
+				
 				for(int a = 0; a < inds.length; a++) {
 					if(e.getSource() == iuser[a]) {
 						if(inds[a] != true) {
@@ -380,6 +378,8 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									}
 									
 								}
+								int hh = 0;
+								
 								System.out.println(seatnum+"좌석");
 								KoskManager km = new KoskManager();
 								JButton pre = new JButton("선택취소");
@@ -463,21 +463,25 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 										panel.remove(tmch);
 										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
 										panel.repaint();
+										
 									}
 								});
-								//===============================================
 								
+								User user = new User();
+								//===============================================
 								//================================================
-								//======== 1일권 버튼 ============================
+								//======== 1일권  버튼 confirm============================
 								thwcf.addActionListener(new ActionListener() {
 									
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
+										user.setSeatType(0);
 										panel.remove(thw);
 										tmch.add(kip.KoskIndividualPanel(mf));
 										panel.add(tmch,0);
 										panel.repaint();
+										
 									}
 								});
 								//======== 개인 기간권 버튼 =========================
@@ -486,6 +490,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
+										user.setSeatType(1);
 										panel.remove(thw);
 										tmch.add(kip2.KoskIndividualPanel2(mf));
 										panel.add(tmch,0);     
@@ -503,6 +508,27 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 										KoskManager kkm = new KoskManager();
 										System.out.println(kkm.seatim()+"좌석 선택 완료");
 										kkm.seatsv(kkm.seatim());
+									}
+								});
+								
+								tmcfbtn.addActionListener(new ActionListener() {
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										panel.remove(tmch);
+										mf.repaint();
+										if(user.getSeatType()==0) {
+											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip.indi(),seatnum,0));
+											System.out.println("1일권 선택");
+											System.out.println(kip.indi());
+										} else if(user.getSeatType() == 1) {
+											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip2.daytime(),seatnum,1));
+											System.out.println(kip2.daytime());
+											System.out.println("기간권 선택");
+										}
+										
+										
 									}
 								});
 								//=============================================
@@ -582,7 +608,6 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
 			panel.repaint();
 		}
 	});
@@ -594,7 +619,10 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,seatnum));
+			ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kgp.gptm(),seatnum, 0));
+			// 단체 
+			System.out.println("단체석 누름");
+			System.out.println(kgp.gptm());
 		}
 	});
 	//=====================================================
@@ -610,8 +638,6 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 						if(grfs[b] != true) {
 							((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 							((JComponent) e.getSource()).setForeground(Color.WHITE);
-							
-							
 							if(b == 0) {
 								seatnum = "25";
 							} else {
@@ -643,7 +669,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 								pre.setForeground(Color.WHITE);
 								pre.setLocation(5, 531);
 								pre.setSize(160 ,53);
-								panel.add(pre);
+								//panel.add(pre);
 
 								JButton confirm = new JButton("Confirm");
 								confirm.setFont(font);
@@ -654,7 +680,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 								//confirm.setVisible(b);
 
 								panel.repaint();
-								/*panel.add(pre);*/
+								panel.add(pre);
 								panel.add(confirm);
 
 
@@ -675,8 +701,8 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 										}
 										System.out.println(kkm.seatim()+"불러옴");
 										
-										KoskGroupPanel kgp = new KoskGroupPanel();
-										//group.add(kgp.KoskGroupPanel(mf));
+										
+										group.add(kgp.KoskGroupPanel(mf,seatnum));
 										panel.add(group,0);
 										panel.repaint();
 									
@@ -751,7 +777,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 								//confirm.setVisible(b);
 
 								panel.repaint();
-								/*panel.add(pre);*/
+								panel.add(pre);
 								panel.add(confirm);
 
 
@@ -773,10 +799,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 											dfuser[i].setEnabled(false);
 											dsuser[0].setEnabled(false);
 										}
-										kkm.seatss(user2.getSeatNum());
-										System.out.println(kkm.seatim()+"불러옴");
-										KoskGroupPanel kgp = new KoskGroupPanel();
-										//group.add(kgp.KoskGroupPanel(mf));
+										group.add(kgp.KoskGroupPanel(mf,seatnum));
 										panel.add(group,0);
 										panel.repaint();
 									
@@ -804,12 +827,13 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			
 			for(int d = 0; d < gres.length; d++) {
 				if(e.getSource() == deuser[d]) { 
 					if(gres[d] != true) {
 						((JComponent) e.getSource()).setBackground(new Color(163, 152, 134));
 						((JComponent) e.getSource()).setForeground(Color.WHITE);
-						String seatnum = null;
+						
 						seatnum = "29";
 						if(seatnum == null) {
 						} else {
@@ -834,26 +858,15 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 						pre.setLocation(5, 531);
 						pre.setSize(160 ,53);
 						panel.add(pre);
-
 						JButton confirm = new JButton("Confirm");
 						confirm.setFont(font);
 						confirm.setBackground(new Color(163, 152, 134));
 						confirm.setForeground(Color.WHITE);
 						confirm.setLocation(175, 531);
 						confirm.setSize(160,53);
-						//confirm.setVisible(b);
-
 						panel.repaint();
-						/*panel.add(pre);*/
+						panel.add(pre);
 						panel.add(confirm);
-						
-						//==== border 태두리 설정 =====================
-						
-						
-						//====================================
-						
-						
-						
 						confirm.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -868,62 +881,42 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									dfuser[i].setEnabled(false);
 									dsuser[0].setEnabled(false);
 								}
-								kkm.seatss(user2.getSeatNum());
-								System.out.println(kkm.seatim()+"불러옴");
-								KoskGroupPanel kgp = new KoskGroupPanel();
-								//group.add(kgp.KoskGroupPanel(mf));
+								group.add(kgp.KoskGroupPanel(mf,seatnum));
 								panel.add(group,0);
 								panel.repaint();
 							}
-							
 						});
 						pre.addActionListener(new ActionListener() {
-
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
 								ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
 							}
 						});
-
 					}
 				}
 			}
 		}
 	});
-	
-
-	
 }
-//============== 좌석 버튼 클릭시 이벤트 ===================
 @Override
 public void mouseClicked(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
 }
-
 @Override
 public void mouseEntered(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
 }
-
 @Override
 public void mouseExited(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
 }
-
 @Override
 public void mousePressed(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
 }
-
 @Override
 public void mouseReleased(MouseEvent e) {
-	
-	
-	
 }
 }
+
+
+
+
+

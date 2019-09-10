@@ -32,29 +32,7 @@ public class KoskManager {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public KoskManager(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
+	public boolean KoskSgin (ArrayList number2) { // KoskSignUp에서 정보를 받아옴
 	      Iterator it = number2.iterator();
 	      
 	      String[] value = new String[4];// 0번부터 3번까지 순서대로 정보를 value에 저장함
@@ -86,7 +64,7 @@ public class KoskManager {
 	               }
 	            }
 	         }
-//	         return ss.signupservice(value);
+	         return ss.signupservice(value);
 	         
 	      }
 	public void seatManger(String seatnum) {

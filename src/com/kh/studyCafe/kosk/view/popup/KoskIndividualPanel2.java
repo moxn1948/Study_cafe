@@ -30,6 +30,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 	public JPanel panel = new JPanel();
 	private JLabel Rt;
 	
+	long daytime;
 	private KoskMainFrame mf;
 	public JPanel KoskIndividualPanel2(KoskMainFrame mf) {
 	this.mf = mf;
@@ -154,7 +155,8 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 			fm.setVisible(false);
 			//confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
 		}
-		 kkm.intime(day);
+			daytime = day;
+			System.out.println(day+"팝업창에서 선택함");
 	}
 
 	@Override
@@ -179,6 +181,10 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public long daytime() {
+		
+		return daytime;
 	}
 	
 }
