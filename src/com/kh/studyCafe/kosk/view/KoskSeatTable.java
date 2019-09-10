@@ -43,6 +43,9 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		int y = 152;
 		ArrayList<User> user = new ArrayList<User>();
 		
+		KoskIndividualPanel kip = new KoskIndividualPanel();
+		KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
+		
 		String name = null;
 		
 		
@@ -434,8 +437,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 								JPanel tmch = new JPanel();
 								tmch.setBounds(20, 100, 300, 400);
 								tmch.setLayout(null);
-								KoskIndividualPanel kip = new KoskIndividualPanel();
-								KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
+								
 								//===============================
 								//==== 시간권 패널 버튼 =============
 								Image confirmimg = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(117, 50, 0);
@@ -470,8 +472,9 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
 										panel.remove(tmch);
-										ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum));
+										ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,kip.hourtie,kkm.seatim()));
 										panel.repaint();
+										System.out.println(kip.hourtie+"추가 시간");
 									}
 								});
 								//=============================
@@ -600,7 +603,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum));
+			ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,S));
 		}
 	});
 	//=====================================================
