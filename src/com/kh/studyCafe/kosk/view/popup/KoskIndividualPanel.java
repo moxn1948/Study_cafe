@@ -18,7 +18,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
+import com.kh.studyCafe.kosk.view.KoskPayment;
+import com.kh.studyCafe.kosk.view.KoskSeatTable;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskIndividualPanel extends JPanel implements MouseListener{
@@ -35,9 +39,9 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	public boolean a = true;
-
+	JPanel backpanel = new JPanel();
 	private KoskMainFrame mf;
-	
+	String phnum;
 	public JPanel KoskIndividualPanel(KoskMainFrame mf){
 	this.mf = mf;
 	
@@ -145,15 +149,6 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	
 	
 
-	confirm.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	});
-	
 	
 	//============
 	
@@ -165,7 +160,7 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	panel.add(plus);
 	panel.add(time);
 	panel.add(minus);
-//	panel.add(confirm);
+	//panel.add(confirm);
 	
 	mf.add(panel);
 	
@@ -225,8 +220,10 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 			} else if(e.getSource() == null) {
 				hour = 1;
 			}
+			System.out.println(hour);
 		}
-		 kkm.intime(hour);
+		 KoskDao kd = new KoskDao();
+		//kd.Kosktime(phnum, hour+"");
 	/*	if(e.getSource() == confirm) {
 			mf.dispose();
 			//ChangePanel.changePanel(kst.panel, new KoskPayment());
@@ -234,6 +231,7 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 		}*/
 		
 	}
+	
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -257,6 +255,10 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public int indi() {
+		
+		return hour;
 	}
 	
 }
