@@ -120,7 +120,7 @@ public class  KoskLogin extends JPanel{
 		Login.add(signUp);
 		
 		mf.add(Login,0);
-		
+		mf.repaint();
 		Login.addMouseListener(null);
 		
 		ArrayList userList = new ArrayList<>();
@@ -130,28 +130,18 @@ public class  KoskLogin extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KoskDao kd = new KoskDao();
-				//ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf));
-				/*for(int i=0; i<kd.seatin().size(); i++) {
-					System.out.println("i : " + i);
-					System.out.println(kd.seatin().size());
-					System.out.println(kd.seatin().get(i));
-					
-					//System.out.println(kd.login(phonenumber.getText(), password.getText()));
-					
-				}*/
 				String phnum = phonenumber.getText();
 				//System.out.println(phnum);
-				String seatnum = null;
+				
 				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
-					
-					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,seatnum));
+					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum)));
+				
 				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
 					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum));
 				} else {
-					
+					System.out.println(kd.seatin());
 				}
 				
-			//	System.out.println(kd.KoskRead());	
 			}
 		});
 		
