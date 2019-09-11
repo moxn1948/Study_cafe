@@ -25,12 +25,21 @@ import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 public class KoskSeatManagement extends JPanel{
 	
 	public JPanel panel = new JPanel();
-	JPanel backpanel = new JPanel();
+	JPanel backpanel ;
 	private KoskMainFrame mf ;
 	private JButton[] button = new JButton[3];
 	private ClientBack client;
 	
-	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phnum,String seatnum, ClientBack client) {
+	private int onum;
+	private String seatNum;
+	private String phoneNum;
+	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phoneNum,String seatNum, int onum) {
+		this.mf = mf;
+		this.backpanel = backpanel;
+		this.onum = onum;
+		this.seatNum = seatNum;
+		this.backpanel = backpanel;
+		this.phoneNum = phoneNum;
 		KoskIndividualPanel kip = new KoskIndividualPanel();
 		KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
 		
@@ -39,10 +48,6 @@ public class KoskSeatManagement extends JPanel{
 		JPanel pp = new JPanel(); // 시간 기간 선택
 		JPanel pp2 = new JPanel();// 1일권
 		JPanel pp3 = new JPanel();// 기간권
-		this.mf = mf;
-		this.backpanel = backpanel;
-		
-		
 		
 		//======= 컬러 설정 ====	
 		
@@ -181,7 +186,7 @@ public class KoskSeatManagement extends JPanel{
 		   seat2.setFont(inputtext);
 		   seat2.setForeground(textColor);
 		   
-		   JTextField seat = new JTextField(new KoskDao().seatread(phnum)+"번 좌석") {
+		   JTextField seat = new JTextField(new KoskDao().seatread(phoneNum)+"번 좌석") {
 			   @Override
 			   public void setBorder(Border border) {
 				   
@@ -223,6 +228,7 @@ public class KoskSeatManagement extends JPanel{
 					System.out.println(kip.indi()+"시간 선택함");
 					System.out.println(seatnum);
 					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,kip.indi(),seatnum,0, client));
+
 				}
 			});
 		 //individual2 버튼
@@ -277,7 +283,12 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				//ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf));
+				if(num>=0 && num < 25) {
+					ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phoneNum,onum));
+				} else {
+					//팝업사용
+				}
+				
 			   
 			}
 		});
@@ -288,7 +299,7 @@ public class KoskSeatManagement extends JPanel{
 					// TODO Auto-generated method stub
 					panel.remove(pp);
 					panel.repaint();   
-					pp2.add(new KoskIndividualPanel());
+					pp2.add(kip.KoskIndividualPanel(mf));
 					panel.add(pp2,0);
 					panel.repaint();
 					
@@ -352,7 +363,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phnum) );
+				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phoneNum) );
 			}
 		});
 		   
