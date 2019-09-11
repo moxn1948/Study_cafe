@@ -369,7 +369,7 @@ public class KoskSeatManagement extends JPanel{
 				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phoneNum) );
 			}
 		});
-		   
+		    
 		  
 		   
 		 
