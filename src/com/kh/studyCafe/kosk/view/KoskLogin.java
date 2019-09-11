@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 
@@ -148,7 +149,7 @@ public class  KoskLogin extends JPanel{
 				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
 //					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum, client));
 					// seatTable로 연결
-					ChangePanel.changePanel(mf, Login, new KoskSeatTable2(mf, Login, client, phnum));
+					ChangePanel.changePanel(mf, Login, new KoskSeatTable2(mf, new AdmDao().admRead(), client, phnum));
 					System.out.println("seatTable로 연결");
 					
 				} else {

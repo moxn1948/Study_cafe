@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskGroupPanel;
@@ -39,7 +40,10 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	private int num ; // 좌석 번호 가져오기
 	String seatnum = null;
 	int hh = 0;
-public KoskSeatTable(KoskMainFrame mf, String phnum) {
+	
+	private ClientBack client;
+	
+public KoskSeatTable(KoskMainFrame mf, String phnum, ClientBack client) {
 	this.mf = mf;
 		int x = 5;
 		int y = 152;
@@ -278,7 +282,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 			}
 			
 			@Override
@@ -461,7 +465,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
 										panel.remove(tmch);
-										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum, client));
 										panel.repaint();
 										
 									}
@@ -519,11 +523,11 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 										panel.remove(tmch);
 										mf.repaint();
 										if(user.getSeatType()==0) {
-											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip.indi(),seatnum,0));
+											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip.indi(),seatnum,0, client));
 											System.out.println("1일권 선택");
 											System.out.println(kip.indi());
 										} else if(user.getSeatType() == 1) {
-											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip2.daytime(),seatnum,1));
+											ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kip2.daytime(),seatnum,1, client));
 											System.out.println(kip2.daytime());
 											System.out.println("기간권 선택");
 										}
@@ -568,7 +572,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum, client));
 									}
 								});
 								//==============================================
@@ -619,7 +623,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			panel.remove(group);
-			ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kgp.gptm(),seatnum, 0));
+			ChangePanel.changePanel(mf, panel, new KoskPayment(mf, panel, phnum, kgp.gptm(),seatnum, 0, client));
 			// 단체 
 			System.out.println("단체석 누름");
 			System.out.println(kgp.gptm());
@@ -713,7 +717,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum, client));
 									}
 								});
 							}
@@ -810,7 +814,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum, client));
 									}
 								});
 								
@@ -890,7 +894,7 @@ public KoskSeatTable(KoskMainFrame mf, String phnum) {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
-								ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum));
+								ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum, client));
 							}
 						});
 					}
