@@ -1,19 +1,10 @@
 package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
-
-
-
-
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -25,11 +16,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.view.popup.KoskPassWordNo;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpPop;
-import com.kh.studyCafe.model.vo.User;
   
 public class KoskSignUp extends JPanel{
 
@@ -41,9 +32,16 @@ public class KoskSignUp extends JPanel{
 	private String ph;
 	private String ps;
 	private String pss;
-	public KoskSignUp(KoskMainFrame mf) {
+	
+
+	// 네트워크 코드
+	private ClientBack client;
+	
+	public KoskSignUp(KoskMainFrame mf, ClientBack client) {
 		this.mf = mf;
 		
+		// 네트워크 코드
+		this.client = client;
 
 		JPanel pp =new JPanel();
 		JPanel pp2 = new JPanel();
@@ -206,7 +204,7 @@ public class KoskSignUp extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				pp.remove(pp2);
 				pp.repaint();
-				ChangePanel.changePanel(mf, pp,new KoskLogin(mf));
+				ChangePanel.changePanel(mf, pp,new KoskLogin(mf, client));
 				mf.repaint();
 			}
 			
@@ -223,7 +221,7 @@ public class KoskSignUp extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				pp.remove(pp3);
 				pp.repaint();
-				ChangePanel.changePanel(mf, pp, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, pp, new KoskLogin(mf, client));
 				mf.repaint();
 				
 			}
@@ -270,11 +268,11 @@ public class KoskSignUp extends JPanel{
 				number.add(psch.getText());
 			    
 				KoskManager km =  new KoskManager();
-				km.KoskSgin(number);
-				if(km.KoskSgin(number) == true) {
+//				km.KoskSgin(number, client);
+				if(km.KoskSgin(number, client) == true) {
 					pp.add(pp2,0);
 					mf.repaint();
-				} else if(km.KoskSgin(number) == false){
+				} else if(km.KoskSgin(number, client) == false){
 					pp.add(pp4,0);
 					mf.repaint();
 				}

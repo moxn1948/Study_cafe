@@ -12,8 +12,6 @@ import javax.swing.JPanel;
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
-//import com.kh.studyCafe.client.Watcher;
 import com.kh.studyCafe.model.vo.User;
 
 
@@ -43,13 +41,8 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		
-		
 	}
-	public static void main(String[] args) {
-		new AdmMainFrame();
-		
-	}
+
 	
 	public void appendUser(ArrayList<User> user) {
 		// 클라이언트 측 리페인트

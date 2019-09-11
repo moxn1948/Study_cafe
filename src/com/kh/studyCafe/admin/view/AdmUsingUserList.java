@@ -28,7 +28,6 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUsingUserList extends JPanel implements ActionListener, MouseListener {
@@ -283,16 +282,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(cafeInfo);
 		this.add(scrollpane);
 		
-		 if(!threadControl) {
-
-	         // 시계스레드 start
-	         MinTimeThread timeThread = new MinTimeThread(client);
-	         timeThread.setDaemon(true);
-	         timeThread.start();
-	         
-	         threadControl = true;
-	      }
-
 
 	}
 

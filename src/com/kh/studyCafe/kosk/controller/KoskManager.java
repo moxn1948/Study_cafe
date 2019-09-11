@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.model.service.SignUpService;
 import com.kh.studyCafe.model.vo.User;
@@ -25,8 +26,14 @@ public class KoskManager {
 		return kd.KoskLineSeat(phoneNum, seatNum);
 		
 	}
+
+	// 네트워크 코드
+	private ClientBack client;
 	
-	public boolean KoskSgin(ArrayList number2) { // KoskSignUp에서 정보를 받아옴
+	public boolean KoskSgin(ArrayList number2, ClientBack client) { // KoskSignUp에서 정보를 받아옴
+		// 네트워크 코드
+		this.client = client;
+		
 	      Iterator it = number2.iterator();
 	      
 	      String[] value = new String[4];// 0번부터 3번까지 순서대로 정보를 value에 저장함
@@ -43,34 +50,13 @@ public class KoskManager {
 		      
 		      AdmDao ad = new AdmDao();
 		      ad.admWrite(u);
+		      
+		      client.sendUser(ad.admRead());
 	      }
-	      
-	      /*
-	         BufferedWriter bw = null;
-	         if(ss.signupservice(value)== true) {
-	            
-	            try {
-	               bw = new BufferedWriter(new FileWriter("user.dat",true));
-	               bw.write(value[0]+"/");
-	               bw.write(value[1]+"/");
-	               bw.write(value[2]+"\r\n");// 파일 입력하는 부분
-	      
-	            } catch (IOException e) {
-	               
-	               e.printStackTrace();
-	            } finally {
-	               try {
-	                  bw.close();
-	               } catch (IOException e) {
-	                  
-	               }
-	            }
-	         }
-*/
-	         return ss.signupservice(value);
+	      return ss.signupservice(value);
 
 	         
-	      }
+	}
 	public void seatManger(String seatnum) {
 		BufferedWriter bw = null;
 		BufferedReader br = null;

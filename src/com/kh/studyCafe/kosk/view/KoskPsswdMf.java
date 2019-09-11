@@ -14,8 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskPsswdMf extends JPanel{
@@ -29,9 +28,15 @@ public class KoskPsswdMf extends JPanel{
 	private JButton button;
 	private String phoneNum;
 	
-	public KoskPsswdMf(KoskMainFrame mf, String phoneNum) {
+	// 네트워크 코드
+	private ClientBack client;
+	
+	public KoskPsswdMf(KoskMainFrame mf, String phoneNum, ClientBack client) {
 		this.mf = mf;
 		this.phoneNum = phoneNum;
+		
+		// 네트워크 코드
+		this.client = client;
 		
 		// ============= 색상 설정 ===============
 		Color wallPapers = new Color(239,234,222);
@@ -155,7 +160,7 @@ public class KoskPsswdMf extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
+				ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf, client));
 			}
 		});
 
@@ -169,7 +174,7 @@ public class KoskPsswdMf extends JPanel{
 				if(nowPasswd.equals(newPasswd)) {
 					ArrayList<User> userList = null;
 					
-					ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf));
+					ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf, client));
 				}else {
 					cancel.setEnabled(false);
 					find.setEnabled(false);
