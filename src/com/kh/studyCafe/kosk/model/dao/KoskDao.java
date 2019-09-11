@@ -431,4 +431,23 @@ public class KoskDao {
 		         }
 		         return a;
 		      }
+public String seatread(String phnum) {
+		    	  
+		    	  ArrayList<User> userList = null;
+			         String seatnum = null;
+		    	  
+		    	 try  (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+		    		 userList = (ArrayList<User>) ois.readObject();
+		    		 
+		    		 seatnum = new String();
+		    		 for(int i=0; i<userList.size(); i++) {
+		    			 if(userList.get(i).getPhoneNum().equals(phnum)) {
+		    				 seatnum = (userList.get(i).getSeatNum());
+		    			 }
+		    		 }
+		    	 } catch (Exception e) {
+		    		 System.out.println("user.dat에 첫번째 입력");
+		    	 }
+		    	  return seatnum;
+		      }
 }
