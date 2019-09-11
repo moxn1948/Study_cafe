@@ -8,8 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class KoskSetTableOkCancel {
-	public KoskSetTableOkCancel() {
+import com.kh.studyCafe.kosk.view.KoskMainFrame;
+
+public class KoskSetTableOkCancel extends JPanel{
+	private KoskMainFrame mf;
+	public JPanel KoskSetTableOkCancel(KoskMainFrame mf) {
+		this.mf= mf;
 			Font font = new Font("맑은 고딕",Font.BOLD,15);
 			Color textColor = new Color(127,118,104);
 			Color wallPapers = new Color(205, 201, 191);
@@ -17,7 +21,6 @@ public class KoskSetTableOkCancel {
 			Color paper1 = new Color(255,255,255);
 			
 			
-			JFrame mf = new JFrame();
 			mf.setSize(310,250);
 			
 			JPanel panel = new JPanel();
@@ -50,11 +53,13 @@ public class KoskSetTableOkCancel {
 			
 			
 			mf.add(panel);
-			panel.add(button);
-			panel.add(button1);
+			//panel.add(button);
+			//panel.add(button1);
 			panel.add(label);
 			mf.setVisible(true);
 			mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			return panel;
 		
 	}
 
