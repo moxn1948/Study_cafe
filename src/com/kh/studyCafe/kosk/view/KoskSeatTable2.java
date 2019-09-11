@@ -17,6 +17,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
@@ -27,8 +28,8 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private boolean seatToggle;
 	
 	private KoskMainFrame mf;
-	private JPanel op;
-	private String phnum;
+//	private JPanel op;
+	public static String phnum;
 	private ClientBack client;
 	
 	private JButton logout;
@@ -36,8 +37,9 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private JButton confirm;
 	private String seatNum;
 	
-	public KoskSeatTable2(KoskMainFrame mf, JPanel op, ClientBack client,String phnum) {
-		this.op = op;
+	
+	public KoskSeatTable2(KoskMainFrame mf, ArrayList<User> uList, ClientBack client, String phnum) {
+//		this.op = op;
 		this.mf = mf;
 		this.phnum = phnum;
 
@@ -159,10 +161,9 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		
 		// 이미 사용 중인 좌석 처리
 		for (int i = 0; i < seatIndv.length; i++) {
-			ArrayList<User> utList = new AdmDao().admRead();
 			
-			for(int j = 0; j < utList.size(); j++) {
-				if(utList.get(j).getSeatNum().equals((i+1) + "")) {
+			for(int j = 0; j < uList.size(); j++) {
+				if(uList.get(j).getSeatNum().equals((i+1) + "")) {
 					seatIndv[i].setBackground(new Color(127, 118, 104));
 					seatIndv[i].setForeground(Color.WHITE);
 					seatIndv[i].setEnabled(false);
@@ -173,10 +174,9 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		}
 
 		for (int i = 0; i < seatGrp.length; i++) {
-			ArrayList<User> utList = new AdmDao().admRead();
 			
-			for(int j = 0; j < utList.size(); j++) {
-				if(utList.get(j).getSeatNum().equals(seatGrp[i].getText())) {
+			for(int j = 0; j < uList.size(); j++) {
+				if(uList.get(j).getSeatNum().equals(seatGrp[i].getText())) {
 					seatGrp[i].setBackground(new Color(127, 118, 104));
 					seatGrp[i].setForeground(Color.WHITE);
 					seatGrp[i].setEnabled(false);

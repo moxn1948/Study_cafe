@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
-import com.kh.studyCafe.admin.view.AdmMainFrame;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
  
@@ -50,11 +49,12 @@ public class KoskMainFrame extends JFrame{
 		if(KoskMainFrame.koskWatchPanel != null) {
 				
 			String tempClass = KoskMainFrame.koskWatchPanel.getClass().getName().split("view.")[1];
-			if(tempClass.equals("KoskSeatTable")) {
+			if(tempClass.equals("KoskSeatTable2")) {
 				
 				this.remove(KoskMainFrame.koskWatchPanel);
-				this.add(new KoskSeatTable(this, KoskSeatTable.phoneNum, client));
+				this.add(new KoskSeatTable2(this, new AdmDao().admRead(), client, KoskSeatTable2.phnum));
 				this.repaint();
+				
 				System.out.println("리페인트 수정됨2");
 			}
 			
