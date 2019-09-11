@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,8 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.model.vo.User;
 
 public class KoskPsswdFind extends JPanel{
 	private KoskMainFrame mf;
@@ -29,10 +28,16 @@ public class KoskPsswdFind extends JPanel{
 	private JButton find;
 	private KoskPsswdMf kpm;
 	//User에서 값을 이름, 핸드폰 번호 , 비밀번호 값 받아와서 저장
+	
+	// 네크워크 코드
+	private ClientBack client;
 
 	public KoskPsswdFind(KoskMainFrame mf) {
 		this.mf = mf;
-
+		
+		// 네크워크 코드
+		this.client = client;
+		
 		TitledBorder tb = new TitledBorder(new LineBorder(Color.black));
 		
 		// ============= 색상 설정 ===============
@@ -128,7 +133,7 @@ public class KoskPsswdFind extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, pssfind, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, pssfind, new KoskLogin(mf, client));
 			}
 		});
 
@@ -139,7 +144,7 @@ public class KoskPsswdFind extends JPanel{
 				//등록되어 있는 정보와 입력된 값바 비교 후 맞을 시 이름과 전화번호, 비밀번호 값 전달 / 패널 전환
 				KoskDao kd = new KoskDao();
 				if((kd.compare(phtf.getText(), nametf.getText())) == true) {
-					ChangePanel.changePanel(mf, pssfind, new KoskPsswdMf(mf, phtf.toString()));
+					ChangePanel.changePanel(mf, pssfind, new KoskPsswdMf(mf, phtf.toString(), client));
 				}else {
 					phtf.setEditable(false);
 					nametf.setEditable(false);
