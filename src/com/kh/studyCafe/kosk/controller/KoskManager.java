@@ -3,19 +3,15 @@ package com.kh.studyCafe.kosk.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
-import com.kh.studyCafe.admin.model.vo.AdmUserTable;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
 import com.kh.studyCafe.model.service.SignUpService;
 import com.kh.studyCafe.model.vo.User;
 
@@ -40,7 +36,16 @@ public class KoskManager {
 	         i++;
 	      }
 	      SignUpService ss = new SignUpService();
-	      ss.signupservice(value);
+//	      ss.signupservice(value);
+	      
+	      if(ss.signupservice(value) == true) {
+		      User u = new User(value[0], value[1], value[2]);
+		      
+		      AdmDao ad = new AdmDao();
+		      ad.admWrite(u);
+	      }
+	      
+	      /*
 	         BufferedWriter bw = null;
 	         if(ss.signupservice(value)== true) {
 	            
@@ -61,7 +66,7 @@ public class KoskManager {
 	               }
 	            }
 	         }
-
+*/
 	         return ss.signupservice(value);
 
 	         
