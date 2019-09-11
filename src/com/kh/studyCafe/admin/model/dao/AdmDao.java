@@ -1,10 +1,15 @@
 package com.kh.studyCafe.admin.model.dao;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -270,6 +275,30 @@ public class AdmDao {
 
      }
 
+   
+   		//로그인 아이디 패스워트 텍스트 불러오기
+   	public String loginInforRead() {
+   		String idPwd="";
+   		File file =new File("loginfo.txt");
+   		
+   		try {
+			BufferedReader inFiles = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()),"UTF8"));
+			String line ="";
+			while((line=inFiles.readLine())!=null) {
+				if(line.trim().length()>0) {
+					idPwd+=line+",";
+				}
+			}
+			inFiles.close();
+   		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+   
+   		return idPwd;
+   	
+   	}
 }
 
 
