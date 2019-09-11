@@ -30,6 +30,7 @@ public class  KoskLogin extends JPanel{
 	// 네크워크 코드
 	private ClientBack client;
 	
+	private int onum;
 	
 	public KoskLogin(KoskMainFrame mf, ClientBack client) {
 		// 네크워크 코드
@@ -143,7 +144,7 @@ public class  KoskLogin extends JPanel{
 
 				
 				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
-					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum), client));
+					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum), onum, client));
 					
 				
 				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
