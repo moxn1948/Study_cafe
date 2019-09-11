@@ -45,7 +45,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	
 	private int onum;
 	private String phnum;
-	public KoskSeatTable(KoskMainFrame mf, String phnum,int onum) {
+	public KoskSeatTable(KoskMainFrame mf, String phnum,int onum, ClientBack client) {
 		this.mf = mf;
 		this.phnum = phnum;
 		this.onum = onum;
@@ -402,7 +402,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 												dfuser[i].setEnabled(false);
 												dsuser[i].setEnabled(false);
 											}
-										}\
+										}
 										System.out.println(seatnum+"좌석");
 										KoskManager km = new KoskManager();
 										JButton pre = new JButton("선택취소");

@@ -2,15 +2,10 @@
 package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,12 +17,11 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel;
 import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
-import com.kh.studyCafe.model.vo.User;
  
 public class KoskSeatManagement extends JPanel{
 	
@@ -38,13 +32,16 @@ public class KoskSeatManagement extends JPanel{
 	private int onum;
 	private String seatNum;
 	private String phoneNum;
-	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phoneNum,String seatNum, int onum) {
+	private ClientBack client;
+	
+	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phoneNum,String seatNum, int onum, ClientBack client) {
 		this.mf = mf;
 		this.backpanel = backpanel;
 		this.onum = onum;
 		this.seatNum = seatNum;
 		this.backpanel = backpanel;
 		this.phoneNum = phoneNum;
+		this.client = client;
 		KoskIndividualPanel kip = new KoskIndividualPanel();
 		KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
 		
@@ -232,7 +229,7 @@ public class KoskSeatManagement extends JPanel{
 					// TODO Auto-generated method stub
 					System.out.println(kip.indi()+"시간 선택함");
 					System.out.println(seatNum);
-					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phoneNum,kip.indi(),seatNum,0));
+					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phoneNum,kip.indi(),seatNum,0, client));
 				}
 			});
 		 //individual2 버튼
@@ -242,7 +239,7 @@ public class KoskSeatManagement extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println(kip2.daytime()+"시트메니저");
-				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phoneNum,kip2.daytime(),seatNum,1));
+				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phoneNum,kip2.daytime(),seatNum,1, client));
 			}
 		});
 		 mf.repaint();
@@ -277,7 +274,7 @@ public class KoskSeatManagement extends JPanel{
 				mf.repaint();*/
 				
 				koskDao.KoskExitSeat(phoneNum);// 퇴실 
-				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 				
 					
 			}
@@ -288,7 +285,7 @@ public class KoskSeatManagement extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(num>=0 && num < 25) {
-					ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phoneNum,onum));
+					ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phoneNum,onum, client));
 				} else {
 					//팝업사용
 				}
@@ -359,7 +356,7 @@ public class KoskSeatManagement extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 			}
 		});
 		   mypage.addActionListener(new ActionListener() {
