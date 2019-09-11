@@ -1,6 +1,7 @@
 package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ import com.kh.studyCafe.client.ClientBack;
 
 public class AdmLoginFail extends JPanel implements ActionListener {
 
-	private JPanel login= new JPanel();
+//	private JPanel login= new JPanel();
 	private JPanel op =null;
 	private AdmMainFrame mf;
 	private ClientBack client;
@@ -67,12 +68,13 @@ public class AdmLoginFail extends JPanel implements ActionListener {
 		ControlPanel cp = new ControlPanel();
 		
 		if(e.getSource()==closeBtn) {
-//			mf.remove(this);
-//			mf.repaint();
-			AdmLoginMain ad = new AdmLoginMain(mf,client);
+			mf.remove(this);
+			
+			for(Component cp2 : op.getComponents()) {
+				cp2.setEnabled(true);
+			}
 			
 			
-			cp.changePanel(mf, this, login);
 			
 		}
 		
