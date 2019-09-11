@@ -51,7 +51,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 		this.onum = onum;
 		int x = 5;
 		int y = 152;
-
+ 
 		KoskDao koskdao = new KoskDao();
 		ArrayList<User> user = new ArrayList<User>();
 
