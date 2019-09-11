@@ -1,3 +1,4 @@
+
 package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
@@ -376,4 +377,3 @@ public class KoskSeatManagement extends JPanel{
 		
 	}
 }
-

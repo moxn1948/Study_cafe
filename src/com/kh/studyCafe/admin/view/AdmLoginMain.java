@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
 
 public class AdmLoginMain extends MouseAdapter implements ActionListener{ // MouseAdapter는 예시이고, 필요한 이벤트에다 ControlPanel 선언해주면 됩니다.
 	private JPanel login = new JPanel();
@@ -33,6 +32,7 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	private ClientBack client;
 	
 	public AdmLoginMain(AdmMainFrame mf, ClientBack client) {
+		
 		AdmMainFrame.watchPanel = login;
 		this.mf = mf;
 		this.client = client;
@@ -112,7 +112,28 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		if(e.getSource() == loginBtn) {
 			AdmManager am = new AdmManager();
 			
-			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
+			String id = loginTextField.getText().trim();
+			char[]pwdArr =passwordField.getPassword();
+			String pwd ="";
+			//password는 문자형이라서 별도로 문자열로 바꿔줘야함
+			for(int i=0;i<pwdArr.length;i++) {
+				pwd+=pwdArr[i];
+			}
+			
+			System.out.println(id);
+			System.out.println(pwd);
+			boolean result =am.logpass(id, pwd);
+			if(result ==true) {
+				//로그인 성공일때는 바로 로그인
+				cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
+				
+			}else {
+				//실패시 gui
+				AdmLoginFail af= new AdmLoginFail(mf, login, client);
+				
+				cp.addPanel(mf, login, af);
+
+			}
 		}
 		
 		if(e.getSource() == loginTextField) {

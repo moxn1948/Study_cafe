@@ -3,6 +3,7 @@ package com.kh.studyCafe.admin.controller;
 import java.util.ArrayList;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.service.AdmLogin;
 import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.model.vo.User;
@@ -50,5 +51,11 @@ public class AdmManager {
 	}
 	public ArrayList<User> addWeekRemainTime(String phoneNum, int term) {
 		return ad.admWeekReadLine(phoneNum, term);
+	}
+	//admLoginMain에서 넘긴걸 받아옴
+	public boolean logpass(String id,String pwd) {
+		AdmLogin al = new AdmLogin();
+		return al.isLogincheck(id,pwd);
+		
 	}
 }

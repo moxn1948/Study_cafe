@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 
 public class KoskPayment extends JPanel{
@@ -28,7 +28,16 @@ public class KoskPayment extends JPanel{
 	private String seatnum = new String();
 	private int num =0;
 	KoskDao kd = new KoskDao();
-	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num) {
+	
+	
+	// 네트워크 코드
+	private ClientBack client;
+	
+	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num, ClientBack client) {
+		// 네트워크 코드
+		this.client = client;
+		
+		
 		this.mf = mf;
 		this.backpanel = backpanel;
 		this.phnum = phnum;
@@ -133,7 +142,7 @@ public class KoskPayment extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				//ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
 				panel.removeAll();
-				mf.add(new KoskLogin(mf));
+				mf.add(new KoskLogin(mf, client));
 				mf.repaint();
 			}
 		});
@@ -180,7 +189,7 @@ public class KoskPayment extends JPanel{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+						ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 					}
 				});
 				
@@ -188,7 +197,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+						ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 						
 					}
 				});
@@ -226,7 +235,7 @@ public class KoskPayment extends JPanel{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
+						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num,client));
 						
 					}
 				});

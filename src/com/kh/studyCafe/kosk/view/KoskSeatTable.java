@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskGroupPanel;
@@ -38,6 +39,10 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 	User user2 = new User();
 	private int num ; // 좌석 번호 가져오기
 	String seatnum = null;
+	int hh = 0;
+	
+	private ClientBack client;
+	
 	private int onum;
 	private String phnum;
 	public KoskSeatTable(KoskMainFrame mf, String phnum,int onum) {
@@ -280,17 +285,12 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 
 
 
-			//================================================
-
-
-
-
 			logOut.addMouseListener(new MouseListener() {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
-					ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 				}
 
 				@Override
@@ -373,6 +373,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 									user2.setSeatNum(Integer.toString(a));
 									seatnum = user2.getSeatNum();
 									if(seatnum == null) {
+
 									} else {
 										for(int i = 0; i < inds.length; i++) {
 											if(i == a) {
@@ -401,8 +402,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 												dfuser[i].setEnabled(false);
 												dsuser[i].setEnabled(false);
 											}
-										}
-
+										}\
 										System.out.println(seatnum+"좌석");
 										KoskManager km = new KoskManager();
 										JButton pre = new JButton("선택취소");
@@ -420,6 +420,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 										confirm.setLocation(175, 531);
 										confirm.setSize(160,53);
 										//confirm.setVisible(b);
+
 
 										panel.repaint();
 										/*panel.add(pre);*/
@@ -587,7 +588,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 										});
 										//==============================================
 									}
-								} 
+
 							}
 
 						}
@@ -595,16 +596,7 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 					}
 				});
 			}
-			// ============= group패널 ===============
-			JPanel group = new JPanel();
-			group.setBounds(25, 40, 300, 400);
-			group.setLayout(null);
-			group.setBackground(wallPapers);
-			//======================================
-			//=== group패널 버튼 =====================
-			Image confirmimg = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(117, 50, 0);
-			JButton groupcf = new JButton(new ImageIcon(confirmimg));
-			groupcf.setBounds(139,280,117,50);
+
 
 			Image cancelimg = new ImageIcon("img/Cancelbtnimg.png").getImage().getScaledInstance(117, 50, 0);
 			JButton groupcc = new JButton(new ImageIcon(cancelimg));
@@ -698,38 +690,6 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 										panel.add(confirm);
 
 
-										confirm.addActionListener(new ActionListener() {
-
-											@Override
-											public void actionPerformed(ActionEvent e) {
-												// TODO Auto-generated method stub
-												for(int i=0; i<iuser.length; i++) {
-													iuser[i].setEnabled(false);
-												}
-												for(int i=0; i<deuser.length; i++) {
-													deuser[i].setEnabled(false);
-												}
-												for(int i=0; i<dfuser.length; i++) {
-													dfuser[i].setEnabled(false);
-													dsuser[0].setEnabled(false);
-												}
-												System.out.println(kkm.seatim()+"불러옴");
-
-
-												group.add(kgp.KoskGroupPanel(mf,seatnum));
-												panel.add(group,0);
-												panel.repaint();
-
-											}
-										});
-										pre.addActionListener(new ActionListener() {
-
-											@Override
-											public void actionPerformed(ActionEvent e) {
-												// TODO Auto-generated method stub
-												ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum,num));
-											}
-										});
 									}
 								}
 
@@ -904,7 +864,8 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum,num));
+										ChangePanel.changePanel(mf, panel, new KoskSeatTable(mf,phnum,num, client));
+
 									}
 								});
 							}

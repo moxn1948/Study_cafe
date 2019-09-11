@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.model.vo.User;
 
  
  
@@ -26,7 +27,13 @@ public class  KoskLogin extends JPanel{
 	private KoskMainFrame mf;
 	private int resultphone;
 	private int resultpassw;
-	public KoskLogin(KoskMainFrame mf) {
+	// 네크워크 코드
+	private ClientBack client;
+	
+	
+	public KoskLogin(KoskMainFrame mf, ClientBack client) {
+		// 네크워크 코드
+		this.client = client;
 		this.mf = mf;
 
 		//======= 색상 설정 ====
@@ -133,11 +140,18 @@ public class  KoskLogin extends JPanel{
 				String phnum = phonenumber.getText();
 				//System.out.println(phnum);
 				
+
+				
 				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
-					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum)));
+					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum), client));
+					
 				
 				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
-					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum));
+//					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum, client));
+					// seatTable로 연결
+					ChangePanel.changePanel(mf, Login, new KoskSeatTable2(mf, new AdmDao().admRead(), client, phnum));
+					System.out.println("seatTable로 연결");
+					
 				} else {
 					System.out.println(kd.seatin());
 				}
@@ -162,7 +176,7 @@ public class  KoskLogin extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, Login, new KoskSignUp(mf));
+				ChangePanel.changePanel(mf, Login, new KoskSignUp(mf, client));
 				
 			}
 			
