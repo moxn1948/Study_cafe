@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,6 +19,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.controller.KoskManager;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
@@ -25,13 +28,13 @@ import com.kh.studyCafe.kosk.view.KoskPayment;
 import com.kh.studyCafe.kosk.view.KoskSeatTable;
 import com.kh.studyCafe.model.vo.User;
 
-public class KoskIndividualPanel extends JPanel implements MouseListener{
+public class KoskIndividualPanel extends JPanel implements  MouseListener{
 	
 	private JButton plus;
 	private JButton	minus;
 	private JButton cancel;
 	public JButton confirm;
-	public JPanel panel = new JPanel();
+	
 	private JTextField time;
 	private JTextField Rttime;
 	private JTextField ettime;
@@ -40,10 +43,20 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	public boolean a = true;
 	JPanel backpanel = new JPanel();
+	
+	private JPanel panel;
 	private KoskMainFrame mf; 
-	String phnum;
-	public JPanel KoskIndividualPanel(KoskMainFrame mf){
+	private ArrayList<User> uList;
+	private ClientBack client;
+	private int light;
+	private String phnum;
+	public  KoskIndividualPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light){
 	this.mf = mf;
+	this.panel = panel;
+	this.uList = uList;
+	this.client = client;
+	this.light = light;
+	this.phnum = phnum;
 	//===== 컬러 =====
 
 	Color wallPapers = new Color(239,234,222);
@@ -54,13 +67,14 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 		
 	TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
-	panel.setBorder(oneTb);
+	this.setBorder(oneTb);
 	
 	//===== 패널 =======
 	
-	panel.setSize(300,400);
-	panel.setLayout(null);
-	panel.setBackground(wallPapers);
+	this.setSize(300,400);
+	this.setLocation(30, 120);
+	this.setLayout(null);
+	this.setBackground(wallPapers);
 	
 	//===== 라벨 =========
 	JLabel logo = new JLabel("1일권");
@@ -151,28 +165,26 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	
 	//============
 	
-	panel.add(logo);
-	panel.add(Rt);
-	panel.add(et);
-	panel.add(Rttime);
-	panel.add(ettime);
-	panel.add(plus);
-	panel.add(time);
-	panel.add(minus);
-	//panel.add(confirm);
+	this.add(logo);
+	this.add(Rt);
+	this.add(et);
+	this.add(Rttime);
+	this.add(ettime);
+	this.add(plus);
+	this.add(time);
+	this.add(minus);
+	this.add(confirm);
+	this.add(cancel);
 	
-	mf.add(panel);
+	mf.add(this,0);
+	mf.repaint();
 	
 	
 	
 	
-	panel.repaint();
-	
-	return panel;
 	
 	
 }
-	
 	public int hourtie = 0;
 	User user = new User();
 	long seattime = 0;
@@ -224,7 +236,12 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 			System.out.println(hour);
 			seattime = hour;
 		}
-		 KoskDao kd = new KoskDao();
+		if(e.getSource() == confirm) {
+			ChangePanel.changePanel(mf, this, panel, new KoskPayment(mf,uList,phnum,client,panel,light,seattime));
+		}
+		if(e.getSource() == cancel) {
+			
+		}
 	}
 	
 
@@ -249,11 +266,13 @@ public class KoskIndividualPanel extends JPanel implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
+	
 	public long indi() {
 		
 		return seattime;
 	}
+
+
 	
 }

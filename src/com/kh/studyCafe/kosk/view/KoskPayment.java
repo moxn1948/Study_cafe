@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,34 +17,38 @@ import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.model.vo.User;
 
-public class KoskPayment extends JPanel{
-
+public class KoskPayment extends JPanel implements ActionListener{
 	private KoskMainFrame mf;
-	private JPanel panel = new JPanel();
-	private JPanel panel2 = new JPanel();
-	private JPanel backpanel = new JPanel();
-	private String phnum = new String();
-	private long time = 0;
-	private String seatnum = new String();
-	private int num =0;
-	KoskDao kd = new KoskDao();
-	
-	
-	// 네트워크 코드
 	private ClientBack client;
+	private JPanel panel;
+	private ArrayList<User> uList;
+	private JButton mypage;
+	private JButton logout;
+	private JButton money;
+	private JButton back;
+	private int light;
+	private long seattime;
+	private String phnum;
+	private JButton card;
+	private JButton back2;
+	private JButton button;
+	KoskDao kd = new KoskDao();	
 	
-	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num, ClientBack client) {
+	public  KoskPayment(KoskMainFrame mf,ArrayList<User> uList,String phnum,ClientBack client, JPanel panel
+			,int light,long seattime) {
 		// 네트워크 코드
 		this.client = client;
-		
-		
-		this.mf = mf;
-		this.backpanel = backpanel;
+		this.panel = panel;
+		this.uList = uList;
+		this.mf = mf; 
 		this.phnum = phnum;
-		this.time = time;
-		this.seatnum = seatnum;
-		this.num = num;
+		this.light = light; // 좌석 번호
+		this.seattime = seattime; //좌석 시간
+		
+		KoskMainFrame.koskWatchPanel = this;
+		
 		//======= 컬러 설정 =  ===	
 
 		Color wallPapers = new Color(239,234,222);
@@ -52,14 +57,10 @@ public class KoskPayment extends JPanel{
 		//=================
 		TitledBorder tb = new TitledBorder(new LineBorder(Color.black));
 		//================ Frame 설정 ======================
-		panel.setSize(360,640);
-		panel.setLayout(null);
-		panel.setBackground(wallPapers);
+		this.setSize(360,640);
+		this.setLayout(null);
+		this.setBackground(wallPapers);
 
-		panel2.setSize(318,113);
-		panel2.setBackground(wallPapers);
-		panel2.setLocation(16, 256);
-		panel2.setLayout(null);
 		//================================================
 
 		//============== font 설정 =========
@@ -84,35 +85,42 @@ public class KoskPayment extends JPanel{
 		//== 버튼 설정 =========
 		Image logoutimg = new ImageIcon("img/logoutbtnimg.png").getImage().getScaledInstance(80, 30, 0);
 
-		JButton logout = new JButton(new ImageIcon(logoutimg));
+		logout = new JButton(new ImageIcon(logoutimg));
 		logout.setBounds(1,1,80,30);
 		logout.setBorderPainted(false);
 
 		Image mypageimg = new ImageIcon("img/mypagebtnimg.png").getImage().getScaledInstance(80, 30, 0);
-		JButton mypage = new JButton(new ImageIcon(mypageimg));
+		mypage = new JButton(new ImageIcon(mypageimg));
 		mypage.setBounds(259, 1, 80, 30);
 		mypage.setBorderPainted(false);
 
-		JButton money = new JButton("현금");
+		money = new JButton("현금");
 		money.setFont(font);
 		money.setBackground(paper);
 		money.setForeground(paper1);
 		money.setBounds(60,250,95,96);
 
-		JButton card = new JButton("카드");
+		card = new JButton("카드");
 		card.setFont(font);
 		card.setBackground(paper);
 		card.setForeground(paper1);
 		card.setBounds(190,250,95,96);
 
 		Image backimg = new ImageIcon("img/backbtnimg.png").getImage().getScaledInstance(100, 40, 0);
-		JButton back = new JButton(new ImageIcon(backimg));
+		back = new JButton(new ImageIcon(backimg));
 		back.setBorderPainted(false);
 		back.setBounds(20,530,100,40);
 
-		JButton back2 = new JButton(new ImageIcon(backimg));
+		back2 = new JButton(new ImageIcon(backimg));
 		back2.setBorderPainted(false);
 		back2.setBounds(20,530,100,40);
+		
+		button = new JButton("결제가 완료 되었습니다.");
+		button.setFont(font);
+		button.setBounds(0,0,300,100);
+		button.setBackground(new Color(170, 162, 142));
+		button.setLocation(9, 6);
+		button.setForeground(paper1);
 		//==================
 
 		//==== 라벨 설정 ======
@@ -128,137 +136,76 @@ public class KoskPayment extends JPanel{
 		seat2.setForeground(textColor);
 
 		//============
-		mypage.addActionListener(new ActionListener() {
+		mypage.addActionListener(this);
+		logout.addActionListener(this);
+		back.addActionListener(this);
+		back2.addActionListener(this);
+		money.addActionListener(this);
+		button.addActionListener(this);
+		card.addActionListener(this);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phnum));
+		this.add(ib);
+		this.add(logout);
+		this.add(mypage);
+		this.add(paytext);
+		this.add(seat2);
+		this.add(card);
+		this.add(money);
+		this.add(back);
+		this.repaint();
+		mf.repaint();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == mypage) {
+			ChangePanel.changePanel(mf, panel, new KoskMypage(mf,this,phnum,client));
+		}
+		if(e.getSource() == logout) {
+			panel.removeAll();
+			mf.add(new KoskLogin(mf, client));
+			mf.repaint(); //change패널 로 변경
+		}
+		if(e.getSource() == logout) {
+			//ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+		}
+		if(e.getSource() == back) {
+			ChangePanel.changePanel(mf, panel, panel );
+		}
+		if(e.getSource() == money) {
+			money.setEnabled(false);
+			card.setEnabled(false);
+			money.setVisible(false);
+			card.setVisible(false);
+			kd.Kosktimeplus2(uList,light,seattime,phnum);
+			System.out.println(light+"페이먼트 좌석 정보");
+			ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
+			/*this.remove(back);
+			this.add(back2,0);*/
+			mf.repaint();
+			if(e.getSource() == button) {
+				
 			}
-		});
-
-		logout.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
-				panel.removeAll();
-				mf.add(new KoskLogin(mf, client));
-				mf.repaint();
+			if(e.getSource() == back2) {
+				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
 			}
-		});
-
-		back.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, backpanel);
+		}
+		if(e.getSource() == card) {
+			money.setEnabled(false);
+			card.setEnabled(false);
+			money.setVisible(false);
+			card.setVisible(false);
+			panel.remove(back);
+			panel.add(back2);
+			mf.add(panel,0);
+			if(e.getSource() == back2) {
+				ChangePanel.changePanel(mf, panel, new KoskPayment(
+						mf,uList,phnum,client,panel,light,seattime));
+				
 			}
-		});
-
-		money.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				money.setEnabled(false);
-				card.setEnabled(false);
-				money.setVisible(false);
-				card.setVisible(false);
-				
-				
-				
-				
-				JButton button = new JButton("결제가 완료 되었습니다.");
-				button.setFont(font);
-				button.setBounds(0,0,300,100);
-				button.setBackground(new Color(170, 162, 142));
-				button.setLocation(9, 6);
-				button.setForeground(paper1);
-				
-						
-				System.out.println("폰 : "+phnum+" 시간 : "+time+" 좌석 : "+seatnum);
-				kd.Kosktimeplus(phnum, time, seatnum,num);
-				
-				panel2.add(button,0);
-				panel.remove(back);
-				panel.add(back2,0);
-				mf.repaint();
-					
-				button.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
-					}
-				});
-				
-				back2.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
-						
-					}
-				});
-
-				panel2.setBorder(tb);				
-				panel.add(panel2,0);
-				mf.repaint();
-			}
-		});
-		
-		card.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				money.setEnabled(false);
-				card.setEnabled(false);
-				money.setVisible(false);
-				card.setVisible(false);
-				panel.remove(back);
-				panel.add(back2);
-				mf.add(panel,0);
-				
-				JButton button = new JButton("카드를 넣어주세요");
-				button.setFont(font);
-				button.setBounds(0,0,300,100);
-				button.setBackground(new Color(170, 162, 142));
-				button.setLocation(9, 6);
-				button.setForeground(paper1);
-				panel2.add(button);
-				
-				//back2 addActionListener가 발생 하지 않을시
-				//contdown이 진행되면 0이 되면 결제 완료 팝업으로 변환
-				
-				back2.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num,client));
-						
-					}
-				});
-
-				panel2.setBorder(tb);				
-				panel.add(panel2,0);
-				mf.repaint();
-
-			}
-		});
-
-		panel.add(ib);
-		panel.add(logout);
-		panel.add(mypage);
-		panel.add(paytext);
-		panel.add(seat2);
-		panel.add(card);
-		panel.add(money);
-		panel.add(back);
-		panel.repaint();
-
-		mf.add(panel,0);
-
+		}
 	}
 	
 }

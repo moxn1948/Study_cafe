@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListener {
@@ -28,23 +29,23 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private boolean seatToggle;
 	
 	private KoskMainFrame mf;
-//	private JPanel op;
-	public static String phnum;
 	private ClientBack client;
-	
 	private JButton logout;
 	private JButton mypage;
 	private JButton confirm;
 	private String seatNum;
+	private ArrayList<User> uList;
+	private JPanel panel;
+	private String phnum;
 	
-	
-	public KoskSeatTable2(KoskMainFrame mf, ArrayList<User> uList, ClientBack client, String phnum) {
+	public KoskSeatTable2(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client) {
 //		this.op = op;
 		this.mf = mf;
-		this.phnum = phnum;
-
-		// 네트워크 코드
+		this.uList = uList;
 		this.client = client;
+		this.panel = panel;
+		this.phnum = phnum;
+		// 네트워크 코드
 		KoskMainFrame.koskWatchPanel = this;
 		
 		// 패널 설정
@@ -210,16 +211,23 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		
 		// 로그아웃 버튼 클릭 시
 		if(e.getSource() == logout) {
-			System.out.println("logout btn");
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
 		
 		// 마이페이지 버튼 클릭 시
 		if(e.getSource() == mypage) {
-			System.out.println("mypage btn");
+			ChangePanel.changePanel(mf, this, new KoskMypage(mf, this, phnum, client));
 		}
 		
 		// confirm 버튼 클릭 시
 		if(e.getSource() == confirm) {
+			for(int i=0; i<seatIndv.length; i++) {
+				seatIndv[i].setEnabled(false);
+			}for(int i=0; i<seatGrp.length; i++) {
+				seatGrp[i].setEnabled(false);
+			}
+			ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,light));
+			
 			System.out.println("confirm btn");
 		}
 		
@@ -327,7 +335,12 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == confirm) {
+			
+		}
+		if(e.getSource() == logout) {
+			
+		}
 	}
 
 
