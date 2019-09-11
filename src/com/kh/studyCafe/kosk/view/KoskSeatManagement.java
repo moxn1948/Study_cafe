@@ -32,11 +32,12 @@ public class KoskSeatManagement extends JPanel{
 	
 	public JPanel panel = new JPanel();
 	JPanel backpanel = new JPanel();
-	private KoskMainFrame mf;
+	private KoskMainFrame mf ;
 	private JButton[] button = new JButton[3];
 	public KoskSeatManagement(KoskMainFrame mf, JPanel backpanel, KoskDao koskDao, String phnum,String seatnum) {
-	
-		KoskManager km = new KoskManager();
+		KoskIndividualPanel kip = new KoskIndividualPanel();
+		KoskIndividualPanel2 kip2 = new KoskIndividualPanel2();
+		
 			
 		// 패널 2개 생성
 		JPanel pp = new JPanel(); // 시간 기간 선택
@@ -184,7 +185,7 @@ public class KoskSeatManagement extends JPanel{
 		   seat2.setFont(inputtext);
 		   seat2.setForeground(textColor);
 		   
-		   JTextField seat = new JTextField("4-B번") {
+		   JTextField seat = new JTextField(new KoskDao().seatread(phnum)+"번 좌석") {
 			   @Override
 			   public void setBorder(Border border) {
 				   
@@ -199,7 +200,6 @@ public class KoskSeatManagement extends JPanel{
 		  //====================
 		 // koskIndividualpanel 에서 취소버튼
 		  
-		   KoskIndividualPanel ki = new KoskIndividualPanel();
 		
 		panel.add(logout);
 		panel.add(ib);
@@ -214,27 +214,29 @@ public class KoskSeatManagement extends JPanel{
 		//=============== 테두리 선언 부분 ========================
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
 		//=====================================================
-		mf.add(panel,1);
+		mf.add(panel,0);
 		mf.repaint();
 		int num=0; 
 		long time =0;
+		//individual 버튼
 		 indicon.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					KoskManager kkm = new KoskManager();
-					System.out.println(kkm.gettime()+"시간 선택함");
-					
-					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
+					System.out.println(kip.indi()+"시간 선택함");
+					System.out.println(seatnum);
+					ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,kip.indi(),seatnum,0));
 				}
 			});
+		 //individual2 버튼
 		 indi2con.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
+				System.out.println(kip2.daytime()+"시트메니저");
+				ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,kip2.daytime(),seatnum,1));
 			}
 		});
 		 mf.repaint();
@@ -290,8 +292,7 @@ public class KoskSeatManagement extends JPanel{
 					// TODO Auto-generated method stub
 					panel.remove(pp);
 					panel.repaint();   
-					KoskIndividualPanel ti = new KoskIndividualPanel();
-					pp2.add(ti.KoskIndividualPanel(mf));
+					pp2.add(new KoskIndividualPanel());
 					panel.add(pp2,0);
 					panel.repaint();
 					
@@ -304,8 +305,7 @@ public class KoskSeatManagement extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					panel.remove(pp);
-					KoskIndividualPanel2 ti2 = new KoskIndividualPanel2();
-					pp3.add(ti2.KoskIndividualPanel2(mf));
+					pp3.add(kip2.KoskIndividualPanel2(mf));
 					panel.add(pp3,0);
 					panel.repaint();
 					

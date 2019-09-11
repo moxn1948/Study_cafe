@@ -23,10 +23,18 @@ public class KoskPayment extends JPanel{
 	private JPanel panel = new JPanel();
 	private JPanel panel2 = new JPanel();
 	private JPanel backpanel = new JPanel();
+	private String phnum = new String();
+	private long time = 0;
+	private String seatnum = new String();
+	private int num =0;
 	KoskDao kd = new KoskDao();
 	public  KoskPayment(KoskMainFrame mf, JPanel backpanel, String phnum, long time, String seatnum, int num) {
 		this.mf = mf;
 		this.backpanel = backpanel;
+		this.phnum = phnum;
+		this.time = time;
+		this.seatnum = seatnum;
+		this.num = num;
 		//======= 컬러 설정 =  ===	
 
 		Color wallPapers = new Color(239,234,222);
@@ -116,7 +124,6 @@ public class KoskPayment extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ChangePanel.changePanel(mf, panel, new KoskMypage(mf, panel,phnum));
-
 			}
 		});
 
@@ -124,8 +131,10 @@ public class KoskPayment extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
-
+				//ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+				panel.removeAll();
+				mf.add(new KoskLogin(mf));
+				mf.repaint();
 			}
 		});
 
@@ -146,29 +155,40 @@ public class KoskPayment extends JPanel{
 				card.setEnabled(false);
 				money.setVisible(false);
 				card.setVisible(false);
-				panel.remove(back);
-				panel.add(back2);
-				mf.add(panel);
 				
 				
 				
-				JButton button = new JButton("현금을 넣어주세요");
+				
+				JButton button = new JButton("결제가 완료 되었습니다.");
 				button.setFont(font);
 				button.setBounds(0,0,300,100);
 				button.setBackground(new Color(170, 162, 142));
 				button.setLocation(9, 6);
 				button.setForeground(paper1);
-				panel2.add(button);
-								
-				kd.Kosktimeplus(phnum, time, seatnum,num);
-				System.out.println("폰 : "+phnum+" 시간 : "+time+" 좌석 : "+seatnum);
 				
+						
+				System.out.println("폰 : "+phnum+" 시간 : "+time+" 좌석 : "+seatnum);
+				kd.Kosktimeplus(phnum, time, seatnum,num);
+				
+				panel2.add(button,0);
+				panel.remove(back);
+				panel.add(back2,0);
+				mf.repaint();
+					
+				button.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+					}
+				});
 				
 				back2.addActionListener(new ActionListener() {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ChangePanel.changePanel(mf, panel, new KoskPayment(mf,panel,phnum,time,seatnum,num));
+						ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
 						
 					}
 				});
@@ -176,7 +196,6 @@ public class KoskPayment extends JPanel{
 				panel2.setBorder(tb);				
 				panel.add(panel2,0);
 				mf.repaint();
-
 			}
 		});
 		
@@ -190,7 +209,7 @@ public class KoskPayment extends JPanel{
 				card.setVisible(false);
 				panel.remove(back);
 				panel.add(back2);
-				mf.add(panel);
+				mf.add(panel,0);
 				
 				JButton button = new JButton("카드를 넣어주세요");
 				button.setFont(font);
@@ -229,7 +248,7 @@ public class KoskPayment extends JPanel{
 		panel.add(back);
 		panel.repaint();
 
-		mf.add(panel,1);
+		mf.add(panel,0);
 
 	}
 	

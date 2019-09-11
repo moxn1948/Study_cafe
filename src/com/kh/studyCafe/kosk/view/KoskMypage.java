@@ -215,7 +215,8 @@ public class KoskMypage extends JPanel{
 		panel.add(dtime1);
 		panel.add(find);
 
-		mf.add(panel);
+		mf.add(panel,0);
+		mf.repaint();
 
 
 		find.addActionListener(new ActionListener() {
