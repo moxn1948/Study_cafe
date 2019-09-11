@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,21 +23,24 @@ import com.kh.studyCafe.kosk.model.dao.KoskDao;
 
  
  
-public class  KoskLogin extends JPanel{
-	private JPanel Login = new JPanel();
+public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 	private KoskMainFrame mf;
-	private int resultphone;
-	private int resultpassw;
 	// 네크워크 코드
 	private ClientBack client;
 	
-	private int onum;
-	
+	private int compareNum;
+	private JButton login;
+	private JButton signUp;
+	private JButton findPwd;
+	private JTextField phoneNumber;
+	private JTextField password;
+	private int length;
 	public KoskLogin(KoskMainFrame mf, ClientBack client) {
 		// 네크워크 코드
 		this.client = client;
 		this.mf = mf;
-
+		
+		ArrayList userList = new ArrayList<>();
 		//======= 색상 설정 ====
 		
 		Color wallPapers = new Color(239,234,222); 
@@ -44,19 +48,17 @@ public class  KoskLogin extends JPanel{
 		
 		//=================
 		
-		
 		//================ 패널 설정 ======================
-		Login.setSize(360,640);
-		Login.setLayout(null);
-		Login.setBackground(wallPapers);
+		this.setSize(360,640);
+		this.setLayout(null);
+		this.setBackground(wallPapers);
 		//================================================
 		
 		//============== font 폰트 설정 =========
 		
-		Font f1 = new Font("",Font.BOLD,25);
+		Font f1 = new Font("맑은 고딕",Font.BOLD,25);
 		
 		//============================
-		
 		
 		//============== 제목 설정 ========================
 		
@@ -79,24 +81,14 @@ public class  KoskLogin extends JPanel{
 		
 		//==================== 텍스트 필드 설정  ==============
 		
-		JTextField phonenumber = new JTextField("Phone Number");
-		JTextField password = new JPasswordField("Pawd");
-		phonenumber.setEnabled(false);
-		phonenumber.addMouseListener(null);
-		phonenumber.setBounds(65,275,230,40);
-		phonenumber.setLayout(null);
+		phoneNumber = new JTextField("Phone Number");
 		
-		password.setEnabled(false);
-		password.addMouseListener(null);
+		phoneNumber.setBounds(65,275,230,40);
+		phoneNumber.setLayout(null);
+		
+		password = new JPasswordField("Pawd");
 		password.setBounds(65,320,230,40);
 		password.setLayout(null);
-		
-		
-		
-		
-		
-		
-		
 		//===================================================
 		
 		//===============  제목설정 =================
@@ -105,183 +97,106 @@ public class  KoskLogin extends JPanel{
 		Image singUpicon = new ImageIcon("img/singUpimg.png").getImage().getScaledInstance(110, 40, 0);
 		Image findPwdicon = new ImageIcon("img/findPwdimg.png").getImage().getScaledInstance(110, 40, 0);
 		
-		JButton loginButton = new JButton(new ImageIcon(loginicon));
-		JButton signUp = new JButton(new ImageIcon(singUpicon));
-		JButton findPwd = new JButton(new ImageIcon(findPwdicon));
+		login = new JButton(new ImageIcon(loginicon));
+		signUp = new JButton(new ImageIcon(singUpicon));
+		findPwd = new JButton(new ImageIcon(findPwdicon));
 		findPwd.setBorderPainted(false);
 		
-		loginButton.setBounds(65,365,230,50); 
+		login.setBounds(65,365,230,50); 
 		signUp.setBounds(65,420,110,40);
 		findPwd.setBounds(185,420,110,40);
-		
-		
+		login.addActionListener(this);
+		findPwd.addActionListener(this);
+		signUp.addActionListener(this);
+		phoneNumber.addMouseListener(this);
+		password.addMouseListener(this);
 		//=======================================
+				
+		this.add(title1);
+		this.add(title2);
+		this.add(title3);
+		this.add(phoneNumber);
+		this.add(password);
+		this.add(login);
+		this.add(findPwd);
+		this.add(signUp);
 		
-		
-		Login.add(title1);
-		Login.add(title2);
-		Login.add(title3);
-		Login.add(phonenumber);
-		Login.add(password);
-		Login.add(loginButton);
-		Login.add(findPwd);
-		Login.add(signUp);
-		
-		mf.add(Login,0);
+		mf.add(this,0);
 		mf.repaint();
-		Login.addMouseListener(null);
-		
-		ArrayList userList = new ArrayList<>();
-		
-		loginButton.addActionListener(new ActionListener() {
+	}
+				
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == login) {
+			KoskDao kd = new KoskDao();
+			String phoneNum = phoneNumber.getText();
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				KoskDao kd = new KoskDao();
-				String phnum = phonenumber.getText();
-				//System.out.println(phnum);
-				
-
-				
-				if(kd.login(phonenumber.getText(), password.getText()) == 1) {
-					ChangePanel.changePanel(mf, Login, new KoskSeatManagement(mf, Login, new KoskDao(),phnum,kd.toEnterInfo(phnum), onum, client));
-					
-				
-				} else if(kd.login(phonenumber.getText(), password.getText()) == 2) {
-//					ChangePanel.changePanel(mf, Login, new KoskSeatTable(mf,phnum, client));
-					// seatTable로 연결
-					ChangePanel.changePanel(mf, Login, new KoskSeatTable2(mf, new AdmDao().admRead(), client, phnum));
-					System.out.println("seatTable로 연결");
-					
-				} else {
-					System.out.println(kd.seatin());
-				}
-				
+			if(kd.login(phoneNumber.getText(), password.getText()) == 1) {
+				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, this, new KoskDao(), phoneNum, kd.toEnterInfo(phoneNum), compareNum, client));
+			}else if(kd.login(phoneNumber.getText(), password.getText()) == 2) {
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, new AdmDao().admRead(), client, phoneNum));
 			}
-		});
+		}
+		if(e.getSource() == signUp) {
+			ChangePanel.changePanel(mf, this, new KoskSignUp(mf, client));
+		}
+		if(e.getSource() == findPwd) {
+			ChangePanel.changePanel(mf, this, new KoskPsswdFind(mf));
+		}
 		
-		findPwd.addActionListener(new ActionListener() {
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == password) {
+			if(length == 0) {
+				password.setText("");
+				password.setEditable(true);
+				password.requestFocus();
+				password.selectAll();
+				
+				length++;
+			}
+		}
+		length = 0;
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if(e.getSource() == phoneNumber) {
+			if(length == 0) {
+				phoneNumber.setText("");
+				phoneNumber.setEditable(true);
+				phoneNumber.requestFocus();
+				phoneNumber.selectAll();
+				
+				length++;
+			}
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				//ChangePanel.changePanel(Login, new KoskPsswdFind());
-
-				ChangePanel.changePanel(mf, Login, new KoskPsswdFind(mf));
-     
-				
-			}
-		});
-	
-		signUp.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, Login, new KoskSignUp(mf, client));
-				
-			}
-			
-		});
-		phonenumber.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				if(e.getSource() == phonenumber) {
-					if(resultphone == 0) {
-						phonenumber.setText("");
-						phonenumber.setEnabled(true);
-						phonenumber.requestFocus();
-						
-						resultphone++;
-					}	
-					
-				}
-				
-				
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-
-		});
-		password.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(e.getSource() == password) {
-					if(resultpassw == 0) {
-						password.setText("");
-						password.setEnabled(true);
-						password.requestFocus();
-						
-						resultpassw++;
-					}	
-					
-				}
-				
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-
-		});
-	
-
-
-	
+		}
+		
 		
 	}
 	
-	
-
-		
 }
 	
 	
