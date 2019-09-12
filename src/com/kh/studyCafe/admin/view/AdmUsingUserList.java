@@ -28,6 +28,7 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+//import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUsingUserList extends JPanel implements ActionListener, MouseListener {
@@ -85,10 +86,26 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 			}
 
-			// 입실시간, 퇴실시간 테이블에 뿌리기
-			data[i][4] = timeEdit[0].split("일 ")[1];
-			data[i][5] = timeEdit[1].split("일 ")[1];
+			// 입실 시간 뿌리기
+			if (timeEdit[0].split("일 ")[1].substring(7).equals("오전")) {
+				data[i][4] = timeEdit[0].split("일 ")[1].substring(0, 7) + " AM";
+			} else {
+				data[i][4] = timeEdit[0].split("일 ")[1].substring(0, 7) + " PM";
+			}
+			
+			// 퇴실 예정 시간 뿌리기
+			if (utList.get(i).getSeatType() == User.WEEKSEAT) {
+				data[i][5] = "-";
+				
+			}else if(utList.get(i).getSeatType() == User.HOURSEAT){
+				if (timeEdit[1].split("일 ")[1].substring(7).equals("오전")) {
+					data[i][5] = timeEdit[1].split("일 ")[1].substring(0, 7) + " AM";
+				} else {
+					data[i][5] = timeEdit[1].split("일 ")[1].substring(0, 7) + " PM";
+				}
 
+			}
+			
 			// 잔여시간 형식 수정해서 테이블에 뿌리기
 			if (utList.get(i).getSeatType() == 2) { // 기간권일 때
 				data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
@@ -96,28 +113,19 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 				// 밀리세컨드를 시간 분으로 표시하기 위해 변
 				String timeResult = "";
 
-				timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
 //				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
 				if(utList.get(i).getRemainTime() % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
-	               timeResult += "0분";
+					timeResult += utList.get(i).getRemainTime() / 3600000 + 1 + "시간 ";
+					timeResult += "0분";
 	            }else {
-	               timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
+	            	timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
+	            	timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
 	            }
 				
 				
 				data[i][6] = timeResult;
 			}
 
-			// 오전, 오후를 AM, PM으로 변경
-			for (int j = 0; j < 2; j++) {
-				if (timeEdit[j].split("일 ")[1].substring(7).equals("오전")) {
-
-					data[i][4 + j] = timeEdit[j].split("일 ")[1].substring(0, 7) + " AM";
-				} else {
-					data[i][4 + j] = timeEdit[j].split("일 ")[1].substring(0, 7) + " PM";
-				}
-
-			}
 
 			// 개인&그룹 구분해서 테이블에 뿌리기
 			if (utList.get(i).getSeatNum().contains("-")) { // 그룹일 때
@@ -281,8 +289,17 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(allUserInfoButton);
 		this.add(cafeInfo);
 		this.add(scrollpane);
-		
 
+	/*	if(!threadControl) {
+
+			// 시계스레드 start
+			MinTimeThread timeThread = new MinTimeThread(client);
+			timeThread.setDaemon(true);
+			timeThread.start();
+			
+			threadControl = true;
+		}
+*/
 	}
 
 	@Override
@@ -319,6 +336,10 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		AdmDao ad = new AdmDao();
 		ControlPanel cp = new ControlPanel();
 		if(table.getSelectedColumn() == 1) {
+			scrollpane.getHorizontalScrollBar().setEnabled(false);
+			scrollpane.getVerticalScrollBar().setEnabled(false);
+			scrollpane.getViewport().getView().setEnabled(false);
+			
 			cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone),this,client));			
 		}
 		if(table.getSelectedColumn() == 8) {//연장
