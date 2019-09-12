@@ -24,15 +24,17 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 	 private JButton Period;
 	 private ArrayList<User> uList;
 	 private ClientBack client;
-	 private int light;
+	 private String seatnum;
 	 private String phnum;
-	public  KoskTimeHourWeek(KoskMainFrame mf, ArrayList<User> uList,String phnum, ClientBack client,JPanel panel, int light) {
+	 private int tableOrManage;
+	public  KoskTimeHourWeek(KoskMainFrame mf, ArrayList<User> uList,String phnum, ClientBack client,JPanel panel, String seatnum,int tableOrManage) {
 		this.panel = panel;
 		this.mf = mf;
 		this.uList = uList;
 		this.client = client;
-		this.light = light;
+		this.seatnum = seatnum;
 		this.phnum = phnum;
+		this.tableOrManage = tableOrManage;
 		
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		Color wallPapers = new Color(239,234,222);
@@ -64,7 +66,7 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		
 		JLabel label = new JLabel();
 		label.setForeground(textColor);
-		panel.setOpaque(true);
+		this.setOpaque(true);
 		
 		this.add(oneday);
 		this.add(Period);
@@ -79,10 +81,11 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == oneday) {
-			ChangePanel.changePanel(mf, this,new KoskIndividualPanel(mf,uList,phnum,client,panel,light));
+			//System.out.println(seatnum);
+			ChangePanel.changePanel(mf, this,new KoskIndividualPanel(mf,uList,phnum,client,panel,seatnum,1,tableOrManage));
 		}
 		if(e.getSource() == Period) {
-			
+			ChangePanel.changePanel(mf, this,new KoskIndividualPanel2(mf,uList,phnum,client,panel,seatnum,2,tableOrManage));
 		}
 	}
 

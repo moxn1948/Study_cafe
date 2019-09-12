@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,9 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.model.vo.User;
 
  
  
@@ -130,11 +129,18 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 		if(e.getSource() == login) {
 			KoskDao kd = new KoskDao();
 			String phoneNum = phoneNumber.getText();
+			ArrayList<User> uList;
+			uList = kd.uList();
+//			uList.get(kd.userindex(phoneNum)).setSeatNum("0");
+//			kd.KoskWrite(uList);
+			String light = (uList.get(kd.userindex(phoneNum)).getSeatNum());
+			long seattime = uList.get(kd.userindex(phoneNum)).getRemainTime();
+			System.out.println(uList);
 			
 			if(kd.login(phoneNumber.getText(), password.getText()) == 1) {
-				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, this, new KoskDao(), phoneNum, kd.toEnterInfo(phoneNum), compareNum, client));
+				 ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList,phoneNum,client,this,light,seattime));
 			}else if(kd.login(phoneNumber.getText(), password.getText()) == 2) {
-				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, new AdmDao().admRead(), client, phoneNum));
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList,phoneNum, client));
 			}
 		}
 		if(e.getSource() == signUp) {
@@ -143,7 +149,6 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 		if(e.getSource() == findPwd) {
 			ChangePanel.changePanel(mf, this, new KoskPsswdFind(mf));
 		}
-		
 	}
 
 	@Override

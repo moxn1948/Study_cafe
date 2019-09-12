@@ -19,11 +19,13 @@ import javax.swing.JPanel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.kosk.view.popup.KoskGroupPanel;
+import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListener {
-	private JButton seatIndv[] = new JButton[25];
+	private JButton seatIndv[] = new JButton[26];
 	private JButton seatGrp[] = new JButton[5];
 	private int light;
 	private boolean seatToggle;
@@ -35,15 +37,15 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private JButton confirm;
 	private String seatNum;
 	private ArrayList<User> uList;
-	private JPanel panel;
-	private String phnum;
+	static String phnum;
+	private int indvOrGrp;
+	private int tableOrManage;
 	
 	public KoskSeatTable2(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client) {
 //		this.op = op;
 		this.mf = mf;
 		this.uList = uList;
 		this.client = client;
-		this.panel = panel;
 		this.phnum = phnum;
 		// 네트워크 코드
 		KoskMainFrame.koskWatchPanel = this;
@@ -216,7 +218,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		
 		// 마이페이지 버튼 클릭 시
 		if(e.getSource() == mypage) {
-			ChangePanel.changePanel(mf, this, new KoskMypage(mf, this, phnum, client));
+			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this, phnum, client));
 		}
 		
 		// confirm 버튼 클릭 시
@@ -226,7 +228,15 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 			}for(int i=0; i<seatGrp.length; i++) {
 				seatGrp[i].setEnabled(false);
 			}
-			ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,light));
+			if(indvOrGrp == 1) {
+				tableOrManage = 1; // 시트테이블로 부터 시작
+				System.out.println(seatNum+"좌석");
+				ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,seatNum,tableOrManage));
+			} else {
+				ChangePanel.addPanel(mf, this, new KoskGroupPanel(mf, uList,phnum,client,this,seatNum,tableOrManage));
+				// public KoskGroupPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light) {
+				System.out.println("그룹 선택");
+			}
 			
 			System.out.println("confirm btn");
 		}
@@ -240,6 +250,9 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 
 			if(e.getSource() == seatIndv[i]) {
 				if(seatToggle == false) { // 처음 선택 했을 때
+//					for(int j = 0; j < utList.size(); j++) {
+//
+//					}
 					seatIndv[i].setBackground(new Color(127, 118, 104));
 					seatIndv[i].setForeground(Color.WHITE);       
 					seatNum = (i+1) + "";
@@ -269,7 +282,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 					}
 
 				}
-
+				indvOrGrp = 1;
 			}
 		}
 
@@ -283,7 +296,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 					light = i + seatIndv.length;
 					seatToggle = true;
 
-					seatNum = seatGrp[i].getText();
+						seatNum = seatGrp[i].getText();
 				}else { // 이미 선택한 좌석이 있을 경우
 					if(light >= seatIndv.length) {
 						// 기존의 선택 좌석을 선택 해제함
@@ -312,10 +325,10 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 					}
 
 				}
-
+				indvOrGrp = 2;
 			}
 		}
-		
+
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -335,15 +348,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == confirm) {
-			
-		}
-		if(e.getSource() == logout) {
-			
-		}
+		
 	}
-
-
-
 
 }
