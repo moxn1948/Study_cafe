@@ -93,14 +93,19 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 			cp.removePanel2(mf, this, op2); // 메인프레임, 현재 팝업 패널, 뒤에 깔린 팝업 패널
 		}
 		if(e.getSource() == confirmBtn) {
+			AdmDao ad = new AdmDao();
+			ad.admDeleteUserWrite(u);
+			
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
-				cp.changeTablePanel3(mf, this, op1, op2, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				cp.changeTablePanel3(mf, this, op1, op2, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));				
 			}
 			if(tempClass.equals("AdmAllUserList")) {
-				cp.changeTablePanel3(mf, this, op1, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+				cp.changeTablePanel3(mf, this, op1, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));
 				// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
 			}
+
+			client.sendUser(ad.admRead());
 		}
 		
 	}

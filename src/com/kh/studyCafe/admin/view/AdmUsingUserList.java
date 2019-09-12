@@ -1,6 +1,7 @@
 package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,6 +16,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
@@ -159,7 +162,30 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 		// 테이블 생성
-		table = new JTable(model);
+		  table = new JTable(model) {
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+				if (column > columnNames.length - 4) { // 이용 중인 회원 셀 색 바꾸기
+					JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
+					component.setBackground(new Color(158, 149, 135));
+					component.setForeground(Color.WHITE);
+					component.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+					
+
+					return component;
+				} else {
+					JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
+					// if (column == columnNames.length - 1) {
+					// component.setBackground(new Color(158, 149, 135));
+					component.setBackground(Color.WHITE);
+					component.setForeground(new Color(127, 118, 104));
+					component.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+
+					return component;
+				}
+
+			}
+		};
 
 		// 이미지 파일 불러오기
 		Image icon = new ImageIcon("img/logo.png").getImage().getScaledInstance(41, 54, 0);
@@ -349,18 +375,13 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 			int row = table.getSelectedRow();
 			tablePhone = table.getValueAt(row, 2) + "";
-//			String seatTimeType = table.getValueAt(row, 6) + "";
 			String remainTimeChk = table.getValueAt(row, 6) + "";
-//			remainTimeChk = remainTimeChk.split("시간 ")[0];
-//			System.out.println();
 		
 			// 회원에 따라 연장 버튼 연결 구분
 			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
 				if(remainTimeChk.contains("일")) { // 기간권일때
 					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
 				}else {
-//					System.out.println(remainTimeChk.split("시간 ")[0]);
-//					sysout
 					if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) { // 잔여시간이 30분 미만일 때
 						cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
 					}else {
@@ -368,7 +389,11 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 					}	
 				}
 			} else { // 그룹일 때
-				cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+				if(Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) {
+					cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+				}else {
+					cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
+				}
 			}
 
 		}

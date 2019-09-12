@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    private JLabel srchChk;
    private JScrollBar vertical;
    private String seatNum;
-   
    public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
       this.mf = mf;
       this.client = client;
@@ -111,6 +111,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
             data[i][4] = timeEdit[0].split("일 ")[1].substring(0, 7) + " PM";
          }
          
+
          // 퇴실 예정 시간 뿌리기
          if (utList.get(i).getSeatType() == User.WEEKSEAT) {
             data[i][5] = "-";
@@ -124,20 +125,27 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
          }
          
-         
 
-         // 잔여시간 형식 수정해서 테이블에 뿌리기
-         if (utList.get(i).getSeatType() == User.WEEKSEAT) { // 기간권일 때
-            data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
-         } else if (utList.get(i).getSeatType() == User.HOURSEAT) { // 1일권일 때
-            // 밀리세컨드를 시간 분으로 표시하기 위해 변
-            String timeResult = "";
 
-            timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
-            timeResult += utList.get(i).getRemainTime() % 3600000 / 60000  + 1 + "분";
+ 		// 잔여시간 형식 수정해서 테이블에 뿌리기
+ 		if (utList.get(i).getSeatType() == 2) { // 기간권일 때
+ 			data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
+ 		} else if (utList.get(i).getSeatType() == 1) { // 1일권일 때
+ 			// 밀리세컨드를 시간 분으로 표시하기 위해 변
+ 			String timeResult = "";
 
-            data[i][6] = timeResult;
-         }
+// 				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
+ 			if(utList.get(i).getRemainTime() % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
+ 				timeResult += utList.get(i).getRemainTime() / 3600000 + 1 + "시간 ";
+ 				timeResult += "0분";
+             }else {
+             	timeResult += utList.get(i).getRemainTime() / 3600000 + "시간 ";
+             	timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
+             }
+ 			
+ 			
+ 			data[i][6] = timeResult;
+ 		}
 
 
          // 개인&그룹 구분해서 테이블에 뿌리기
@@ -212,32 +220,41 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
       this.setLayout(null);
       this.setBackground(Color.WHITE);
+      
+      
       // 테이블 생성
       // 이용중인 회원일 경우 셀의 색을 바꾸어서 표시함
       // 버튼 부분은 백그라운드 색으로 흰색으로 칠하여 없는것처럼 보이게 해놓았으나 수정이필요함
-      table = new JTable(model); /*{
+      table = new JTable(model) {
          @Override
          public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
             if (row < utList.size()) { // 이용 중인 회원 셀 색 바꾸기
                JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
                component.setBackground(new Color(239, 234, 222));
-               if (column > columnNames.length - 5) {
-                  component.setBackground(new Color(127, 118, 104));
+               component.setForeground(new Color(127, 118, 104));
+               if (column > columnNames.length - 5 && column != columnNames.length - 1) {
+                  component.setBackground(new Color(158, 149, 135));
+                  component.setForeground(Color.WHITE);
+                  component.setFont(new Font("맑은 고딕", Font.BOLD, 14));
                }
+               
                return component;
             } else {
                JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
                if (column == columnNames.length - 1) {
-                  component.setBackground(new Color(127, 118, 104));
+                  component.setBackground(new Color(158, 149, 135));
+                  component.setForeground(Color.WHITE);
+                  component.setFont(new Font("맑은 고딕", Font.BOLD, 14));
                } else {
                   component.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                   component.setBackground(Color.WHITE);
+                  component.setForeground(new Color(127, 118, 104));
                }
                return component;
             }
 
          }
-      };*/
+      };
 
       // 이미지 파일 불러오기
       Image icon = new ImageIcon("img/logo.png").getImage().getScaledInstance(41, 54, 0);
@@ -264,6 +281,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       table.getColumnModel().getColumn(9).setPreferredWidth(66);
       table.getColumnModel().getColumn(10).setPreferredWidth(66);
       table.getColumnModel().getColumn(11).setPreferredWidth(66);
+      
 
       // 테이블 스크롤 기능 추가해서 넣기
       scrollpane = new JScrollPane(table);
@@ -275,8 +293,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       scrollpane.getViewport().setBackground(Color.WHITE);
       scrollpane.setBackground(Color.WHITE);
       scrollpane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-      table.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(),
-            BorderFactory.createMatteBorder(0, 1, 1, 1, new Color(127, 118, 104))));
+      table.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(), BorderFactory.createMatteBorder(0, 1, 1, 1, new Color(127, 118, 104))));
       table.setGridColor(new Color(127, 118, 104));
       table.setForeground(new Color(127, 118, 104));
       table.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
@@ -337,7 +354,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
 
       srchChk = new JLabel();
-      srchChk.setBounds(22, 168, 633, 40);
+      srchChk.setBounds(22, 168, 620, 41);
       srchChk.setBackground(Color.RED);
       srchChk.setBorder(BorderFactory.createEmptyBorder());
       vertical = scrollpane.getVerticalScrollBar();
@@ -386,7 +403,8 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
                   vertical.setValue(0);
                   srchChk.setLocation(22, (168+ i*40));
                }
-               srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+               break;
             }
          }
          for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 이름 검색 시
@@ -402,11 +420,15 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
                   srchChk.setLocation(22, (168+ num*40));
                }
                
-               srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+               break;
             }
          }
          for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
             if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
+            	System.out.println("이용중인 회원 전화번호");
+            	System.out.println(utList.get(i).getPhoneNum());
+            	System.out.println(searchForm.getText().trim());
                if(i>10) {
 //                  System.out.println("a지역");
                   vertical.setValue((i-10)*40-12);
@@ -416,21 +438,25 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
                   vertical.setValue(0);
                   srchChk.setLocation(22, (168+ i*40));
                }
-               srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+               break;
             }
          }
-         for (int i = 0; i < allUserList.size(); i++) { // 이용 중인 전화번호 이름 검색 시
+         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 전화번호 이름 검색 시
             if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
-               if(i>10) {
-//                  System.out.println("a지역");
-                  vertical.setValue((i-10)*40-12);
+             	System.out.println("전체 회원 전화번호");
+             	System.out.println(allUserList.get(i).getPhoneNum());
+             	System.out.println(searchForm.getText().trim());
+                int num = i + utList.size();
+               if(num>10) {
+            	  vertical.setValue((num-10)*40 - 12);
                   srchChk.setLocation(22, (181+ 10*40));
                }else {
-//                  System.out.println("c지역");
                   vertical.setValue(0);
-                  srchChk.setLocation(22, (168+ i*40));
+                  srchChk.setLocation(22, (168+ num*40));
                }
-               srchChk.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+               break;
             }
          }
       } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // 검색 취소 기능
