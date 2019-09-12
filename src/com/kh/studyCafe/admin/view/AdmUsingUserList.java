@@ -385,7 +385,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 			// 회원에 따라 이동 버튼 연결 구분
 			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum));
+				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));
 			} else { // 그룹일 때
 				cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
 			}
