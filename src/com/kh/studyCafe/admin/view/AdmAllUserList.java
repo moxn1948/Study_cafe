@@ -42,7 +42,7 @@ import com.kh.studyCafe.model.vo.User;
 public class AdmAllUserList extends JPanel implements ActionListener, KeyListener, MouseListener {
 	private AdmMainFrame mf;
 	private ClientBack client;
-	private JScrollPane scrollpane;
+	private JScrollPane scrollpane = null;
 	private ArrayList<AdmUserTable> utList;
 	private ArrayList<AdmUserTable> allUserList;
 	private ArrayList<User> u;
@@ -52,6 +52,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 	private DefaultTableModel model;
 	private JLabel srchChk;
 	private JScrollBar vertical;
+	private String seatNum;
 	
 	public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
@@ -258,7 +259,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 		table.getColumnModel().getColumn(11).setPreferredWidth(66);
 
 		// 테이블 스크롤 기능 추가해서 넣기
-		JScrollPane scrollpane = new JScrollPane(table);
+		scrollpane = new JScrollPane(table);
 
 		// 전체 테이블 크기설정
 //		 scrollpane.setPreferredSize(new Dimension(920, 504));
@@ -489,11 +490,12 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
 			int row = table.getSelectedRow();
 			tablePhone = table.getValueAt(row, 2) + "";
+			seatNum = table.getValueAt(row, 3) + "";
 			
 
 			// 회원에 따라 이동 버튼 연결 구분
 			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList ));
+				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum));
 			} else { // 그룹일 때
 				cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
 			}
@@ -514,23 +516,23 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 				cp.addPanel(mf, this, new AdmExitTimeHour(mf, this, client, phoneNum));
 			}
 		}
-		if(table.getSelectedColumn() == 11) {
+		if(table.getSelectedColumn() == 11) { //입실
 			scrollpane.getHorizontalScrollBar().setEnabled(false);
 			scrollpane.getVerticalScrollBar().setEnabled(false);
 			scrollpane.getViewport().getView().setEnabled(false);
 
 			int row = table.getSelectedRow();
 			tablePhone = table.getValueAt(row, 2) + "";
-			String seatNum = table.getValueAt(row, 3) + "";
+			seatNum = table.getValueAt(row, 3) + "";
 			String inTime = table.getValueAt(row, 4)+ "";
 			System.out.println(seatNum);
 			System.out.println(inTime);
 			// 회원에 따라 이동 버튼 연결 구분
-			//if 만약 셀렉트 로우 좌석번호 0이아니고 입실시간 0이면 새로운 입실확인창으로 가 정보가지고
-			// 만약 좌석번호도 0이고 입실시간도 0이면 좌서ㅏㄱ표 로 감 이해?
+			//만약 입실하지 않은 기간권 사용자가 입실할 경우 좌석번호는 가지고 있고 입실시간은 가지고 있지 않다.
+			//기간권이 없는 회원이 입실할 경우 좌석번호 없고, 입실시간도 없다.
 			if(seatNum.equals("-") && inTime.equals("-")) {
-				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList));				
-			} else/* if(!(seatNum.equals("0")) && inTime.equals("0")) */{
+				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum));				
+			} else if(inTime.equals("-")) {
 				cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));				
 			}
 		}
