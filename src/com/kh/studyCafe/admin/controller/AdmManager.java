@@ -36,8 +36,14 @@ public class AdmManager {
 	public ArrayList<User> addRemainTime(String phoneNum, int term) {
 		return ad.admReadLine(phoneNum, term);
 	}
-	public ArrayList<User> enterSeatIndv(String phoneNum,int term, String seatNum) {
-		return ad.admEnterSeatIndv(phoneNum, term, seatNum);
+	public ArrayList<User> enterSeatGrp(String phoneNum,int term,int count, String seatNum) {
+		return ad.admEnterSeatGrp(phoneNum, term, count, seatNum);
+	}
+	public ArrayList<User> enterSeatIndvTime(String phoneNum,int term, String seatNum) {
+		return ad.admEnterSeatIndvTime(phoneNum, term, seatNum);
+	}
+	public ArrayList<User> enterSeatIndvWeek(String phoneNum,int weekTerm, String seatNum) {
+		return ad.admEnterSeatIndvWeek(phoneNum, weekTerm, seatNum);
 	}
 
 	public ArrayList<User> moveSeatNum(String phoneNum, String seatNum) {

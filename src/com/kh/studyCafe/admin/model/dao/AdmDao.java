@@ -189,9 +189,10 @@ public class AdmDao {
 			userList = (ArrayList<User>) ois.readObject();
 
 			for (int i = 0; i < userList.size(); i++) {
-				if(userList.get(i).getPhoneNum().equals(phoneNum)) 
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setInTime(timeNow);
-				break;
+					break;
+				}
 			}
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
@@ -199,7 +200,65 @@ public class AdmDao {
 		return userList;
 	}
 
-	public ArrayList<User> admEnterSeatIndv(String phoneNum, int term, String seatNum) {
+	public ArrayList<User> admEnterSeatIndvTime(String phoneNum, int term, String seatNum) {
+
+		ArrayList<User> userList = null;
+		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+		//	    System.out.println(timeNow);
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+
+			System.out.println("userList.size : " + userList.size());
+			System.out.println("phone : " + phoneNum);
+			System.out.println("term + " + term);
+			System.out.println("seatNum" + seatNum);
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setSeatNum(seatNum);
+					userList.get(i).setInTime(timeNow);
+					userList.get(i).setOutTime(timeNow + term*3600000); 
+					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
+					userList.get(i).setSeatType(User.HOURSEAT);
+
+					break;
+				}
+			}
+		}catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+		return userList;
+	}
+
+	public ArrayList<User> admEnterSeatGrp(String phoneNum, int term,int count, String seatNum) {
+
+		ArrayList<User> userList = null;
+		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+		//	    System.out.println(timeNow);
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+
+			System.out.println("userList.size : " + userList.size());
+			System.out.println("phone : " + phoneNum);
+			System.out.println("term + " + term);
+			System.out.println("seatNum" + seatNum);
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setSeatNum(seatNum);
+					userList.get(i).setInTime(timeNow);
+					userList.get(i).setOutTime(timeNow + term*3600000); 
+					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
+					userList.get(i).setSeatType(User.HOURSEAT);
+
+					break;
+				}
+			}
+		}catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+		return userList;
+	}
+
+	public ArrayList<User> admEnterSeatIndvWeek(String phoneNum, int weekTerm, String seatNum) {
 		long inTime = 0;
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
@@ -208,12 +267,15 @@ public class AdmDao {
 			userList = (ArrayList<User>) ois.readObject();
 
 			for (int i = 0; i < userList.size(); i++) {
-				if(userList.get(i).getPhoneNum().equals(phoneNum))
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
-				userList.get(i).setInTime(timeNow);
-				userList.get(i).setOutTime(timeNow + term*3600000); 
-				userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
-				break;
+					userList.get(i).setInTime(timeNow);
+					userList.get(i).setOutTime(timeNow + weekTerm*3600000*24); 
+					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
+					userList.get(i).setSeatType(User.WEEKSEAT);
+
+					break;
+				}
 			}
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
@@ -321,6 +383,33 @@ public class AdmDao {
 
 		return idPwd;
 
+	}
+
+
+	// 회원삭제 메소드
+	public int admDeleteUserWrite(User u) {
+		int result = 0;
+
+		ArrayList<User> uTemp = admRead();
+		if(uTemp == null) {
+			uTemp = new ArrayList<User> ();
+		}
+
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
+			for (int i = 0; i < uTemp.size(); i++) {
+				if(u.getPhoneNum().equals(uTemp.get(i).getPhoneNum())) {
+					uTemp.remove(i);
+				}
+			}
+			oos.writeObject(uTemp);
+
+			oos.flush();
+			result++;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 }
 
