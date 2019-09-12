@@ -1,6 +1,7 @@
 package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -165,7 +166,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
       }
       
       if(!seatNum.equals("-")) {
-         for (int i = 0; i < seatGrp.length; i++) {
+    	  for (int i = 0; i < seatGrp.length; i++) {
               seatGrp[i].setEnabled(false);
               seatGrp[i].removeMouseListener(this);
           }
@@ -229,7 +230,12 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
          ControlPanel cp = new ControlPanel();
          int sn = 0;
          if(selectSeat == null) {
-            cp.addPanel(mf, this, new AdmUnSelectSeat(mf, op, this));
+			for (Component comp : seat.getComponents()) {
+				comp.setEnabled(false);
+				comp.removeMouseListener(this);
+			}
+
+			cp.addPanel(mf, this, new AdmUnSelectSeat(mf, op, this, client, phoneNum, utList, seatNum, u));
          }else {
             if(!selectSeat.contains("-")) {
                sn = Integer.parseInt(selectSeat);
@@ -238,21 +244,21 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
             if(seatNum.equals("-")) { // 자리입실
                System.out.println("좌석 입실입니다.");
                if(sn >= 1 && sn <= 25) {
-                  cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
-               }else {
-                  cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
-               }
+                   cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
+                }else {
+                   cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
+                }
             }else { // 자리이동
-            for (int i = 0; i < seatGrp.length; i++) {
-               seatGrp[i].setEnabled(false);
-            }
-            
-            if (!selectSeat.contains("-")) {
-               client.sendUser(ad.moveSeatNum(phoneNum, selectSeat));
-               mf.remove(this);
-            } else {
-               cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
-            }
+				for (int i = 0; i < seatGrp.length; i++) {
+					seatGrp[i].setEnabled(false);
+				}
+				
+				if (!selectSeat.contains("-")) {
+					client.sendUser(ad.moveSeatNum(phoneNum, selectSeat));
+					mf.remove(this);
+				} else {
+					cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
+				}
             }
          }
       }
@@ -301,7 +307,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 
             }
 
-           System.out.println("AdmSeatTable 선택한 좌석 : " + selectSeat);
+        	System.out.println("AdmSeatTable 선택한 좌석 : " + selectSeat);
          }
       }
 
@@ -345,7 +351,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
                }
 
             }
-           System.out.println("AdmSeatTable 선택한 좌석 : " + selectSeat);
+        	System.out.println("AdmSeatTable 선택한 좌석 : " + selectSeat);
         
              
 
