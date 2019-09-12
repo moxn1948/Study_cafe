@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,7 +14,9 @@ import javax.swing.JTextField;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.model.vo.User;
 
 public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 	private AdmMainFrame mf = null;
@@ -25,14 +28,20 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 	private int term = 1;
 	private JButton countUpBtn = null;
 	private JButton countDownBtn = null;
+	private ArrayList<AdmUserTable> utList;
+	private ArrayList<User> u;
+	private JPanel op2;
 
-   public AdmNewIndvSelectTime(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
+   public AdmNewIndvSelectTime(AdmMainFrame mf, JPanel op,JPanel op2, ClientBack client, String phoneNum, ArrayList<AdmUserTable> utList, ArrayList<User> u) {
 		this.mf = mf;
 		this.op = op;
+		this.op2 = op2;
 		this.client = client;
 		this.phoneNum = phoneNum;
-	   
-	   // 패널 설정
+		this.utList = utList;
+		this.u = u;
+
+		// 패널 설정
 		int w = 540;
 		int h = 467;
 		int x = popPosition(w, h)[0];
@@ -166,7 +175,8 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
-		
+		cancelBtn.addActionListener(this);
+		confirmBtn.addActionListener(this);
 		
 		
 
@@ -202,18 +212,17 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener{
    
    @Override
    public void actionPerformed(ActionEvent e) {
+	   ControlPanel cp = new ControlPanel();
       if(e.getSource() == cancelBtn) {
-		new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(
-				mf, new AdmManager().usingUserManager(),new AdmDao().admRead(), client));				
+		cp.removePanel2(mf, this, op2);			
       }
-      
-     
-      
+    
       if(e.getSource() == confirmBtn) {
 			AdmManager ad = new AdmManager();
 			client.sendUser(ad.addRemainTime(phoneNum, term));
-			
 			mf.remove(this);
+			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
       }
       
    }

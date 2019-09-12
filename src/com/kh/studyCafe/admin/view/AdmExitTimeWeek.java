@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,6 +24,8 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	private JButton cancelBtn;
 	private JButton confirmBtn;
 	private String phoneNum;
+	private JCheckBox refundChk;
+	boolean refundChked;
 	
 	public AdmExitTimeWeek(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
 		this.op = op;
@@ -65,12 +69,22 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		remainTime.setSize(remainTime.getPreferredSize());
 		
 		// 환불 체크박스 설정
-		JCheckBox refundChk = new JCheckBox("환불하시겠습니까?");
+		refundChk = new JCheckBox("환불하시겠습니까?");
 		refundChk.setLocation(17, 168);
 		refundChk.setOpaque(false);
 		refundChk.setForeground(new Color(127, 118, 104));
 		refundChk.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		refundChk.setSize(refundChk.getPreferredSize());
+		refundChk.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					refundChked = true;
+				}
+				
+			}
+		});
 		
 		// 버튼 설정
 		cancelBtn = new JButton("Cancel");
@@ -110,6 +124,7 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		AdmManager ad = new AdmManager();
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
@@ -118,6 +133,15 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 			if(tempClass.equals("AdmAllUserList")) {
 				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}		
+		}
+		if(e.getSource() == confirmBtn) {
+			if(refundChked == true) {
+				  client.sendUser(ad.exitSeatTime(phoneNum));
+				  mf.remove(this);
+			}else {
+				client.sendUser(ad.exitSeatWeek(phoneNum));
+				  mf.remove(this);
+			}
 		}
 		
 	}
