@@ -1,6 +1,7 @@
 package com.kh.studyCafe.kosk.model.dao;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,6 +25,8 @@ public class KoskDao {
 	private String name;
 	private int term;
 	private int light;
+	private int hOfw;
+	private long seattime;
 	public int KoskWrite(ArrayList<User> user) {
 		int result = 0;
 
@@ -55,7 +58,6 @@ public class KoskDao {
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) 
 					seatNum = userList.get(i).getSeatNum();
-				break;
 			}
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
@@ -91,7 +93,6 @@ public class KoskDao {
 	public int login(String phoneNum, String password) { 
 		this.phoneNum = phoneNum;
 		this.password = password;
-		//this.phonenumber = phonenumber;
 		ArrayList<User> userList = null;
 		ArrayList<String> seatnum = null;
 		
@@ -104,6 +105,7 @@ public class KoskDao {
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					if(userList.get(i).getPassword().equals(password)) {
+						System.out.println(userList.get(i).getSeatNum());
 						if(!userList.get(i).getSeatNum().equals("0")) {
 							a = 1; // 회원정보 있으면서 좌석까지 있음
 						} else {
@@ -167,7 +169,7 @@ public class KoskDao {
 		}
 		
 		
-		public ArrayList<User> KoskExitSeat(String phoneNum){
+		public void KoskExitSeat(String phoneNum){
 			this.phoneNum = phoneNum;
 			ArrayList<User> userList = null;
 
@@ -191,7 +193,6 @@ public class KoskDao {
 				System.out.println("user.dat에 첫번째 입력");
 			}
 
-			return userList;
 		}
 		
 		public boolean compare(String phoneNum, String name) { 
@@ -268,15 +269,15 @@ public class KoskDao {
 							if(a>0 && a<26) {
 								userList.get(i).setSeatNum(seatNum);
 							} else if(a == 25) {
-								userList.get(i).setSeatNum("4-A");
+								userList.get(i).setSeatNum("25");
 							} else if(a == 26) {
-								userList.get(i).setSeatNum("4-B");
+								userList.get(i).setSeatNum("26");
 							} else if(a == 27) {
-								userList.get(i).setSeatNum("6-A");
+								userList.get(i).setSeatNum("27");
 							} else if(a == 28) {
-								userList.get(i).setSeatNum("6-B");
+								userList.get(i).setSeatNum("28");
 							} else if(a == 29) {
-								userList.get(i).setSeatNum("8-A");
+								userList.get(i).setSeatNum("29");
 							}
 						
 						KoskWrite(userList);
@@ -290,41 +291,29 @@ public class KoskDao {
 			
 		
 		}
-		public void Kosktimeplus2(ArrayList<User> uList,int light,long seattime,String phnum) {
-			this.light = light;
+		public void Kosktimeplus2(ArrayList<User> uList,String seatnum,long seattime,String phnum,int hOfw) {
+			this.seatNum = seatnum;
 			this.phoneNum = phnum;
+			this.hOfw = hOfw;
+			this.seattime = seattime;
 			ArrayList<User> userList = null;
-			String seatNum = null;
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 				userList = (ArrayList<User>) ois.readObject();
-				System.out.println("불러온 좌석 값 : " + light);
+				System.out.println("불러온 좌석 값 : " + seatNum);
 				System.out.println("불러온 휴대폰값 : " + phnum);
 							for(int i=0; i<userList.size(); i++) {
+								
+								
 								if(userList.get(i).getPhoneNum().equals(phnum)) {
-									 if(light>0 && light<25) {
-										 userList.get(i).setSeatNum((light)+"");
-										 System.out.println(light+"좌석");
-										 System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									 } else if(light == 0) {
-										 userList.get(i).setSeatNum("1");
-										 System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									 }else if(light == 25) {
-										userList.get(i).setSeatNum("4-A");
-										System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									} else if(light == 26) {
-										userList.get(i).setSeatNum("4-B");
-										System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									} else if(light == 27) {
-										userList.get(i).setSeatNum("6-A");
-										System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									} else if(light == 28) {
-										userList.get(i).setSeatNum("6-B");
-										System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									} else if(light == 29) {
-										userList.get(i).setSeatNum("8-A");
-										System.out.println(userList.get(i).getSeatNum()+"좌석 "+i+": 번째 저장된 좌석");
-									}	
+									 userList.get(i).setSeatNum(seatNum);
 									
+									 if(hOfw == 1) {
+											userList.get(i).setRemainTime(((seattime)*3600000) + userList.get(i).getRemainTime());
+											userList.get(i).setOutTime((seattime*3600000) + userList.get(i).getOutTime());
+										} else {
+											userList.get(i).setRemainTime((((seattime)*3600000)*(seattime*24)) + userList.get(i).getRemainTime());
+											userList.get(i).setOutTime((((seattime)*3600000)*(seattime*24)) + userList.get(i).getOutTime());
+										}
 								}
 							}
 							 KoskWrite(userList);
@@ -456,20 +445,47 @@ public class KoskDao {
 		    	  return userList;
 		      }
 		      
-		      /*public String getphnum(ArrayList<User> uList) {
-		    	  ArrayList<User> userList = null;
-		    	  String phnum;
-		    	  try  (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
-			    		 userList = (ArrayList<User>) ois.readObject();
-			    		 
-			    		 for(int i=0; i<userList.size(); i++) {
-			    			 if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-			    				phnum = (userList.get(i).getPhoneNum());
-			    			 }
-			    		 }
-			    	 } catch (Exception e) {
-			    		 System.out.println("user.dat에 첫번째 입력");
-			    	 }
-		    	  return "";
-		      }*/
+		   public int userindex(String phnum) {
+			   int indexnum = 0;
+			   ArrayList<User> userList = null;
+			   
+			   try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+				   userList = (ArrayList<User>) ois.readObject();
+				   for(int i=0; i<userList.size(); i++) {
+					   if(userList.get(i).getPhoneNum().equals(phnum)) {
+						   indexnum = i;
+					   }
+				   }
+				   System.out.println(indexnum+"인덱스");
+			   }
+			   catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			   
+			   return indexnum;
+		   }
+		   public String nowseat(String phnum) {
+			   String seatnum = null;
+			   ArrayList<User> userList = null;
+			   int a = 0;
+			   
+			   try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+				   userList = (ArrayList<User>) ois.readObject();
+				   for(int i=0; i<userList.size(); i++) {
+					   if(userList.get(i).getPhoneNum().equals(phnum)) {
+						  a = Integer.parseInt(userList.get(i).getSeatNum());
+						  if(a>0 && a<26) {
+							 seatnum = a+""; 
+						  }
+					   }
+				   }
+			   }
+			   catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			   return "";
+		   }
 }

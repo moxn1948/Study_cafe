@@ -221,7 +221,6 @@ public class KoskMypage extends JPanel implements ActionListener{
 		this.add(dtime1);
 		this.add(find);
 
-		mf.add(this,0);
 		mf.repaint();
 
 

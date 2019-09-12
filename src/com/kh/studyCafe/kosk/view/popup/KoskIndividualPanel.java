@@ -25,7 +25,9 @@ import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 import com.kh.studyCafe.kosk.view.KoskPayment;
+import com.kh.studyCafe.kosk.view.KoskSeatManagement;
 import com.kh.studyCafe.kosk.view.KoskSeatTable;
+import com.kh.studyCafe.kosk.view.KoskSeatTable2;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskIndividualPanel extends JPanel implements  MouseListener{
@@ -42,21 +44,27 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 	private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
 	private int timeMinute = 30;    //잔여시간, 연장시간에 출력되는 분(String 변환전)
 	public boolean a = true;
-	JPanel backpanel = new JPanel();
 	
 	private JPanel panel;
 	private KoskMainFrame mf; 
 	private ArrayList<User> uList;
 	private ClientBack client;
-	private int light;
+	private String seatnum;
 	private String phnum;
-	public  KoskIndividualPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light){
-	this.mf = mf;
-	this.panel = panel;
-	this.uList = uList;
-	this.client = client;
-	this.light = light;
-	this.phnum = phnum;
+	private int hOfw;
+	private int tableOrManage;
+	
+	public  KoskIndividualPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,String seatnum, int hOfw, 
+			int tableOrManage){
+	
+		this.mf = mf;
+		this.panel = panel;
+		this.uList = uList;
+		this.client = client;
+		this.seatnum = seatnum;
+		this.phnum = phnum;
+		this.hOfw = hOfw;
+		this.tableOrManage = tableOrManage;
 	//===== 컬러 =====
 
 	Color wallPapers = new Color(239,234,222);
@@ -237,10 +245,17 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 			seattime = hour;
 		}
 		if(e.getSource() == confirm) {
-			ChangePanel.changePanel(mf, this, panel, new KoskPayment(mf,uList,phnum,client,panel,light,seattime));
+			if(seattime == 0) {
+				seattime = 1;
+			}
+			ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,hOfw, tableOrManage));
 		}
 		if(e.getSource() == cancel) {
-			
+			if(tableOrManage == 1) {
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, phnum, client));
+			} else {
+				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, seattime));
+			}
 		}
 	}
 	

@@ -25,27 +25,31 @@ public class KoskPayment extends JPanel implements ActionListener{
 	private JPanel panel;
 	private ArrayList<User> uList;
 	private JButton mypage;
-	private JButton logout;
+	private JButton logout = new JButton();
 	private JButton money;
-	private JButton back;
-	private int light;
+	private JButton back = new JButton();
+	private String seatnum;
 	private long seattime;
 	private String phnum;
+	private int hOfw;
+	private int tableOrManage;
 	private JButton card;
-	private JButton back2;
-	private JButton button;
+	private JButton back2 = new JButton();
+	private JButton button = new JButton();
 	KoskDao kd = new KoskDao();	
 	
 	public  KoskPayment(KoskMainFrame mf,ArrayList<User> uList,String phnum,ClientBack client, JPanel panel
-			,int light,long seattime) {
+			,String seatnum,long seattime, int hOfw, int tableOrManage) {
 		// 네트워크 코드
 		this.client = client;
 		this.panel = panel;
 		this.uList = uList;
 		this.mf = mf; 
 		this.phnum = phnum;
-		this.light = light; // 좌석 번호
+		this.seatnum = seatnum; // 좌석 번호
 		this.seattime = seattime; //좌석 시간
+		this.hOfw = hOfw;
+		this.tableOrManage = tableOrManage;
 		
 		KoskMainFrame.koskWatchPanel = this;
 		
@@ -85,7 +89,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 		//== 버튼 설정 =========
 		Image logoutimg = new ImageIcon("img/logoutbtnimg.png").getImage().getScaledInstance(80, 30, 0);
 
-		logout = new JButton(new ImageIcon(logoutimg));
+		logout.setIcon(new ImageIcon(logoutimg));
 		logout.setBounds(1,1,80,30);
 		logout.setBorderPainted(false);
 
@@ -107,15 +111,15 @@ public class KoskPayment extends JPanel implements ActionListener{
 		card.setBounds(190,250,95,96);
 
 		Image backimg = new ImageIcon("img/backbtnimg.png").getImage().getScaledInstance(100, 40, 0);
-		back = new JButton(new ImageIcon(backimg));
+		back.setIcon(new ImageIcon(backimg));
 		back.setBorderPainted(false);
 		back.setBounds(20,530,100,40);
 
-		back2 = new JButton(new ImageIcon(backimg));
+		back2.setIcon(new ImageIcon(backimg));
 		back2.setBorderPainted(false);
 		back2.setBounds(20,530,100,40);
 		
-		button = new JButton("결제가 완료 되었습니다.");
+		button.setText("결제가 완료 되었습니다.");
 		button.setFont(font);
 		button.setBounds(0,0,300,100);
 		button.setBackground(new Color(170, 162, 142));
@@ -161,50 +165,30 @@ public class KoskPayment extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == mypage) {
-			ChangePanel.changePanel(mf, panel, new KoskMypage(mf,this,phnum,client));
+			ChangePanel.changePanel(mf, this, new KoskMypage(mf,this,phnum,client));
 		}
 		if(e.getSource() == logout) {
-			panel.removeAll();
-			mf.add(new KoskLogin(mf, client));
-			mf.repaint(); //change패널 로 변경
-		}
-		if(e.getSource() == logout) {
-			//ChangePanel.changePanel(mf, panel, new KoskLogin(mf));
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
 		if(e.getSource() == back) {
-			ChangePanel.changePanel(mf, panel, panel );
+			if(tableOrManage == 1) {
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, phnum, client));
+			} else if(tableOrManage == 2){
+				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, seattime));
+			}
+			
 		}
 		if(e.getSource() == money) {
-			money.setEnabled(false);
-			card.setEnabled(false);
-			money.setVisible(false);
-			card.setVisible(false);
-			kd.Kosktimeplus2(uList,light,seattime,phnum);
-			System.out.println(light+"페이먼트 좌석 정보");
-			ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
-			/*this.remove(back);
-			this.add(back2,0);*/
-			mf.repaint();
-			if(e.getSource() == button) {
-				
-			}
-			if(e.getSource() == back2) {
-				ChangePanel.changePanel(mf, panel, new KoskLogin(mf, client));
-			}
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw);
+			System.out.println(seatnum+"페이먼트 좌석 정보");
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+			
 		}
 		if(e.getSource() == card) {
-			money.setEnabled(false);
-			card.setEnabled(false);
-			money.setVisible(false);
-			card.setVisible(false);
-			panel.remove(back);
-			panel.add(back2);
-			mf.add(panel,0);
-			if(e.getSource() == back2) {
-				ChangePanel.changePanel(mf, panel, new KoskPayment(
-						mf,uList,phnum,client,panel,light,seattime));
-				
-			}
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw);
+			System.out.println(seatnum+"페이먼트 좌석 정보");
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+			mf.repaint();
 		}
 	}
 	
