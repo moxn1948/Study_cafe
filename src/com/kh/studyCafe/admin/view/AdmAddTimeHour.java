@@ -39,16 +39,29 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		this.phoneNum = phoneNum;
 		this.client = client;
 		
+		AdmManager ad = new AdmManager();
+		
 		// 잔여시간 표시
 		String timeEdit = "";
 
-		timeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + "시간 ";
-		timeEdit += new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
-
-		addTimeEdit = "";
+//		timeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
+		if(ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
+			timeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
+			timeEdit += "0분";
+        }else {
+        	timeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + "시간 ";
+        	timeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 + "분";
+        }
 		
-		addTimeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
-		addTimeEdit += new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
+		addTimeEdit = "";
+//		addTimeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
+		if(ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
+			addTimeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + 2 + "시간 ";
+			addTimeEdit += "0분";
+        }else {
+        	addTimeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
+        	addTimeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 + "분";
+        }
 
 		this.setLayout(null);
 		this.setBounds(300, 120, 370, 452);

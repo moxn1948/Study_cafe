@@ -1,6 +1,7 @@
 package com.kh.studyCafe.admin.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +11,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.model.vo.User;
+
 public class AdmChkUserDelete extends JPanel implements ActionListener{
+	private AdmMainFrame mf;
+	private User u;
+	private ClientBack client;
+	private JPanel op1;
+	private JPanel op2;
+	private JButton cancelBtn;
+	private JButton confirmBtn;
 	
-	public AdmChkUserDelete(AdmMainFrame mf) {
+	public AdmChkUserDelete(AdmMainFrame mf, User u, JPanel op1, JPanel op2, ClientBack client) {
+		this.mf = mf;
+		this.u = u;
+		this.op1 = op1; // table
+		this.op2 = op2; // userinfo popup
+		this.client = client;
+		
 		// 패널 설정
 		int w = 410;
 		int h = 192;
@@ -33,8 +52,8 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 		notice.setSize(notice.getPreferredSize());
 		
 		// 버튼 설정
-		JButton cancelBtn = new JButton("Cancel");
-		JButton confirmBtn = new JButton("Confirm");
+		cancelBtn = new JButton("Cancel");
+		confirmBtn = new JButton("Confirm");
 		
 		cancelBtn.setBounds(16, 128, 184, 50);
 		confirmBtn.setBounds(210, 128, 184, 50);
@@ -46,6 +65,10 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
+		
+		cancelBtn.addActionListener(this);
+		confirmBtn.addActionListener(this);
+		
 		
 		// 패널에 올리기
 		this.add(notice);
@@ -65,6 +88,20 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		ControlPanel cp = new ControlPanel();
+		if(e.getSource() == cancelBtn) {
+			cp.removePanel2(mf, this, op2); // 메인프레임, 현재 팝업 패널, 뒤에 깔린 팝업 패널
+		}
+		if(e.getSource() == confirmBtn) {
+			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			if(tempClass.equals("AdmUsingUserList")) {
+				cp.changeTablePanel3(mf, this, op1, op2, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+			if(tempClass.equals("AdmAllUserList")) {
+				cp.changeTablePanel3(mf, this, op1, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+				// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
+			}
+		}
 		
 	}
 	
