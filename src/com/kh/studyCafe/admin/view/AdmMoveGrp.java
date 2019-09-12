@@ -86,6 +86,7 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		if(tempClass.equals("AdmAllUserList")) {
 			new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 		}
+		
 	}
 	
 	
