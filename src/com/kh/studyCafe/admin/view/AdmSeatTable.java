@@ -18,6 +18,7 @@ import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.model.vo.User;
 
 public class AdmSeatTable extends JPanel implements ActionListener, MouseListener{
 	private JButton seatIndv[] = new JButton[25];
@@ -33,15 +34,19 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 	private String seatNum;
 	private String selectSeat;
 	private ArrayList<AdmUserTable> utList;
-
-	public AdmSeatTable(AdmMainFrame mf, JPanel op, ClientBack client,String phoneNum, ArrayList<AdmUserTable> utList,String seatNum) {
+	private ArrayList<User> u;
+	private JPanel op2;
+	private JLayeredPane seat;
+	
+	public AdmSeatTable(AdmMainFrame mf, JPanel op, ClientBack client,String phoneNum, ArrayList<AdmUserTable> utList,String seatNum, ArrayList<User> u) {
 		this.op = op;
 		this.mf = mf;
 		this.client = client;
 		this.phoneNum = phoneNum;
 		this.utList = utList;
 		this.seatNum = seatNum;
-
+		this.u = u;
+		op2 = this;
 
 		// 패널 설정
 		int w = 404;
@@ -64,7 +69,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		title.setSize(title.getPreferredSize());
 
 		// 좌석표 설정
-		JLayeredPane seat = new JLayeredPane();
+		seat = new JLayeredPane();
 		seat.setBounds(26, 104, 354, 350);
 
 		// 좌석표 배치
@@ -213,6 +218,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 		if(e.getSource() == confirmBtn) {
 			AdmDao ao = new AdmDao();
 			AdmManager ad = new AdmManager();
+			ControlPanel cp = new ControlPanel();
 			int sn = 0;
 			if(!selectSeat.contains("-")) {
 				sn = Integer.parseInt(selectSeat);
@@ -221,24 +227,19 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 			if(seatNum.equals("-")) { // 자리입실
 				System.out.println("좌석 입실입니다.");
 				if(sn >= 1 && sn <= 25) {
-					new ControlPanel().addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op,client,phoneNum));
+					cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u));
 				}else {
-					new ControlPanel().addPanel2(mf, op, new AdmNewGrpSelectTime(mf, op,client,phoneNum));
+					cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op,client,phoneNum));
 				}
 			}else { // 자리이동
 				if(!selectSeat.contains("-")) {
 					client.sendUser(ad.moveSeatNum(phoneNum, selectSeat));
 					mf.remove(this);	
 				}else {
-					System.out.println("그룹좌석으로 이동 안됨");
-
-//					new ControlPanel().changePanel(mf, this, new AdmMoveGrp(mf, op,client));
+					cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
 				}
 			}
 		}
-		//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), 
-		//new AdmDao().admRead(), client));
-
 
 	}
 

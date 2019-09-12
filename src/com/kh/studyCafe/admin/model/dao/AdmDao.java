@@ -98,9 +98,9 @@ public class AdmDao {
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
-//					System.out.println(userList);
+					//					System.out.println(userList);
 					//admWrite(userList); // 
-//					System.out.println(userList + "2");
+					//					System.out.println(userList + "2");
 				}
 			}
 
@@ -122,7 +122,30 @@ public class AdmDao {
 					userList.get(i).setInTime(0);
 					userList.get(i).setOutTime(0);
 					userList.get(i).setRemainTime(0);
-//					System.out.println(userList);
+					userList.get(i).setSeatNum("-");
+					//					System.out.println(userList);
+					admWrite(userList); // 
+				}
+			}
+
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+
+		return userList;
+	}
+
+	public ArrayList<User> admExitSeatWeek(String phoneNum){
+		ArrayList<User> userList = null;
+
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setInTime(0);
+					userList.get(i).setOutTime(0);
+					//					System.out.println(userList);
 					admWrite(userList); // 
 				}
 			}
@@ -143,16 +166,16 @@ public class AdmDao {
 			System.out.println(userList);
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-					
+
 					seatNum = userList.get(i).getSeatNum();
 					System.out.println("111seatNum"+seatNum);
-				break;
+					break;
 				}
 			}
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
-		
+
 
 		return seatNum;
 	}
@@ -160,11 +183,11 @@ public class AdmDao {
 	public ArrayList<User> admEnterSeat(String phoneNum) {
 		long inTime = 0;
 		ArrayList<User> userList = null;
-	    long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-//	    System.out.println(timeNow);
+		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+		//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-			
+
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) 
 					userList.get(i).setInTime(timeNow);
@@ -179,17 +202,17 @@ public class AdmDao {
 	public ArrayList<User> admEnterSeatIndv(String phoneNum, int term, String seatNum) {
 		long inTime = 0;
 		ArrayList<User> userList = null;
-	    long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-//	    System.out.println(timeNow);
+		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+		//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-			
+
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum))
 					userList.get(i).setSeatNum(seatNum);
-					userList.get(i).setInTime(timeNow);
-					userList.get(i).setOutTime(timeNow + term*3600000); 
-					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
+				userList.get(i).setInTime(timeNow);
+				userList.get(i).setOutTime(timeNow + term*3600000); 
+				userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
 				break;
 			}
 		}catch (ClassNotFoundException | IOException e) {
@@ -201,21 +224,21 @@ public class AdmDao {
 	public ArrayList<User> admEnterSeat() { // 잔여시간을 현재시간 기준으로 변경하는 메소드
 		long inTime = 0;
 		ArrayList<User> userList = null;
-	    long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-//	    System.out.println(timeNow);
+		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+		//		       System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-			
-			
+
+
 			for (int i = 0; i < userList.size(); i++) {
 
 				long remainTime = userList.get(i).getOutTime() - timeNow;
-				
-				if(userList.get(i).getInTime() != 0) {
+
+				if(userList.get(i).getRemainTime() != 0) {
 					userList.get(i).setRemainTime(remainTime);
 				}
-				
-				
+
+
 				if(remainTime < 0) { // 퇴실 시간 지난 사람 퇴실 처리
 					userList.get(i).setSeatNum("0");
 					userList.get(i).setInTime(0);
@@ -224,64 +247,64 @@ public class AdmDao {
 					userList.get(i).setSeatType(User.NOSEAT);
 				}
 			}
-			
+
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("admEnterSeat 오류");
 		}
-		
+
 		return userList;
 	}
-	
 
-	   public ArrayList<User> admWeekReadLine(String phoneNum, int term){
-	      ArrayList<User> userList = null;
 
-	      try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
-	         userList = (ArrayList<User>) ois.readObject();
+	public ArrayList<User> admWeekReadLine(String phoneNum, int term){
+		ArrayList<User> userList = null;
 
-	         for (int i = 0; i < userList.size(); i++) {
-	            if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-	               userList.get(i).setOutTime(userList.get(i).getOutTime() + term*86400000);
-	               userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*86400000);
-	               admWrite(userList); // 
-	            }
-	         }
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
 
-	      } catch (ClassNotFoundException | IOException e) {
-	         System.out.println("user.dat에 첫번째 입력");
-	      }
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*86400000);
+					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*86400000);
+					admWrite(userList); // 
+				}
+			}
 
-	      return userList;
-	   }
-	   
-   public User toUserInfo(String phoneNum) { 
-        ArrayList<User> userList = null;
-        User u = null;
-        
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
-           userList = (ArrayList<User>) ois.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
 
-           for (int i = 0; i < userList.size(); i++) {
-              if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-                 u = (User) userList.get(i);
-              }
-           }
-           
-        }catch (ClassNotFoundException | IOException e) {
-           System.out.println("user.dat에 첫번째 입력");
-        }
-        
-        return u;
+		return userList;
+	}
 
-     }
+	public User toUserInfo(String phoneNum) { 
+		ArrayList<User> userList = null;
+		User u = null;
 
-   
-   		//로그인 아이디 패스워트 텍스트 불러오기
-   	public String loginInforRead() {
-   		String idPwd="";
-   		File file =new File("loginfo.txt");
-   		
-   		try {
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+			userList = (ArrayList<User>) ois.readObject();
+
+			for (int i = 0; i < userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+					u = (User) userList.get(i);
+				}
+			}
+
+		}catch (ClassNotFoundException | IOException e) {
+			System.out.println("user.dat에 첫번째 입력");
+		}
+
+		return u;
+
+	}
+
+
+	//로그인 아이디 패스워트 텍스트 불러오기
+	public String loginInforRead() {
+		String idPwd="";
+		File file =new File("loginfo.txt");
+
+		try {
 			BufferedReader inFiles = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsoluteFile()),"UTF8"));
 			String line ="";
 			while((line=inFiles.readLine())!=null) {
@@ -290,15 +313,15 @@ public class AdmDao {
 				}
 			}
 			inFiles.close();
-   		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-   
-   		return idPwd;
-   	
-   	}
+
+		return idPwd;
+
+	}
 }
 
 
