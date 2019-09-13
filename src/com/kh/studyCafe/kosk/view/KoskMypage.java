@@ -51,7 +51,6 @@ public class KoskMypage extends JPanel implements ActionListener{
 		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
 		Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
 		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
-
 		//===============================
 
 		//==== 마이페이지 제목  ===============
@@ -156,9 +155,9 @@ public class KoskMypage extends JPanel implements ActionListener{
 				if(temp >= 1) {
 					int day = cal.get(Calendar.DATE) + 1;
 					if(hour >= 12) {
-						dtime = new JTextField(day + "일 PM" + (hour - 12) + " : " + minutes);
+						dtime = new JTextField(day + "일 PM " + (hour - 12) + " : " + minutes);
 					}else {
-						dtime = new JTextField(day + "일 AM" + hour + " : " + minutes);
+						dtime = new JTextField(day + "일 AM " + hour + " : " + minutes);
 					}
 				} else {
 					if(hour >= 12) {
@@ -168,20 +167,20 @@ public class KoskMypage extends JPanel implements ActionListener{
 					}
 				} 	   
 
-			}else {
-				atime = new JTextField("");
-				dtime = new JTextField("");
 			}
-			atime.setBounds(120,280,200,40);
-			atime.setBackground(wallPapers);
-			atime.setFont(inputtext);
-			atime.setForeground(textColor);
+		} else {
+			atime = new JTextField();
+			dtime = new JTextField();
+		}
+		atime.setBounds(120,280,200,40);
+		atime.setBackground(wallPapers);
+		atime.setFont(inputtext);
+		atime.setForeground(textColor);
 
-			dtime.setBounds(120,340,200,40);
-			dtime.setBackground(wallPapers);
-			dtime.setFont(inputtext);
-			dtime.setForeground(textColor);
-		} 
+		dtime.setBounds(120,340,200,40);
+		dtime.setBackground(wallPapers);
+		dtime.setFont(inputtext);
+		dtime.setForeground(textColor);
 		JTextField point = new JTextField(tempData[3] + "p");
 		point.setBounds(120,400,200,40);
 		point.setBackground(wallPapers);
@@ -222,8 +221,6 @@ public class KoskMypage extends JPanel implements ActionListener{
 		this.add(find);
 
 		mf.repaint();
-
-
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
