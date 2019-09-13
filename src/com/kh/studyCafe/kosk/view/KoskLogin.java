@@ -140,7 +140,7 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 			if(kd.login(phoneNumber.getText(), password.getText()) == 1) {
 				 ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList,phoneNum,client,this,light,seattime));
 			}else if(kd.login(phoneNumber.getText(), password.getText()) == 2) {
-				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList,phoneNum, client));
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList, client,phoneNum));
 			}
 		}
 		if(e.getSource() == signUp) {

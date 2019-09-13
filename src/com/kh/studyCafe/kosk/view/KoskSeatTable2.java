@@ -41,7 +41,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private int indvOrGrp;
 	private int tableOrManage;
 	
-	public KoskSeatTable2(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client) {
+	public KoskSeatTable2(KoskMainFrame mf,ArrayList<User> uList, ClientBack client,String phnum) {
 //		this.op = op;
 		this.mf = mf;
 		this.uList = uList;

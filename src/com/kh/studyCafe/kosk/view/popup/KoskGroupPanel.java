@@ -21,6 +21,7 @@ import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 import com.kh.studyCafe.kosk.view.KoskPayment;
+import com.kh.studyCafe.kosk.view.KoskSeatTable2;
 import com.kh.studyCafe.model.vo.User;
 
 
@@ -205,7 +206,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       this.add(minus2);
       this.add(cancel);
       this.add(confirm);
-      
+      mf.repaint();
       
    }
    User user = new User();
@@ -266,11 +267,12 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
          }
       }
       if(e.getSource() == cancel) {
-         
+         ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
       }
       if(e.getSource() == confirm) {
          //좌석표 패널에서 결제 선택 패널로 전환 추가
-         ChangePanel.changePanel(mf, this, panel, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,1,tableOrManage));
+    	  tableOrManage = 1;
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,1,tableOrManage));
          
       }
       
@@ -302,9 +304,5 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
    public void mouseReleased(MouseEvent e) {
       // TODO Auto-generated method stub
       
-   }
-   public long gptm() {
-      
-      return hour;
    }
 }
