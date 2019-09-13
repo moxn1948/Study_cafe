@@ -488,4 +488,24 @@ public class KoskDao {
 			 
 			   return "";
 		   }
+		   
+		   public void changePasswd(String phoneNum, String password) { 
+				this.phoneNum = phoneNum;
+				this.password = password;
+				ArrayList<User> userList = null;
+				ArrayList<String> seatnum = null;
+				
+				try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
+					userList = (ArrayList<User>) ois.readObject();
+					
+					seatnum = new ArrayList<String>();
+					for (int i = 0; i < userList.size(); i++) {
+						if(userList.get(i).getPhoneNum().equals(phoneNum)) {
+							userList.get(i).setPassword(password);
+						}
+					}
+				}catch (ClassNotFoundException | IOException e) {
+					System.out.println("user.dat에 첫번째 입력");
+				}
+			}
 }

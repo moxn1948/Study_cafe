@@ -5,36 +5,35 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.model.vo.User;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
+import com.kh.studyCafe.kosk.view.popup.KoskPasswordIs;
 
-public class KoskPsswdMf extends JPanel{
-	private KoskMainFrame mf;
-	private JPanel pssmf = new JPanel() ;
-	private JPanel panel1 = new JPanel();
-	private JTextField nametf;
-	private JTextField phtf;
+public class KoskPsswdMf extends JPanel implements ActionListener{
+	private JPanel panel;
+	private JTextField passwd1;
+	private JTextField passwd2;
 	private JButton cancel;
 	private JButton find;
 	private JButton button;
 	private String phoneNum;
-	
+	private KoskMainFrame mf;
 	// 네트워크 코드
 	private ClientBack client;
 	
 	public KoskPsswdMf(KoskMainFrame mf, String phoneNum, ClientBack client) {
 		this.mf = mf;
 		this.phoneNum = phoneNum;
-		
 		// 네트워크 코드
 		this.client = client;
 		
@@ -54,9 +53,9 @@ public class KoskPsswdMf extends JPanel{
 		//===============================
 
 		//============= 패널 설정 ===============
-		pssmf.setSize(360,640);
-		pssmf.setLayout(null);
-		pssmf.setBackground(wallPapers);
+		this.setSize(360,640);
+		this.setLayout(null);
+		this.setBackground(wallPapers);
 
 		//=================================
 
@@ -86,9 +85,8 @@ public class KoskPsswdMf extends JPanel{
 		psswdcg.setForeground(textColor);
 		psswdcg2.setForeground(textColor);
 
-		nametf = new JTextField(4);
-		nametf.setBounds(120,230,200,40);
-		pssmf.add(nametf);
+		passwd1 = new JPasswordField(4);
+		passwd1.setBounds(120,230,200,40);
 
 		JLabel psswdch = new JLabel("비밀번호");
 		JLabel psswdch2 = new JLabel("확인");
@@ -99,111 +97,57 @@ public class KoskPsswdMf extends JPanel{
 		psswdch.setForeground(textColor);
 		psswdch2.setForeground(textColor);
 
-		JLabel label = new JLabel();
-		label.setFont(font);
-		label.setText("�߸� �Է��Ͽ����ϴ�");
-		label.setBounds(5,60,280,40);
-		label.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel label1= new JLabel();
-		label1.setFont(font);
-		label1.setText("�̸� Ȥ�� ��ȭ��ȣ��");
-		label1.setBounds(5,45,280,40);
-		label1.setHorizontalAlignment(JLabel.CENTER);
-
-		phtf = new JTextField(4);
-		phtf.setBounds(120,295,200,40);
-		pssmf.add(phtf);
+		passwd2 = new JPasswordField(4);
+		passwd2.setBounds(120,295,200,40);
 
 		Image cancelimg2 = new ImageIcon("img/cancelbtnimg2.png").getImage().getScaledInstance(100, 40, 0);
 
 		cancel = new JButton(new ImageIcon(cancelimg2));
 		cancel.setBorderPainted(false);
 		cancel.setBounds(20,530,100,40);
+		cancel.addActionListener(this);
+		
 		find = new JButton("확인버튼");
 		find.setFont(checktext);
 		find.setHorizontalAlignment(JButton.CENTER);
 		find.setBackground(findbtnColor);
 		find.setBorderPainted(false);
 		find.setBounds(220,530,100,40);
+		find.addActionListener(this);
 		//===============================
-		button = new JButton("OK");
-		button.setBounds(5,140,280,40);
-		button.setFont(font);
-		button.setBackground(paper);
-		button.setForeground(paper1);
 
-
-		pssmf.add(text);
-		pssmf.add(ib);
-		pssmf.add(psswdch);
-		pssmf.add(psswdch2);
-		pssmf.add(nametf);
-		pssmf.add(psswdcg);
-		pssmf.add(psswdcg2);
-		pssmf.add(phtf);
-		pssmf.add(cancel);
-		pssmf.add(find);
-
-		panel1.add(button);
-		panel1.add(label);
-		panel1.add(label1);
-		panel1.setSize(310,250);
-		panel1.setBackground(wallPapers);
-		panel1.setLayout(null);
-		panel1.setLocation(30, 150);		
-		mf.add(pssmf);
+		this.add(text);
+		this.add(ib);
+		this.add(psswdch);
+		this.add(psswdch2);
+		this.add(passwd1);
+		this.add(psswdcg);
+		this.add(psswdcg2);
+		this.add(passwd2);
+		this.add(cancel);
+		this.add(find);
+	
+		mf.add(this, 0);
 		mf.repaint();
-
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf, client));
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cancel) {
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+		}
+		if(e.getSource() == find) {
+			String str1 = passwd1.getText();
+			String str2 = passwd2.getText();
+			if(str1.equals(str2)) {
+				KoskDao kd = new KoskDao();
+				kd.changePasswd(phoneNum, passwd1.getText());
+				ChangePanel.addPanel(mf, this, new KoskPasswordIs(mf, this, client));
+			}else {
+				ChangePanel.addPanel(mf, this, new KoskPasswordDoNot(mf, this, phoneNum, client));
 			}
-		});
-
-		find.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String nowPasswd = nametf.getText();
-				String newPasswd = phtf.getText();
-
-				if(nowPasswd.equals(newPasswd)) {
-					ArrayList<User> userList = null;
-					
-					ChangePanel.changePanel(mf,pssmf, new KoskLogin(mf, client));
-				}else {
-					cancel.setEnabled(false);
-					find.setEnabled(false);
-					nametf.setEnabled(false);
-					phtf.setEnabled(false);
-					cancel.setBackground(new Color(205, 201, 191));
-					cancel.setForeground(new Color(64, 64, 64));
-					pssmf.add(panel1,1);
-					//pssmf.repaint();
-					mf.repaint();
-				}
-
-			}
-		});
-
-		button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pssmf.remove(panel1);
-				cancel.setEnabled(true);
-				find.setEnabled(true);
-				nametf.setEnabled(true);
-				phtf.setEnabled(true);
-				nametf.setText("");
-				phtf.setText("");
-				mf.repaint();
-			}
-		});
+		}
+		
 	}
 
 }

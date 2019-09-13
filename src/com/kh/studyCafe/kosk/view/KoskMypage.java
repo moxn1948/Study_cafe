@@ -96,13 +96,8 @@ public class KoskMypage extends JPanel implements ActionListener{
 		dtime1.setForeground(textColor);
 		dtime1.setFont(inputtext);
 
-		JLabel point1 = new JLabel("포인트");
-		point1.setBounds(30,400,80,30);
-		point1.setForeground(textColor);
-		point1.setFont(inputtext);
-
 		JLabel rating1 = new JLabel("등급");
-		rating1.setBounds(30,460,80,30);
+		rating1.setBounds(30,400,80,30);
 		rating1.setForeground(textColor);
 		rating1.setFont(inputtext);
 
@@ -181,14 +176,9 @@ public class KoskMypage extends JPanel implements ActionListener{
 		dtime.setBackground(wallPapers);
 		dtime.setFont(inputtext);
 		dtime.setForeground(textColor);
-		JTextField point = new JTextField(tempData[3] + "p");
-		point.setBounds(120,400,200,40);
-		point.setBackground(wallPapers);
-		point.setFont(inputtext);
-		point.setForeground(textColor);
-
+	
 		JTextField rating = new JTextField(tempData[4]);
-		rating.setBounds(120,460,200,40);
+		rating.setBounds(120,400,200,40);
 		rating.setBackground(wallPapers);
 		rating.setFont(inputtext);
 		rating1.setForeground(textColor);
@@ -209,14 +199,12 @@ public class KoskMypage extends JPanel implements ActionListener{
 		this.add(hou);
 		this.add(atime);
 		this.add(dtime);
-		this.add(point);
 		this.add(rating);
 		this.add(hou1);
 		this.add(phnumber);
 		this.add(phnumber2);
 		this.add(atime1);
 		this.add(rating1);
-		this.add(point1);
 		this.add(dtime1);
 		this.add(find);
 
