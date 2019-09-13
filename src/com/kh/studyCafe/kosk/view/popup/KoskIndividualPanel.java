@@ -53,6 +53,7 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 	private String phnum;
 	private int hOfw;
 	private int tableOrManage;
+	KoskDao kd = new KoskDao();
 	
 	public  KoskIndividualPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,String seatnum, int hOfw, 
 			int tableOrManage){
@@ -100,13 +101,17 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 	et.setFont(checktext);
 	et.setForeground(textColor);
 	//===================
-	 
+	int t = (int)uList.get(kd.userindex(phnum)).getRemainTime();
+	System.out.println(t+"남은시간");
 	//====== textField =======
 	String th1 = Integer.valueOf(timeHour).toString();
 	String tm1 = Integer.valueOf(timeMinute).toString();
+	int h = t/3600000;
+	int m = t/3600000/6;
+	int m2 = t/3600000/60;
 	
-	Rttime = new JTextField(th1 + ":" + tm1) {
-		  @Override
+	Rttime = new JTextField(h+":"+m+""+m2) {
+		  @Override//th1 + ":" + tm1
 		   public void setBorder(Border border) {
 			   
 		   }
@@ -124,7 +129,8 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 	time.setHorizontalAlignment(JTextField.CENTER);
 	time.setEditable(false);
 	
-	timeHour += hour;
+	timeHour += hour+h;
+
 	String th2 = Integer.valueOf(timeHour).toString();
 	String tm2 = Integer.valueOf(timeMinute).toString();
 	
@@ -252,7 +258,7 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
 		}
 		if(e.getSource() == cancel) {
 			if(tableOrManage == 1) {
-				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, phnum, client));
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
 			} else {
 				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, seattime));
 			}

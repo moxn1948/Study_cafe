@@ -164,7 +164,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
       }
       if(e.getSource() == cancel) {
     	  if(tableOrManage == 1) {
-    		  ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, phnum, client));
+    		  ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
     	  } else {
     		  ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, uList.get(kd.userindex(phnum)).getInTime()));
     	  }
