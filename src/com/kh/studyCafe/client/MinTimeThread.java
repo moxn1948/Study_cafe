@@ -1,8 +1,5 @@
 package com.kh.studyCafe.client;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 
 public class MinTimeThread extends Thread{
@@ -19,7 +16,7 @@ public class MinTimeThread extends Thread{
 			// 메소드 : remainTime을 현재시간으로 수정하고 client.appendUser()
 
 			try {
-				Thread.sleep(60000); // 1분
+				Thread.sleep(10000); // 1분
 
 				System.out.println("스레드 테스트");
 				client.sendUser(new AdmDao().admEnterSeat());

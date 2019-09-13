@@ -311,7 +311,7 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		if(e.getSource() == confirmBtn) {
 			AdmManager ad = new AdmManager();
 			client.sendUser(ad.enterSeatGrp(phoneNum, term, count, selectSeat));
-			mf.remove(this);
+//			mf.remove(this);
 			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 			// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
 		}

@@ -245,7 +245,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 		if (e.getSource() == confirmBtn) {
 			
-			// 본인 클라이언트 스트림으로 보냄
+			// 본인 클라이언트 스트림으로 보냄	
 			AdmManager ad = new AdmManager();
 			client.sendUser(ad.addRemainTime(phoneNum, term));
 			

@@ -38,6 +38,7 @@ import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmAllUserList extends JPanel implements ActionListener, KeyListener, MouseListener {
@@ -370,6 +371,9 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       this.add(scrollpane);
       
 //      System.out.println(vertical.getSize());
+//      
+//		MinTimeThread timeThread = new MinTimeThread(client);
+//		timeThread.execute();
 
    }
 

@@ -31,6 +31,7 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
@@ -315,9 +316,9 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(allUserInfoButton);
 		this.add(cafeInfo);
 		this.add(scrollpane);
-
-	/*	if(!threadControl) {
-
+		
+		
+		if(!threadControl) {
 			// 시계스레드 start
 			MinTimeThread timeThread = new MinTimeThread(client);
 			timeThread.setDaemon(true);
@@ -325,7 +326,13 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 			
 			threadControl = true;
 		}
-*/
+		
+//		while(true) {
+//			MinTimeThread timeThread = new MinTimeThread(client);
+//			timeThread.execute();
+			
+//		}
+
 	}
 
 	@Override
@@ -336,10 +343,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		if (e.getSource() == allUserInfoButton) {
 
 			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, utList, u, client));
-
-			scrollpane.getHorizontalScrollBar().setEnabled(false);
-			scrollpane.getVerticalScrollBar().setEnabled(false);
-			scrollpane.getViewport().getView().setEnabled(false);
 
 		}
 
@@ -389,7 +392,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 					}	
 				}
 			} else { // 그룹일 때
-				if(Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) {
+				if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) {
 					cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
 				}else {
 					cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));

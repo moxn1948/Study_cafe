@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.view.AdmMainFrame;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 import com.kh.studyCafe.model.vo.User;
@@ -38,7 +37,7 @@ public class ClientBack {
 	public void connect() {
 		
 		try {
-			socket = new Socket("210.217.185.116", 8000);
+			socket = new Socket("192.168.1.157", 8000);
 			System.out.println("서버 연결됨");
 			
 			in = new ObjectInputStream(socket.getInputStream()); // 서버 측에서 전송 받음
