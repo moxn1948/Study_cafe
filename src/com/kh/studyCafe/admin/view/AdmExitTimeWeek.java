@@ -141,11 +141,12 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		}
 		if(e.getSource() == confirmBtn) {
 			if(refundChked == true) {
-				  client.sendUser(ad.exitSeatTime(phoneNum));
-				  mf.remove(this);
+				
+				client.sendUser(ad.refundSeatWeek(phoneNum));
+				mf.remove(this);
 			}else {
 				client.sendUser(ad.exitSeatWeek(phoneNum));
-				  mf.remove(this);
+			    mf.remove(this);
 			}
 		}
 		
