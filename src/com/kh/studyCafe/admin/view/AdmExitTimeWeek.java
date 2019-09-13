@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.client.ClientBack;
 
 public class AdmExitTimeWeek extends JPanel implements ActionListener{
@@ -61,7 +62,10 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		subTitle.setSize(subTitle.getPreferredSize());
 		
 		// 잔여시간 텍스트 설정
-		JLabel remainTime = new JLabel("25일"); // 나중에 데이터 받아서 값 올려야함
+		long remainTimeNum = new AdmUserInfoChk().toRemainInfo(phoneNum, new AdmDao().admRead());
+		String remainTimeStr = (remainTimeNum - 1) / 86400000 + 1 + "일"; 
+		
+		JLabel remainTime = new JLabel(remainTimeStr); // 나중에 데이터 받아서 값 올려야함
 
 		remainTime.setLocation(237, 104);
 		remainTime.setForeground(new Color(127, 118, 104));

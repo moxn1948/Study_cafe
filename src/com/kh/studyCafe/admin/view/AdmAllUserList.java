@@ -38,7 +38,7 @@ import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.service.AdmUserInfoChk;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
+//import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmAllUserList extends JPanel implements ActionListener, KeyListener, MouseListener {
@@ -130,7 +130,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
  		// 잔여시간 형식 수정해서 테이블에 뿌리기
  		if (utList.get(i).getSeatType() == 2) { // 기간권일 때
- 			data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
+ 			data[i][6] = (utList.get(i).getRemainTime() - 1) / 86400000 + 1 + "일";
  		} else if (utList.get(i).getSeatType() == 1) { // 1일권일 때
  			// 밀리세컨드를 시간 분으로 표시하기 위해 변
  			String timeResult = "";
@@ -188,7 +188,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          if (data[i + utList.size()][3].equals("-")) {
             data[i + utList.size()][6] = "-";
          } else {
-            data[i + utList.size()][6] = allUserList.get(i).getRemainTime() / 86400000 + 1 +  "일";
+            data[i + utList.size()][6] = (allUserList.get(i).getRemainTime() - 1) / 86400000 + 1 +  "일";
          }
 
       }
@@ -395,73 +395,76 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    public void keyPressed(KeyEvent e) {
       if (e.getKeyCode() == KeyEvent.VK_ENTER) { // 검색 기능
          srchChk.setBorder(BorderFactory.createEmptyBorder());
+         if(!searchForm.getText().equals("")) {
+	        	
+	         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
+	            if (utList.get(i).getName().contains(searchForm.getText().trim())) {
+	               if(i>10) {
+	//                  System.out.println("a지역");
+	                  vertical.setValue((i-10)*40-12);
+	                  srchChk.setLocation(22, (181+ 10*40));
+	               }else {
+	//                  System.out.println("c지역");
+	                  vertical.setValue(0);
+	                  srchChk.setLocation(22, (168+ i*40));
+	               }
+	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+	               break;
+	            }
+	         }
+	         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 이름 검색 시
+	            if (allUserList.get(i).getName().contains(searchForm.getText().trim())) {
+	               int num = i + utList.size();
+	               if(num>10) {
+	//                  System.out.println("1a지역");
+	                  vertical.setValue((num-10)*40 - 12);
+	                  srchChk.setLocation(22, (181+ 10*40));
+	               }else {
+	//                  System.out.println("1c지역");
+	                  vertical.setValue(0);
+	                  srchChk.setLocation(22, (168+ num*40));
+	               }
+	               
+	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+	               break;
+	            }
+	         }
+	         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
+	            if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
+	            	System.out.println("이용중인 회원 전화번호");
+	            	System.out.println(utList.get(i).getPhoneNum());
+	            	System.out.println(searchForm.getText().trim());
+	               if(i>10) {
+	//                  System.out.println("a지역");
+	                  vertical.setValue((i-10)*40-12);
+	                  srchChk.setLocation(22, (181+ 10*40));
+	               }else {
+	//                  System.out.println("c지역");
+	                  vertical.setValue(0);
+	                  srchChk.setLocation(22, (168+ i*40));
+	               }
+	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+	               break;
+	            }
+	         }
+	         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 전화번호 이름 검색 시
+	            if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
+	             	System.out.println("전체 회원 전화번호");
+	             	System.out.println(allUserList.get(i).getPhoneNum());
+	             	System.out.println(searchForm.getText().trim());
+	                int num = i + utList.size();
+	               if(num>10) {
+	            	  vertical.setValue((num-10)*40 - 12);
+	                  srchChk.setLocation(22, (181+ 10*40));
+	               }else {
+	                  vertical.setValue(0);
+	                  srchChk.setLocation(22, (168+ num*40));
+	               }
+	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
+	               break;
+	            }
+	         }
          
-         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
-            if (utList.get(i).getName().contains(searchForm.getText().trim())) {
-               if(i>10) {
-//                  System.out.println("a지역");
-                  vertical.setValue((i-10)*40-12);
-                  srchChk.setLocation(22, (181+ 10*40));
-               }else {
-//                  System.out.println("c지역");
-                  vertical.setValue(0);
-                  srchChk.setLocation(22, (168+ i*40));
-               }
-               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
-               break;
-            }
-         }
-         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 이름 검색 시
-            if (allUserList.get(i).getName().contains(searchForm.getText().trim())) {
-               int num = i + utList.size();
-               if(num>10) {
-//                  System.out.println("1a지역");
-                  vertical.setValue((num-10)*40 - 12);
-                  srchChk.setLocation(22, (181+ 10*40));
-               }else {
-//                  System.out.println("1c지역");
-                  vertical.setValue(0);
-                  srchChk.setLocation(22, (168+ num*40));
-               }
-               
-               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
-               break;
-            }
-         }
-         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
-            if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
-            	System.out.println("이용중인 회원 전화번호");
-            	System.out.println(utList.get(i).getPhoneNum());
-            	System.out.println(searchForm.getText().trim());
-               if(i>10) {
-//                  System.out.println("a지역");
-                  vertical.setValue((i-10)*40-12);
-                  srchChk.setLocation(22, (181+ 10*40));
-               }else {
-//                  System.out.println("c지역");
-                  vertical.setValue(0);
-                  srchChk.setLocation(22, (168+ i*40));
-               }
-               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
-               break;
-            }
-         }
-         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 전화번호 이름 검색 시
-            if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
-             	System.out.println("전체 회원 전화번호");
-             	System.out.println(allUserList.get(i).getPhoneNum());
-             	System.out.println(searchForm.getText().trim());
-                int num = i + utList.size();
-               if(num>10) {
-            	  vertical.setValue((num-10)*40 - 12);
-                  srchChk.setLocation(22, (181+ 10*40));
-               }else {
-                  vertical.setValue(0);
-                  srchChk.setLocation(22, (168+ num*40));
-               }
-               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
-               break;
-            }
          }
       } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // 검색 취소 기능
          srchChk.setBorder(BorderFactory.createEmptyBorder());
@@ -489,7 +492,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       if(table.getSelectedColumn() == 1) {
          cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone),this, client));         
       }
-      if(table.getSelectedColumn() == 8) {//연장
+      if(table.getSelectedColumn() == 8) { //연장
          scrollpane.getHorizontalScrollBar().setEnabled(false);
          scrollpane.getVerticalScrollBar().setEnabled(false);
          scrollpane.getViewport().getView().setEnabled(false);
@@ -498,24 +501,31 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          tablePhone = table.getValueAt(row, 2) + "";
 //         String seatTimeType = table.getValueAt(row, 6) + "";
          String remainTimeChk = table.getValueAt(row, 6) + "";
+     	System.out.println("그룹 : " + remainTimeChk);
 //         remainTimeChk = remainTimeChk.split("시간 ")[0];
 //         System.out.println();
       
          // 회원에 따라 연장 버튼 연결 구분
          if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
             if(remainTimeChk.contains("일")) { // 기간권일때
-               cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
-            }else {
-//               System.out.println(remainTimeChk.split("시간 ")[0]);
-//               sysout
-               if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) { // 잔여시간이 30분 미만일 때
+				if(Integer.parseInt(remainTimeChk.split("일")[0]) + 7 < 100) {
+					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
+				}else {
+					cp.addPanel(mf, this, new AdmAddNotice2(mf, this, client));
+				}
+            }else { // 1일권일때
+               if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
                   cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
                }else {
                   cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
                }   
             }
          } else { // 그룹일 때
-            cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+             if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
+                 cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+              }else {
+                 cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
+              }   
          }
 
       }
@@ -571,7 +581,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          if(seatNum.equals("-") && inTime.equals("-")) {
             cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));            
          } else if(inTime.equals("-")) {
-            cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));            
+            cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));       
          }
       }
       

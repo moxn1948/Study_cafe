@@ -111,8 +111,8 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		
 		if(e.getSource() == loginBtn) {
 			AdmManager am = new AdmManager();
-			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
-			/*String id = loginTextField.getText().trim();
+//			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
+			String id = loginTextField.getText().trim();
 			char[]pwdArr =passwordField.getPassword();
 			String pwd ="";
 			//password는 문자형이라서 별도로 문자열로 바꿔줘야함
@@ -133,7 +133,7 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 				
 				cp.addPanel(mf, login, af);
 
-			}*/
+			}
 		}
 		
 		if(e.getSource() == loginTextField) {

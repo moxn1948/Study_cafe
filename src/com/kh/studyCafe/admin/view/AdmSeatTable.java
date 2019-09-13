@@ -142,21 +142,20 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 
       for (int i = 0; i < seatIndv.length; i++) {
          seatIndv[i].addMouseListener(this);
-         for(int j = 0; j < utList.size(); j++) {
-            if(utList.get(j).getSeatNum().equals((i+1) + "")) {
+         for(int j = 0; j < u.size(); j++) {
+            if(u.get(j).getSeatNum().equals((i+1) + "")) {
                seatIndv[i].setBackground(new Color(127, 118, 104));
                seatIndv[i].setForeground(Color.WHITE);
                seatIndv[i].setEnabled(false);
                seatIndv[i].removeMouseListener(this);
             }
          }
-
       }
 
       for (int i = 0; i < seatGrp.length; i++) {
          seatGrp[i].addMouseListener(this);
-         for(int j = 0; j < utList.size(); j++) {
-            if(utList.get(j).getSeatNum().equals(seatGrp[i].getText())) {
+         for(int j = 0; j < u.size(); j++) {
+            if(u.get(j).getSeatNum().equals(seatGrp[i].getText())) {
                seatGrp[i].setBackground(new Color(127, 118, 104));
                seatGrp[i].setForeground(Color.WHITE);
                seatGrp[i].setEnabled(false);
@@ -212,8 +211,6 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
    @Override
    public void actionPerformed(ActionEvent e) {
 
-
-
       if(e.getSource() == cancelBtn) {
          String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
          if(tempClass.equals("AdmUsingUserList")) {
@@ -244,8 +241,16 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
             if(seatNum.equals("-")) { // 자리입실
                System.out.println("좌석 입실입니다.");
                if(sn >= 1 && sn <= 25) {
+	       			for (Component comp : seat.getComponents()) {
+	    				comp.setEnabled(false);
+	    				comp.removeMouseListener(this);
+	    			}
                    cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }else {
+        			for (Component comp : seat.getComponents()) {
+        				comp.setEnabled(false);
+        				comp.removeMouseListener(this);
+        			}
                    cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }
             }else { // 자리이동
@@ -274,9 +279,6 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 
          if(e.getSource() == seatIndv[i]) {
             if(seatToggle == false) { // 처음 선택 했을 때
-               //               for(int j = 0; j < utList.size(); j++) {
-               //
-               //               }
                seatIndv[i].setBackground(new Color(127, 118, 104));
                seatIndv[i].setForeground(Color.WHITE);       
                selectSeat = (i+1) + "";

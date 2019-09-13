@@ -172,13 +172,12 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		if (e.getSource() == plusBtn) {
 			if (term < 28) {
 				
-				term += 7;
-				System.out.println(term);
-				num.setText(term + "");	
-				
-				
 				String[] addTimeEditTemp = addTimeEdit.split("일");
-				if(Integer.parseInt(addTimeEditTemp[0]) + 7 < 100) {
+				if(Integer.parseInt(addTimeEditTemp[0]) + 7 < 100 && Integer.parseInt(addTimeEdit) < 100) {
+					term += 7;
+					System.out.println(term);
+					num.setText(term + "");	
+					
 					addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 7 + "";
 					addTimeEdit = addTimeEditTemp[0];  
 					weekNum.setText(addTimeEdit);
@@ -224,9 +223,10 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 			
 			// 본인 클라이언트 스트림으로 보냄
 			AdmManager ad = new AdmManager();
+			mf.remove(this);
+			
 			client.sendUser(ad.addWeekRemainTime(phoneNum, term));
 			
-			mf.remove(this);
 		}
 
 		

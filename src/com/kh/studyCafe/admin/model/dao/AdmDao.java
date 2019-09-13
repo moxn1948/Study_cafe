@@ -76,8 +76,8 @@ public class AdmDao {
 
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*3600000);
-					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000);
+					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*3600000L);
+					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*3600000L);
 					admWrite(userList); // 
 				}
 			}
@@ -122,8 +122,9 @@ public class AdmDao {
 					userList.get(i).setInTime(0);
 					userList.get(i).setOutTime(0);
 					userList.get(i).setRemainTime(0);
-					userList.get(i).setSeatNum("-");
-					//					System.out.println(userList);
+					userList.get(i).setSeatNum("0");
+					userList.get(i).setSeatType(User.NOSEAT);
+				
 					admWrite(userList); // 
 				}
 			}
@@ -144,8 +145,6 @@ public class AdmDao {
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setInTime(0);
-					userList.get(i).setOutTime(0);
-					//					System.out.println(userList);
 					admWrite(userList); // 
 				}
 			}
@@ -184,7 +183,6 @@ public class AdmDao {
 		long inTime = 0;
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-		//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 
@@ -204,7 +202,6 @@ public class AdmDao {
 
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-		//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 
@@ -216,7 +213,7 @@ public class AdmDao {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
 					userList.get(i).setInTime(timeNow);
-					userList.get(i).setOutTime(timeNow + term*3600000); 
+					userList.get(i).setOutTime(timeNow + term*3600000L); 
 					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
 					userList.get(i).setSeatType(User.HOURSEAT);
 
@@ -233,7 +230,6 @@ public class AdmDao {
 
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-		//	    System.out.println(timeNow);
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 
@@ -245,7 +241,7 @@ public class AdmDao {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
 					userList.get(i).setInTime(timeNow);
-					userList.get(i).setOutTime(timeNow + term*3600000); 
+					userList.get(i).setOutTime(timeNow + term*3600000L); 
 					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
 					userList.get(i).setSeatType(User.HOURSEAT);
 
@@ -270,7 +266,7 @@ public class AdmDao {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
 					userList.get(i).setInTime(timeNow);
-					userList.get(i).setOutTime(timeNow + weekTerm*3600000*24); 
+					userList.get(i).setOutTime(timeNow + weekTerm*3600000L*24L); 
 					userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
 					userList.get(i).setSeatType(User.WEEKSEAT);
 
@@ -326,8 +322,8 @@ public class AdmDao {
 
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
-					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*86400000);
-					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*86400000);
+					userList.get(i).setOutTime(userList.get(i).getOutTime() + term*86400000L);
+					userList.get(i).setRemainTime(userList.get(i).getRemainTime() + term*86400000L);
 					admWrite(userList); // 
 				}
 			}

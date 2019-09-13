@@ -84,7 +84,8 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 		hourCount.setForeground(new Color(127, 118, 104));
 		hourCount.setFont(new Font("맑은 고딕", Font.BOLD, 28));
 		hourCount.setSize(hourCount.getPreferredSize());
-
+		hourCount.setSelected(true);
+		
 		// 1일권 총 시간 타이틀
 		JLabel totalHourCount = new JLabel("이용하실 시간");
 
@@ -327,7 +328,9 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 
 		//취소버튼
 		if(e.getSource() == cancelBtn) {
-			cp.removePanel2(mf, this, op2);         
+//			cp.removePanel2(mf, this, op2);
+			
+			cp.reSeatPanel(mf, this, op2, new AdmSeatTable(mf, this, client, phoneNum, utList, "-", u));
 		}
 
 		//확인버튼
