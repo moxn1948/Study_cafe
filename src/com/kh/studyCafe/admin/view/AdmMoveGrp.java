@@ -14,12 +14,12 @@ import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 
+// 스터디룸 이동 불가 안내 팝업
 public class AdmMoveGrp extends JPanel implements ActionListener{
-//자리이동 팝업 2번
-//이거하나됨...	
-	private JPanel op = null;
+	private JPanel op;
 	private AdmMainFrame mf;
 	private ClientBack client;
+	private JButton closeBtn;
 	
 	public AdmMoveGrp(AdmMainFrame mf, JPanel op, ClientBack client) {
 		this.mf = mf;
@@ -50,7 +50,7 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		subTitle.setSize(subTitle.getPreferredSize());
 		*/
 		//버튼 설정
-		JButton closeBtn = new JButton("Close");
+		closeBtn = new JButton("Close");
 		
 		//close버
 		
@@ -79,12 +79,15 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
-		if(tempClass.equals("AdmUsingUserList")) {
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
-		}
-		if(tempClass.equals("AdmAllUserList")) {
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+		if(e.getSource() == closeBtn) {
+			
+			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			if(tempClass.equals("AdmUsingUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+			if(tempClass.equals("AdmAllUserList")) {
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
 		}
 		
 	}

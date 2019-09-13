@@ -31,7 +31,7 @@ import javax.swing.table.TableColumnModel;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
+//import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
 
@@ -112,7 +112,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 			
 			// 잔여시간 형식 수정해서 테이블에 뿌리기
 			if (utList.get(i).getSeatType() == 2) { // 기간권일 때
-				data[i][6] = utList.get(i).getRemainTime() / 86400000 + 1 + "일";
+				data[i][6] = (utList.get(i).getRemainTime() - 1) / 86400000 + 1 + "일";
 			} else if (utList.get(i).getSeatType() == 1) { // 1일권일 때
 				// 밀리세컨드를 시간 분으로 표시하기 위해 변
 				String timeResult = "";
@@ -317,15 +317,15 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(cafeInfo);
 		this.add(scrollpane);
 		
-		
-		if(!threadControl) {
-			// 시계스레드 start
-			MinTimeThread timeThread = new MinTimeThread(client);
-			timeThread.setDaemon(true);
-			timeThread.start();
-			
-			threadControl = true;
-		}
+//		
+//		if(!threadControl) {
+//			// 시계스레드 start
+//			MinTimeThread timeThread = new MinTimeThread(client);
+//			timeThread.setDaemon(true);
+//			timeThread.start();
+//			
+//			threadControl = true;
+//		}
 		
 //		while(true) {
 //			MinTimeThread timeThread = new MinTimeThread(client);
@@ -383,7 +383,11 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 			// 회원에 따라 연장 버튼 연결 구분
 			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
 				if(remainTimeChk.contains("일")) { // 기간권일때
-					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
+					if(Integer.parseInt(remainTimeChk.split("일")[0]) + 7 < 100) {
+						cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
+					}else {
+						cp.addPanel(mf, this, new AdmAddNotice2(mf, this, client));
+					}
 				}else {
 					if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30) { // 잔여시간이 30분 미만일 때
 						cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));

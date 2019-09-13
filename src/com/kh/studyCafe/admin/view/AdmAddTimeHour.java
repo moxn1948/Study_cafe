@@ -247,9 +247,10 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 			
 			// 본인 클라이언트 스트림으로 보냄	
 			AdmManager ad = new AdmManager();
+			mf.remove(this);
+			
 			client.sendUser(ad.addRemainTime(phoneNum, term));
 			
-			mf.remove(this);
 			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 
