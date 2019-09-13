@@ -31,6 +31,8 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 		this.op1 = op1; // table
 		this.op2 = op2; // userinfo popup
 		this.client = client;
+
+//		AdmMainFrame.livePanel = this;
 		
 		// 패널 설정
 		int w = 410;

@@ -31,6 +31,8 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		this.u = u;
 		this.client = client;
 
+//	    AdmMainFrame.livePanel = this;
+	      
 		this.setBounds(300, 120, 362, 484);
 		this.setBackground(new Color(239, 234, 222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));

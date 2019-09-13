@@ -28,6 +28,7 @@ public class AdmExitTimeHour extends JPanel implements ActionListener{
 		this.client = client;
 		this.phoneNum = phoneNum;
 		String timeEdit = "";
+//		AdmMainFrame.livePanel = this;
 
 		if(new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) {
 			timeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";

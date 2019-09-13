@@ -15,6 +15,8 @@ public class AdmUsingSeat extends JPanel implements ActionListener {
 
 	     
 	public AdmUsingSeat(AdmMainFrame mf) {
+//	    AdmMainFrame.livePanel = this;
+	      
 		//패널 설정
 		      
 		this.setBounds(270,203,410,193);

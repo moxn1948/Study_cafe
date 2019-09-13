@@ -38,6 +38,7 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		this.op = op;
 		this.phoneNum = phoneNum;
 		this.client = client;
+//		AdmMainFrame.livePanel = this;
 		
 		AdmManager ad = new AdmManager();
 		
