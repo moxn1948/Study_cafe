@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ref.PhantomReference;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,24 +18,24 @@ import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
 
-public class KoskPsswdFind extends JPanel{
-	private KoskMainFrame mf;
-	private JPanel pssfind = new JPanel();
-	private JPanel popUp = new JPanel();
+public class KoskPsswdFind extends JPanel implements ActionListener{
+	private JPanel panel;
 	private JTextField nametf;
 	private JTextField phtf;
 	private JButton cancel;
 	private JButton find;
 	private KoskPsswdMf kpm;
+	private KoskMainFrame mf;
 	//User에서 값을 이름, 핸드폰 번호 , 비밀번호 값 받아와서 저장
 	
 	// 네크워크 코드
 	private ClientBack client;
 
-	public KoskPsswdFind(KoskMainFrame mf) {
+	public KoskPsswdFind(KoskMainFrame mf, JPanel panel, ClientBack client) {
 		this.mf = mf;
-		
+		this.client = client;
 		// 네크워크 코드
 		this.client = client;
 		
@@ -53,15 +54,10 @@ public class KoskPsswdFind extends JPanel{
 		//===============================
 
 		//============= 패널 설정 ===============
-		pssfind.setSize(360,640);
-		pssfind.setLayout(null);
-		pssfind.setBackground(wallPapers);
+		this.setSize(360,640);
+		this.setLayout(null);
+		this.setBackground(wallPapers);
 		
-		popUp.setSize(310,200);
-		popUp.setBackground(wallPapers);
-		popUp.setLayout(null);
-		popUp.setLocation(16, 256);
-
 		//=================================
 
 		//==== 아이콘 이미지  ===============
@@ -88,7 +84,6 @@ public class KoskPsswdFind extends JPanel{
 
 		nametf = new JTextField(11);
 		nametf.setBounds(120,230,200,40);
-		pssfind.add(nametf);
 
 		JLabel phnumber = new JLabel("휴대폰");
 		JLabel phnumber2 = new JLabel("번호");
@@ -101,7 +96,6 @@ public class KoskPsswdFind extends JPanel{
 
 		phtf = new JTextField(4);
 		phtf.setBounds(120,295,200,40);
-		pssfind.add(phtf);
 
 		Image cancelimg2 = new ImageIcon("img/cancelbtnimg2.png").getImage().getScaledInstance(100, 40, 0);
 		Image findimg = new ImageIcon("img/findbtnimg.png").getImage().getScaledInstance(100, 40, 0);
@@ -109,86 +103,43 @@ public class KoskPsswdFind extends JPanel{
 		cancel = new JButton(new ImageIcon(cancelimg2));
 		cancel.setBorderPainted(false);
 		cancel.setBounds(20,530,100,40);
+		cancel.addActionListener(this);
+		
 		find = new JButton(new ImageIcon(findimg));
 		find.setBorderPainted(false);
 		find.setBounds(220,530,100,40);
+		find.addActionListener(this);
 		//===============================
 
+		this.add(ib);
+		this.add(name);
+		this.add(nametf);
+		this.add(phnumber);
+		this.add(phnumber2);
+		this.add(phtf);
+		this.add(cancel);
+		this.add(find);
+		this.add(text);
 
-		pssfind.add(ib);
-		pssfind.add(name);
-		pssfind.add(nametf);
-		pssfind.add(phnumber);
-		pssfind.add(phnumber2);
-		pssfind.add(phtf);
-		pssfind.add(cancel);
-		pssfind.add(find);
-		pssfind.add(text);
-
-		mf.add(pssfind);
+		mf.add(this, 0);
 		mf.repaint();
 
-		cancel.addActionListener(new ActionListener() {
+	}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				ChangePanel.changePanel(mf, pssfind, new KoskLogin(mf, client));
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cancel) {
+			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+		}
+		if(e.getSource() == find) {
+			KoskDao kd = new KoskDao();
+			if((kd.compare(phtf.getText(), nametf.getText())) == true) {
+				ChangePanel.changePanel(mf, this, new KoskPsswdMf(mf, phtf.toString(), client));
+			}else {
+				String phoneNum = phtf.getText();
+				ChangePanel.addPanel(mf, this, new KoskPasswordDoNot(mf, this, phoneNum, client));
 			}
-		});
-
-		find.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//등록되어 있는 정보와 입력된 값바 비교 후 맞을 시 이름과 전화번호, 비밀번호 값 전달 / 패널 전환
-				KoskDao kd = new KoskDao();
-				if((kd.compare(phtf.getText(), nametf.getText())) == true) {
-					ChangePanel.changePanel(mf, pssfind, new KoskPsswdMf(mf, phtf.toString(), client));
-				}else {
-					phtf.setEditable(false);
-					nametf.setEditable(false);
-					find.setEnabled(false);
-					cancel.setEnabled(false);
-					
-					JButton button = new JButton("OK");
-				      button.setBounds(15,120,280,40);
-				      button.setFont(new Font("맑은 고딕",Font.BOLD,15));
-				      button.setBackground(new Color(170, 162, 142));
-				      button.setForeground(new Color(255,255,255));
-				   
-				      JLabel label = new JLabel();
-				      label.setFont(new Font("맑은 고딕",Font.BOLD,15));
-				      label.setText("잘못 입력하였습니다");
-				      label.setBounds(15,50,280,40);
-				      label.setHorizontalAlignment(JLabel.CENTER);
-				        
-				      JLabel label1= new JLabel();
-				      label1.setFont(new Font("맑은 고딕",Font.BOLD,15));
-				      label1.setText("이름 혹은 전화번호를");
-				      label1.setBounds(15,35,280,40);
-				      label1.setHorizontalAlignment(JLabel.CENTER);
-				      
-				      popUp.add(button);
-				      popUp.add(label);
-				      popUp.add(label1);
-				      
-				      popUp.setBorder(tb);				
-				      pssfind.add(popUp,0);
-				      mf.repaint();
-				      
-				      button.addActionListener(new ActionListener() {
-						
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							ChangePanel.changePanel(mf, pssfind, new KoskPsswdFind(mf));
-						}
-					});
-				}
-			}
-		});
-		
-
+		}
 	}
 
 }

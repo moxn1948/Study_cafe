@@ -16,11 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import com.kh.studyCafe.admin.model.dao.AdmDao;
-import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskGroupPanel;
-import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
 
@@ -210,7 +208,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		KoskDao kd = new KoskDao();
 		// 로그아웃 버튼 클릭 시
 		if(e.getSource() == logout) {
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
@@ -228,16 +226,20 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 			}for(int i=0; i<seatGrp.length; i++) {
 				seatGrp[i].setEnabled(false);
 			}
-			if(indvOrGrp == 1) {
-				tableOrManage = 1; // 시트테이블로 부터 시작
-				System.out.println(seatNum+"좌석");
-				ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,seatNum,tableOrManage));
-			} else {
-				ChangePanel.addPanel(mf, this, new KoskGroupPanel(mf, uList,phnum,client,this,seatNum,tableOrManage));
-				// public KoskGroupPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light) {
-				System.out.println("그룹 선택");
+			if(kd.toEnterInfo(phnum).equals("0")) {
+				if(indvOrGrp == 1) {
+					tableOrManage = 1; // 시트테이블로 부터 시작
+					System.out.println(seatNum+"좌석");
+					ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,seatNum,tableOrManage));
+				} else {
+					ChangePanel.addPanel(mf, this, new KoskGroupPanel(mf, uList,phnum,client,this,seatNum,tableOrManage));
+					// public KoskGroupPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light) {
+					System.out.println("그룹 선택");
+				}
+			}else {
+				kd.KoskLineSeat(phnum, seatNum);
+				ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 			}
-			
 			System.out.println("confirm btn");
 		}
 		
@@ -263,7 +265,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 						// 기존의 선택 좌석을 선택 해제함
 						seatGrp[light-seatIndv.length].setBackground(Color.WHITE);
 						seatGrp[light-seatIndv.length].setForeground(new Color(127, 118, 104));   
-
+							
 						// 새로 선택한 좌석 선택함
 						seatIndv[i].setBackground(new Color(127, 118, 104));
 						seatIndv[i].setForeground(Color.WHITE);
@@ -348,7 +350,6 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

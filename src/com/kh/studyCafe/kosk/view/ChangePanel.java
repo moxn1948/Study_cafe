@@ -20,6 +20,15 @@ public class ChangePanel{
 		mf.repaint();
 	}
 	
+	public static void popchangePanel(KoskMainFrame mf, JPanel op, JPanel np) {
+		for (Component cp : np.getComponents()){
+	           cp.setEnabled(true);
+	      }
+		mf.remove(op);
+		mf.add(np,0);
+		mf.repaint();
+	}
+	
 	public static void changePanel(KoskMainFrame mf, JPanel op, JPanel op2, JPanel np) { // 있던 패널 지우고 새 패널 올리기
 		mf.remove(op);
 		mf.remove(op2);

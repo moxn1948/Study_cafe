@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
+import com.kh.studyCafe.kosk.view.popup.KoskGropError;
 import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
@@ -36,7 +37,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 	private ClientBack client;
 	private ArrayList<User> uList;
 	private String seatnum;
-	
+	private long seattime;
 	private JButton[] button = new JButton[3];
 	
 	private JButton mypage = new JButton();
@@ -56,6 +57,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		this.panel = panel;
 		this.seatnum = seatnum;
 		this.tableOrManage = tableOrManage;
+		this.seattime = seattime;
 	
 		//============== font 설정 =========
 				Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
@@ -166,17 +168,12 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		    logout.addActionListener(this);
 		    mypage.addActionListener(this);
 		    
-		  
-		   
-		 
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
 		KoskDao kd = new KoskDao();
+		
 		if(e.getSource() == mypage) {
 			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this, phnum, client));
 		}
@@ -185,11 +182,11 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		}
 		
 		if(e.getSource() == seatmv) {
-			/*if(light>=0 && light < 25) {
-				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList,phnum,client));
-			} else {
-				//팝업사용
-			}*/
+			if(seatnum.length() == 3) {
+				//팝업
+			}else if(Integer.parseInt(seatnum) > 0 && Integer.parseInt(seatnum) <= 25) {
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList,client, phnum));
+			}
 		}
 		if(e.getSource() == out) {
 			
