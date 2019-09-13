@@ -128,19 +128,19 @@ public class AdmUserInfoChk {
 		// 개인 - 빈 회원
 
 		  // 날짜 오늘로 수정
-	      long inTime1 = new Date(new GregorianCalendar(2019, 8, 13, 0, 2, 0).getTimeInMillis()).getTime();
+	      long inTime1 = new Date(new GregorianCalendar(2019, 8, 14, 0, 2, 0).getTimeInMillis()).getTime();
 	      /*기간권-날짜수정안해도됨*/long inTime2 = new Date(new GregorianCalendar(2019, 8, 8, 0, 11, 0).getTimeInMillis()).getTime();
-	      long inTime3 = new Date(new GregorianCalendar(2019, 8, 13, 0, 14, 0).getTimeInMillis()).getTime();
-	      long inTime4 = new Date(new GregorianCalendar(2019, 8, 13, 1, 15, 0).getTimeInMillis()).getTime();
-	      long inTime5 = new Date(new GregorianCalendar(2019, 8, 13, 1, 28, 0).getTimeInMillis()).getTime();
+	      long inTime3 = new Date(new GregorianCalendar(2019, 8, 14, 0, 14, 0).getTimeInMillis()).getTime();
+	      long inTime4 = new Date(new GregorianCalendar(2019, 8, 14, 1, 15, 0).getTimeInMillis()).getTime();
+	      long inTime5 = new Date(new GregorianCalendar(2019, 8, 14, 1, 28, 0).getTimeInMillis()).getTime();
 	
 				
-	      /*날짜 오늘로 수정*/long outTime1 = new Date(new GregorianCalendar(2019, 8, 13, 23, 55, 0).getTimeInMillis()).getTime();
-	      /*기간권-날짜수정안해도됨*/long outTime2 = new Date(new GregorianCalendar(2019, 8, 14, 0, 0, 0).getTimeInMillis()).getTime();
-	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 13, 15, 30, 0).getTimeInMillis()).getTime();
-	      /*날짜 오늘로 수정*/long outTime4 = new Date(new GregorianCalendar(2019, 8, 13, 23, 5, 0).getTimeInMillis()).getTime();
-	      /*잔여시간 30분 미만으로 수정*/long outTime5 = new Date(new GregorianCalendar(2019, 8, 13, 16, 00, 0).getTimeInMillis()).getTime();
-	
+	      /*날짜 오늘로 수정*/long outTime1 = new Date(new GregorianCalendar(2019, 8, 14, 23, 55, 0).getTimeInMillis()).getTime();
+	      /*기간권-날짜수정안해도됨*/long outTime2 = new Date(new GregorianCalendar(2019, 8, 15, 0, 0, 0).getTimeInMillis()).getTime();
+	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 14, 2, 40, 0).getTimeInMillis()).getTime();
+	      /*날짜 오늘로 수정*/long outTime4 = new Date(new GregorianCalendar(2019, 8, 14, 23, 5, 0).getTimeInMillis()).getTime();
+	      /*잔여시간 30분 미만으로 수정*/long outTime5 = new Date(new GregorianCalendar(2019, 8, 14, 16, 00, 0).getTimeInMillis()).getTime();
+	      
 	      long currentTime = new Date().getTime();
 	
 	      long remainTime1 = outTime1 - currentTime;
@@ -153,20 +153,19 @@ public class AdmUserInfoChk {
 	      long pointTime3 = outTime3 - inTime3;
 	      long pointTime4 = outTime4 - inTime4;
 	      long pointTime5 = outTime5 - inTime5;
-	
-	      User u = new User("별님", "010-1111-1111", "pass123", "12", inTime1, outTime1, remainTime1, User.HOURSEAT, 120, pointTime1, "silver");
-	      User u1 = new User("달님", "010-2222-2222", "pas24", "16", inTime2, outTime2, remainTime2, User.WEEKSEAT, 100, pointTime2, "gold");
-	      User u2 = new User("햇님", "010-3333-3333", "pass323", "4", inTime3, outTime3, remainTime3, User.HOURSEAT, 1222, pointTime3, "silver");
-	      User u3 = new User("팥쥐", "010-4444-4444", "pass423", "6-A", inTime4, outTime4, remainTime4, User.HOURSEAT, 1000, pointTime4, "silver");
-	      User u4 = new User("콩쥐", "010-5555-5555", "pass523", "4-B", inTime5, outTime5, remainTime5, User.HOURSEAT, 2111, pointTime5, "bronze");
-	      User u5 = new User("민국", "010-7777-7777", "pass723", "13", 0, outTime2, remainTime2, User.WEEKSEAT, 4000, pointTime5, "silver");
-	      User u6 = new User("대한", "010-6666-6666", "pass623", "22", 0, outTime2, remainTime2, User.WEEKSEAT, 2000, pointTime5, "silver");
-	      User u7 = new User("만세", "010-8888-8888", "pass83", "0", 0, 0, 0, User.NOSEAT, 1020, pointTime5, "silver");
-	      User u8 = new User("백설", "010-9999-9999", "pass8213", "0", 0, 0, 0, User.NOSEAT, 1020, pointTime5, "silver");
-	      User u9 = new User("라푼젤", "010-1212-1212", "pass8323", "0", 0, 0, 0, User.NOSEAT, 1020, pointTime5, "silver");
-	      User u10 = new User("뮬란", "010-1313-1313", "pass8623", "0", 0, 0, 0, User.NOSEAT, 1020, pointTime5, "silver");
-	      User u11 = new User("알라딘", "010-1414-1414", "pass8823", "0", 0, 0, 0, User.NOSEAT, 1020, pointTime5, "silver");
-	      
+	  	
+	      User u = new User("별님", "010-1111-1111", "pass123", "12", inTime1, outTime1, remainTime1, User.HOURSEAT, pointTime1, "silver");
+	      User u1 = new User("달님", "010-2222-2222", "pas24", "16", inTime2, outTime2, remainTime2, User.WEEKSEAT, pointTime2, "gold");
+	      User u2 = new User("햇님", "010-3333-3333", "pass323", "4", inTime3, outTime3, remainTime3, User.HOURSEAT, pointTime3, "silver");
+	      User u3 = new User("팥쥐", "010-4444-4444", "pass423", "6-A", inTime4, outTime4, remainTime4, User.HOURSEAT, pointTime4, "silver");
+	      User u4 = new User("콩쥐", "010-5555-5555", "pass523", "4-B", inTime5, outTime5, remainTime5, User.HOURSEAT, pointTime5, "bronze");
+	      User u5 = new User("민국", "010-7777-7777", "pass723", "13", 0, outTime2, remainTime2, User.WEEKSEAT, pointTime5, "silver");
+	      User u6 = new User("대한", "010-6666-6666", "pass623", "22", 0, outTime2, remainTime2, User.WEEKSEAT, pointTime5, "silver");
+	      User u7 = new User("만세", "010-8888-8888", "pass83", "0", 0, 0, 0, User.NOSEAT, pointTime5, "silver");
+	      User u8 = new User("백설", "010-9999-9999", "pass8213", "0", 0, 0, 0, User.NOSEAT, pointTime5, "silver");
+	      User u9 = new User("라푼젤", "010-1212-1212", "pass8323", "0", 0, 0, 0, User.NOSEAT, pointTime5, "silver");
+	      User u10 = new User("뮬란", "010-1313-1313", "pass8623", "0", 0, 0, 0, User.NOSEAT, pointTime5, "silver");
+	      User u11 = new User("알라딘", "010-1414-1414", "pass8823", "0", 0, 0, 0, User.NOSEAT, pointTime5, "silver");
 	      
 	      AdmDao ad = new AdmDao();
 	      ad.admWrite(u);

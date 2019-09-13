@@ -341,8 +341,6 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 //			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 			
 			if(selectedKind.equals("1일권")) {
-				System.out.println(phoneNum);
-				System.out.println(seatNum);
 				client.sendUser(ad.enterSeatIndvTime(phoneNum, term, seatNum));
 			}else if(selectedKind.equals("기간권")) {
 				client.sendUser(ad.enterSeatIndvWeek(phoneNum, weekTerm, seatNum));

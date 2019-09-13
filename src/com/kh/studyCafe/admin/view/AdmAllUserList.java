@@ -55,11 +55,13 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    private JLabel srchChk;
    private JScrollBar vertical;
    private String seatNum;
+   private int allListNum;
+   
    public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
       this.mf = mf;
       this.client = client;
       allUserList = new AdmUserInfoChk().AllUserInfo(u);
-      int allListNum = utList.size() + allUserList.size();
+      allListNum = utList.size() + allUserList.size();
       this.utList = utList;
       this.u = u;
       AdmMainFrame.watchPanel = this;
@@ -396,8 +398,15 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    public void keyPressed(KeyEvent e) {
       if (e.getKeyCode() == KeyEvent.VK_ENTER) { // 검색 기능
          srchChk.setBorder(BorderFactory.createEmptyBorder());
+         
+         if(allListNum > 11) {
+        	 srchChk.setSize(620, 41);
+         }else {
+        	 srchChk.setSize(632, 41);
+         }
+         
          if(!searchForm.getText().equals("")) {
-	        	
+	        
 	         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
 	            if (utList.get(i).getName().contains(searchForm.getText().trim())) {
 	               if(i>10) {
@@ -500,11 +509,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
          int row = table.getSelectedRow();
          tablePhone = table.getValueAt(row, 2) + "";
-//         String seatTimeType = table.getValueAt(row, 6) + "";
          String remainTimeChk = table.getValueAt(row, 6) + "";
-     	System.out.println("그룹 : " + remainTimeChk);
-//         remainTimeChk = remainTimeChk.split("시간 ")[0];
-//         System.out.println();
       
          // 회원에 따라 연장 버튼 연결 구분
          if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
@@ -574,13 +579,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          tablePhone = table.getValueAt(row, 2) + "";
          seatNum = table.getValueAt(row, 3) + "";
          String inTime = table.getValueAt(row, 4)+ "";
-         System.out.println(seatNum);
-         System.out.println(inTime);
          // 회원에 따라 이동 버튼 연결 구분
          //만약 입실하지 않은 기간권 사용자가 입실할 경우 좌석번호는 가지고 있고 입실시간은 가지고 있지 않다.
          //기간권이 없는 회원이 입실할 경우 좌석번호 없고, 입실시간도 없다.
          if(seatNum.equals("-") && inTime.equals("-")) {
-            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));            
+            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));      
          } else if(inTime.equals("-")) {
             cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));       
          }
