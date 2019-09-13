@@ -1,4 +1,4 @@
-/*package com.kh.studyCafe.kosk.view;
+package com.kh.studyCafe.kosk.view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -896,4 +896,3 @@ public class KoskSeatTable extends JPanel implements MouseListener{
 
 
 
-*/
