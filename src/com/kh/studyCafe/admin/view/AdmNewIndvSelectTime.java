@@ -334,17 +334,22 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 		if(e.getSource() == confirmBtn) {
 			AdmManager ad = new AdmManager();
 			//시간권과 기간권을 구분하여 confirm하기 
+//			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			
 			if(selectedKind.equals("1일권")) {
 				System.out.println(phoneNum);
 				System.out.println(seatNum);
 				client.sendUser(ad.enterSeatIndvTime(phoneNum, term, seatNum));
-			}
-			if(selectedKind.equals("기간권")) {
+			}else if(selectedKind.equals("기간권")) {
 				client.sendUser(ad.enterSeatIndvWeek(phoneNum, weekTerm, seatNum));
 			}
+			
 			mf.remove(this);
-			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			mf.remove(op2);
+			
+//			mf.remove(this);
 			// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
+
 		}
 
 	}
