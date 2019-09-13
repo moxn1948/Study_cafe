@@ -25,6 +25,7 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		this.mf = mf;
 		this.op = op;
 		this.client = client;
+//		AdmMainFrame.livePanel = this;
 		
 		//패널 설정
 		this.setBounds(270,203,410,193); //오븐

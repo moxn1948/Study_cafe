@@ -51,6 +51,7 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		this.utList = utList;
 		this.u = u;
 		this.selectSeat = selectSeat;
+//		AdmMainFrame.livePanel = this;
 		
 		String grp = selectSeat.split("-")[0];
 		if(grp.equals("4")){
@@ -233,7 +234,7 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		int[] position = new int[2];
 
 		position[0] = (962 - w) / 2;
-		position[1] = (662 - h) / 2;
+		position[1] = (662 - h) / 2 + 20;
 
 		return position;
 	}

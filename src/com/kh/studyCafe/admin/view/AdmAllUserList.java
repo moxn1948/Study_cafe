@@ -63,6 +63,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       this.utList = utList;
       this.u = u;
       AdmMainFrame.watchPanel = this;
+//      AdmMainFrame.livePanel = this;
 
       // 테이블 헤더 목록
       String[] columnNames = { "No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴실",

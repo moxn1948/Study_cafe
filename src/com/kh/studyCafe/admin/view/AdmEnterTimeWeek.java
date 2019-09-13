@@ -27,6 +27,7 @@ public class AdmEnterTimeWeek extends JPanel implements ActionListener{
       this.mf = mf;
       this.client = client;
       this.phoneNum = phoneNum;
+//	  AdmMainFrame.livePanel = this;
       
       // 패널 설정
       int w = 410;

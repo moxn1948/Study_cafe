@@ -33,10 +33,12 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	
 	public AdmLoginMain(AdmMainFrame mf, ClientBack client) {
 		
-		AdmMainFrame.watchPanel = login;
 		this.mf = mf;
 		this.client = client;
 
+		AdmMainFrame.watchPanel = login;
+//		AdmMainFrame.livePanel = login;
+		
 		login.setLayout(null);
 		login.setSize(978, 700);
 		login.setBackground(Color.WHITE);

@@ -58,7 +58,8 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 		this.utList = utList;
 		this.u = u;
 		this.seatNum = seatNum;
-
+//
+//		AdmMainFrame.livePanel = this;
 		// 패널 설정
 		int w = 731;
 		int h = 474;
@@ -252,7 +253,7 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 		int[] position = new int[2];
 
 		position[0] = (962 - w) / 2;
-		position[1] = (662 - h) / 2;
+		position[1] = (662 - h) / 2 + 34;
 
 		return position;
 	}

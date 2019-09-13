@@ -48,6 +48,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
       this.seatNum = seatNum;
       this.u = u;
       op2 = this;
+//      AdmMainFrame.livePanel = this;
 
       // 패널 설정
       int w = 404;
@@ -245,12 +246,16 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 	    				comp.setEnabled(false);
 	    				comp.removeMouseListener(this);
 	    			}
+        			this.setEnabled(false);
+        			this.removeMouseListener(this);
                    cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }else {
         			for (Component comp : seat.getComponents()) {
         				comp.setEnabled(false);
         				comp.removeMouseListener(this);
         			}
+        			this.setEnabled(false);
+        			this.removeMouseListener(this);
                    cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }
             }else { // 자리이동

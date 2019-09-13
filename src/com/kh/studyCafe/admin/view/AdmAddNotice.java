@@ -24,6 +24,7 @@ public class AdmAddNotice extends JPanel implements ActionListener{
 		this.mf = mf;
 		this.op = op;
 		this.client = client;
+//		AdmMainFrame.livePanel = this;
 		
 		//패널 설정
 		this.setBounds(270,250,410,193);
@@ -31,7 +32,7 @@ public class AdmAddNotice extends JPanel implements ActionListener{
 		this.setBorder(BorderFactory.createLineBorder(new Color(189,177,157)));
 	
 		// 안내문구
-		JLabel title = new JLabel("<html><p style='text-align:center;'>잔여시간이 30분 이하일 때만<br>연장이 가능합니다.</p></html>");
+		JLabel title = new JLabel("<html><p style='text-align:center;'>잔여시간이 30분 미만일 때만<br>연장이 가능합니다.</p></html>");
 	 
 		title.setLocation(72, 44);
 		title.setForeground(new Color(127,118,104));

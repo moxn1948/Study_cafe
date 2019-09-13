@@ -37,7 +37,8 @@ public class AdmUnSelectSeat extends JPanel implements ActionListener{
       this.utList = utList;
       this.seatNum = seatNum;
       this.u = u;
-      
+
+//      AdmMainFrame.livePanel = this;
       
       this.setBounds(270,203,410,193);
       this.setBackground(new Color(239,234,222));

@@ -18,7 +18,7 @@ import com.kh.studyCafe.model.vo.User;
 public class AdmMainFrame extends JFrame implements ActionListener{
 	private ClientBack client = new ClientBack(); // 클라이언트 백그라운드 생성
 	private static Object ipName;
-	public static JPanel watchPanel;
+	public static JPanel watchPanel = null;
 	
 	// 메인 프레임
 	public AdmMainFrame() {
@@ -49,7 +49,9 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		new AdmDao().admWrite(user); // 새파일 생성해야 함
 		System.out.println("리페인트 타이밍");
 		
-		if(AdmMainFrame.watchPanel != null) {
+		String tempWatch = AdmMainFrame.watchPanel.getClass() + "";
+		
+		if(!tempWatch.substring(tempWatch.length() - 6, tempWatch.length()).equals("JPanel")) {
 			this.remove(AdmMainFrame.watchPanel);
 	
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];

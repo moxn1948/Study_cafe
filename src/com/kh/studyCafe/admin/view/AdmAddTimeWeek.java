@@ -35,6 +35,7 @@ public class AdmAddTimeWeek extends JPanel implements ActionListener {
 		this.mf = mf;
 		this.op = op;
 		this.phoneNum = phoneNum;
+//		AdmMainFrame.livePanel = this;
 
 		// 잔여시간 표시
 		String timeEdit = new AdmManager().findPhoneToRemain(phoneNum) / 86400000 + 1 + "";

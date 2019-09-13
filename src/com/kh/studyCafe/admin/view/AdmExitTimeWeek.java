@@ -33,6 +33,7 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		this.client = client;
 		this.mf = mf;
 		this.phoneNum = phoneNum;
+//		AdmMainFrame.livePanel = this;
 	
 		
 		// 패널 설정
