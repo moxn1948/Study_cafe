@@ -190,7 +190,7 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		pNumPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pNumPut.setSize(pNum.getPreferredSize());
 
-		JLabel point = new JLabel("포인트");
+/*		JLabel point = new JLabel("포인트");
 		point.setLocation(40, 285);
 		point.setForeground(new Color(163, 152, 134));
 		point.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -202,7 +202,7 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		pointPut.setForeground(new Color(163, 152, 134));
 		pointPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pointPut.setSize(pointPut.getPreferredSize());
-
+*/
 		JLabel grade = new JLabel("등급");
 		grade.setLocation(40, 317);
 		grade.setForeground(new Color(163, 152, 134));
@@ -248,8 +248,8 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 //		this.add(remain2);
 		this.add(pNum);
 		this.add(pNumPut);
-		this.add(point);
-		this.add(pointPut);
+//		this.add(point);
+//		this.add(pointPut);
 		this.add(grade);
 		this.add(inTime);
 		this.add(gradePut);

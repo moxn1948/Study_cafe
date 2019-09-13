@@ -104,7 +104,7 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		totalUserCount.setSize(totalUserCount.getPreferredSize());
 
 		// 총 인원 - 명수 표시
-		totalUserCountNum = new JLabel("2명");
+		totalUserCountNum = new JLabel(count + "명");
 
 		totalUserCountNum.setLocation(164, 170);
 		totalUserCountNum.setForeground(new Color(127, 118, 104));

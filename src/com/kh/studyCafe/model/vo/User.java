@@ -20,7 +20,7 @@ public class User implements Serializable{
 	public final static int HOURSEAT = 1; // 1일권 사용할 때
 	public final static int WEEKSEAT = 2; // 기간권 사용할 때
 	private int seatType; // 시트타입
-	private int point; // 포인트
+//	private int point; // 포인트
 	private long pointTime; // 누적 결제시간
 	private String rank; // 등급
 	
@@ -35,7 +35,7 @@ public class User implements Serializable{
 		this.outTime = 0;
 		this.remainTime = 0;
 		this.seatType = NOSEAT;
-		this.point = 0;
+//		this.point = 0;
 		this.pointTime = 0;
 		this.rank = "bronze";
 		
@@ -43,7 +43,7 @@ public class User implements Serializable{
 
 	// 모든 필드 초기화 생성자
 	public User(String name, String phoneNum, String password, String seatNum, long inTime, long outTime, long remainTime,
-			int seatType, int point, long pointTime, String rank) {
+			int seatType, long pointTime, String rank) {
 		super();
 		this.name = name;
 		this.phoneNum = phoneNum;
@@ -53,7 +53,7 @@ public class User implements Serializable{
 		this.outTime = outTime;
 		this.remainTime = remainTime;
 		this.seatType = seatType;
-		this.point = point;
+//		this.point = point;
 		this.pointTime = pointTime;
 		this.rank = rank;
 	}
@@ -123,14 +123,14 @@ public class User implements Serializable{
 		this.seatType = seatType;
 	}
 
-	public int getPoint() {
-		return point;
-	}
-
-	public void setPoint(int point) {
-		this.point = point;
-	}
-	
+//	public int getPoint() {
+//		return point;
+//	}
+//
+//	public void setPoint(int point) {
+//		this.point = point;
+//	}
+//	
 	public long getPointTime() {
 		return pointTime;
 	}
@@ -151,7 +151,7 @@ public class User implements Serializable{
 	public String toString() {
 		return "User [name=" + name + ", phoneNum=" + phoneNum + ", password=" + password + ", seatNum=" + seatNum
 				+ ", inTime=" + inTime + ", outTime=" + outTime + ", remainTime=" + remainTime + ", seatType="
-				+ seatType + ", point=" + point + ", pointTime=" + pointTime + ", rank=" + rank + "]";
+				+ seatType + ", pointTime=" + pointTime + ", rank=" + rank + "]";
 	}
 	
 }

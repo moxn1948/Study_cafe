@@ -248,7 +248,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
 	    			}
         			this.setEnabled(false);
         			this.removeMouseListener(this);
-                   cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
+                    cp.addPanel2(mf, this, new AdmNewIndvSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }else {
         			for (Component comp : seat.getComponents()) {
         				comp.setEnabled(false);
@@ -256,7 +256,7 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
         			}
         			this.setEnabled(false);
         			this.removeMouseListener(this);
-                   cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
+                    cp.addPanel2(mf, this, new AdmNewGrpSelectTime(mf, op, op2,client,phoneNum, utList, u, selectSeat));
                 }
             }else { // 자리이동
 				for (int i = 0; i < seatGrp.length; i++) {
