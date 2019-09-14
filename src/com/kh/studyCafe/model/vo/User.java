@@ -23,6 +23,7 @@ public class User implements Serializable{
 //	private int point; // 포인트
 	private long pointTime; // 누적 결제시간
 	private String rank; // 등급
+	private int totalSales;
 	
 	public User() {}
 	
@@ -38,7 +39,7 @@ public class User implements Serializable{
 //		this.point = 0;
 		this.pointTime = 0;
 		this.rank = "bronze";
-		
+		this.totalSales = 0;
 	}
 
 	// 모든 필드 초기화 생성자
@@ -56,8 +57,10 @@ public class User implements Serializable{
 //		this.point = point;
 		this.pointTime = pointTime;
 		this.rank = rank;
+		this.totalSales = 0;
 	}
-	
+
+
 	// setter, getter
 	public String getName() {
 		return name;
@@ -146,12 +149,21 @@ public class User implements Serializable{
 	public void setRank(String rank) {
 		this.rank = rank;
 	}
+	
+	
+	public int getTotalSales() {
+		return totalSales;
+	}
+
+	public void setTotalSales(int totalSales) {
+		this.totalSales = totalSales;
+	}
 
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", phoneNum=" + phoneNum + ", password=" + password + ", seatNum=" + seatNum
 				+ ", inTime=" + inTime + ", outTime=" + outTime + ", remainTime=" + remainTime + ", seatType="
-				+ seatType + ", pointTime=" + pointTime + ", rank=" + rank + "]";
+				+ seatType + ", pointTime=" + pointTime + ", rank=" + rank + ", totalSales=" + totalSales + "]";
 	}
 	
 }

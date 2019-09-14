@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmCafe;
 import com.kh.studyCafe.client.ClientBack;
 
 public class AdmCafeInfo extends JPanel implements ActionListener {
@@ -30,7 +31,6 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		this.mf=mf;
 		this.op=op;
 		this.client=client;
-		
 		
 		
 		this.setBounds(270, 120, 391, 440);

@@ -5,12 +5,14 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmCafe;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
@@ -19,7 +21,8 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	private ClientBack client = new ClientBack(); // 클라이언트 백그라운드 생성
 	private static Object ipName;
 	public static JPanel watchPanel = null;
-	
+	private AdmDao ad = new AdmDao();
+	private AdmCafe ac = ad.readCafe();
 	// 메인 프레임
 	public AdmMainFrame() {
 		
@@ -32,6 +35,15 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
+		
+		Calendar cal = Calendar.getInstance();
+		
+		if(ac.getDay() != cal.get(cal.DATE)) {
+			ac.setDay(cal.get(cal.DATE));
+			ac.setTotalDaySales(0);
+			ad.writeCafe(ac);
+		}
+		
 		try {
 			ipName = InetAddress.getLocalHost().getHostAddress();
 			client.setGui(this);
@@ -46,7 +58,22 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	
 	public void appendUser(ArrayList<User> user) {
 		// 클라이언트 측 리페인트
-		new AdmDao().admWrite(user); // 새파일 생성해야 함
+		
+		ad.admWrite(user); // 새파일 생성해야 함
+		
+		ArrayList<User> userList = ad.admRead();
+		
+		for(int i = 0; i < userList.size(); i++) {
+			if(userList.get(i).getTotalSales() != 0) {
+				int Sales = userList.get(i).getTotalSales();
+				ac.setTotalDaySales(ac.getTotalDaySales() + Sales);
+				ac.setTotalMonthSales(ac.getTotalDaySales());
+				userList.get(i).setTotalSales(0);
+			}
+		}
+		ad.admWrite(userList);
+		
+		
 		System.out.println("리페인트 타이밍");
 		
 		String tempWatch = AdmMainFrame.watchPanel.getClass() + "";
