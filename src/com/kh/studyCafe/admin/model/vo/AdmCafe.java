@@ -1,6 +1,13 @@
 package com.kh.studyCafe.admin.model.vo;
 
-public class AdmCafe {
+import java.io.Serializable;
+
+//implements 수정함
+public class AdmCafe implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 669863668942436805L;
 	private int totalDaySales;
 	private int totalMonthSales;
 	private int totalUserAmount;

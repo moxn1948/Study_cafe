@@ -10,10 +10,28 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class AdmCafeInfo extends JPanel implements ActionListener {
+import com.kh.studyCafe.admin.controller.AdmManager;
+import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.client.ClientBack;
 
-	public AdmCafeInfo(AdmMainFrame mf) {
+public class AdmCafeInfo extends JPanel implements ActionListener {
+//아래 추가함
+	
+	private JPanel op = null;
+	private AdmMainFrame mf;
+	private ClientBack client;
+	private JButton closeBtn;
+	
+	
+	//여기도 0914수정
+	public AdmCafeInfo(AdmMainFrame mf,JPanel op, ClientBack client) {
 //		AdmMainFrame.livePanel = this;
+		AdmDao ad = new AdmDao(); //190914수정
+		this.mf=mf;
+		this.op=op;
+		this.client=client;
+		
+		
 		
 		this.setBounds(270, 120, 391, 440);
 		this.setBackground(new Color(239, 234, 222));
@@ -48,14 +66,14 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		subTitle2.setFont(new Font("맑은 고딕",Font.BOLD,22));
 		subTitle2.setSize(subTitle2.getPreferredSize());
 		
-		JLabel pNum = new JLabel("명");
+		/*JLabel pNum = new JLabel("명");
 		pNum.setLocation(240, 220);
 		pNum.setForeground(new Color(163, 152, 134));
 		pNum.setFont(new Font("맑은 고딕",Font.BOLD,22));
-		pNum.setSize(pNum.getPreferredSize());
+		pNum.setSize(pNum.getPreferredSize());*/
 		
 		
-		JLabel pNumPut = new JLabel("297");
+		JLabel pNumPut = new JLabel(ad.readCafe().getTotalUserAmount()+"명");
 		pNumPut.setLocation(200, 220);
 		pNumPut.setForeground(new Color(163, 152, 134));
 		pNumPut.setFont(new Font("맑은 고딕",Font.BOLD,22));
@@ -78,15 +96,15 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		month.setSize(month.getPreferredSize());
 		
 		//하루매출
-		JLabel won = new JLabel("원");
+		/*JLabel won = new JLabel("원");
 		won.setLocation(310, 132);
 		won.setForeground(new Color(163, 152, 134));
 		won.setFont(new Font("맑은 고딕",Font.BOLD,22));
 		won.setSize(won.getPreferredSize());
+		*/
 		
 		
-		
-		JLabel wonPut = new JLabel("200,000");
+		JLabel wonPut = new JLabel(ad.readCafe().getTotalDaySales()+"원");
 		wonPut.setLocation(200, 132);
 		wonPut.setForeground(new Color(163, 152, 134));
 		wonPut.setFont(new Font("맑은 고딕",Font.BOLD,22));
@@ -101,14 +119,14 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		
 		
 		
-		JLabel won2 = new JLabel("원");
+		/*JLabel won2 = new JLabel("원");
 		won2.setLocation(310, 192);
 		won2.setForeground(new Color(163, 152, 134));
 		won2.setFont(new Font("맑은 고딕",Font.BOLD,22));
-		won2.setSize(won2.getPreferredSize());
+		won2.setSize(won2.getPreferredSize());*/
 		
 		
-		JLabel won2Put = new JLabel("2,200,000");
+		JLabel won2Put = new JLabel(ad.readCafe().getTotalMonthSales()+"원");
 		won2Put.setLocation(200, 192);
 		won2Put.setForeground(new Color(163, 152, 134));
 		won2Put.setFont(new Font("맑은 고딕",Font.BOLD,22));
@@ -121,7 +139,7 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		
 		
 		// 버튼 설정
-		JButton closeBtn = new JButton("Close");
+		closeBtn = new JButton("Close");
 		
 		closeBtn.setBounds(33, 346, 326, 50);
 	
@@ -131,21 +149,20 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		closeBtn.setForeground(Color.WHITE);
 		closeBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		closeBtn.setBorderPainted(false);
+		//수정1914
+		closeBtn.addActionListener(this);
 
 		
 		// 패널에 올리기
 		this.add(title);
 		this.add(subTitle);
 		this.add(subTitle2); //총회원수 타이틀
-		this.add(pNum);//명
 		this.add(pNumPut);//명
 		
 	    this.add(closeBtn);
 	    this.add(day);
 	    this.add(month);
-	    this.add(won);
 	    this.add(wonPut);
-	    this.add(won2);
 	    this.add(won2Put);
 	    
 	}
@@ -154,8 +171,15 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		ControlPanel cp = new ControlPanel();
 		
-	}
+		if(e.getSource() == closeBtn) {
+			System.out.println("ddd");
+			new ControlPanel().changeTablePanel2(mf, this, op, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+		}
+		
+			
+			
+		}
 
 }
