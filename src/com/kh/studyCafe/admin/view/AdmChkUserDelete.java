@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
+import com.kh.studyCafe.admin.model.vo.AdmCafe;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
@@ -97,7 +98,9 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 		if(e.getSource() == confirmBtn) {
 			AdmDao ad = new AdmDao();
 			ad.admDeleteUserWrite(u);
-			
+			AdmCafe ac = ad.readCafe();
+			ac.setTotalUserAmount(ac.getTotalUserAmount() - 1);
+			ad.writeCafe(ac);
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
 				cp.changeTablePanel3(mf, this, op1, op2, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));				

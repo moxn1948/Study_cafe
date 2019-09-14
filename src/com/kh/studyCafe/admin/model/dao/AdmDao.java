@@ -500,12 +500,40 @@ public class AdmDao {
 				e.printStackTrace();
 			}
 			
+		}		
+	}
+	
+	
+	public void writeCafe(AdmCafe ac) {
+		FileOutputStream fos =null;
+		ObjectOutputStream oos = null;
+				
+		try {
+			fos= new FileOutputStream("CafeInfo.dat");
+			oos=new ObjectOutputStream(fos);
+			
+			oos.writeObject(ac);
+			
+			System.out.println("객체를 저장했습니다.");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				fos.close();
+				oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		
 		
 	}
-	
 	
 
    	public AdmCafe readCafe() {

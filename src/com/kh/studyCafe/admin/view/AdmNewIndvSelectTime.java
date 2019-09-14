@@ -46,7 +46,7 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 	private int weekTerm = 7;
 	private JTextField boxWeekDisplay;
 	private ButtonGroup timeRadio;
-	private String selectedKind = "";
+	private String selectedKind = "1일권";
 	private String seatNum;
 
 	public AdmNewIndvSelectTime(AdmMainFrame mf, JPanel op,JPanel op2, ClientBack client, String phoneNum, ArrayList<AdmUserTable> utList, ArrayList<User> u, String seatNum) {
