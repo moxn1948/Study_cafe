@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -18,11 +20,12 @@ import javax.swing.SwingUtilities;
 
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.controller.KoskManager;
+import com.kh.studyCafe.kosk.view.popup.KoskCheckBoxPop;
 import com.kh.studyCafe.kosk.view.popup.KoskPassWordNo;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpCancle;
 import com.kh.studyCafe.kosk.view.popup.KoskSignUpPop;
 
-public class KoskSignUp extends JPanel implements ActionListener{
+public class KoskSignUp extends JPanel implements ActionListener,ItemListener{
 
 	private KoskMainFrame mf;
 	private String nam;
@@ -35,6 +38,8 @@ public class KoskSignUp extends JPanel implements ActionListener{
 	private JTextField phtf;
 	private JTextField pstf;
 	private JTextField psch;
+	private JCheckBox check;
+	private boolean checkstate = false;
 	// 네트워크 코드
 	private ClientBack client;
 
@@ -137,12 +142,12 @@ public class KoskSignUp extends JPanel implements ActionListener{
 		//=================popup버튼 완료 설정==============
 
 		//====== 체크박스 설정 ======================
-		JCheckBox checkbox = new JCheckBox("   [필수] 제 3자 이용자 동의 약관");
-		checkbox.setBounds(40,450,400,30);
-		checkbox.setBackground(wallPapers);
-		checkbox.setFont(checktext);
-		checkbox.setForeground(textColor);
-
+		check = new JCheckBox("   [필수] 제 3자 이용자 동의 약관");
+		check.setBounds(40,450,400,30);
+		check.setBackground(wallPapers);
+		check.setFont(checktext);
+		check.setForeground(textColor);
+		check.addItemListener(this);
 		//====================================
 		this.add(text);
 		this.add(ib);
@@ -158,19 +163,32 @@ public class KoskSignUp extends JPanel implements ActionListener{
 		this.add(psch);
 		this.add(cancel);
 		this.add(confirm);
-		this.add(checkbox);
+		this.add(check);
 
 		mf.add(this, 0);
 		mf.repaint();
 	}
 	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getStateChange() == ItemEvent.SELECTED) {
+				checkstate = true;
+			
+		}else if(e.getStateChange() == ItemEvent.DESELECTED){
+			checkstate = false;
+		}
+	}
+	
+	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+			
 		if(e.getSource() == cancel) {
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
 		if(e.getSource() == confirm) {
 			String num1 = pstf.getText();
 			String num2 = psch.getText();
+			if(checkstate == true) {
 			if(num1.equals(num2)) {
 				ArrayList number = new ArrayList();
 				number.add(nametf.getText());
@@ -187,8 +205,14 @@ public class KoskSignUp extends JPanel implements ActionListener{
 			} else {
 				ChangePanel.addPanel(mf, this, new KoskPassWordNo(mf, this,client));
 			}
+			}else {
+				ChangePanel.addPanel(mf, this, new KoskCheckBoxPop(mf,this,client));
+			}
 		}
 
 	}
 
+
+
+	
 }
