@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
@@ -57,7 +58,8 @@ public class KoskCardButton extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == button) {
+		if(e.getSource() == button) {	
+			client.sendUser(new AdmDao().admRead());
 			ChangePanel.changePanel(mf, this, new KoskPaySuccess(mf, this, client));
 		}
 	}

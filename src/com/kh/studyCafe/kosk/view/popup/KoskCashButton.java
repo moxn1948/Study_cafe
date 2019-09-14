@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;

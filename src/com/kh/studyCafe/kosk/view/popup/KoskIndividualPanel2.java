@@ -45,6 +45,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
    private String phnum;
    private int tableOrManage;
    private long seattime;
+   private int hOfw;
    
    public KoskIndividualPanel2(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,String seatnum, int hOfw
 		   ,int tableOrManage) {
@@ -56,6 +57,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
 	   this.phnum = phnum;
 	   this.tableOrManage = tableOrManage;
 	   this.seattime = seattime;
+	   this.hOfw = hOfw;
    //===== 컬러 =====
 
    Color wallPapers = new Color(239,234,222);
@@ -171,7 +173,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
     	 
       }
       if(e.getSource() == confirm) {
-         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,this,seatnum,day,1,tableOrManage));
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,this,seatnum,day,hOfw,tableOrManage));
          //confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
          
       }

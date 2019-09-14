@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskGroupPanel;
@@ -35,7 +36,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private JButton confirm;
 	private String seatNum;
 	private ArrayList<User> uList;
-	static String phnum;
+	public static String phnum;
 	private int indvOrGrp;
 	private int tableOrManage;
 	
@@ -238,6 +239,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 				}
 			}else {
 				kd.KoskLineSeat(phnum, seatNum);
+				client.sendUser(new AdmDao().admRead());
 				ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 			}
 			System.out.println("confirm btn");

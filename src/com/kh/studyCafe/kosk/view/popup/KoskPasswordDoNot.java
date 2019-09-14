@@ -13,9 +13,8 @@ import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.view.ChangePanel;
-import com.kh.studyCafe.kosk.view.KoskLogin;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
-import com.kh.studyCafe.kosk.view.KoskPsswdMf;
+import com.kh.studyCafe.kosk.view.KoskPsswdFind;
 
 public class KoskPasswordDoNot extends JPanel  implements ActionListener{
 	private KoskMainFrame mf;
@@ -75,7 +74,7 @@ public class KoskPasswordDoNot extends JPanel  implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) {
-			ChangePanel.popchangePanel(mf, this, new KoskPsswdMf(mf, phoneNum, client));
+			ChangePanel.popchangePanel(mf, this, new KoskPsswdFind(mf, client));
 		}
 		
 	}

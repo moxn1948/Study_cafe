@@ -147,7 +147,7 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 			ChangePanel.changePanel(mf, this, new KoskSignUp(mf, client));
 		}
 		if(e.getSource() == findPwd) {
-			ChangePanel.changePanel(mf, this, new KoskPsswdFind(mf,this,client));
+			ChangePanel.changePanel(mf, this, new KoskPsswdFind(mf,client));
 		}
 	}
 

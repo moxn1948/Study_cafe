@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskPasswordDoNot;
@@ -142,8 +143,11 @@ public class KoskPsswdMf extends JPanel implements ActionListener{
 			if(str1.equals(str2)) {
 				KoskDao kd = new KoskDao();
 				kd.changePasswd(phoneNum, passwd1.getText());
+				client.sendUser(new AdmDao().admRead());
+				System.out.println("저장됨");
 				ChangePanel.addPanel(mf, this, new KoskPasswordIs(mf, this, client));
 			}else {
+				System.out.println("저장xx");
 				ChangePanel.addPanel(mf, this, new KoskPasswordDoNot(mf, this, phoneNum, client));
 			}
 		}

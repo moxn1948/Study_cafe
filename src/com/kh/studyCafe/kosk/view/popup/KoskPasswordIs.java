@@ -47,6 +47,7 @@ public class KoskPasswordIs extends JPanel implements ActionListener{
 	button.setBounds(5,140,280,40);
 	button.setBackground(paper);
 	button.setForeground(paper1);
+	button.addActionListener(this);
 	
 	JLabel label = new JLabel();
 	label.setFont(font);

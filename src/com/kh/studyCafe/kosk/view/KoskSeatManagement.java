@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskGropError;
@@ -191,6 +192,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		if(e.getSource() == out) {
 			
 			kd.KoskExitSeat(phnum);// 퇴실 
+			client.sendUser(new AdmDao().admRead());
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
 		if(e.getSource() == ex) {
