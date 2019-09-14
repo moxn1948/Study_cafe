@@ -142,9 +142,9 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 				if(kd.findPhoneToSeatType(phoneNum) == User.WEEKSEAT && kd.findPhoneToUser(phoneNum).getInTime() == 0) {
 
 					long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-					User u = kd.findPhoneToUser(phoneNum);
-					u.setInTime(timeNow);
-					new AdmDao().admWrite(u);
+//					User u = kd.findPhoneToUser(phoneNum);
+//					u.setInTime(timeNow);
+					new AdmDao().admWriteKosk(timeNow, phoneNum);
 					client.sendUser(new AdmDao().admRead());
 					
 					ChangePanel.changePanel(mf, this, new KoskEnterGrp(mf, uList, client,this,light,seattime, phoneNum));

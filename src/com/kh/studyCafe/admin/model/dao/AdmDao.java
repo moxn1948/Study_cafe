@@ -52,7 +52,34 @@ public class AdmDao {
 
 		return result;
 	}
+	// 키오스크쪽 임시 메소드
+	public int admWriteKosk(long timeNow, String phoneNum) {
+		int result = 0;
 
+		ArrayList<User> uTemp = admRead();
+		if(uTemp == null) {
+			uTemp = new ArrayList<User> ();
+		}
+
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
+//			uTemp.add(u);
+			for (int i = 0; i < uTemp.size(); i++) {
+				if(uTemp.get(i).getPhoneNum().equals(phoneNum)) {
+					uTemp.get(i).setInTime(timeNow);
+				}
+			}
+			
+			oos.writeObject(uTemp);
+
+			oos.flush();
+			result++;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 	public int admWrite(ArrayList<User> user) {
 		int result = 0;
 
