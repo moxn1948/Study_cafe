@@ -137,7 +137,7 @@ public class AdmUserInfoChk {
 				
 	      /*날짜 오늘로 수정*/long outTime1 = new Date(new GregorianCalendar(2019, 8, 14, 23, 55, 0).getTimeInMillis()).getTime();
 	      /*기간권-날짜수정안해도됨*/long outTime2 = new Date(new GregorianCalendar(2019, 8, 15, 0, 0, 0).getTimeInMillis()).getTime();
-	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 14, 2, 40, 0).getTimeInMillis()).getTime();
+	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 14, 12, 40, 0).getTimeInMillis()).getTime();
 	      /*날짜 오늘로 수정*/long outTime4 = new Date(new GregorianCalendar(2019, 8, 14, 23, 5, 0).getTimeInMillis()).getTime();
 	      /*잔여시간 30분 미만으로 수정*/long outTime5 = new Date(new GregorianCalendar(2019, 8, 14, 16, 00, 0).getTimeInMillis()).getTime();
 	      
@@ -154,7 +154,7 @@ public class AdmUserInfoChk {
 	      long pointTime4 = outTime4 - inTime4;
 	      long pointTime5 = outTime5 - inTime5;
 	  	
-	      User u = new User("별님", "010-1111-1111", "pass123", "12", inTime1, outTime1, remainTime1, User.HOURSEAT, pointTime1, "silver");
+	      User u = new User("별님", "12", "12", "12", inTime1, outTime1, remainTime1, User.HOURSEAT, pointTime1, "silver");
 	      User u1 = new User("달님", "010-2222-2222", "pas24", "16", inTime2, outTime2, remainTime2, User.WEEKSEAT, pointTime2, "gold");
 	      User u2 = new User("햇님", "010-3333-3333", "pass323", "4", inTime3, outTime3, remainTime3, User.HOURSEAT, pointTime3, "silver");
 	      User u3 = new User("팥쥐", "010-4444-4444", "pass423", "6-A", inTime4, outTime4, remainTime4, User.HOURSEAT, pointTime4, "silver");

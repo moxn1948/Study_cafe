@@ -46,7 +46,7 @@ public class KoskMainFrame extends JFrame{
 		System.out.println("리페인트 타이밍");
 		
 		
-		if(KoskMainFrame.koskWatchPanel != null) {
+/*		if(KoskMainFrame.koskWatchPanel != null) {
 				
 			String tempClass = KoskMainFrame.koskWatchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("KoskSeatTable2")) {
@@ -60,7 +60,7 @@ public class KoskMainFrame extends JFrame{
 			
 //			System.out.println(new AdmDao().admRead());
 			System.out.println("리페인트 수정됨");
-		}
+		}*/
 		
 	}
 

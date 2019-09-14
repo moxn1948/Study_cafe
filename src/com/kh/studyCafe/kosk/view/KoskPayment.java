@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskCardButton;
@@ -172,14 +173,19 @@ public class KoskPayment extends JPanel implements ActionListener{
 			}
 		}
 		if(e.getSource() == money) {
-			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw);
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
 			System.out.println(seatnum+"페이먼트 좌석 정보");
+//			System.out.println("1111");
+//			System.out.println(new AdmDao().admRead());
+			client.sendUser(new AdmDao().admRead());
 			ChangePanel.addPanel(mf, this, new KoskCardButton(mf, this, client));
 			
 		}
 		if(e.getSource() == card) {
-			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw);
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
 			System.out.println(seatnum+"페이먼트 좌석 정보");
+//			System.out.println("222");
+			client.sendUser(new AdmDao().admRead());
 			ChangePanel.addPanel(mf, this, new KoskCashButton(mf, this,client));
 			mf.repaint();
 		}

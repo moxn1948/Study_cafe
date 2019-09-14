@@ -33,9 +33,9 @@ public class KoskPsswdFind extends JPanel implements ActionListener{
 	// 네크워크 코드
 	private ClientBack client;
 
-	public KoskPsswdFind(KoskMainFrame mf, JPanel panel, ClientBack client) {
+	public KoskPsswdFind(KoskMainFrame mf, ClientBack client) {
 		this.mf = mf;
-		this.client = client;
+//		this.client = client;
 		// 네크워크 코드
 		this.client = client;
 		
@@ -134,7 +134,7 @@ public class KoskPsswdFind extends JPanel implements ActionListener{
 		if(e.getSource() == find) {
 			KoskDao kd = new KoskDao();
 			if((kd.compare(phtf.getText(), nametf.getText())) == true) {
-				ChangePanel.changePanel(mf, this, new KoskPsswdMf(mf, phtf.toString(), client));
+				ChangePanel.changePanel(mf, this, new KoskPsswdMf(mf, phtf.getText(), client));
 			}else {
 				String phoneNum = phtf.getText();
 				ChangePanel.addPanel(mf, this, new KoskPasswordDoNot(mf, this, phoneNum, client));
