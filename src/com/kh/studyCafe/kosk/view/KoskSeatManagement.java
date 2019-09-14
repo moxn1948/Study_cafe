@@ -23,13 +23,13 @@ import com.kh.studyCafe.kosk.view.popup.KoskExit;
 import com.kh.studyCafe.kosk.view.popup.KoskGroupMoveNo;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
- 
+
 public class KoskSeatManagement extends JPanel implements ActionListener{
-	
+
 	public JPanel panel;
 	JPanel backpanel ;
 	private KoskMainFrame mf ;
-	
+
 	private int onum;
 	private String seatNum;
 	private String phnum;
@@ -38,7 +38,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 	private String seatnum;
 	private long seattime;
 	private JButton[] button = new JButton[3];
-	
+
 	private JButton mypage = new JButton();
 	private JButton logout = new JButton();
 	private JButton out = new JButton();
@@ -46,7 +46,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 	private JButton ex = new JButton();
 	private int tableOrManage;
 	KoskDao kd = new KoskDao();
-	 
+
 	public KoskSeatManagement(KoskMainFrame mf, ArrayList<User> uList,String phnum, 
 			ClientBack client, JPanel panel, String seatnum,long seattime) {
 		this.mf = mf;
@@ -57,97 +57,97 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		this.seatnum = seatnum;
 		this.tableOrManage = tableOrManage;
 		this.seattime = seattime;
-	
+
 		//============== font 설정 =========
-				Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
-				Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
-				Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
-				Font f1 = new Font("Noto Sans KR",Font.BOLD,25);
-				Font font = new Font("맑은 고딕",Font.BOLD,15);
-				Color wallPapers = new Color(239,234,222);
-				Color textColor = new Color(127,118,104);
-				Color paper = new Color(163, 152, 134);
-				Color paper1 = new Color(255,255,255);
-			 	
+		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
+		Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
+		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
+		Font f1 = new Font("Noto Sans KR",Font.BOLD,25);
+		Font font = new Font("맑은 고딕",Font.BOLD,15);
+		Color wallPapers = new Color(239,234,222);
+		Color textColor = new Color(127,118,104);
+		Color paper = new Color(163, 152, 134);
+		Color paper1 = new Color(255,255,255);
+
 		//=================
-		
+
 		//================ Frame 설정 ======================
 		this.setSize(360,640);
 		this.setLayout(null);
 		this.setBackground(wallPapers);
 		//================================================
-		
-		
-		
+
+
+
 		//==== 이미지 아이콘  ===============
 		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(30, 30, 0);
 		JLabel ib = new JLabel("",(new ImageIcon(imgicon)),SwingUtilities.CENTER);			
 		ib.setBounds(150,0,50,50);
-				
+
 		//===============================
-		
-		
+
+
 		//== 버튼 설정  =========
 		Image logoutimg = new ImageIcon("img/logoutbtnimg.png").getImage().getScaledInstance(80, 30, 0);
 		logout.setIcon(new ImageIcon(logoutimg));
 		logout.setBounds(1,1,80,30);
 		logout.setBorderPainted(false);
-		
+
 		Image mypageimg = new ImageIcon("img/mypagebtnimg.png").getImage().getScaledInstance(80, 30, 0);
 		mypage.setIcon(new ImageIcon(mypageimg));
 		mypage.setBounds(275,1, 80, 30);
 		mypage.setBorderPainted(false);
-		
+
 		Image outbtnimg = new ImageIcon("img/outbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		out.setIcon(new ImageIcon(outbtnimg));
 		out.setBounds(20,200,95,96);
 		button[0] = out;
-		
+
 		Image exbtnimg = new ImageIcon("img/exbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		ex.setIcon(new ImageIcon(exbtnimg));
 		ex.setBounds(122,200,95,96);
 		button[1] = ex; 
-		
+
 		Image setmvimg = new ImageIcon("img/seatmvbtnimg.png").getImage().getScaledInstance(95, 96, 0);
 		seatmv.setIcon(new ImageIcon(setmvimg));
 		seatmv.setBounds(225, 200, 95, 96);
 		button[2] = seatmv;
-		
+
 		//==================
-		
+
 		//==== �� ======
-		
-		  JLabel seatM = new JLabel("좌석 관리"); //�̸� ��
-		   seatM.setBounds(100, 80, 200, 30);
-		   seatM.setFont(siguptext);
-		   seatM.setForeground(textColor);
-		
+
+		JLabel seatM = new JLabel("좌석 관리"); //�̸� ��
+		seatM.setBounds(100, 80, 200, 30);
+		seatM.setFont(siguptext);
+		seatM.setForeground(textColor);
+
 		//============
-		   
+
 		//==== �¼� ��ġ ǥ�� ==========
-		  
-		   JLabel seat2 = new JLabel("이용중인 좌석");
-		   seat2.setBounds(80,110,200,40);
-		   seat2.setFont(inputtext);
-		   seat2.setForeground(textColor);
-		   
-		   
-		   JLabel seat = new JLabel(uList.get(kd.userindex(phnum)).getSeatNum()+" 번 좌석") {
-			   @Override
-			   public void setBorder(Border border) {
-				   
-			   }
-		   };
-		   seat.setBounds(200,110,200,40);
-		   seat.setFont(inputtext);
-		   seat.setForeground(textColor);
-		   seat.setBackground(wallPapers);
-		
-		   
-		  //====================
-		 // koskIndividualpanel 에서 취소버튼
-		  
-		
+
+		JLabel seat2 = new JLabel("이용중인 좌석");
+		seat2.setBounds(80,110,200,40);
+		seat2.setFont(inputtext);
+		seat2.setForeground(textColor);
+
+
+		JLabel seat = new JLabel(uList.get(kd.userindex(phnum)).getSeatNum()+" 번 좌석") {
+			@Override
+			public void setBorder(Border border) {
+
+			}
+		};
+		seat.setBounds(200,110,200,40);
+		seat.setFont(inputtext);
+		seat.setForeground(textColor);
+		seat.setBackground(wallPapers);
+
+
+		//====================
+		// koskIndividualpanel 에서 취소버튼
+
+
 		this.add(logout);
 		this.add(ib);
 		this.add(mypage);
@@ -157,52 +157,51 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		this.add(out);
 		this.add(ex);
 		this.add(seatmv);
-		 
+
 		//=============== 테두리 선언 부분 ========================
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
 		//=====================================================
-		 	ex.addActionListener(this);
-			out.addActionListener(this);
-			seatmv.addActionListener(this);
-		    logout.addActionListener(this);
-		    mypage.addActionListener(this);
-		    
+		ex.addActionListener(this);
+		out.addActionListener(this);
+		seatmv.addActionListener(this);
+		logout.addActionListener(this);
+		mypage.addActionListener(this);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		KoskDao kd = new KoskDao();
-		
+
 		if(e.getSource() == mypage) {
 			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this,uList, phnum, client));
 		}
 		if(e.getSource() == logout) {
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
-		
+
 		if(e.getSource() == out) {
 			out.setVisible(false);
 			ChangePanel.addPanel(mf, this, new KoskExit(mf, this, phnum, client));
 		}
-		  if(e.getSource() == ex) {
-			 
-			  tableOrManage = 2;
-		         ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf, uList, phnum, client, backpanel, seatnum,tableOrManage));
-		     
-			  for(int i=0; i< button.length; i++) {
-		            button[i].setVisible(false);
-		         }
-		           }
-		  
-	if(e.getSource() == seatmv) {
-		seatmv.setVisible(false); 
-			System.out.println(uList.get(kd.userindex(phnum)).getSeatNum().substring(1,2));
-			if(!uList.get(kd.userindex(phnum)).getSeatNum().substring(1,2).equals("-")) {
+		if(e.getSource() == ex) {
+
+			tableOrManage = 2;
+			ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf, uList, phnum, client, backpanel, seatnum,tableOrManage));
+
+			for(int i=0; i< button.length; i++) {
+				button[i].setVisible(false);
+			}
+		}
+
+		if(e.getSource() == seatmv) {
+			seatmv.setVisible(false); 
+			if(!uList.get(kd.userindex(phnum)).getSeatNum().contains("-")) {
 				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
 			} else {
 				ChangePanel.addPanel(mf, this, new KoskGroupMoveNo(mf, this, client));
 
+			}
+		}
 	}
-	}
-}
 }

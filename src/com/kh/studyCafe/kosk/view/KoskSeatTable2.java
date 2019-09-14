@@ -234,8 +234,10 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		if(e.getSource() == confirm) {
 			for(int i=0; i<seatIndv.length; i++) {
 				seatIndv[i].setEnabled(false);
+				seatIndv[i].removeMouseListener(this);
 			}for(int i=0; i<seatGrp.length; i++) {
 				seatGrp[i].setEnabled(false);
+				seatGrp[i].removeMouseListener(this);
 			}
 			if(kd.toEnterInfo(phnum).equals("0")) {
 				if(indvOrGrp == 1) {
