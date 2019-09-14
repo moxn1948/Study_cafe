@@ -73,7 +73,7 @@ public class KoskCardButton extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) {	
 			KoskDao kd = new KoskDao();
-			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw);
 			client.sendUser(new AdmDao().admRead());
 			ChangePanel.changePanel(mf, this, new KoskPaySuccess(mf, this, client));
 		}

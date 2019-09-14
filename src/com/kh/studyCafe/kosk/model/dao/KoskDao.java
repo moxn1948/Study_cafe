@@ -172,14 +172,18 @@ public class KoskDao {
 
 			for (int i = 0; i < userList.size(); i++) {
 				if (userList.get(i).getPhoneNum().equals(phoneNum)) {
-					userList.get(i).setInTime(0);
-					userList.get(i).setSeatNum("0");
-					userList.get(i).setOutTime(0);
-					userList.get(i).setRemainTime(0);
+					if(findPhoneToSeatType(phoneNum) == User.WEEKSEAT) { // 기간권
+						userList.get(i).setInTime(0);
+						
+					}else { // 1일권
+						userList.get(i).setInTime(0);
+						userList.get(i).setOutTime(0);
+						userList.get(i).setRemainTime(0);
+						userList.get(i).setSeatNum("0");
+						userList.get(i).setSeatType(User.NOSEAT);
+							
+					}
 					KoskWrite(userList); //
-				} else {
-					System.out.println(userList.get(i).getPhoneNum());
-
 				}
 			}
 
@@ -287,29 +291,28 @@ public class KoskDao {
 
 	}
 
-	public void Kosktimeplus2(ArrayList<User> uList, String seatnum, long seattime, String phnum, int hOfw, ClientBack client) {
+	public void Kosktimeplus2(ArrayList<User> uList, String seatnum, long seattime, String phnum, int hOfw) {
 		this.seatNum = seatnum;
 		this.phoneNum = phnum;
 		this.hOfw = hOfw;
 		this.seattime = seattime;
 		ArrayList<User> userList = null;
+		
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-			System.out.println("불러온 좌석 값 : " + seatNum);
-			System.out.println("불러온 휴대폰값 : " + phnum);
+			
 			for (int i = 0; i < userList.size(); i++) {
 
 				if (userList.get(i).getPhoneNum().equals(phnum)) {
-					userList.get(i).setSeatNum(seatNum);
 					
 					long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
 					if (hOfw == 1) {
+						userList.get(i).setSeatNum(seatnum);
 						userList.get(i).setInTime(timeNow);
-						userList.get(i).setOutTime(timeNow + (seattime * 3600000L));
-						userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
+						userList.get(i).setOutTime(userList.get(i).getRemainTime() + timeNow + (seattime * 3600000L));
+						userList.get(i).setRemainTime(userList.get(i).getRemainTime() + userList.get(i).getOutTime() - timeNow);
 						userList.get(i).setSeatType(User.HOURSEAT);
 						userList.get(i).setPointTime(userList.get(i).getPointTime() + (seattime * 3600000L));
-						System.out.println("userList" + userList);            
 						
 						// 회원 등급 체크
 						if (userList.get(i).getPointTime() > 360000000L) {
@@ -319,14 +322,15 @@ public class KoskDao {
 						} else {
 							userList.get(i).setRank("bronze");
 						}
-						
+
+						break;
 					} else {
-						System.out.println("seattime" + seattime);
+						userList.get(i).setSeatNum(seatnum);
 						userList.get(i).setInTime(timeNow);
-						userList.get(i).setOutTime(timeNow + (((seattime * 3600000L * 24L))));
+						userList.get(i).setOutTime(userList.get(i).getRemainTime() + timeNow + (((seattime * 3600000L * 24L))));
 						userList.get(i).setRemainTime(userList.get(i).getOutTime() - timeNow);
 						userList.get(i).setSeatType(User.WEEKSEAT);
-						userList.get(i).setPointTime(userList.get(i).getPointTime() +(seattime * 3600000L * 24L));
+						userList.get(i).setPointTime(userList.get(i).getPointTime() + (seattime * 3600000L * 24L));
 						
 						// 회원 등급 체크
 						if (userList.get(i).getPointTime() > 360000000L) {
@@ -338,11 +342,14 @@ public class KoskDao {
 						}
 						
 					}
+					
+					break;
 				}
+				
+				
 			}
+			System.out.println("여기여기 " + userList);
 			KoskWrite(userList);
-
-			System.out.println(light + "전달하는 값");
 
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
@@ -477,7 +484,10 @@ public class KoskDao {
 			userList = (ArrayList<User>) ois.readObject();
 			for (int i = 0; i < userList.size(); i++) {
 				if (userList.get(i).getPhoneNum().equals(phnum)) {
+					System.out.println(userList.get(i));
+					System.out.println("idx : " + i);
 					indexnum = i;
+					break;
 				}
 			}
 			System.out.println(indexnum + "인덱스");
@@ -567,4 +577,59 @@ public class KoskDao {
 		}
 		return dc;
 	}
+	
+	// 핸드폰 번호로 입실 타입 찾기
+	public int findPhoneToSeatType(String phnum) {
+		int seatType = 0;
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+			userList = ((ArrayList<User>) ois.readObject());
+			
+			for(int i=0; i<userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phnum)) {
+					seatType = userList.get(i).getSeatType();
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return seatType;
+	}
+
+	// 핸드폰 번호로 user 찾기
+	public User findPhoneToUser(String phnum) {
+		User u = null;
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+			userList = ((ArrayList<User>) ois.readObject());
+			
+			for(int i=0; i<userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phnum)) {
+					u = userList.get(i);
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return u;
+	}
+	
 }

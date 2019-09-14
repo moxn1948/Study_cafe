@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.model.vo.User;
@@ -131,15 +134,24 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 			String phoneNum = phoneNumber.getText();
 			ArrayList<User> uList;
 			uList = kd.uList();
-//			uList.get(kd.userindex(phoneNum)).setSeatNum("0");
-//			kd.KoskWrite(uList);
 			String light = (uList.get(kd.userindex(phoneNum)).getSeatNum());
 			long seattime = uList.get(kd.userindex(phoneNum)).getRemainTime();
 			System.out.println(uList);
 			
-			if(kd.login(phoneNumber.getText(), password.getText()) == 1) {
-				 ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList,phoneNum,client,this,light,seattime));
-			}else if(kd.login(phoneNumber.getText(), password.getText()) == 2) {
+			if(kd.login(phoneNumber.getText(), password.getText()) == 1) { // 이미 입실한 경우
+				if(kd.findPhoneToSeatType(phoneNum) == User.WEEKSEAT && kd.findPhoneToUser(phoneNum).getInTime() == 0) {
+
+					long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
+					User u = kd.findPhoneToUser(phoneNum);
+					u.setInTime(timeNow);
+					new AdmDao().admWrite(u);
+					client.sendUser(new AdmDao().admRead());
+					
+					ChangePanel.changePanel(mf, this, new KoskEnterGrp(mf, uList, client,this,light,seattime, phoneNum));
+				}else {
+					ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList,phoneNum,client,this,light,seattime));
+				}
+			}else if(kd.login(phoneNumber.getText(), password.getText()) == 2) { // 초기 회원인경우
 				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList, client,phoneNum));
 			}
 		}

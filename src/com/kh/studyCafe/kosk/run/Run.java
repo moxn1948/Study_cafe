@@ -7,9 +7,8 @@ public class Run {
 	public static void main(String[] args) {
 
 	  new KoskMainFrame();
-	
 
-		//KoskMainFrame kmf = new KoskMainFrame();
+//	  KoskMainFrame kmf = new KoskMainFrame();
 
 	}
 

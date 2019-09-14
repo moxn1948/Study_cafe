@@ -192,8 +192,6 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		         for (int i = 0; i < seatGrp.length; i++) {
 		              seatGrp[i].setEnabled(false);
 		              seatGrp[i].removeMouseListener(this);
-		              seatGrp[i].setBackground(new Color(127, 118, 104));
-					  seatGrp[i].setForeground(Color.WHITE);
 		          }
 		      }
 
@@ -234,20 +232,21 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		if(e.getSource() == confirm) {
 			for(int i=0; i<seatIndv.length; i++) {
 				seatIndv[i].setEnabled(false);
+				seatIndv[i].removeMouseListener(this);
 			}for(int i=0; i<seatGrp.length; i++) {
 				seatGrp[i].setEnabled(false);
+				seatGrp[i].removeMouseListener(this);
 			}
-			if(kd.toEnterInfo(phnum).equals("0")) {
+			if(kd.toEnterInfo(phnum).equals("0")) { // 처음 입실
 				if(indvOrGrp == 1) {
 					tableOrManage = 1; // 시트테이블로 부터 시작
-					System.out.println(seatNum+"좌석");
 					ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf,uList,phnum,client,this,seatNum,tableOrManage));
 				} else {
 					ChangePanel.addPanel(mf, this, new KoskGroupPanel(mf, uList,phnum,client,this,seatNum,tableOrManage));
 					// public KoskGroupPanel(KoskMainFrame mf,ArrayList<User> uList,String phnum, ClientBack client, JPanel panel,int light) {
 					System.out.println("그룹 선택");
 				}
-			}else {
+			}else { // 이동
 				kd.KoskLineSeat(phnum, seatNum);
 				client.sendUser(new AdmDao().admRead());
 				ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
