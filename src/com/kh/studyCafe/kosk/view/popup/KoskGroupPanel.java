@@ -95,30 +95,16 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       logo.setFont(inputtext);
       logo.setForeground(textColor);
       
-      JLabel Rt = new JLabel("잔여 시간");// 잔여시간
+      JLabel Rt = new JLabel("결제 시간");// 잔여시간
       Rt.setBounds(40, 78, 100, 30);
       Rt.setFont(checktext);
       Rt.setForeground(textColor);
       
-      JLabel et = new JLabel("연장 후 시간"); // 연장 후 시간
+      JLabel et = new JLabel("사용 가능 인원"); // 연장 후 시간
       et.setBounds(40, 100, 100, 30);
       et.setFont(checktext);
       et.setForeground(textColor);
       
-      String th1 = Integer.valueOf(timeHour).toString();    
-      String tm1 = Integer.valueOf(timeMinute).toString();   
-      
-      Rttime = new JTextField(th1 + ":" + tm1) {
-           @Override
-            public void setBorder(Border border) {
-               
-            }
-      };
-      Rttime.setBounds(180, 78, 100, 30);
-      Rttime.setFont(checktext);
-      Rttime.setForeground(textColor);
-      Rttime.setBackground(wallPapers);
-            
       hour++;
       time = new JTextField("0" + hour + ": 00");
       time.setBounds(25,175,110,40);
@@ -129,17 +115,22 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       
       time.addMouseListener(this);
       
-      timeHour = timeHour + hour;
-      String th2 = Integer.valueOf(timeHour).toString();    
-      String tm2 = Integer.valueOf(timeMinute).toString();   
-      
-      ettime = new JTextField(th2 + ":" + tm2) {
-         @Override
-         public void setBorder(Border border) {
+      Rttime = new JTextField("0" + hour + ": 00");
+      Rttime.setBounds(150, 75, 100, 30);
+      Rttime.setFont(checktext);
+      Rttime.setForeground(textColor);
+      Rttime.setBackground(wallPapers);
             
-         }
-      };
-      ettime.setBounds(180, 100, 100, 30);
+      
+      timeHour = timeHour + hour;
+      if(seatName.equals("4")) {
+    	  ettime = new JTextField((Integer.parseInt(seatName) - 2) + "명  ~ " + seatName + "명");
+      }else if(seatName.equals("6")) {
+    	  ettime = new JTextField((Integer.parseInt(seatName) - 2) + "명  ~ " + seatName + "명");
+      }else if(seatName.equals("8")) {
+    	  ettime = new JTextField((Integer.parseInt(seatName) - 2) + "명  ~ " + seatName + "명");
+      }
+      ettime.setBounds(150, 100, 100, 30);
       ettime.setBackground(wallPapers);
       ettime.setFont(checktext);
       ettime.setForeground(textColor);

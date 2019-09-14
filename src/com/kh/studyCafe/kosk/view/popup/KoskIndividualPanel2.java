@@ -173,7 +173,7 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
     	 
       }
       if(e.getSource() == confirm) {
-         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,this,seatnum,day,hOfw,tableOrManage));
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,this,seatnum,day,hOfw,tableOrManage, 1));
          //confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
          
       }
