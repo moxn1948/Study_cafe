@@ -162,7 +162,6 @@ public class KoskMypage extends JPanel implements ActionListener{
                }
 
                hour += h;
-               
                if(d <= 0) {
             	   if(hour >= 24) {
             		   dtime = new JTextField("AM " + (hour - 24) + " : " + minutes);

@@ -165,19 +165,21 @@ public class KoskIndividualPanel2 extends JPanel implements MouseListener{
          System.out.println(day);
       }
       if(e.getSource() == cancel) {
-    	  if(tableOrManage == 1) {
+    	  if(tableOrManage == 1) { // 입실
     		  ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
-    	  } else {
+    	  } else { // 연장
     		  ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, uList.get(kd.userindex(phnum)).getInTime()));
     	  }
     	 
       }
       if(e.getSource() == confirm) {
-         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,this,seatnum,day,hOfw,tableOrManage, 1));
+
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum, day,hOfw, tableOrManage, 1));
+
          //confirm버튼 누를 시 좌석표 패널에서 결제 선택패널로 전환 추가
          
       }
-         System.out.println(day+"기간권  에서 선택함");
+         System.out.println(day+"기간권에서 선택함");
    }
 
    @Override

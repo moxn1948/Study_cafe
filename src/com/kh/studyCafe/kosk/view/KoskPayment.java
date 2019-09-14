@@ -54,7 +54,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 		this.hOfw = hOfw;
 		this.tableOrManage = tableOrManage;
 		this.Personnum = Personnum;
-		
+		System.out.println("seatTime : " + seattime);
 		KoskMainFrame.koskWatchPanel = this;
 		
 		//======= 컬러 설정 =  ===	
