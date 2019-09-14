@@ -106,7 +106,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          data[i][9] = "이동";
          data[i][10] = "퇴실";
          data[i][11] = "-";
-         
 
          // 입실 시간 뿌리기
          if (timeEdit[0].split("일 ")[1].substring(7).equals("오전")) {
@@ -364,7 +363,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       vertical = scrollpane.getVerticalScrollBar();
       
       table.addMouseListener(this);
-      
+
       this.add(srchChk, new Integer(10));
       // 패널에 추가하기
       this.add(searchForm);
@@ -510,28 +509,30 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          int row = table.getSelectedRow();
          tablePhone = table.getValueAt(row, 2) + "";
          String remainTimeChk = table.getValueAt(row, 6) + "";
-      
          // 회원에 따라 연장 버튼 연결 구분
-         if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-            if(remainTimeChk.contains("일")) { // 기간권일때
-				if(Integer.parseInt(remainTimeChk.split("일")[0]) + 7 < 100) {
-					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
-				}else {
-					cp.addPanel(mf, this, new AdmAddNotice2(mf, this, client));
-				}
-            }else { // 1일권일때
-               if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
-                  cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
-               }else {
-                  cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
-               }   
-            }
-         } else { // 그룹일 때
-             if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
-                 cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
-              }else {
-                 cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
-              }   
+
+         if(!table.getValueAt(row, 8).equals("-")) {
+             if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
+                if(remainTimeChk.contains("일")) { // 기간권일때
+    				if(Integer.parseInt(remainTimeChk.split("일")[0]) + 7 < 100) {
+    					cp.addPanel(mf, this, new AdmAddTimeWeek(mf, this, tablePhone, client));
+    				}else {
+    					cp.addPanel(mf, this, new AdmAddNotice2(mf, this, client));
+    				}
+                }else { // 1일권일때
+                   if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
+                      cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+                   }else {
+                      cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
+                   }   
+                }
+             } else { // 그룹일 때
+                 if(Integer.parseInt(remainTimeChk.split("시간 ")[0]) == 0 && Integer.parseInt(remainTimeChk.split("시간 ")[1].split("분")[0]) < 30 ) { // 잔여시간이 30분 미만일 때
+                     cp.addPanel(mf, this, new AdmAddTimeHour(mf, this, tablePhone, client));
+                  }else {
+                     cp.addPanel(mf, this, new AdmAddNotice(mf, this, client));
+                  }   
+             }
          }
 
       }
@@ -545,12 +546,14 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          tablePhone = table.getValueAt(row, 2) + "";
          seatNum = table.getValueAt(row, 3) + "";
          
-
-         // 회원에 따라 이동 버튼 연결 구분
-         if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
-            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));
-         } else { // 그룹일 때
-            cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
+         if(!table.getValueAt(row, 9).equals("-")) {
+        	 
+	         // 회원에 따라 이동 버튼 연결 구분
+	         if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
+	            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));
+	         } else { // 그룹일 때
+	            cp.addPanel(mf, this, new AdmMoveGrp(mf, this, client));
+	         }
          }
       }
       if(table.getSelectedColumn() == 10) {//퇴실
@@ -562,11 +565,13 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          String seatTimeType = table.getValueAt(row, 6) + "";
          String phoneNum = table.getValueAt(row, 2) + "";
 
-         // 회원에 따라 퇴실 버튼 연결 구분
-         if (seatTimeType.contains("일")) { // 기간권일 때
-            cp.addPanel(mf, this, new AdmExitTimeWeek(mf, this, client, phoneNum));
-         } else { // 1일권일 떄
-            cp.addPanel(mf, this, new AdmExitTimeHour(mf, this, client, phoneNum));
+         if(!table.getValueAt(row, 10).equals("-")) {
+	         // 회원에 따라 퇴실 버튼 연결 구분
+	         if (seatTimeType.contains("일")) { // 기간권일 때
+	            cp.addPanel(mf, this, new AdmExitTimeWeek(mf, this, client, phoneNum));
+	         } else { // 1일권일 떄
+	            cp.addPanel(mf, this, new AdmExitTimeHour(mf, this, client, phoneNum));
+	         }
          }
       }
       if(table.getSelectedColumn() == 11) { //입실
@@ -582,10 +587,14 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          // 회원에 따라 이동 버튼 연결 구분
          //만약 입실하지 않은 기간권 사용자가 입실할 경우 좌석번호는 가지고 있고 입실시간은 가지고 있지 않다.
          //기간권이 없는 회원이 입실할 경우 좌석번호 없고, 입실시간도 없다.
-         if(seatNum.equals("-") && inTime.equals("-")) {
-            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));      
-         } else if(inTime.equals("-")) {
-            cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));       
+         
+
+         if(!table.getValueAt(row, 11).equals("-")) {
+	         if(seatNum.equals("-") && inTime.equals("-")) {
+	            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));      
+	         } else if(inTime.equals("-")) {
+	            cp.addPanel(mf, this, new AdmEnterTimeWeek(mf, this, client, tablePhone));       
+	         }
          }
       }
       
