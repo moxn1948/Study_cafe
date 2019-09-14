@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,19 +13,31 @@ import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
+import com.kh.studyCafe.model.vo.User;
 
 public class KoskCardButton extends JPanel implements ActionListener{
 	private KoskMainFrame mf;
 	private JPanel panel;
+	private ArrayList<User> uList;
+	private String seatnum;
+	private long seattime;
+	private String phnum;
+	private int hOfw;
 	private ClientBack client;
 	
 	private JButton button;
 	
-	public KoskCardButton(KoskMainFrame mf, JPanel panel, ClientBack client) {
-		this.mf = mf;
+	public KoskCardButton(KoskMainFrame mf, JPanel panel, ArrayList<User> uList, String seatnum, long seattime, String phnum, int hOfw, ClientBack client) {
+		this.mf = mf; 
 		this.panel = panel;
+		this.uList = uList;
+		this.seatnum = seatnum;
+		this.seattime = seattime;
+		this.phnum = phnum;
+		this.hOfw = hOfw;
 		this.client = client;
 		
 		KoskMainFrame.koskWatchPanel = this;
@@ -59,6 +72,8 @@ public class KoskCardButton extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) {	
+			KoskDao kd = new KoskDao();
+			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
 			client.sendUser(new AdmDao().admRead());
 			ChangePanel.changePanel(mf, this, new KoskPaySuccess(mf, this, client));
 		}

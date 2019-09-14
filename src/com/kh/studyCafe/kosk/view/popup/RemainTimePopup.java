@@ -6,32 +6,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
-import com.kh.studyCafe.kosk.view.KoskLogin;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 
-public class KoskExit extends JPanel implements ActionListener {
+public class RemainTimePopup extends JPanel implements ActionListener{
 	private KoskMainFrame mf;
 	private JPanel panel;
 	private ClientBack client;
-	private String phoneNum;
 	
 	private JButton button;
 	
-	public KoskExit(KoskMainFrame mf, JPanel panel, String phoneNum, ClientBack client) {
+	public RemainTimePopup(KoskMainFrame mf, JPanel panel, ClientBack client) {
 		this.mf = mf;
 		this.panel = panel;
-		this.phoneNum = phoneNum;
 		this.client = client;
+		
+		KoskMainFrame.koskWatchPanel = this;
 		
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		Color textColor = new Color(127,118,104);
@@ -41,14 +37,14 @@ public class KoskExit extends JPanel implements ActionListener {
 		
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
 		
-		this.setSize(310,200);
-		this.setLocation(25, 180);
+		this.setSize(310,180);
+		this.setLocation(25, 230);
 		this.setBorder(oneTb);
 		this.setBackground(wallPapers);
 		this.setLayout(null);
 		
 		button = new JButton("OK");
-		button.setBounds(15,140,280,40);
+		button.setBounds(15,120,280,40);
 		button.setFont(font);
 		button.setBackground(paper);
 		button.setForeground(paper1);
@@ -56,21 +52,19 @@ public class KoskExit extends JPanel implements ActionListener {
 		
 		JLabel label = new JLabel();
 		label.setFont(font);
-		label.setText("안녕히 가세요");
-		label.setBounds(15,60,280,40);
-		label.setForeground(textColor);
+		label.setText("1일권 시간연장은 남은 시간이 ");
+		label.setBounds(15,45,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
-		
+	     
 		JLabel label1= new JLabel();
-		label.setFont(font);
-		label1.setText("퇴실이 완료되었습니다");
-		label1.setBounds(15,45,280,40);
-		label1.setForeground(textColor);
+		label1.setFont(font);
+	    label1.setText("30분 이하일 때만 연장이 가능합니다.");
+		label1.setBounds(15,60,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		
-		this.add(button);
 		this.add(label);
 		this.add(label1);
+		this.add(button);
 		
 		mf.add(this, 0);
 		mf.repaint();
@@ -79,10 +73,9 @@ public class KoskExit extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) {
-			KoskDao kd = new KoskDao();
-			kd.KoskExitSeat(phoneNum);
-			client.sendUser(new AdmDao().admRead());
-			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+			ChangePanel.popchangePanel(mf, this, panel);
 		}
+		
 	}
-}  
+
+}

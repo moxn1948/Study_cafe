@@ -71,10 +71,6 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		this.add(oneday);
 		this.add(Period);
 		mf.repaint();
-		
-	
-		
-		
 	
 	}
 	@Override
@@ -82,7 +78,12 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == oneday) {
 			//System.out.println(seatnum);
-			ChangePanel.changePanel(mf, this,new KoskIndividualPanel(mf,uList,phnum,client,panel,seatnum,1,tableOrManage));
+			if(uList.get(0).getRemainTime() <= 1800000L) {
+				ChangePanel.changePanel(mf, this,new KoskIndividualPanel(mf,uList,phnum,client,panel,seatnum,1,tableOrManage));
+			}else {
+				oneday.setVisible(false);
+				ChangePanel.addPanel(mf, this, new RemainTimePopup(mf, this, client));
+			}
 		}
 		if(e.getSource() == Period) {
 			ChangePanel.changePanel(mf, this,new KoskIndividualPanel2(mf,uList,phnum,client,panel,seatnum,2,tableOrManage));
