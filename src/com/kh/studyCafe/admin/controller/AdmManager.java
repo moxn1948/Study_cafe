@@ -64,4 +64,10 @@ public class AdmManager {
 		return al.isLogincheck(id,pwd);
 		
 	}
+	
+	//AdmDao불러와야할 수정
+	public void readAdmDao() {
+		AdmDao ad= new AdmDao();
+		ad.readCafe();
+	}
 }

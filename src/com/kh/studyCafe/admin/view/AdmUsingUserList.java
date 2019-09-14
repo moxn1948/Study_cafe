@@ -28,10 +28,10 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
-import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
@@ -254,7 +254,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		cafeInfo.setForeground(Color.WHITE);
 		cafeInfo.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		cafeInfo.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
-
+		cafeInfo.addActionListener(this);
 		// 전체 회원보기 버튼생성
 		allUserInfoButton = new JButton("전체 회원 보기");
 		allUserInfoButton.setBounds(801, 70, 140, 42);
@@ -346,7 +346,10 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		// 매장정보보기 버튼 클릭 시 패널 변경
 		if (e.getSource() == cafeInfo) {
 
-			cp.addPanel(mf, this, new AdmCafeInfo(mf));
+			//수정
+			AdmManager am = new AdmManager();
+			am.readAdmDao();
+			cp.addPanel(mf, this, new AdmCafeInfo(mf,this,client));
 
 			scrollpane.getHorizontalScrollBar().setEnabled(false);
 			scrollpane.getVerticalScrollBar().setEnabled(false);

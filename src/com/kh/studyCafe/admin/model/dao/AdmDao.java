@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.kh.studyCafe.admin.model.vo.AdmCafe;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmDao {
@@ -471,6 +472,77 @@ public class AdmDao {
 
 	}
 
+	//카페정보 불러오기 메소드 객체씀
+	public void writeCafe() {
+		FileOutputStream fos =null;
+		ObjectOutputStream oos = null;
+		
+		AdmCafe ac = new AdmCafe(0,1,2);
+		
+		try {
+			fos= new FileOutputStream("CafeInfo.dat");
+			oos=new ObjectOutputStream(fos);
+			
+			oos.writeObject(ac);
+			
+			System.out.println("객체를 저장했습니다.");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				fos.close();
+				oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	
+
+   	public AdmCafe readCafe() {
+   		FileInputStream fis =null;
+   		ObjectInputStream ois =null;
+   		AdmCafe ac = null;
+   		
+   		try {
+   			//cafeInfo파일로 부터 객체를 읽어오는 스트림 생성
+			fis= new FileInputStream("CafeInfo.dat");
+			ois= new ObjectInputStream(fis);
+			
+			//CafeINfo로 부터 객체 하나씩 읽어서 출력
+			ac = (AdmCafe) ois.readObject();
+//			int daysale = ac.getTotalDaySales();
+			
+//			System.out.println("fffffff");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				fis.close();
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+   		
+   		return ac;
+   	}
+	
+	
 
 	// 회원삭제 메소드
 	public int admDeleteUserWrite(User u) {
