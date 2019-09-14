@@ -26,7 +26,6 @@ import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 import com.kh.studyCafe.kosk.view.KoskPayment;
 import com.kh.studyCafe.kosk.view.KoskSeatManagement;
-import com.kh.studyCafe.kosk.view.KoskSeatTable;
 import com.kh.studyCafe.kosk.view.KoskSeatTable2;
 import com.kh.studyCafe.model.vo.User;
 
