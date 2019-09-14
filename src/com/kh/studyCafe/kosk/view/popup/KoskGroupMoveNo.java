@@ -44,7 +44,7 @@ public class KoskGroupMoveNo extends JPanel implements ActionListener{
 		label.setFont(font);
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
-
+      
 		this.add(button);
 		this.add(label);
 
