@@ -32,6 +32,7 @@ import com.kh.studyCafe.admin.controller.AdmManager;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 //import com.kh.studyCafe.client.MinTimeThread;
 import com.kh.studyCafe.model.vo.User;
@@ -320,7 +321,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(scrollpane);
 		
 		
-/*		if(!threadControl) {
+		if(!threadControl) {
 			// 시계스레드 start
 			MinTimeThread timeThread = new MinTimeThread(client);
 			timeThread.setDaemon(true);
@@ -328,7 +329,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 			
 			threadControl = true;
 		}
-		*/
+		
 
 	}
 
@@ -339,7 +340,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		// 전체회원보기 버튼 클릭 시 패널 변경
 		if (e.getSource() == allUserInfoButton) {
 
-			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, utList, u, client));
+			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 
 		}
 

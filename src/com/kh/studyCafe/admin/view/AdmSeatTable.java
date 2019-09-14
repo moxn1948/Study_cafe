@@ -215,10 +215,12 @@ public class AdmSeatTable extends JPanel implements ActionListener, MouseListene
       if(e.getSource() == cancelBtn) {
          String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
          if(tempClass.equals("AdmUsingUserList")) {
+        	 mf.remove(AdmMainFrame.watchPanel);
             new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));            
          }
          if(tempClass.equals("AdmAllUserList")) {
-            new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));            
+        	 mf.remove(AdmMainFrame.watchPanel);
+        	 new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));            
          }
       }
       

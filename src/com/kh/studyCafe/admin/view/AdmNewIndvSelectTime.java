@@ -347,6 +347,7 @@ public class AdmNewIndvSelectTime extends JPanel implements ActionListener, Item
 			}
 			
 			mf.remove(this);
+			mf.remove(op);
 			mf.remove(op2);
 			
 //			mf.remove(this);
