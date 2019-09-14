@@ -69,10 +69,12 @@ public class KoskPayment extends JPanel implements ActionListener{
 		//================================================
 
 		//============== font 설정 =========
-		Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
-		Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
-		Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
-		Font f1 = new Font("Noto Sans KR",Font.BOLD,25);
+		Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
+		Font inputtext = new Font("맑은 고딕",Font.BOLD,17);
+		Font inputtext2 = new Font("맑은 고딕",Font.BOLD,18);
+		Font inputtext3 = new Font("맑은 고딕",Font.BOLD,19);
+		Font checktext = new Font("맑은 고딕",Font.BOLD,14);
+		Font f1 = new Font("맑은 고딕",Font.BOLD,25);
 		Color paper = new Color(163, 152, 134);
 		Color paper1 = new Color(255,255,255);
 		Font font = new Font("맑은 고딕",Font.BOLD,15);	 	
@@ -135,7 +137,48 @@ public class KoskPayment extends JPanel implements ActionListener{
 		seat2.setBounds(80,140,200,40);
 		seat2.setFont(inputtext);
 		seat2.setForeground(textColor);
-
+		
+		JLabel payMoney = new JLabel("   원 금액");
+		payMoney.setLocation(56, 370);
+		payMoney.setFont(inputtext2);
+		payMoney.setForeground(textColor);
+		payMoney.setSize(payMoney.getPreferredSize());
+		
+		JLabel dcMoney = new JLabel("- 할인 금액");
+		dcMoney.setLocation(60, 404);
+		dcMoney.setFont(inputtext2);
+		dcMoney.setForeground(textColor);
+		dcMoney.setSize(dcMoney.getPreferredSize());
+		
+		JLabel fpayMoney = new JLabel("총 결제 금액");
+		fpayMoney.setLocation(60, 446);
+		fpayMoney.setFont(inputtext3);
+		fpayMoney.setForeground(textColor);
+		fpayMoney.setSize(fpayMoney.getPreferredSize());
+		
+		if(hOfw == 2) {
+			seattime = seattime* 24;
+		}
+		
+		JLabel payMoney2 = new JLabel((seattime*1500)+"원");
+		payMoney2.setLocation(180, 370);
+		payMoney2.setFont(inputtext2);
+		payMoney2.setForeground(textColor);
+		payMoney2.setSize(payMoney2.getPreferredSize());
+		
+		JLabel dcMoney2 = new JLabel(((seattime*kd.discount(phnum))+"원"));
+		dcMoney2.setLocation(180, 404);
+		dcMoney2.setFont(inputtext2);
+		dcMoney2.setForeground(textColor);
+		dcMoney2.setSize(dcMoney2.getPreferredSize());
+		
+		JLabel fpayMomey2 = new JLabel(((seattime*1500)-(seattime*kd.discount(phnum)))+"원");
+		fpayMomey2.setLocation(180, 446);
+		fpayMomey2.setFont(inputtext3);
+		fpayMomey2.setForeground(textColor);
+		fpayMomey2.setSize(fpayMomey2.getPreferredSize());
+		
+		
 		//============
 		mypage.addActionListener(this);
 		logout.addActionListener(this);
@@ -152,6 +195,12 @@ public class KoskPayment extends JPanel implements ActionListener{
 		this.add(card);
 		this.add(money);
 		this.add(back);
+		this.add(payMoney);
+		this.add(payMoney2);
+		this.add(dcMoney);
+		this.add(dcMoney2);
+		this.add(fpayMoney);
+		this.add(fpayMomey2);
 		this.repaint();
 		mf.repaint();
 
@@ -172,20 +221,13 @@ public class KoskPayment extends JPanel implements ActionListener{
 				ChangePanel.changePanel(mf, this, new KoskSeatManagement(mf, uList, phnum, client, panel, seatnum, seattime));
 			}
 		}
-		if(e.getSource() == money) {
-			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
+		if(e.getSource() == card) {
 			System.out.println(seatnum+"페이먼트 좌석 정보");
-//			System.out.println("1111");
-//			System.out.println(new AdmDao().admRead());
-			client.sendUser(new AdmDao().admRead());
 			ChangePanel.addPanel(mf, this, new KoskCardButton(mf, this, client));
 			
 		}
-		if(e.getSource() == card) {
-			kd.Kosktimeplus2(uList,seatnum,seattime,phnum,hOfw, client);
+		if(e.getSource() == money) {
 			System.out.println(seatnum+"페이먼트 좌석 정보");
-//			System.out.println("222");
-			client.sendUser(new AdmDao().admRead());
 			ChangePanel.addPanel(mf, this, new KoskCashButton(mf, this,client));
 			mf.repaint();
 		}

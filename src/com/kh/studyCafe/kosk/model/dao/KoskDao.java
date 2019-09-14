@@ -1,6 +1,7 @@
 package com.kh.studyCafe.kosk.model.dao;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -533,5 +534,37 @@ public class KoskDao {
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+	}
+	
+	public int discount(String phnum) {
+		int dc = 0;
+		ArrayList<User> userList = null;
+		
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))){
+			userList = ((ArrayList<User>) ois.readObject());
+			
+			for(int i=0; i<userList.size(); i++) {
+				if(userList.get(i).getPhoneNum().equals(phnum)) {
+					if(userList.get(i).getRank().equals("bronze")) {
+						dc = 50;
+					} else if(userList.get(i).getRank().equals("silver")) {
+						dc = 100;
+					} else if(userList.get(i).getRank().equals("gold")) {
+						dc = 150;
+					}
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dc;
 	}
 }
