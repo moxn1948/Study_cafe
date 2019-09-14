@@ -104,6 +104,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       et.setBounds(40, 100, 100, 30);
       et.setFont(checktext);
       et.setForeground(textColor);
+
       /*
       String th1 = Integer.valueOf(timeHour).toString();    
       String tm1 = Integer.valueOf(timeMinute).toString();   
@@ -119,6 +120,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       Rttime.setForeground(textColor);
       Rttime.setBackground(wallPapers);
             */
+
       hour++;
       time = new JTextField("0" + hour + ": 00");
       time.setBounds(25,175,110,40);
@@ -128,6 +130,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       time.setEditable(false);
       
       time.addMouseListener(this);
+
       /*
       timeHour = timeHour + hour;
       String th2 = Integer.valueOf(timeHour).toString();    
@@ -147,6 +150,16 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
       
 //      ettime.setBounds(180, 100, 100, 30);
 
+
+      
+      Rttime = new JTextField("0" + hour + ": 00");
+      Rttime.setBounds(150, 75, 100, 30);
+      Rttime.setFont(checktext);
+      Rttime.setForeground(textColor);
+      Rttime.setBackground(wallPapers);
+            
+      
+
       timeHour = timeHour + hour;
       if(seatName.equals("4")) {
     	  ettime = new JTextField((Integer.parseInt(seatName) - 2) + "명  ~ " + seatName + "명");
@@ -156,7 +169,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
     	  ettime = new JTextField((Integer.parseInt(seatName) - 2) + "명  ~ " + seatName + "명");
       }
       ettime.setBounds(150, 100, 100, 30);
-      
+
       ettime.setBackground(wallPapers);
       ettime.setFont(checktext);
       ettime.setForeground(textColor);
