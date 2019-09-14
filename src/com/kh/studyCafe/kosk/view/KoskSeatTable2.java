@@ -41,7 +41,8 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 	private int tableOrManage;
 	
 	public KoskSeatTable2(KoskMainFrame mf,ArrayList<User> uList, ClientBack client,String phnum) {
-//		this.op = op;
+//		
+		KoskDao kd = new KoskDao();
 		this.mf = mf;
 		this.uList = uList;
 		this.client = client;
@@ -53,7 +54,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		this.setLayout(null);
 		this.setBounds(0, 0, 360, 640);
 		this.setBackground(new Color(239,234,222));
-		
+		 
 		// title 텍스트 설정
 		JLabel title = new JLabel("좌석표");
 		title.setLocation(130 , 71);
@@ -115,7 +116,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 				seat.add(seatGrp[i]);
 			}
 		}
-
+		
 
 		seatIndv[0].setLocation(0, 0);
 		seatIndv[1].setLocation(42, 0);
@@ -186,6 +187,15 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 				}
 			}
 		}
+		
+		  if(!(uList.get(kd.userindex(phnum)).getSeatNum().equals("-")|| uList.get(kd.userindex(phnum)).getSeatNum().equals("0"))) { // 이동일 때
+		         for (int i = 0; i < seatGrp.length; i++) {
+		              seatGrp[i].setEnabled(false);
+		              seatGrp[i].removeMouseListener(this);
+		              seatGrp[i].setBackground(new Color(127, 118, 104));
+					  seatGrp[i].setForeground(Color.WHITE);
+		          }
+		      }
 
 		// confirm 버튼
 		confirm = new JButton("Confirm");
@@ -217,7 +227,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		
 		// 마이페이지 버튼 클릭 시
 		if(e.getSource() == mypage) {
-			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this, phnum, client));
+			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this,uList, phnum, client));
 		}
 		
 		// confirm 버튼 클릭 시

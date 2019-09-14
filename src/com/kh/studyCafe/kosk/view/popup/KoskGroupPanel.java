@@ -36,7 +36,7 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
    private JButton minus;
    private JButton minus2;
    private JButton cancel; 
-   private JButton confirm;
+   private JButton confirm; 
    private int personNum;    //결제시 출력되는 인원수
    private int hour = 0;    //결제시 출력되는 시간
    private int timeHour = 02;    //잔여시간,연장시간에 출력되는 시간(String 변환전)
@@ -266,13 +266,17 @@ public class KoskGroupPanel extends JPanel implements MouseListener{
             psn.setText(personNum + "명");
          }
       }
+      
       if(e.getSource() == cancel) {
          ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
       }
       if(e.getSource() == confirm) {
          //좌석표 패널에서 결제 선택 패널로 전환 추가
     	  tableOrManage = 1;
-         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,1,tableOrManage));
+    	  if(seattime == 0) {
+    		  seattime = 1;
+    	  }
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,1,tableOrManage,personNum));
          
       }
       

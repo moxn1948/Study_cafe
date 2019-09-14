@@ -68,7 +68,7 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
    Color wallPapers = new Color(239,234,222);
    Color textColor = new Color(127,118,104);
                
-   Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
+   Font siguptext = new Font("맑은 고딕",Font.BOLD,30); 
    Font inputtext = new Font("맑은 고딕",Font.BOLD,25); 
    Font checktext = new Font("맑은 고딕",Font.BOLD,14);
       
@@ -256,7 +256,7 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
          if(seattime == 0) {
             seattime = 1;
          }
-         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,hOfw, tableOrManage));
+         ChangePanel.changePanel(mf, this, new KoskPayment(mf,uList,phnum,client,panel,seatnum,seattime,hOfw, tableOrManage,1));
       }
       if(e.getSource() == cancel) {
          if(tableOrManage == 1) {
