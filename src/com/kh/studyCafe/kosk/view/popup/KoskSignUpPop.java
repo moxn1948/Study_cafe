@@ -39,7 +39,7 @@ public class KoskSignUpPop extends JPanel implements ActionListener{
 		
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
 		
-		this.setSize(310,250);
+		this.setSize(295,215);;
 		this.setLocation(30, 120);
 		this.setBorder(oneTb);
 		this.setBackground(wallPapers);

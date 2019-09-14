@@ -1,6 +1,7 @@
 package com.kh.studyCafe.kosk.view.popup;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,12 +14,12 @@ import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 
-public class KoskPassWordNo extends JPanel implements ActionListener{
+public class KoskCheckBoxPop extends JPanel implements ActionListener{
 	private KoskMainFrame mf;
 	private JPanel panel;
 	private ClientBack client;
 	private JButton button;
-	public KoskPassWordNo(KoskMainFrame mf,JPanel panel ,ClientBack client) {
+	public KoskCheckBoxPop(KoskMainFrame mf,JPanel panel ,ClientBack client) {
 		this.mf = mf;
 		this.panel = panel;
 		this.client = client;
@@ -28,7 +29,9 @@ public class KoskPassWordNo extends JPanel implements ActionListener{
 		Color wallPapers = new Color(205, 201, 191);
 		Color paper = new Color(170, 162, 142);
 		Color paper1 = new Color(255,255,255);
-
+		
+		
+		
 		this.setSize(295,215);
 		this.setLocation(30, 120);
 		this.setBackground(wallPapers);
@@ -40,20 +43,21 @@ public class KoskPassWordNo extends JPanel implements ActionListener{
 		button.setForeground(paper1);
 		button.addActionListener(this);
 
-		JLabel label = new JLabel("비밀번호가 일치하지 않습니다");
+		JLabel label = new JLabel("체크박스를 체크해 주세요");
 		label.setFont(font);
 		label.setBounds(5,60,280,40);
 		label.setHorizontalAlignment(JLabel.CENTER);
 
 		this.add(button);
 		this.add(label);
-
 	}
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button) {
 			ChangePanel.popchangePanel(mf, this, panel);
 		}
+		
 	}
 
-}   
+}
