@@ -12,7 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -21,8 +20,7 @@ import javax.swing.border.TitledBorder;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.kosk.view.popup.KoskGropError;
-import com.kh.studyCafe.kosk.view.popup.KoskIndividualPanel2;
+import com.kh.studyCafe.kosk.view.popup.KoskExit;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
  
@@ -190,10 +188,8 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 			}
 		}
 		if(e.getSource() == out) {
-			
-			kd.KoskExitSeat(phnum);// 퇴실 
-			client.sendUser(new AdmDao().admRead());
-			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
+			out.setVisible(false);
+			ChangePanel.addPanel(mf, this, new KoskExit(mf, this, phnum, client));
 		}
 		if(e.getSource() == ex) {
 			for(int i=0; i< button.length; i++) {

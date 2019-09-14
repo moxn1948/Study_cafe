@@ -23,6 +23,7 @@ public class ChangePanel{
 	public static void popchangePanel(KoskMainFrame mf, JPanel op, JPanel np) {
 		for (Component cp : np.getComponents()){
 	           cp.setEnabled(true);
+	           cp.setVisible(true);
 	      }
 		mf.remove(op);
 		mf.add(np,0);
