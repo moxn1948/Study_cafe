@@ -37,11 +37,12 @@ public class KoskPayment extends JPanel implements ActionListener{
 	private int hOfw;
 	private int tableOrManage;
 	private JButton card;
+	private int Personnum;
 	private JButton button = new JButton();
 	KoskDao kd = new KoskDao();	
 	
 	public KoskPayment(KoskMainFrame mf,ArrayList<User> uList,String phnum,ClientBack client, JPanel panel
-			,String seatnum,long seattime, int hOfw, int tableOrManage) {
+			,String seatnum,long seattime, int hOfw, int tableOrManage, int Personnum) {
 		// 네트워크 코드
 		this.client = client;
 		this.panel = panel;
@@ -52,6 +53,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 		this.seattime = seattime; //좌석 시간
 		this.hOfw = hOfw;
 		this.tableOrManage = tableOrManage;
+		this.Personnum = Personnum;
 		
 		KoskMainFrame.koskWatchPanel = this;
 		
@@ -160,7 +162,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 			seattime = seattime* 24;
 		}
 		
-		JLabel payMoney2 = new JLabel((seattime*1500)+"원");
+		JLabel payMoney2 = new JLabel((seattime*1500*Personnum)+"원");
 		payMoney2.setLocation(180, 370);
 		payMoney2.setFont(inputtext2);
 		payMoney2.setForeground(textColor);
@@ -172,7 +174,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 		dcMoney2.setForeground(textColor);
 		dcMoney2.setSize(dcMoney2.getPreferredSize());
 		
-		JLabel fpayMomey2 = new JLabel(((seattime*1500)-(seattime*kd.discount(phnum)))+"원");
+		JLabel fpayMomey2 = new JLabel(((seattime*1500*Personnum)-(seattime*kd.discount(phnum)))+"원");
 		fpayMomey2.setLocation(180, 446);
 		fpayMomey2.setFont(inputtext3);
 		fpayMomey2.setForeground(textColor);
@@ -209,7 +211,7 @@ public class KoskPayment extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == mypage) {
-			ChangePanel.changePanel(mf, this, new KoskMypage(mf,this,phnum,client));
+			ChangePanel.changePanel(mf, this, new KoskMypage(mf,this,uList,phnum,client));
 		}
 		if(e.getSource() == logout) {
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
@@ -223,12 +225,11 @@ public class KoskPayment extends JPanel implements ActionListener{
 		}
 		if(e.getSource() == card) {
 			System.out.println(seatnum+"페이먼트 좌석 정보");
-			ChangePanel.addPanel(mf, this, new KoskCardButton(mf, this, client));
-			
+			ChangePanel.addPanel(mf, this, new KoskCardButton(mf, this,uList,seatnum,seattime,phnum,hOfw, client));
 		}
 		if(e.getSource() == money) {
 			System.out.println(seatnum+"페이먼트 좌석 정보");
-			ChangePanel.addPanel(mf, this, new KoskCashButton(mf, this,client));
+			ChangePanel.addPanel(mf, this, new KoskCashButton(mf, this,uList,seatnum,seattime,phnum,hOfw, client));
 			mf.repaint();
 		}
 	}

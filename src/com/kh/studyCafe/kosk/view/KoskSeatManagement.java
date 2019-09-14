@@ -17,10 +17,10 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.popup.KoskExit;
+import com.kh.studyCafe.kosk.view.popup.KoskGroupMoveNo;
 import com.kh.studyCafe.kosk.view.popup.KoskTimeHourWeek;
 import com.kh.studyCafe.model.vo.User;
  
@@ -46,7 +46,7 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 	private JButton ex = new JButton();
 	private int tableOrManage;
 	KoskDao kd = new KoskDao();
-	
+	 
 	public KoskSeatManagement(KoskMainFrame mf, ArrayList<User> uList,String phnum, 
 			ClientBack client, JPanel panel, String seatnum,long seattime) {
 		this.mf = mf;
@@ -174,30 +174,35 @@ public class KoskSeatManagement extends JPanel implements ActionListener{
 		KoskDao kd = new KoskDao();
 		
 		if(e.getSource() == mypage) {
-			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this, phnum, client));
+			ChangePanel.changePanel(mf, this ,new KoskMypage(mf, this,uList, phnum, client));
 		}
 		if(e.getSource() == logout) {
 			ChangePanel.changePanel(mf, this, new KoskLogin(mf, client));
 		}
 		
-		if(e.getSource() == seatmv) {
-			if(seatnum.length() == 3) {
-				//팝업
-			}else if(Integer.parseInt(seatnum) > 0 && Integer.parseInt(seatnum) <= 25) {
-				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf,uList,client, phnum));
-			}
-		}
 		if(e.getSource() == out) {
 			out.setVisible(false);
 			ChangePanel.addPanel(mf, this, new KoskExit(mf, this, phnum, client));
 		}
-		if(e.getSource() == ex) {
-			for(int i=0; i< button.length; i++) {
-				button[i].setVisible(false);
-			}
-			tableOrManage = 2;
-			ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf, uList, phnum, client, backpanel, seatnum,tableOrManage));
-		}
-		
+		  if(e.getSource() == ex) {
+			 
+			  tableOrManage = 2;
+		         ChangePanel.addPanel(mf, this, new KoskTimeHourWeek(mf, uList, phnum, client, backpanel, seatnum,tableOrManage));
+		     
+			  for(int i=0; i< button.length; i++) {
+		            button[i].setVisible(false);
+		         }
+		           }
+		  
+	if(e.getSource() == seatmv) {
+		seatmv.setVisible(false); 
+			System.out.println(uList.get(kd.userindex(phnum)).getSeatNum().substring(1,2));
+			if(!uList.get(kd.userindex(phnum)).getSeatNum().substring(1,2).equals("-")) {
+				ChangePanel.changePanel(mf, this, new KoskSeatTable2(mf, uList, client, phnum));
+			} else {
+				ChangePanel.addPanel(mf, this, new KoskGroupMoveNo(mf, this, client));
+
 	}
+	}
+}
 }

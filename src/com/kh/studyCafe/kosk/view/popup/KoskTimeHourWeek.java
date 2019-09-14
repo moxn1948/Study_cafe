@@ -13,6 +13,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.kh.studyCafe.client.ClientBack;
+import com.kh.studyCafe.kosk.model.dao.KoskDao;
 import com.kh.studyCafe.kosk.view.ChangePanel;
 import com.kh.studyCafe.kosk.view.KoskMainFrame;
 import com.kh.studyCafe.model.vo.User;
@@ -28,6 +29,7 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 	 private String phnum;
 	 private int tableOrManage;
 	public  KoskTimeHourWeek(KoskMainFrame mf, ArrayList<User> uList,String phnum, ClientBack client,JPanel panel, String seatnum,int tableOrManage) {
+		KoskDao kd = new KoskDao();
 		this.panel = panel;
 		this.mf = mf;
 		this.uList = uList;
@@ -43,7 +45,7 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		Color paper1 = new Color(255,255,255);
 		
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
- 	 
+ 	  
 		this.setSize(310,250);
 		this.setLocation(25, 195);
 		this.setBorder(oneTb);
@@ -71,13 +73,17 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		this.add(oneday);
 		this.add(Period);
 		mf.repaint();
-	
+		String str = uList.get(kd.userindex(phnum)).getSeatNum()+"aa";
+		
+		if(str.substring(1,2).equals("-")) {
+			Period.setVisible(false);
+			oneday.setSize(220,68);
+		} 
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == oneday) {
-			//System.out.println(seatnum);
 			if(uList.get(0).getRemainTime() <= 1800000L) {
 				ChangePanel.changePanel(mf, this,new KoskIndividualPanel(mf,uList,phnum,client,panel,seatnum,1,tableOrManage));
 			}else {

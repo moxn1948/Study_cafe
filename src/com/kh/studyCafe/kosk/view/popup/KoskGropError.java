@@ -41,7 +41,7 @@ public class KoskGropError {
 		label1.setText("4�ȷ��� 2���̻� 4������");
 		label1.setBounds(5,45,280,40);
 		label1.setHorizontalAlignment(JLabel.CENTER);
-		
+		 
 		 
 		mf.add(panel);
 		panel.add(button);
