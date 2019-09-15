@@ -174,7 +174,7 @@ public class AdmCafeInfo extends JPanel implements ActionListener {
 		ControlPanel cp = new ControlPanel();
 		
 		if(e.getSource() == closeBtn) {
-			System.out.println("ddd");
+			mf.remove(AdmMainFrame.watchPanel);
 			new ControlPanel().changeTablePanel2(mf, this, op, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 		}
 		
