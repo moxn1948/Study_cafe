@@ -2,6 +2,7 @@ package com.kh.studyCafe.kosk.controller;
 
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +14,7 @@ import java.util.Iterator;
 import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.kosk.model.dao.KoskDao;
-import com.kh.studyCafe.model.service.SignUpService;
+import com.kh.studyCafe.kosk.model.service.SignUpService;
 import com.kh.studyCafe.model.vo.User;
 
 public class KoskManager {

@@ -1,16 +1,19 @@
 package com.kh.studyCafe.kosk.model.service;
 
 public class SignUpService {
-	
-	public boolean singupservice(String[] value) {
-		
-		if(value[2].equals(value[3])) {
+	private boolean pwcht;
+	public boolean signupservice(String[] value) {
+		if(value[2].equals(value[3])){
+			pwcht = true;
 			return true;
-		} else {
+		}else {
+			pwcht = false;
 			return false;
 		}
 		
+		
 	}
+
 
 }
 
