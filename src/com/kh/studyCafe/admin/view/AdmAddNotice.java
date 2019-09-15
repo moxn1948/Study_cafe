@@ -18,13 +18,14 @@ public class AdmAddNotice extends JPanel implements ActionListener{
 	private JPanel op = null;
 	private AdmMainFrame mf;
 	private ClientBack client;
+	private JButton closeBtn;
+	private ControlPanel cp = new ControlPanel();
 	
 	// 잔여시간 30분 이상일 때, 안내 팝업
 	public AdmAddNotice(AdmMainFrame mf, JPanel op, ClientBack client) {
 		this.mf = mf;
 		this.op = op;
 		this.client = client;
-//		AdmMainFrame.livePanel = this;
 		
 		//패널 설정
 		this.setBounds(270,250,410,193);
@@ -40,7 +41,7 @@ public class AdmAddNotice extends JPanel implements ActionListener{
 		title.setSize(title.getPreferredSize());
 		
 		//버튼 설정
-		JButton closeBtn = new JButton("Close");
+		closeBtn = new JButton("Close");
 		
 		closeBtn.setBounds(19,124,372,50);
 		closeBtn.setBackground(new Color(189, 177, 157));
@@ -57,12 +58,15 @@ public class AdmAddNotice extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
-		if(tempClass.equals("AdmUsingUserList")) {
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
-		}
-		if(tempClass.equals("AdmAllUserList")) {
-			new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+		if(e.getSource() == closeBtn) {
+			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
+			if(tempClass.equals("AdmUsingUserList")) {
+				cp.changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
+			if(tempClass.equals("AdmAllUserList")) {
+				cp.changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+			}
 		}
 	}
 	

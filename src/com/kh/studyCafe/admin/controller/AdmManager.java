@@ -29,12 +29,15 @@ public class AdmManager {
 	public ArrayList<User> addRemainTime(String phoneNum, int term) {
 		return ad.admReadLine(phoneNum, term);
 	}
+	
 	public ArrayList<User> enterSeatGrp(String phoneNum,int term,int count, String seatNum) {
 		return ad.admEnterSeatGrp(phoneNum, term, count, seatNum);
 	}
+	
 	public ArrayList<User> enterSeatIndvTime(String phoneNum,int term, String seatNum) {
 		return ad.admEnterSeatIndvTime(phoneNum, term, seatNum);
 	}
+	
 	public ArrayList<User> enterSeatIndvWeek(String phoneNum,int weekTerm, String seatNum) {
 		return ad.admEnterSeatIndvWeek(phoneNum, weekTerm, seatNum);
 	}
@@ -42,15 +45,19 @@ public class AdmManager {
 	public ArrayList<User> moveSeatNum(String phoneNum, String seatNum) {
 		return ad.admLineSeat(phoneNum, seatNum);
 	}
+	
 	public ArrayList<User> exitSeatTime(String phoneNum) {
 		return ad.admExitSeat(phoneNum);
 	}
+	
 	public ArrayList<User> refundSeatWeek(String phoneNum) {
 		return ad.admRefundSeat(phoneNum);
 	}
+	
 	public ArrayList<User> exitSeatWeek(String phoneNum) {
 		return ad.admExitSeatWeek(phoneNum);
 	}
+	
 	public ArrayList<User> enterSeatTime(String phoneNum) {
 		return ad.admEnterSeat(phoneNum);
 	}
@@ -58,6 +65,7 @@ public class AdmManager {
 	public ArrayList<User> addWeekRemainTime(String phoneNum, int term) {
 		return ad.admWeekReadLine(phoneNum, term);
 	}
+	
 	//admLoginMain에서 넘긴걸 받아옴
 	public boolean logpass(String id,String pwd) {
 		AdmLogin al = new AdmLogin();
@@ -67,7 +75,6 @@ public class AdmManager {
 	
 	//AdmDao불러와야할 수정
 	public void readAdmDao() {
-		AdmDao ad= new AdmDao();
 		ad.readCafe();
 	}
 }

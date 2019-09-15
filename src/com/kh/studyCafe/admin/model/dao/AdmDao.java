@@ -24,7 +24,6 @@ public class AdmDao {
 
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
@@ -32,9 +31,7 @@ public class AdmDao {
 		return userList;
 	}
 
-	public int admWrite(User u) {
-		int result = 0;
-
+	public void admWrite(User u) {
 		ArrayList<User> uTemp = admRead();
 		if(uTemp == null) {
 			uTemp = new ArrayList<User> ();
@@ -45,24 +42,20 @@ public class AdmDao {
 			oos.writeObject(uTemp);
 
 			oos.flush();
-			result++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return result;
 	}
+	
 	// 키오스크쪽 임시 메소드
-	public int admWriteKosk(long timeNow, String phoneNum) {
-		int result = 0;
-
+	public void admWriteKosk(long timeNow, String phoneNum) {
 		ArrayList<User> uTemp = admRead();
 		if(uTemp == null) {
 			uTemp = new ArrayList<User> ();
 		}
 
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
-//			uTemp.add(u);
 			for (int i = 0; i < uTemp.size(); i++) {
 				if(uTemp.get(i).getPhoneNum().equals(phoneNum)) {
 					uTemp.get(i).setInTime(timeNow);
@@ -72,27 +65,21 @@ public class AdmDao {
 			oos.writeObject(uTemp);
 
 			oos.flush();
-			result++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return result;
 	}
 	
-	public int admWrite(ArrayList<User> user) {
-		int result = 0;
-
+	public void admWrite(ArrayList<User> user) {
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.dat"))) {
 			oos.writeObject(user);
 
 			oos.flush();
-			result++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return result;
 	}
 
 	// 1일권 잔여시간 수정
@@ -256,7 +243,6 @@ public class AdmDao {
 			System.out.println("user.dat에 첫번째 입력");
 		}
 
-
 		return seatNum;
 	}
 
@@ -276,6 +262,7 @@ public class AdmDao {
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+		
 		return userList;
 	}
 
@@ -285,11 +272,7 @@ public class AdmDao {
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-
-			System.out.println("userList.size : " + userList.size());
-			System.out.println("phone : " + phoneNum);
-			System.out.println("term + " + term);
-			System.out.println("seatNum" + seatNum);
+			
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
@@ -311,13 +294,14 @@ public class AdmDao {
 						userList.get(i).setTotalSales(term * (1500 - 50));
 					}
 
-
 					break;
 				}
 			}
+			
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+		
 		return userList;
 	}
 
@@ -327,11 +311,7 @@ public class AdmDao {
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
-
-			System.out.println("userList.size : " + userList.size());
-			System.out.println("phone : " + phoneNum);
-			System.out.println("term + " + term);
-			System.out.println("seatNum" + seatNum);
+			
 			for (int i = 0; i < userList.size(); i++) {
 				if(userList.get(i).getPhoneNum().equals(phoneNum)) {
 					userList.get(i).setSeatNum(seatNum);
@@ -359,6 +339,7 @@ public class AdmDao {
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+		
 		return userList;
 	}
 
@@ -366,7 +347,7 @@ public class AdmDao {
 		long inTime = 0;
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-		//	    System.out.println(timeNow);
+		
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 
@@ -398,6 +379,7 @@ public class AdmDao {
 		}catch (ClassNotFoundException | IOException e) {
 			System.out.println("user.dat에 첫번째 입력");
 		}
+		
 		return userList;
 	}
 
@@ -405,19 +387,17 @@ public class AdmDao {
 		long inTime = 0;
 		ArrayList<User> userList = null;
 		long timeNow = new Date(new GregorianCalendar().getTimeInMillis()).getTime();
-		//		       System.out.println(timeNow);
+		
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("user.dat"))) {
 			userList = (ArrayList<User>) ois.readObject();
 
 
 			for (int i = 0; i < userList.size(); i++) {
-
 				long remainTime = userList.get(i).getOutTime() - timeNow;
 
 				if(userList.get(i).getRemainTime() != 0) {
 					userList.get(i).setRemainTime(remainTime);
 				}
-
 
 				if(remainTime < 0) { // 퇴실 시간 지난 사람 퇴실 처리
 					userList.get(i).setSeatNum("0");
@@ -434,7 +414,6 @@ public class AdmDao {
 
 		return userList;
 	}
-
 
 	public ArrayList<User> admWeekReadLine(String phoneNum, int term){
 		ArrayList<User> userList = null;
@@ -459,9 +438,8 @@ public class AdmDao {
 						userList.get(i).setRank("bronze");
 						userList.get(i).setTotalSales(term * 24 * (1500 - 150));
 					}
-
 					
-					admWrite(userList); // 
+					admWrite(userList);
 				}
 			}
 
@@ -545,10 +523,8 @@ public class AdmDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}		
 	}
-	
 	
 	public void writeCafe(AdmCafe ac) {
 		FileOutputStream fos =null;
@@ -560,8 +536,7 @@ public class AdmDao {
 			
 			oos.writeObject(ac);
 			
-			System.out.println("객체를 저장했습니다.");
-			
+			oos.flush();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -577,26 +552,18 @@ public class AdmDao {
 			
 		}
 		
-		
-		
 	}
 	
-
    	public AdmCafe readCafe() {
    		FileInputStream fis =null;
    		ObjectInputStream ois =null;
    		AdmCafe ac = null;
    		
    		try {
-   			//cafeInfo파일로 부터 객체를 읽어오는 스트림 생성
 			fis= new FileInputStream("CafeInfo.dat");
 			ois= new ObjectInputStream(fis);
 			
-			//CafeINfo로 부터 객체 하나씩 읽어서 출력
 			ac = (AdmCafe) ois.readObject();
-//			int daysale = ac.getTotalDaySales();
-			
-//			System.out.println("fffffff");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -619,9 +586,7 @@ public class AdmDao {
 	
 
 	// 회원삭제 메소드
-	public int admDeleteUserWrite(User u) {
-		int result = 0;
-
+	public void admDeleteUserWrite(User u) {
 		ArrayList<User> uTemp = admRead();
 		if(uTemp == null) {
 			uTemp = new ArrayList<User> ();
@@ -636,12 +601,10 @@ public class AdmDao {
 			oos.writeObject(uTemp);
 
 			oos.flush();
-			result++;
 		} catch (IOException e) {
 			e.printStackTrace();
+			
 		}
-
-		return result;
 	}
 }
 

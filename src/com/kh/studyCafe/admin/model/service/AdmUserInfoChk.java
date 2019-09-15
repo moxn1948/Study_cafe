@@ -10,11 +10,10 @@ import com.kh.studyCafe.admin.model.vo.AdmUserTable;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUserInfoChk {
-
-
+	
+		// 이용중인 회원 데이터 가공
 	   public ArrayList<AdmUserTable> usingUserInfo(ArrayList<User> u) {
-
-	      // 이용중인 회원 데이터 가공
+	      
 	      ArrayList<User> user = new ArrayList<User>();
 
 	      for (int i = 0; i < u.size(); i++) {
@@ -22,10 +21,6 @@ public class AdmUserInfoChk {
 	            user.add(u.get(i));
 	         }
 	      }
-
-	      /*for (int i = 0; i < user.size(); i++) {
-	         System.out.println(user.get(i));
-	      }*/
 
 	      String[] name = new String[user.size()];
 	      String[] phoneNum = new String[user.size()];
@@ -60,11 +55,8 @@ public class AdmUserInfoChk {
 	      return utList;
 	   }
 
-	   // 전체 회원 리스트에 맞게 데이터 가공
+	   // 전체회원에서 이용 중인 회원을 제외한 회원 데이터 가공
 	   public ArrayList<AdmUserTable> AllUserInfo(ArrayList<User> u) {
-
-	   
-	      // 데이터 가공
 	      ArrayList<User> user = new ArrayList<User>();
 	      for (int i = 0; i < u.size(); i++) {
 	         if (u.get(i).getInTime() == 0) {
@@ -100,7 +92,9 @@ public class AdmUserInfoChk {
 
 	      // 이름순 정렬
 	      utList.sort(new AscendingName());
+	      
 	      return utList;
+	      
 	   }
 	
 	public long toRemainInfo(String phoneNum, ArrayList<User> u) { 
@@ -110,14 +104,13 @@ public class AdmUserInfoChk {
 				remainTime = u.get(i).getRemainTime();
 				break;
 			}
-
 		}
 
 		return remainTime;
 	}
 	
 	
-
+	// 회원 데이터 입력 메소드
 	public void infoWrite() {
 		// 개인 1일권 - 입실
 		// 개인 기간권 - 입실

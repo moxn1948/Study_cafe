@@ -26,21 +26,20 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 	private JButton cancelBtn;
 	private JButton confirmBtn;
 	
+	private ControlPanel cp = new ControlPanel();
+	
 	public AdmChkUserDelete(AdmMainFrame mf, User u, JPanel op1, JPanel op2, ClientBack client) {
 		this.mf = mf;
 		this.u = u;
 		this.op1 = op1; // table
 		this.op2 = op2; // userinfo popup
 		this.client = client;
-
-//		AdmMainFrame.livePanel = this;
 		
 		// 패널 설정
 		int w = 410;
 		int h = 192;
 		int x = popPosition(w, h)[0];
 		int y = popPosition(w, h)[1];
-		
 
 		this.setBounds(x, y, w, h); 
 		this.setBackground(new Color(239, 234, 222));
@@ -68,12 +67,9 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 		confirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		cancelBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		confirmBtn.setBorder(BorderFactory.createLineBorder(new Color(163, 152, 134)));
-		
 		cancelBtn.addActionListener(this);
 		confirmBtn.addActionListener(this);
 		
-		
-		// 패널에 올리기
 		this.add(notice);
 		this.add(cancelBtn);
 		this.add(confirmBtn);
@@ -91,20 +87,21 @@ public class AdmChkUserDelete extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ControlPanel cp = new ControlPanel();
 		if(e.getSource() == cancelBtn) {
-			cp.removePanel2(mf, this, op2); // 메인프레임, 현재 팝업 패널, 뒤에 깔린 팝업 패널
+			cp.removePanel2(mf, this, op2);
 		}
 		if(e.getSource() == confirmBtn) {
 			AdmDao ad = new AdmDao();
+			
 			ad.admDeleteUserWrite(u);
+			
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
 				cp.changeTablePanel3(mf, this, op1, op2, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));				
 			}
 			if(tempClass.equals("AdmAllUserList")) {
 				cp.changeTablePanel3(mf, this, op1, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));
-				// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
 			}
 
 			client.sendUser(ad.admRead());

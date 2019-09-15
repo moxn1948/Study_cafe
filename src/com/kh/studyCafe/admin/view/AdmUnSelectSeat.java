@@ -16,8 +16,6 @@ import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmUnSelectSeat extends JPanel implements ActionListener{
-//좌석을 선택해주세요 팝업1번 
-         
    private JButton closeBtn;
    private AdmMainFrame mf;
    private JPanel op;
@@ -38,18 +36,12 @@ public class AdmUnSelectSeat extends JPanel implements ActionListener{
       this.seatNum = seatNum;
       this.u = u;
 
-//      AdmMainFrame.livePanel = this;
-      
       this.setBounds(270,203,410,193);
       this.setBackground(new Color(239,234,222));
       this.setBorder(BorderFactory.createLineBorder(new Color(189,177,157)));
       
-      
-      
       //title 텍스트 설정
-      
       JLabel title = new JLabel("이동하실 좌석을 선택해 주세요.");
-      
       title.setLocation(35, 43);
       title.setForeground(new Color(127,118,104));
       title.setFont(new Font("맑은 고딕",Font.BOLD,24));
@@ -58,7 +50,6 @@ public class AdmUnSelectSeat extends JPanel implements ActionListener{
       
       //버튼설정
       closeBtn = new JButton("Close");
-      
       closeBtn.setBounds(45,120,326,50);
       closeBtn.setBackground(new Color(189, 177, 157));
       closeBtn.setFont(new Font("맑은 고딕",Font.BOLD,18));

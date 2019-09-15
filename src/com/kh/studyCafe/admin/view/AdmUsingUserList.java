@@ -48,13 +48,15 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 	private static boolean threadControl;
 	private JTable table;
 
+	private AdmDao ad = new AdmDao();
+	private ControlPanel cp = new ControlPanel();
+	
 	public AdmUsingUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
 		this.mf = mf;
 		this.client = client;
 		this.utList = utList;
 		this.u = u;
 		AdmMainFrame.watchPanel = this;
-//	    AdmMainFrame.livePanel = this;
 		
 		// 테이블 헤더 목록
 		String[] columnNames = { "No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동",
@@ -120,7 +122,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 				// 밀리세컨드를 시간 분으로 표시하기 위해 변
 				String timeResult = "";
 
-//				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
 				if(utList.get(i).getRemainTime() % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
 					timeResult += utList.get(i).getRemainTime() / 3600000 + 1 + "시간 ";
 					timeResult += "0분";
@@ -151,7 +152,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 		}
 
-		// this.은 panel 설정
 		this.setBounds(0, 0, 978, 700);
 
 		// 테이블 모델만들기
@@ -218,9 +218,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 		// 테이블 스크롤 기능 추가해서 넣기
 		scrollpane = new JScrollPane(table);
-
-		// 전체 테이블 크기설정
-		// scrollpane.setPreferredSize(new Dimension(920, 504));
 		// 테이블 모양 설정
 		scrollpane.setBounds(21, 118, 920, 478);
 		scrollpane.getViewport().setBackground(Color.WHITE);
@@ -294,20 +291,9 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		usingInfoGrp.setSize(usingInfoGrp.getPreferredSize());
 
 		// 테이블 내용 수정못하도록 바꿈
-		// table.setEnabled(false);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		
-		
-//		table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
-//		table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
-//		
-//		table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-//		table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-//
-//		table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-//		table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-
 		table.addMouseListener(this);
 		
 		// 패널에 추가하기
@@ -321,15 +307,15 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(scrollpane);
 		
 		
-		if(!threadControl) {
-			// 시계스레드 start
-			MinTimeThread timeThread = new MinTimeThread(client);
-			timeThread.setDaemon(true);
-			timeThread.start();
-			
-			threadControl = true;
-		}
-		
+//		if(!threadControl) {
+//			// 시계스레드 start
+//			MinTimeThread timeThread = new MinTimeThread(client);
+//			timeThread.setDaemon(true);
+//			timeThread.start();
+//			
+//			threadControl = true;
+//		}
+//		
 
 	}
 
@@ -339,17 +325,13 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 		// 전체회원보기 버튼 클릭 시 패널 변경
 		if (e.getSource() == allUserInfoButton) {
-
-			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+			cp.changeTablePanel(mf, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));
 
 		}
 
 		// 매장정보보기 버튼 클릭 시 패널 변경
 		if (e.getSource() == cafeInfo) {
-
-			//수정
-			AdmManager am = new AdmManager();
-			am.readAdmDao();
+			new AdmManager().readAdmDao();
 			cp.addPanel(mf, this, new AdmCafeInfo(mf,this,client));
 
 			scrollpane.getHorizontalScrollBar().setEnabled(false);
@@ -361,10 +343,7 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println(table.getSelectedRow());
 		String tablePhone = table.getValueAt(table.getSelectedRow(), 2) + "";
-		AdmDao ad = new AdmDao();
-		ControlPanel cp = new ControlPanel();
 		if(table.getSelectedColumn() == 1) {
 			scrollpane.getHorizontalScrollBar().setEnabled(false);
 			scrollpane.getVerticalScrollBar().setEnabled(false);
@@ -415,7 +394,6 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 			tablePhone = table.getValueAt(row, 2) + "";
 			String seatNum = table.getValueAt(row, 3) + "";
 			
-
 			// 회원에 따라 이동 버튼 연결 구분
 			if (table.getValueAt(row, 7).equals("개인")) { // 개인일 때
 				cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));
@@ -442,26 +420,14 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 }

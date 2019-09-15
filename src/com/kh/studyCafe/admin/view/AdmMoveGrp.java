@@ -25,7 +25,6 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		this.mf = mf;
 		this.op = op;
 		this.client = client;
-//		AdmMainFrame.livePanel = this;
 		
 		//패널 설정
 		this.setBounds(270,203,410,193); //오븐
@@ -41,48 +40,26 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		title.setFont(new Font("맑은 고딕",Font.BOLD,24));
 		title.setSize(title.getPreferredSize());
 		
-		/*//subTitle텍스트 설정
-		JLabel subTitle = new JLabel("스터디룸은 이동이 불가능합니다.");
-		//340,75
-		  
-		subTitle.setLocation(120, 104);
-		subTitle.setForeground(new Color(127,118,104));//색같은데.
-		subTitle.setFont(new Font("맑은 고딕",Font.BOLD,24));
-		subTitle.setSize(subTitle.getPreferredSize());
-		*/
 		//버튼 설정
 		closeBtn = new JButton("Close");
 		
-		//close버
-		
-//		closeBtn.setLocation(600,543); 이건 걍 해본거..
 		closeBtn.setBounds(45,120,326,50);
-		
-		closeBtn.setBackground(new Color(189, 177, 157)); //컬러
-		
-		closeBtn.setFont(new Font("맑은 고딕",Font.BOLD,18)); 	 //볼드??
-		
+		closeBtn.setBackground(new Color(189, 177, 157));
+		closeBtn.setFont(new Font("맑은 고딕",Font.BOLD,18));
 		closeBtn.setForeground(Color.WHITE);
 		closeBtn.setBorderPainted(false);
-		
 		closeBtn.addActionListener(this);
 		
 		//패널에 올리기
 		this.add(title);
-//		this.add(subTitle);
 		this.add(closeBtn);
 	}
-	
-	
-	
-	
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == closeBtn) {
-			
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
 				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}
@@ -93,10 +70,4 @@ public class AdmMoveGrp extends JPanel implements ActionListener{
 		
 	}
 	
-	
-	
-	
-	//자리이동
-	//스터디룸 이동 불가팝업
-
 }

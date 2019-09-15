@@ -21,11 +21,9 @@ public class ClientBack {
 	private ArrayList<User> user;
 	
 	public final void setGui(AdmMainFrame admMf) { // admin 메인프레임 실행 시
-//		System.out.println("admin mainFrame");
 		this.mf = admMf;
 	}
 	public final void setGui(KoskMainFrame koskMf) { // kosk 메인프레임 실행 시
-//		System.out.println("Kosk mainFrame");
 		this.mf = koskMf;
 	}
 
@@ -37,7 +35,7 @@ public class ClientBack {
 	public void connect() {
 		
 		try {
-			socket = new Socket("192.168.1.105", 8000);
+			socket = new Socket("192.168.1.161", 8000);
 			System.out.println("서버 연결됨");
 			
 			in = new ObjectInputStream(socket.getInputStream()); // 서버 측에서 전송 받음

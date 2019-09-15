@@ -28,16 +28,14 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	private JButton loginBtn;
 	private int resultId;
 	private int resultPw;
-	
 	private ClientBack client;
 	
+	private ControlPanel cp = new ControlPanel();
+	
 	public AdmLoginMain(AdmMainFrame mf, ClientBack client) {
-		
 		this.mf = mf;
 		this.client = client;
-
 		AdmMainFrame.watchPanel = login;
-//		AdmMainFrame.livePanel = login;
 		
 		login.setLayout(null);
 		login.setSize(978, 700);
@@ -57,7 +55,6 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		
 		// 버전 안내 텍스트 영역
 		JLabel versionTxt = new JLabel("관리자용 version");
-
 		versionTxt.setLocation(457, 358);
 		versionTxt.setForeground(new Color(127, 118, 104));
 		versionTxt.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
@@ -71,7 +68,6 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		loginTextField.setEnabled(false);
 		loginTextField.addMouseListener(this); 
 		
-		
 		// PassWord 영역
 		passwordField = new JPasswordField(" PASSWORD");
 		passwordField.setBounds(340, 425, 207, 40);
@@ -79,7 +75,6 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		passwordField.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		passwordField.setEnabled(false);
 		passwordField.addMouseListener(this); 
-		
 		
 		// Login button 영역
 		loginBtn = new JButton("Login");
@@ -89,18 +84,18 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 		loginBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		loginBtn.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		loginBtn.addMouseListener(this); 
-		login.add(logoTxt);
-		login.add(versionTxt);
 		
 		layeredPane.add(loginTextField);
 		layeredPane.add(passwordField);
 		layeredPane.add(loginBtn);
-		
+
+		login.add(logoTxt);
+		login.add(versionTxt);
 		login.add(layeredPane);
+		login.addMouseListener(this);
 		
 		mf.add(login);
 		
-		login.addMouseListener(this);
 	}
 
 	@Override
@@ -109,32 +104,23 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		ControlPanel cp = new ControlPanel();
+		
 		
 		if(e.getSource() == loginBtn) {
 			AdmManager am = new AdmManager();
-//			cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
 			String id = loginTextField.getText().trim();
 			char[]pwdArr =passwordField.getPassword();
 			String pwd ="";
-			//password는 문자형이라서 별도로 문자열로 바꿔줘야함
+			
 			for(int i=0;i<pwdArr.length;i++) {
 				pwd+=pwdArr[i];
 			}
 			
-			System.out.println(id);
-			System.out.println(pwd);
 			boolean result =am.logpass(id, pwd);
-			if(result ==true) {
-				//로그인 성공일때는 바로 로그인
+			if(result == true) { // 로그인 성공
 				cp.changeTablePanel(mf, login, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));
-				
-			}else {
-				//실패시 gui
-				AdmLoginFail af= new AdmLoginFail(mf, login, client);
-				
-				cp.addPanel(mf, login, af);
-
+			}else { // 로그인 실패
+				cp.addPanel(mf, login, new AdmLoginFail(mf, login, client));
 			}
 		}
 		
@@ -158,19 +144,6 @@ public class AdmLoginMain extends MouseAdapter implements ActionListener{ // Mou
 			}
 		}
 		
-		
-    //		cp.changePanel(mf, login, new AdmExitTimeHour()); // 3번째 인자는 테스트 용입니다.
-    //		cp.changePanel(mf, login, new AdmExitTimeWeek()); // 3번째 인자는 테스트 용입니다.
-    //		cp.changePanel(mf, login, new AdmChkUserDelete()); // 3번째 인자는 테스트 용입니다.
-    //		cp.changePanel(mf, login, new AdmSeatTable()); // 3번째 인자는 테스트 용입니다.
-    //		cp.changePanel(mf, login, new AdmNewIndvSelectTime()); // 3번째 인자는 테스트 용입니다.
-    //		cp.changePanel(mf, login, new AdmNewGrpSelectTime()); // 3번째 인자는 테스트 용입니다.
-		//사용중인 유저 리스트 화면입니다.
-//		cp.changeTablePanel(mf, login, new AdmUsingUserList());
-		//전체 회원보기 했을때 나오는 전체회원 화면입니다.
-//		cp.changeTablePanel(mf, login, new AdmAllUserList());
 	}
 	
-	
-
 }
