@@ -35,7 +35,7 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
-		ad.admEnterSeat();
+		ad.admWrite(ad.admEnterSeat());
 		
 		Calendar cal = Calendar.getInstance();
 		if(ac.getDay() != cal.get(cal.DATE)) {

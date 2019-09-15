@@ -121,18 +121,18 @@ public class AdmUserInfoChk {
 		// 개인 - 빈 회원
 
 		  // 날짜 오늘로 수정
-	      long inTime1 = new Date(new GregorianCalendar(2019, 8, 14, 0, 2, 0).getTimeInMillis()).getTime();
+	      long inTime1 = new Date(new GregorianCalendar(2019, 8, 15, 0, 2, 0).getTimeInMillis()).getTime();
 	      /*기간권-날짜수정안해도됨*/long inTime2 = new Date(new GregorianCalendar(2019, 8, 8, 0, 11, 0).getTimeInMillis()).getTime();
-	      long inTime3 = new Date(new GregorianCalendar(2019, 8, 14, 0, 14, 0).getTimeInMillis()).getTime();
-	      long inTime4 = new Date(new GregorianCalendar(2019, 8, 14, 1, 15, 0).getTimeInMillis()).getTime();
-	      long inTime5 = new Date(new GregorianCalendar(2019, 8, 14, 1, 28, 0).getTimeInMillis()).getTime();
+	      long inTime3 = new Date(new GregorianCalendar(2019, 8, 15, 0, 14, 0).getTimeInMillis()).getTime();
+	      long inTime4 = new Date(new GregorianCalendar(2019, 8, 15, 1, 15, 0).getTimeInMillis()).getTime();
+	      long inTime5 = new Date(new GregorianCalendar(2019, 8, 15, 1, 28, 0).getTimeInMillis()).getTime();
 	
 				
-	      /*날짜 오늘로 수정*/long outTime1 = new Date(new GregorianCalendar(2019, 8, 14, 23, 55, 0).getTimeInMillis()).getTime();
-	      /*기간권-날짜수정안해도됨*/long outTime2 = new Date(new GregorianCalendar(2019, 8, 15, 0, 0, 0).getTimeInMillis()).getTime();
-	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 14, 12, 40, 0).getTimeInMillis()).getTime();
-	      /*날짜 오늘로 수정*/long outTime4 = new Date(new GregorianCalendar(2019, 8, 14, 23, 5, 0).getTimeInMillis()).getTime();
-	      /*잔여시간 30분 미만으로 수정*/long outTime5 = new Date(new GregorianCalendar(2019, 8, 14, 16, 00, 0).getTimeInMillis()).getTime();
+	      /*날짜 오늘로 수정*/long outTime1 = new Date(new GregorianCalendar(2019, 8, 15, 23, 55, 0).getTimeInMillis()).getTime();
+	      /*기간권-날짜수정안해도됨*/long outTime2 = new Date(new GregorianCalendar(2019, 8, 17, 0, 0, 0).getTimeInMillis()).getTime();
+	      /*잔여시간 30분 미만으로 수정*/long outTime3 = new Date(new GregorianCalendar(2019, 8, 15, 21, 40, 0).getTimeInMillis()).getTime();
+	      /*날짜 오늘로 수정*/long outTime4 = new Date(new GregorianCalendar(2019, 8, 15, 23, 35, 0).getTimeInMillis()).getTime();
+	      /*잔여시간 30분 미만으로 수정*/long outTime5 = new Date(new GregorianCalendar(2019, 8, 15, 21, 40, 0).getTimeInMillis()).getTime();
 	      
 	      long currentTime = new Date().getTime();
 	

@@ -35,7 +35,7 @@ public class ClientBack {
 	public void connect() {
 		
 		try {
-			socket = new Socket("192.168.1.161", 8000);
+			socket = new Socket("58.238.240.129", 8000);
 			System.out.println("서버 연결됨");
 			
 			in = new ObjectInputStream(socket.getInputStream()); // 서버 측에서 전송 받음

@@ -307,15 +307,15 @@ public class AdmUsingUserList extends JPanel implements ActionListener, MouseLis
 		this.add(scrollpane);
 		
 		
-//		if(!threadControl) {
-//			// 시계스레드 start
-//			MinTimeThread timeThread = new MinTimeThread(client);
-//			timeThread.setDaemon(true);
-//			timeThread.start();
-//			
-//			threadControl = true;
-//		}
-//		
+		if(!threadControl) {
+			// 시계스레드 start
+			MinTimeThread timeThread = new MinTimeThread(client);
+			timeThread.setDaemon(true);
+			timeThread.start();
+			
+			threadControl = true;
+		}
+		
 
 	}
 

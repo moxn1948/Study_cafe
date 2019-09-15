@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -49,10 +50,10 @@ public class KoskSignUp extends JPanel implements ActionListener,ItemListener{
 		this.client = client;
 
 		//===== 컬러 설정 =====
-		Color wallPapers = new Color(239,234,222);
+		Color wallPapers = new Color(247,244,240);
 		Color textColor = new Color(127,118,104);
-		Color paper = new Color(170, 162, 142);
-		Color paper1 = new Color(255,255,255);
+//		Color paper = new Color(170, 162, 142);
+//		Color paper1 = new Color(255,255,255);
 
 		//==================
 
@@ -63,21 +64,20 @@ public class KoskSignUp extends JPanel implements ActionListener,ItemListener{
 		this.setSize(360,640);
 
 		//============ font 설정 ==========
-		Font siguptext = new Font("맑은고딕",Font.BOLD,30);
-		Font inputtext = new Font("맑은고딕",Font.BOLD,17);
-		Font checktext = new Font("맑은고딕",Font.BOLD,14);
-
+		Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
+		Font inputtext = new Font("맑은 고딕",Font.BOLD,15);
+		Font checktext = new Font("맑은 고딕",Font.BOLD,14);
 		//===============================
 
 		//====== 로고 이미지아이콘 ===============
-		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(30, 30, 0);
+		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(26, 30, 0);
 		JLabel ib = new JLabel("",(new ImageIcon(imgicon)),SwingUtilities.CENTER);
 		ib.setBounds(150,0,50,50);
 		//===============================
 
 		//=======  제목 설정  ================
 		JLabel text = new JLabel("회원가입");
-		text.setBounds(110,80,150,50);
+		text.setBounds(120,90,150,50);
 		text.setLayout(null);
 		text.setFont(siguptext);
 		text.setForeground(textColor);
@@ -85,65 +85,74 @@ public class KoskSignUp extends JPanel implements ActionListener,ItemListener{
 
 		//========= 라벨 설정 ===================
 		JLabel name = new JLabel("이름");
-		name.setBounds(30, 170, 40, 30);
+		name.setBounds(36, 198, 40, 30);
 		name.setFont(inputtext);
 		name.setForeground(textColor);
 
 		JLabel phnumber = new JLabel("휴대폰");
 		JLabel phnumber2 = new JLabel("번호");
-		phnumber.setBounds(30,230,60,30);
-		phnumber2.setBounds(30,250,60,30);
+		phnumber.setBounds(33,246,60,30);
+		phnumber2.setBounds(33,263,60,30);
 		phnumber.setFont(inputtext);
 		phnumber2.setFont(inputtext);
 		phnumber.setForeground(textColor);
 		phnumber2.setForeground(textColor);
 
 		JLabel psswd = new JLabel("비밀번호");
-		psswd.setBounds(30,310,80,30);
+		psswd.setBounds(33,304,80,30);
 		psswd.setForeground(textColor);
 		psswd.setFont(inputtext);
 
 		JLabel psswdch = new JLabel("비밀번호");
 		JLabel psswdch2 = new JLabel("확인");
-		psswdch.setBounds(30, 370,80,30);
-		psswdch2.setBounds(30,390,60,30);
+		psswdch.setBounds(33, 352,80,30);
+		psswdch2.setBounds(33,368,60,30);
 		psswdch.setFont(inputtext);
 		psswdch2.setFont(inputtext);
 		psswdch.setForeground(textColor);
 		psswdch2.setForeground(textColor);
 
 		nametf = new JTextField("");
-		nametf.setBounds(120,165,200,40);
-
+		nametf.setBounds(120,190,200,44);
+		nametf.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 
 		phtf = new JTextField("");
-		phtf.setBounds(120,235,200,40);
+		phtf.setBounds(120,244,200,44);
+		phtf.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 
 		pstf = new JPasswordField("");
-		pstf.setBounds(120,305,200,40);
+		pstf.setBounds(120,298,200,44);
 		pstf.setEditable(true);
+		pstf.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 
 		psch = new JPasswordField("");
-		psch.setBounds(120,375,200,40);
+		psch.setBounds(120,352,200,44);
+		psch.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 
 		//===================================
 
 
 		//====== cancel, confirm 버튼 설정 ========================
-		Image cancelbtn = new ImageIcon("img/cancelbtnimg.png").getImage().getScaledInstance(140, 50, 0);
-		Image confirmbtn = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(140, 50, 0);
-		cancel = new JButton(new ImageIcon(cancelbtn));
-		cancel.setBounds(20,500,140,50);
+		cancel = new JButton("Cancel");
+		cancel.setBounds(32,480,141,48);
+		cancel.setBackground(new Color(189, 177, 157));
+		cancel.setForeground(Color.WHITE);
+		cancel.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		cancel.setBorderPainted(false);
 		cancel.addActionListener(this);
 		
-		confirm = new JButton(new ImageIcon(confirmbtn));
-		confirm.setBounds(180,500,140,50);
+		confirm = new JButton("Confirm");
+		confirm.setBounds(179,480,141,48);
+		confirm.setBackground(new Color(163, 152, 134));
+		confirm.setForeground(Color.WHITE);
+		confirm.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		confirm.setBorderPainted(false);
 		confirm.addActionListener(this);
 		//=================popup버튼 완료 설정==============
 
 		//====== 체크박스 설정 ======================
-		check = new JCheckBox("   [필수] 제 3자 이용자 동의 약관");
-		check.setBounds(40,450,400,30);
+		check = new JCheckBox(" [필수] 제 3자 이용자 동의 약관");
+		check.setBounds(52,430,400,30);
 		check.setBackground(wallPapers);
 		check.setFont(checktext);
 		check.setForeground(textColor);

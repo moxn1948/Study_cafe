@@ -46,32 +46,32 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 
 		// 회원 정보 출력
 		JLabel name = new JLabel("이름");
-		name.setLocation(40, 65);
-		name.setForeground(new Color(163, 152, 134));
+		name.setLocation(40, 97);
+		name.setForeground(new Color(127, 118, 104));
 		name.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		name.setSize(name.getPreferredSize());
 
 		JLabel namePut = new JLabel(u.getName());
-		namePut.setLocation(170, 65);
-		namePut.setForeground(new Color(163, 152, 134));
+		namePut.setLocation(170, 97);
+		namePut.setForeground(new Color(127, 118, 104));
 		namePut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		namePut.setSize(namePut.getPreferredSize());
 
 		JLabel phone = new JLabel("전화번호");
-		phone.setLocation(40, 93);
-		phone.setForeground(new Color(163, 152, 134));
+		phone.setLocation(40, 125);
+		phone.setForeground(new Color(127, 118, 104));
 		phone.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		phone.setSize(phone.getPreferredSize());
 
 		JLabel phonePut = new JLabel(u.getPhoneNum());
-		phonePut.setLocation(170, 93);
-		phonePut.setForeground(new Color(163, 152, 134));
+		phonePut.setLocation(170, 125);
+		phonePut.setForeground(new Color(127, 118, 104));
 		phonePut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		phonePut.setSize(phonePut.getPreferredSize());
 
 		JLabel seatNum = new JLabel("좌석번호");
-		seatNum.setLocation(40, 125);
-		seatNum.setForeground(new Color(163, 152, 134));
+		seatNum.setLocation(40, 158);
+		seatNum.setForeground(new Color(127, 118, 104));
 		seatNum.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		seatNum.setSize(seatNum.getPreferredSize());
 
@@ -82,8 +82,8 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 			seatNumStr = u.getSeatNum();
 		}
 		JLabel seatPut = new JLabel(seatNumStr);
-		seatPut.setLocation(170, 125);
-		seatPut.setForeground(new Color(163, 152, 134));
+		seatPut.setLocation(170, 158);
+		seatPut.setForeground(new Color(127, 118, 104));
 		seatPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		seatPut.setSize(seatPut.getPreferredSize());
 		 
@@ -136,63 +136,70 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		}
 
 		JLabel checkIn = new JLabel("입실시간");
-		checkIn.setLocation(40, 157);
-		checkIn.setForeground(new Color(163, 152, 134));
+		checkIn.setLocation(40, 189);
+		checkIn.setForeground(new Color(127, 118, 104));
 		checkIn.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		checkIn.setSize(checkIn.getPreferredSize());
 
         JLabel inTime = new JLabel(inTimeStr);
-        inTime.setLocation(170, 157);
-        inTime.setForeground(new Color(163, 152, 134));
+        inTime.setLocation(170, 189);
+        inTime.setForeground(new Color(127, 118, 104));
         inTime.setFont(new Font("맑은 고딕",Font.BOLD,20));
         inTime.setSize(inTime.getPreferredSize());
 		 
 		JLabel checkOut = new JLabel("퇴실예정시간");
-		checkOut.setLocation(40, 189);
-		checkOut.setForeground(new Color(163, 152, 134));
+		checkOut.setLocation(40, 221);
+		checkOut.setForeground(new Color(127, 118, 104));
 		checkOut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		checkOut.setSize(checkOut.getPreferredSize());
 
 		JLabel outTime = new JLabel(outTimeStr);
 
-		outTime.setLocation(170, 189);
-		outTime.setForeground(new Color(163, 152, 134));
+		outTime.setLocation(170, 221);
+		outTime.setForeground(new Color(127, 118, 104));
 		outTime.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		outTime.setSize(outTime.getPreferredSize());
 
 		JLabel remain = new JLabel("잔여시간");
-		remain.setLocation(40, 221);
-		remain.setForeground(new Color(163, 152, 134));
+		remain.setLocation(40, 253);
+		remain.setForeground(new Color(127, 118, 104));
 		remain.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		remain.setSize(remain.getPreferredSize());
 
 		JLabel remainPut = new JLabel(remainTimeStr);
-		remainPut.setLocation(170, 221);
-		remainPut.setForeground(new Color(163, 152, 134));
+		remainPut.setLocation(170, 253);
+		remainPut.setForeground(new Color(127, 118, 104));
 		remainPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		remainPut.setSize(remainPut.getPreferredSize());
 
+		String seatTypeCtn = "";
+		if(u.getSeatNum().contains("-")) {
+			seatTypeCtn = "단체";
+		}else {
+			seatTypeCtn = "개인";
+		}
 		JLabel pNum = new JLabel("개인/단체");
-		pNum.setLocation(40, 253);
-		pNum.setForeground(new Color(163, 152, 134));
+		pNum.setLocation(40, 285);
+		pNum.setForeground(new Color(127, 118, 104));
 		pNum.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pNum.setSize(pNum.getPreferredSize());
 
-		JLabel pNumPut = new JLabel("개인");
-		pNumPut.setLocation(170, 253);
-		pNumPut.setForeground(new Color(163, 152, 134));
+		
+		JLabel pNumPut = new JLabel(seatTypeCtn);
+		pNumPut.setLocation(170, 285);
+		pNumPut.setForeground(new Color(127, 118, 104));
 		pNumPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pNumPut.setSize(pNum.getPreferredSize());
 		
 		JLabel grade = new JLabel("등급");
-		grade.setLocation(40, 317);
-		grade.setForeground(new Color(163, 152, 134));
+		grade.setLocation(40, 316);
+		grade.setForeground(new Color(127, 118, 104));
 		grade.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		grade.setSize(grade.getPreferredSize());
 
 		JLabel gradePut = new JLabel(u.getRank());
-		gradePut.setLocation(170, 317);
-		gradePut.setForeground(new Color(163, 152, 134));
+		gradePut.setLocation(170, 316);
+		gradePut.setForeground(new Color(127, 118, 104));
 		gradePut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		gradePut.setSize(gradePut.getPreferredSize());
 

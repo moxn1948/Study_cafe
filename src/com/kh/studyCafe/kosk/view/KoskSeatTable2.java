@@ -53,7 +53,7 @@ public class KoskSeatTable2 extends JPanel implements MouseListener, ActionListe
 		// 패널 설정
 		this.setLayout(null);
 		this.setBounds(0, 0, 360, 640);
-		this.setBackground(new Color(239,234,222));
+		this.setBackground(new Color(247,244,240));
 		 
 		// title 텍스트 설정
 		JLabel title = new JLabel("좌석표");

@@ -170,15 +170,21 @@ public class KoskIndividualPanel extends JPanel implements  MouseListener{
    
    minus.addMouseListener(this);
 
-   Image cancelimg = new ImageIcon("img/Cancelbtnimg.png").getImage().getScaledInstance(117, 50, 0);
-   cancel = new JButton(new ImageIcon(cancelimg));
-   cancel.setBounds(20, 280, 117, 50);
+   cancel = new JButton("Cancel");
+   cancel.setBounds(17, 332, 130, 50);
+   cancel.setBackground(new Color(189, 177, 157));
+   cancel.setForeground(Color.WHITE);
+   cancel.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+   cancel.setBorderPainted(false);
    
    cancel.addMouseListener(this);
    
-   Image confirmimg = new ImageIcon("img/confirmbtnimg.png").getImage().getScaledInstance(117, 50, 0);
-   confirm = new JButton(new ImageIcon(confirmimg));
-   confirm.setBounds(139, 280, 117, 50);
+   confirm = new JButton("Confirm");
+   confirm.setBounds(156, 332, 130, 50);
+   confirm.setBackground(new Color(163, 152, 134));
+   confirm.setForeground(Color.WHITE);
+   confirm.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+   confirm.setBorderPainted(false);
    
    confirm.addMouseListener(this);
    
