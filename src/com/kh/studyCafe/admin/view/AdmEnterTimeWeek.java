@@ -15,19 +15,20 @@ import com.kh.studyCafe.admin.model.dao.AdmDao;
 import com.kh.studyCafe.client.ClientBack;
 
 public class AdmEnterTimeWeek extends JPanel implements ActionListener{
-   private JPanel op = null;
+   private JPanel op;
    private JButton cancelBtn;
    private JButton confirmBtn;
    private AdmMainFrame mf;
    private ClientBack client;
    private String phoneNum;
    
+   private AdmManager am = new AdmManager();
+   
    public AdmEnterTimeWeek(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
       this.op = op;
       this.mf = mf;
       this.client = client;
       this.phoneNum = phoneNum;
-//	  AdmMainFrame.livePanel = this;
       
       // 패널 설정
       int w = 410;
@@ -72,7 +73,6 @@ public class AdmEnterTimeWeek extends JPanel implements ActionListener{
       cancelBtn.addActionListener(this);
       confirmBtn.addActionListener(this);
       
-      
       // 패널에 올리기
       this.add(title);
       this.add(subTitle);
@@ -92,20 +92,19 @@ public class AdmEnterTimeWeek extends JPanel implements ActionListener{
    @Override
    public void actionPerformed(ActionEvent e) {
       if(e.getSource() == cancelBtn) {
-         
          String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+         mf.remove(AdmMainFrame.watchPanel);
          if(tempClass.equals("AdmUsingUserList")) {
-            new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));            
+            new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));            
          }
          if(tempClass.equals("AdmAllUserList")) {
-            new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));            
+            new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));            
          }
          
       }
+      
       if(e.getSource() == confirmBtn) {
-         
-        AdmManager ad = new AdmManager(); 
-        client.sendUser(ad.enterSeatTime(phoneNum));
+        client.sendUser(am.enterSeatTime(phoneNum));
         mf.remove(this);
           
       }

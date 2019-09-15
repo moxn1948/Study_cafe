@@ -19,15 +19,15 @@ import com.kh.studyCafe.client.ClientBack;
 import com.kh.studyCafe.model.vo.User;
 
 public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
-	private AdmMainFrame mf = null;
-	private JPanel op = null;
-	private ClientBack client = null;
-	private String phoneNum = null;
-	private JButton cancelBtn = null;
-	private JButton confirmBtn = null;
+	private AdmMainFrame mf;
+	private JPanel op;
+	private ClientBack client;
+	private String phoneNum;
+	private JButton cancelBtn;
+	private JButton confirmBtn;
 	private int term = 1;
-	private JButton countUpBtn = null;
-	private JButton countDownBtn = null;
+	private JButton countUpBtn;
+	private JButton countDownBtn;
 	private ArrayList<AdmUserTable> utList;
 	private ArrayList<User> u;
 	private JPanel op2;
@@ -41,6 +41,9 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 	private int count;
 	private int minNum;
 	private int maxNum;
+	
+	private ControlPanel cp = new ControlPanel();
+	private AdmManager ad = new AdmManager();
 
 	public AdmNewGrpSelectTime(AdmMainFrame mf, JPanel op,JPanel op2, ClientBack client, String phoneNum, ArrayList<AdmUserTable> utList, ArrayList<User> u, String selectSeat) {
 		this.mf = mf;
@@ -51,7 +54,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		this.utList = utList;
 		this.u = u;
 		this.selectSeat = selectSeat;
-//		AdmMainFrame.livePanel = this;
 		
 		String grp = selectSeat.split("-")[0];
 		if(grp.equals("4")){
@@ -81,7 +83,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// title 텍스트 설정
 		JLabel title = new JLabel("1일권");
-
 		title.setLocation(230, 34);
 		title.setForeground(new Color(127, 118, 104));
 		title.setFont(new Font("맑은 고딕", Font.BOLD, 32));
@@ -89,7 +90,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 인원 텍스트 설정
 		JLabel userCount = new JLabel("인원");
-
 		userCount.setLocation(114, 104);
 		userCount.setForeground(new Color(127, 118, 104));
 		userCount.setFont(new Font("맑은 고딕", Font.BOLD, 28));
@@ -97,7 +97,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 총 인원 표시
 		JLabel totalUserCount = new JLabel("총 인원");
-
 		totalUserCount.setLocation(90, 170);
 		totalUserCount.setForeground(new Color(127, 118, 104));
 		totalUserCount.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -105,7 +104,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 총 인원 - 명수 표시
 		totalUserCountNum = new JLabel(count + "명");
-
 		totalUserCountNum.setLocation(164, 170);
 		totalUserCountNum.setForeground(new Color(127, 118, 104));
 		totalUserCountNum.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -113,7 +111,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 총 시간 표시
 		JLabel totalUserTime = new JLabel("이용하실 시간");
-
 		totalUserTime.setLocation(300, 170);
 		totalUserTime.setForeground(new Color(127, 118, 104));
 		totalUserTime.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -121,7 +118,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 총 시간 - 시간 표시
 		totalUserTimeNum = new JLabel("01:00");
-
 		totalUserTimeNum.setLocation(434, 170);
 		totalUserTimeNum.setForeground(new Color(127, 118, 104));
 		totalUserTimeNum.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -130,7 +126,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 		// 시간 텍스트 설정
 		JLabel userTime = new JLabel("시간");
-
 		userTime.setLocation(359, 104);
 		userTime.setForeground(new Color(127, 118, 104));
 		userTime.setFont(new Font("맑은 고딕", Font.BOLD, 28));
@@ -140,7 +135,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		// +, - 버튼 설정
 		countUpBtn = new JButton("+");
 		countDownBtn = new JButton("-");
-
 		countUpBtn.setBounds(44, 234, 200, 44);
 		countDownBtn.setBounds(44, 330, 200, 44);
 		countUpBtn.setBackground(new Color(127, 118, 104));
@@ -174,14 +168,12 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		countDisplay = new JLabel(count + "명");
 		timeDisplay = new JLabel("01:00");
 
-
 		countDisplay.setBounds(44, 284, 200, 40);
 		countDisplay.setBackground(Color.WHITE);
 		countDisplay.setForeground(new Color(127, 118, 104));
 		countDisplay.setFont(new Font("맑은 고딕", Font.BOLD, 22));
 		countDisplay.setBorder(BorderFactory.createEmptyBorder());
 		countDisplay.setHorizontalAlignment(JLabel.CENTER);
-
 
 		timeDisplay.setBounds(294, 284, 200, 40);
 		timeDisplay.setBackground(Color.WHITE);
@@ -207,8 +199,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		cancelBtn.addActionListener(this);
 		confirmBtn.addActionListener(this);
 
-
-
 		this.add(title);
 		this.add(userCount);
 		this.add(userTime);
@@ -216,15 +206,12 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		this.add(totalUserCountNum);
 		this.add(totalUserTime);
 		this.add(totalUserTimeNum);
-
 		this.add(countUpBtn);
 		this.add(countDownBtn);
 		this.add(countDisplay);
-
 		this.add(timeUpBtn);
 		this.add(timeDownBtn);
 		this.add(timeDisplay);
-
 		this.add(cancelBtn);
 		this.add(confirmBtn);
 
@@ -241,21 +228,19 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ControlPanel cp = new ControlPanel();
+		
 		
 		if(e.getSource() == timeUpBtn) {
 			if (term < 9 && term > 0) {
-
 				++term;
 
-				System.out.println("a  : " + term);
 				totalUserTimeNum.setText("0" + term + " : 00");
 				totalUserTimeNum.setSize(totalUserTimeNum.getPreferredSize());
 				timeDisplay.setText("0" + term + " : 00");
 				timeDisplay.setHorizontalAlignment(JLabel.CENTER);
 			} else if (term < 23 && term > 8) {
 				++term;
-				System.out.println("b  : " + term);
+				
 				totalUserTimeNum.setText(term + " : 00");
 				totalUserTimeNum.setSize(totalUserTimeNum.getPreferredSize());
 				timeDisplay.setText(term + " : 00");
@@ -264,17 +249,15 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		}
 		if(e.getSource() == timeDownBtn) {
 			if (term < 9 && term > 1) {
-
 				--term;
-				System.out.println("c  : " + term);
+				
 				totalUserTimeNum.setText("0" + term + " : 00");
 				totalUserTimeNum.setSize(totalUserTimeNum.getPreferredSize());
 				timeDisplay.setText("0" + term + " : 00");
 				timeDisplay.setHorizontalAlignment(JLabel.CENTER);
 			} else if (term < 24 && term > 8) {
-
 				--term;
-				System.out.println("d  : " + term);
+				
 				totalUserTimeNum.setText(term + " : 00");
 				totalUserTimeNum.setSize(totalUserTimeNum.getPreferredSize());
 				timeDisplay.setText(term + " : 00");
@@ -286,7 +269,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 			if(count >= minNum && count < maxNum) {
 				++count;
 				
-				System.out.println("a  : " + count);
 				totalUserCountNum.setText(count + "명");
 				totalUserCountNum.setSize(totalUserCountNum.getPreferredSize());
 				countDisplay.setText(count + "명");
@@ -297,7 +279,6 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 			if(count > minNum && count <= maxNum) {
 				--count;
 				
-				System.out.println("a  : " + count);
 				totalUserCountNum.setText(count + "명");
 				totalUserCountNum.setSize(totalUserCountNum.getPreferredSize());
 				countDisplay.setText(count + "명");
@@ -306,21 +287,15 @@ public class AdmNewGrpSelectTime extends JPanel implements ActionListener{
 		}
 		
 		if(e.getSource() == cancelBtn) {
-//			cp.removePanel2(mf, this, op2);    
 			cp.reSeatPanel(mf, this, op2, new AdmSeatTable(mf, this, client, phoneNum, utList, "-", u));     
 		}
 
 		if(e.getSource() == confirmBtn) {
-			AdmManager ad = new AdmManager();
 			client.sendUser(ad.enterSeatGrp(phoneNum, term, count, selectSeat));
-//			mf.remove(this);
-//			cp.changeTablePanel3(mf, this, op, op2, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 
 			mf.remove(this);
 			mf.remove(op);
 			mf.remove(op2);
-			
-			// 메인프레임, 현재 팝업 패널, 테이블 패널, 뒤에 깔린 팝업패널, 새로 생성할 테이블 패널
 		}
 
 	}

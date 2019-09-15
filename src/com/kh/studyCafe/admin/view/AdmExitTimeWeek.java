@@ -26,15 +26,15 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	private JButton confirmBtn;
 	private String phoneNum;
 	private JCheckBox refundChk;
-	boolean refundChked;
+	private boolean refundChked;
+	
+	private AdmManager am = new AdmManager();
 	
 	public AdmExitTimeWeek(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
 		this.op = op;
 		this.client = client;
 		this.mf = mf;
 		this.phoneNum = phoneNum;
-//		AdmMainFrame.livePanel = this;
-	
 		
 		// 패널 설정
 		int w = 410;
@@ -81,7 +81,6 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 		refundChk.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		refundChk.setSize(refundChk.getPreferredSize());
 		refundChk.addItemListener(new ItemListener() {
-			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
@@ -129,23 +128,23 @@ public class AdmExitTimeWeek extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		AdmManager ad = new AdmManager();
+		
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));				
 			}
 			if(tempClass.equals("AdmAllUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));				
 			}		
 		}
 		if(e.getSource() == confirmBtn) {
 			if(refundChked == true) {
-				
-				client.sendUser(ad.refundSeatWeek(phoneNum));
+				client.sendUser(am.refundSeatWeek(phoneNum));
 				mf.remove(this);
 			}else {
-				client.sendUser(ad.exitSeatWeek(phoneNum));
+				client.sendUser(am.exitSeatWeek(phoneNum));
 			    mf.remove(this);
 			}
 		}

@@ -24,6 +24,8 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 	private ClientBack client;
 	private User u;
 	
+	private ControlPanel cp = new ControlPanel();
+	
 	//패널설정
 	 public AdmUserInfo(AdmMainFrame mf, User u, JPanel op, ClientBack client) {
 		this.op = op;
@@ -31,8 +33,6 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		this.u = u;
 		this.client = client;
 
-//	    AdmMainFrame.livePanel = this;
-	      
 		this.setBounds(300, 120, 362, 484);
 		this.setBackground(new Color(239, 234, 222));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
@@ -172,12 +172,6 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		remainPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		remainPut.setSize(remainPut.getPreferredSize());
 
-//		JLabel remain2 = new JLabel("시간");
-//		remain2.setLocation(186, 221);
-//		remain2.setForeground(new Color(163, 152, 134));
-//		remain2.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-//		remain2.setSize(remain.getPreferredSize());
-
 		JLabel pNum = new JLabel("개인/단체");
 		pNum.setLocation(40, 253);
 		pNum.setForeground(new Color(163, 152, 134));
@@ -189,20 +183,7 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		pNumPut.setForeground(new Color(163, 152, 134));
 		pNumPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pNumPut.setSize(pNum.getPreferredSize());
-
-/*		JLabel point = new JLabel("포인트");
-		point.setLocation(40, 285);
-		point.setForeground(new Color(163, 152, 134));
-		point.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		point.setSize(point.getPreferredSize());
-
-		JLabel pointPut = new JLabel(u.getPoint() + "P");
-
-		pointPut.setLocation(170, 285);
-		pointPut.setForeground(new Color(163, 152, 134));
-		pointPut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		pointPut.setSize(pointPut.getPreferredSize());
-*/
+		
 		JLabel grade = new JLabel("등급");
 		grade.setLocation(40, 317);
 		grade.setForeground(new Color(163, 152, 134));
@@ -210,7 +191,6 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		grade.setSize(grade.getPreferredSize());
 
 		JLabel gradePut = new JLabel(u.getRank());
-
 		gradePut.setLocation(170, 317);
 		gradePut.setForeground(new Color(163, 152, 134));
 		gradePut.setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -225,7 +205,6 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		closeBtn.addActionListener(this);
 
 		deleteBtn = new JButton("<html><u>회원 삭제하기</u></html>");
-
 		deleteBtn.setBounds(84, 430, 200, 21);
 		deleteBtn.setBorderPainted(false);
 		deleteBtn.setContentAreaFilled(false);
@@ -245,11 +224,8 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 		this.add(outTime);
 		this.add(remain);// 잔여시간
 		this.add(remainPut);
-//		this.add(remain2);
 		this.add(pNum);
 		this.add(pNumPut);
-//		this.add(point);
-//		this.add(pointPut);
 		this.add(grade);
 		this.add(inTime);
 		this.add(gradePut);
@@ -264,11 +240,11 @@ public class AdmUserInfo extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ControlPanel cp = new ControlPanel();
 		
 		if(e.getSource() == closeBtn) {
-			
+		
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
 				cp.changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}

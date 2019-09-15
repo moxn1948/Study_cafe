@@ -22,20 +22,21 @@ public class AdmExitTimeHour extends JPanel implements ActionListener{
 	private ClientBack client;
 	private String phoneNum;
 
+	private AdmManager am = new AdmManager(); 
+	
 	public AdmExitTimeHour(AdmMainFrame mf, JPanel op, ClientBack client, String phoneNum) {
 		this.op = op;
 		this.mf = mf;
 		this.client = client;
 		this.phoneNum = phoneNum;
 		String timeEdit = "";
-//		AdmMainFrame.livePanel = this;
 
-		if(new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) {
-			timeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
+		if(am.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) {
+			timeEdit += am.findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
 			timeEdit += "0분";
 		}else {	
-			timeEdit += new AdmManager().findPhoneToRemain(phoneNum) / 3600000 + "시간 ";
-			timeEdit += new AdmManager().findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 + "분";
+			timeEdit += am.findPhoneToRemain(phoneNum) / 3600000 + "시간 ";
+			timeEdit += am.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 + "분";
 		}
 
 		// 패널 설정
@@ -89,7 +90,6 @@ public class AdmExitTimeHour extends JPanel implements ActionListener{
 		cancelBtn.addActionListener(this);
 		confirmBtn.addActionListener(this);
 
-
 		// 패널에 올리기
 		this.add(title);
 		this.add(subTitle);
@@ -110,20 +110,19 @@ public class AdmExitTimeHour extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == cancelBtn) {
-
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));				
 			}
 			if(tempClass.equals("AdmAllUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, am.usingUserManager(), new AdmDao().admRead(), client));				
 			}
 
 		}
 		if(e.getSource() == confirmBtn) {
 
-			AdmManager ad = new AdmManager(); 
-			client.sendUser(ad.exitSeatTime(phoneNum));
+			client.sendUser(am.exitSeatTime(phoneNum));
 			mf.remove(this);
 
 

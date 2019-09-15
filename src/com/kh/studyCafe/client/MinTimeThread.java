@@ -12,16 +12,13 @@ public class MinTimeThread extends Thread{
 	@Override
 	public void run() {
 		while(true) {
-			
-			// 메소드 : remainTime을 현재시간으로 수정하고 client.appendUser()
 
 			try {
 				Thread.sleep(60000); // 1분
 
-				System.out.println("스레드 테스트");
+				System.out.println("스레드 동작");
 				client.sendUser(new AdmDao().admEnterSeat());
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

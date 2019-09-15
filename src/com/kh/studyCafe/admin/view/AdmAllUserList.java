@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.font.TextAttribute;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +56,10 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    private String seatNum;
    private int allListNum;
    
+   private ControlPanel cp = new ControlPanel();
+   private AdmDao ad = new AdmDao();
+   
+   
    public AdmAllUserList(AdmMainFrame mf, ArrayList<AdmUserTable> utList, ArrayList<User> u, ClientBack client) {
       this.mf = mf;
       this.client = client;
@@ -65,7 +68,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       this.utList = utList;
       this.u = u;
       AdmMainFrame.watchPanel = this;
-//      AdmMainFrame.livePanel = this;
 
       // 테이블 헤더 목록
       String[] columnNames = { "No", "회원명", "전화번호", "좌석번호", "입실시간", "퇴실예정시간", "잔여시간", "개인/단체", "좌석연장", "좌석이동", "좌석퇴실",
@@ -74,7 +76,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       // 테이블 내용 부분 크기
       Object[][] data = new Object[allListNum][columnNames.length];
 
-      // 테이블 내용 뿌리기 Start
+   // 테이블 내용 뿌리기 Start
 
       // 이용 중인 회원
       int grpCount = 0;
@@ -127,17 +129,14 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
             }
 
          }
-         
-
 
  		// 잔여시간 형식 수정해서 테이블에 뿌리기
  		if (utList.get(i).getSeatType() == 2) { // 기간권일 때
  			data[i][6] = (utList.get(i).getRemainTime() - 1) / 86400000 + 1 + "일";
  		} else if (utList.get(i).getSeatType() == 1) { // 1일권일 때
- 			// 밀리세컨드를 시간 분으로 표시하기 위해 변
+ 			// 밀리세컨드를 시간 분으로 변경
  			String timeResult = "";
 
-// 				timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
  			if(utList.get(i).getRemainTime() % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
  				timeResult += utList.get(i).getRemainTime() / 3600000 + 1 + "시간 ";
  				timeResult += "0분";
@@ -146,10 +145,8 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
              	timeResult += utList.get(i).getRemainTime() % 3600000 / 60000 + 1 + "분";
              }
  			
- 			
  			data[i][6] = timeResult;
  		}
-
 
          // 개인&그룹 구분해서 테이블에 뿌리기
          if (utList.get(i).getSeatNum().contains("-")) { // 그룹일 때
@@ -165,7 +162,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
       }
 
-      System.out.println(utList.size());
       // 스터디카페에 없는 회원
       for (int i = 0; i < allUserList.size(); i++) {
          data[i + utList.size()][8] = "-";
@@ -194,40 +190,18 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          }
 
       }
-      
-      
+    // 테이블 내용 뿌리기 End
 
-      // 테이블 내용 뿌리기 End
-
-      // this.은 panel 설정
       this.setBounds(0, 0, 978, 700);
-
+      
       // 테이블 모델만들기
-      // 버튼부분빼고 셀의 내용 수정불가하도록 설정
-      model = new DefaultTableModel(data, columnNames) {
-         public boolean isCellEditable(int row, int column) {
-//            if (column >= 8) { // 버튼 쪽 부분
-//               if (row > utList.size() - 1 && column != columnNames.length - 1) { // 스터디카페에 없는 회원의 이동, 연장, 퇴실
-//                  return false;
-//               } else if (row < utList.size() && column == columnNames.length - 1) { // 이용중인 회원의 입실
-//                  return false;
-//               } else {
-//                  return true;
-//               }
-//            } else { // 버튼 아닌 부분
-//               return false;
-//            }
-            return false;
-         }
-      };
+      model = new DefaultTableModel(data, columnNames);
 
       this.setLayout(null);
       this.setBackground(Color.WHITE);
       
-      
       // 테이블 생성
       // 이용중인 회원일 경우 셀의 색을 바꾸어서 표시함
-      // 버튼 부분은 백그라운드 색으로 흰색으로 칠하여 없는것처럼 보이게 해놓았으나 수정이필요함
       table = new JTable(model) {
          @Override
          public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -271,7 +245,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
       // 테이블 행 높이 설정
       table.setRowHeight(40);
-
       table.getColumnModel().getColumn(0).setPreferredWidth(30);
       table.getColumnModel().getColumn(1).setPreferredWidth(60);
       table.getColumnModel().getColumn(2).setPreferredWidth(110);
@@ -285,12 +258,9 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       table.getColumnModel().getColumn(10).setPreferredWidth(66);
       table.getColumnModel().getColumn(11).setPreferredWidth(66);
       
-
-      // 테이블 스크롤 기능 추가해서 넣기
+      // 테이블 스크롤 기능 추가
       scrollpane = new JScrollPane(table);
 
-      // 전체 테이블 크기설정
-//       scrollpane.setPreferredSize(new Dimension(920, 504));
       // 테이블 모양 설정
       scrollpane.setBounds(21, 118, 920, 504);
       scrollpane.getViewport().setBackground(Color.WHITE);
@@ -306,14 +276,11 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       header.setFont(new Font("맑은 고딕", Font.BOLD, 14));
       header.setBackground(Color.WHITE);
 
-      // DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
+      // DefaultTableCellHeaderRenderer 생성 - 정렬 기능
       DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
-      // DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
-      tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-      // 정렬할 테이블의 ColumnModel을 가져옴
+      tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER); // 가운데 정렬
       TableColumnModel tcmSchedule = table.getColumnModel();
-      // 반복문을 이용하여 테이블을 가운데 정렬로 지정
-      for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+      for (int i = 0; i < tcmSchedule.getColumnCount(); i++) { // 테이블을 가운데 정렬로 지정
          tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
       }
 
@@ -329,20 +296,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       // 테이블의 크기를 조절하지 못하도록 함
       table.getTableHeader().setReorderingAllowed(false);
       table.getTableHeader().setResizingAllowed(false);
-
-      // 테이블 연장 / 이동 / 퇴실 열에 버튼을 생성함
-//      table.getColumnModel().getColumn(8).setCellRenderer(new AdmTableAddTime(mf, this, table, client, scrollpane));
-//      table.getColumnModel().getColumn(8).setCellEditor(new AdmTableAddTime(mf, this, table, client, scrollpane));
-//
-//      table.getColumnModel().getColumn(9).setCellRenderer(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-//      table.getColumnModel().getColumn(9).setCellEditor(new AdmTableSeatMove(mf, this, table, client, scrollpane, utList));
-//
-//      table.getColumnModel().getColumn(10).setCellRenderer(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-//      table.getColumnModel().getColumn(10).setCellEditor(new AdmTableExitSeat(mf, this, table, scrollpane, client));
-//
-//      table.getColumnModel().getColumn(11).setCellRenderer(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
-//      table.getColumnModel().getColumn(11).setCellEditor(new AdmTableEnterSeat(mf, this, table, client, scrollpane, utList));
-
+      
       // 회원검색용 텍스트 필드 생성
       searchForm = new JTextField();
       searchForm.setBounds(59, 74, 178, 40);
@@ -355,7 +309,6 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       searchLabel.setLocation(23, 75);
       searchLabel.setSize(32, 39);
 
-
       srchChk = new JLabel();
       srchChk.setBounds(22, 168, 620, 41);
       srchChk.setBackground(Color.RED);
@@ -365,18 +318,12 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
       table.addMouseListener(this);
 
       this.add(srchChk, new Integer(10));
-      // 패널에 추가하기
       this.add(searchForm);
       this.add(searchLabel);
       this.add(logoLabel);
       this.add(allUserInfoButton);
       this.add(scrollpane);
       
-//      System.out.println(vertical.getSize());
-//      
-//		MinTimeThread timeThread = new MinTimeThread(client);
-//		timeThread.execute();
-
    }
 
    @Override
@@ -384,10 +331,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 
       // 이용중인 회원 버튼 클릭 시 패널 변경
       if (e.getSource() == allUserInfoButton) {
-         ControlPanel cp = new ControlPanel();
-
-         cp.changeTablePanel(mf, this,
-               new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
+         cp.changeTablePanel(mf, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), ad.admRead(), client));
 
       }
 
@@ -405,18 +349,15 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          }
          
          if(!searchForm.getText().equals("")) {
-	        
 	         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 이름 검색 시
 	            if (utList.get(i).getName().contains(searchForm.getText().trim())) {
 	               if(i>10) {
-	//                  System.out.println("a지역");
-	                  vertical.setValue((i-10)*40-12);
 	                  srchChk.setLocation(22, (181+ 10*40));
 	               }else {
-	//                  System.out.println("c지역");
 	                  vertical.setValue(0);
 	                  srchChk.setLocation(22, (168+ i*40));
 	               }
+	               
 	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
 	               break;
 	            }
@@ -425,11 +366,9 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 	            if (allUserList.get(i).getName().contains(searchForm.getText().trim())) {
 	               int num = i + utList.size();
 	               if(num>10) {
-	//                  System.out.println("1a지역");
 	                  vertical.setValue((num-10)*40 - 12);
 	                  srchChk.setLocation(22, (181+ 10*40));
 	               }else {
-	//                  System.out.println("1c지역");
 	                  vertical.setValue(0);
 	                  srchChk.setLocation(22, (168+ num*40));
 	               }
@@ -440,28 +379,21 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 	         }
 	         for (int i = 0; i < utList.size(); i++) { // 이용 중인 회원 전화번호 검색 시
 	            if (utList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
-	            	System.out.println("이용중인 회원 전화번호");
-	            	System.out.println(utList.get(i).getPhoneNum());
-	            	System.out.println(searchForm.getText().trim());
 	               if(i>10) {
-	//                  System.out.println("a지역");
 	                  vertical.setValue((i-10)*40-12);
 	                  srchChk.setLocation(22, (181+ 10*40));
 	               }else {
-	//                  System.out.println("c지역");
 	                  vertical.setValue(0);
 	                  srchChk.setLocation(22, (168+ i*40));
 	               }
+	               
 	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
 	               break;
 	            }
 	         }
 	         for (int i = 0; i < allUserList.size(); i++) { // 전체 회원 전화번호 이름 검색 시
 	            if (allUserList.get(i).getPhoneNum().contains(searchForm.getText().trim())) {
-	             	System.out.println("전체 회원 전화번호");
-	             	System.out.println(allUserList.get(i).getPhoneNum());
-	             	System.out.println(searchForm.getText().trim());
-	                int num = i + utList.size();
+	               int num = i + utList.size();
 	               if(num>10) {
 	            	  vertical.setValue((num-10)*40 - 12);
 	                  srchChk.setLocation(22, (181+ 10*40));
@@ -469,6 +401,7 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
 	                  vertical.setValue(0);
 	                  srchChk.setLocation(22, (168+ num*40));
 	               }
+	               
 	               srchChk.setBorder(BorderFactory.createLineBorder(new Color(255,203,0), 4));
 	               break;
 	            }
@@ -482,22 +415,15 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    }
 
    @Override
-   public void keyReleased(KeyEvent e) {
-      // TODO Auto-generated method stub
-
-   }
+   public void keyReleased(KeyEvent e) {}
 
    @Override
-   public void keyTyped(KeyEvent e) {
-
-   }
+   public void keyTyped(KeyEvent e) {}
 
    @Override
    public void mouseClicked(MouseEvent e) {
-      System.out.println(table.getSelectedRow());
       String tablePhone = table.getValueAt(table.getSelectedRow(), 2) + "";
-      AdmDao ad = new AdmDao();
-      ControlPanel cp = new ControlPanel();
+      
       if(table.getSelectedColumn() == 1) {
          cp.addPanel(mf, this, new AdmUserInfo(mf, ad.toUserInfo(tablePhone),this, client));         
       }
@@ -578,17 +504,13 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
          scrollpane.getHorizontalScrollBar().setEnabled(false);
          scrollpane.getVerticalScrollBar().setEnabled(false);
          scrollpane.getViewport().getView().setEnabled(false);
-         
 
          int row = table.getSelectedRow();
          tablePhone = table.getValueAt(row, 2) + "";
          seatNum = table.getValueAt(row, 3) + "";
          String inTime = table.getValueAt(row, 4)+ "";
-         // 회원에 따라 이동 버튼 연결 구분
-         //만약 입실하지 않은 기간권 사용자가 입실할 경우 좌석번호는 가지고 있고 입실시간은 가지고 있지 않다.
-         //기간권이 없는 회원이 입실할 경우 좌석번호 없고, 입실시간도 없다.
          
-
+         // 회원에 따라 이동 버튼 연결 구분
          if(!table.getValueAt(row, 11).equals("-")) {
 	         if(seatNum.equals("-") && inTime.equals("-")) {
 	            cp.addPanel(mf, this, new AdmSeatTable(mf, this, client, tablePhone, utList, seatNum, u));      
@@ -601,27 +523,15 @@ public class AdmAllUserList extends JPanel implements ActionListener, KeyListene
    }
 
    @Override
-   public void mouseEntered(MouseEvent e) {
-      // TODO Auto-generated method stub
-      
-   }
+   public void mouseEntered(MouseEvent e) {}
 
    @Override
-   public void mouseExited(MouseEvent e) {
-      // TODO Auto-generated method stub
-      
-   }
+   public void mouseExited(MouseEvent e) {}
 
    @Override
-   public void mousePressed(MouseEvent e) {
-      // TODO Auto-generated method stub
-      
-   }
+   public void mousePressed(MouseEvent e) {}
 
    @Override
-   public void mouseReleased(MouseEvent e) {
-      // TODO Auto-generated method stub
-      
-   }
+   public void mouseReleased(MouseEvent e) {}
 
 }

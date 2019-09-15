@@ -18,34 +18,32 @@ import com.kh.studyCafe.client.ClientBack;
 
 public class AdmAddTimeHour extends JPanel implements ActionListener {
 	
-	
 	private AdmMainFrame mf;
 	private int term = 1;
-	private JLabel num = null;
-	private JButton plusBtn = null;
-	private JButton minusBtn = null;
-	private JButton confirmBtn = null;
-	private JButton cancelBtn = null;
+	private JLabel num;
+	private JButton plusBtn;
+	private JButton minusBtn;
+	private JButton confirmBtn;
+	private JButton cancelBtn;
 	private String phoneNum;
-	private String name;
-	private JPanel op = null;
+	private JPanel op;
 	private ClientBack client;
 	private String addTimeEdit;
 	private JLabel afterNum;
+	
+	private AdmManager ad = new AdmManager();
+	private ControlPanel cp = new ControlPanel();
 	
 	public AdmAddTimeHour(AdmMainFrame mf, JPanel op, String phoneNum, ClientBack client) {
 		this.mf = mf;
 		this.op = op;
 		this.phoneNum = phoneNum;
 		this.client = client;
-//		AdmMainFrame.livePanel = this;
 		
-		AdmManager ad = new AdmManager();
 		
 		// 잔여시간 표시
 		String timeEdit = "";
 
-//		timeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
 		if(ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
 			timeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + 1 + "시간 ";
 			timeEdit += "0분";
@@ -55,7 +53,6 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
         }
 		
 		addTimeEdit = "";
-//		addTimeEdit += ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + "분";
 		if(ad.findPhoneToRemain(phoneNum) % 3600000 / 60000 + 1 == 60) { // 60분일때 0분 처리해주는 코드
 			addTimeEdit += ad.findPhoneToRemain(phoneNum) / 3600000 + 2 + "시간 ";
 			addTimeEdit += "0분";
@@ -153,8 +150,6 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		this.add(num, 0, 1);
 		this.add(remainNum);
 		this.add(afterNum);
-
-		// 버튼
 		this.add(plusBtn);
 		this.add(minusBtn);
 		this.add(cancelBtn);
@@ -169,33 +164,23 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 		if (e.getSource() == plusBtn) {
 
 			if (term < 9 && term > 0) {
-				
 				++term;
 
-				System.out.println("a  : " + term);
 				num.setText("0" + term + " : 00");	
-				
-				
 				String[] addTimeEditTemp = addTimeEdit.split("시간");
 				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 1 + "시간";
 				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
 				afterNum.setText(addTimeEdit);
-
 				afterNum.setSize(afterNum.getPreferredSize());
 				
 			} else if (term < 23 && term > 8) {
-				
 				++term;
 
-				System.out.println("b  : " + term);
 				num.setText(term + " : 00");
-
-				
 				String[] addTimeEditTemp = addTimeEdit.split("시간");
 				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) + 1 + "시간";
 				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1]; 
 				afterNum.setText(addTimeEdit);
-
 				afterNum.setSize(afterNum.getPreferredSize());
 			}
 			
@@ -203,32 +188,24 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 		if (e.getSource() == minusBtn) {
 
-			
 			if (term < 9 && term > 1) {
-
 				--term;
-				System.out.println("c  : " + term);
-				num.setText("0" + term + " : 00");
 				
+				num.setText("0" + term + " : 00");
 				String[] addTimeEditTemp = addTimeEdit.split("시간");
 				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) - 1 + "시간";
 				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
 				afterNum.setText(addTimeEdit);
-
 				afterNum.setSize(afterNum.getPreferredSize());
 				
 			} else if (term < 24 && term > 8) {
-
 				--term;
-				System.out.println("d  : " + term);
-				num.setText(term + " : 00");
 				
-
+				num.setText(term + " : 00");
 				String[] addTimeEditTemp = addTimeEdit.split("시간");
 				addTimeEditTemp[0] = Integer.parseInt(addTimeEditTemp[0]) - 1 + "시간";
 				addTimeEdit = addTimeEditTemp[0] + addTimeEditTemp[1];  
 				afterNum.setText(addTimeEdit);
-				
 				afterNum.setSize(afterNum.getPreferredSize());
 				
 			}
@@ -236,23 +213,18 @@ public class AdmAddTimeHour extends JPanel implements ActionListener {
 
 		if(e.getSource() == cancelBtn) {
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
+			mf.remove(AdmMainFrame.watchPanel);
 			if(tempClass.equals("AdmUsingUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				cp.changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}
 			if(tempClass.equals("AdmAllUserList")) {
-				new ControlPanel().changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
+				cp.changeTablePanel2(mf, op, this, new AdmAllUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));				
 			}
 		}
 
 		if (e.getSource() == confirmBtn) {
-			
-			// 본인 클라이언트 스트림으로 보냄	
-			AdmManager ad = new AdmManager();
 			mf.remove(this);
-			
 			client.sendUser(ad.addRemainTime(phoneNum, term));
-			
-			//new ControlPanel().changeTablePanel2(mf, op, this, new AdmUsingUserList(mf, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
 		}
 
 	}

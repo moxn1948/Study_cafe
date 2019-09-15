@@ -23,10 +23,9 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	public static JPanel watchPanel = null;
 	private AdmDao ad = new AdmDao();
 	private AdmCafe ac = ad.readCafe();
+	
 	// 메인 프레임
 	public AdmMainFrame() {
-		
-
 		this.setBounds(0, 0, 978, 700); 
 		this.setLayout(null);
 		
@@ -36,8 +35,9 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
-		Calendar cal = Calendar.getInstance();
+		ad.admEnterSeat();
 		
+		Calendar cal = Calendar.getInstance();
 		if(ac.getDay() != cal.get(cal.DATE)) {
 			ac.setDay(cal.get(cal.DATE));
 			ac.setTotalDaySales(0);
@@ -58,7 +58,6 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	
 	public void appendUser(ArrayList<User> user) {
 		// 클라이언트 측 리페인트
-		
 		ad.admWrite(user); // 새파일 생성해야 함
 		
 		ArrayList<User> userList = ad.admRead();
@@ -69,21 +68,18 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 				ac.setTotalDaySales(ac.getTotalDaySales() + Sales);
 				ac.setTotalMonthSales(ac.getTotalDaySales());
 				userList.get(i).setTotalSales(0);
-//				System.out.println();
 			}
 		}
+		
 		ac.setTotalUserAmount(userList.size());
 		ad.writeCafe(ac);
 		ad.admWrite(userList);
 		
-		
 		System.out.println("리페인트 타이밍");
 		
 		String tempWatch = AdmMainFrame.watchPanel.getClass() + "";
-		
 		if(!tempWatch.substring(tempWatch.length() - 6, tempWatch.length()).equals("JPanel")) {
 			this.remove(AdmMainFrame.watchPanel);
-	
 			String tempClass = AdmMainFrame.watchPanel.getClass().getName().split("view.")[1];
 			if(tempClass.equals("AdmUsingUserList")) {
 				this.add(new AdmUsingUserList(this, new AdmManager().usingUserManager(), new AdmDao().admRead(), client));
@@ -96,8 +92,6 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}
+	public void actionPerformed(ActionEvent e) {}
 	
 }
