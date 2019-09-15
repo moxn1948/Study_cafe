@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +29,7 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 	 private String seatnum;
 	 private String phnum;
 	 private int tableOrManage;
-	public  KoskTimeHourWeek(KoskMainFrame mf, ArrayList<User> uList,String phnum, ClientBack client,JPanel panel, String seatnum,int tableOrManage) {
+	public  KoskTimeHourWeek(KoskMainFrame mf, ArrayList<User> uList, String phnum, ClientBack client, JPanel panel, String seatnum, int tableOrManage) {
 		KoskDao kd = new KoskDao();
 		this.panel = panel;
 		this.mf = mf;
@@ -38,31 +39,29 @@ public class KoskTimeHourWeek extends JPanel implements ActionListener{
 		this.phnum = phnum;
 		this.tableOrManage = tableOrManage;
 		
-		Font font = new Font("맑은 고딕",Font.BOLD,15);
+		Font font = new Font("맑은 고딕",Font.BOLD,18);
 		Color wallPapers = new Color(239,234,222);
 		Color textColor = new Color(127,118,104);
 		Color paper = new Color(163, 152, 134);
-		Color paper1 = new Color(255,255,255);
-		
-		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black));
+		Color paper1 = new Color(255, 255, 255);
  	  
 		this.setSize(310,250);
-		this.setLocation(25, 195);
-		this.setBorder(oneTb);
+		this.setLocation(23, 195);
+		this.setBorder(BorderFactory.createLineBorder(new Color(127, 118, 104)));
 		this.setBackground(wallPapers);
 		this.setLayout(null);
 		
 	    oneday = new JButton("1일권");
 	    oneday.addActionListener(this);
 		oneday.setFont(font);
-		oneday.setBounds(50,70,100,68); 
+		oneday.setBounds(21,86,128,68);
 		oneday.setBackground(paper);
 		oneday.setForeground(paper1);
 		
 		Period = new JButton("기간권");
 		Period.addActionListener(this);
 		Period.setFont(font);
-		Period.setBounds(160,70,100,68);
+		Period.setBounds(161,86,128,68);
 		Period.setBackground(paper);
 		Period.setForeground(paper1);
 		

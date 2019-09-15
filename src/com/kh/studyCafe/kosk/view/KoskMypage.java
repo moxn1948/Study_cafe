@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,7 +44,7 @@ public class KoskMypage extends JPanel implements ActionListener{
 
       String[] tempData = kd.myPage(phoneNum).split(",");
 
-      Color wallPapers = new Color(239,234,222);
+      Color wallPapers = new Color(247,244,240);
       Color textColor = new Color(127,118,104);
 
       //===============
@@ -55,70 +56,81 @@ public class KoskMypage extends JPanel implements ActionListener{
       //=======================
 
       //============ font 설정 ==========
-      Font siguptext = new Font("Noto Sans KR",Font.BOLD,30);
-      Font inputtext = new Font("Noto Sans KR",Font.BOLD,17);
-      Font checktext = new Font("Noto Sans KR",Font.BOLD,14);
+      Font siguptext = new Font("맑은 고딕",Font.BOLD,30);
+      Font inputtext = new Font("맑은 고딕",Font.BOLD,15);
       //===============================
 
       //==== 마이페이지 제목  ===============
-      Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(60, 80, 0);
-      JLabel ib = new JLabel("  마이 페이지",(new ImageIcon(imgicon)),SwingUtilities.CENTER);
-      ib.setBounds(10,0,250,80);
+		Image imgicon = new ImageIcon("img/imgicon.png").getImage().getScaledInstance(26, 30, 0);
+		JLabel icon = new JLabel("", (new ImageIcon(imgicon)), SwingUtilities.CENTER);
+		icon.setBounds(150, 0, 50, 50);
+
+      JLabel ib = new JLabel("마이 페이지");
+	  ib.setBounds(90,90,300,50);
       ib.setForeground(textColor);
       ib.setFont(siguptext);
+      ib.setSize(ib.getPreferredSize());
       //===============================
 
       //==== 라벨 설정 ====================
 
-      JLabel name = new JLabel("이름"); //�̸� ��
-      name.setBounds(30, 100, 40, 30);
+      JLabel name = new JLabel("이름");
+      name.setBounds(30, 195, 40, 30);
       name.setFont(inputtext);
       name.setForeground(textColor);
 
       JLabel phnumber = new JLabel("휴대폰");
       JLabel phnumber2 = new JLabel("번호");
-      phnumber.setBounds(30,160,60,30);
-      phnumber2.setBounds(30,180,60,30);
+      phnumber.setBounds(30,243,60,30);
+      phnumber2.setBounds(30,263,60,30);
       phnumber.setFont(inputtext);
       phnumber2.setFont(inputtext);
       phnumber.setForeground(textColor);
       phnumber2.setForeground(textColor);
+		
+		
 
       JLabel hou1 = new JLabel("이용가능");
       JLabel hou2 = new JLabel("시간");
-      hou1.setBounds(30,220,80,30);
-      hou2.setBounds(30,240,80,30);
+      hou1.setBounds(30,295,80,30);
+      hou2.setBounds(30,311,80,30);
       hou1.setForeground(textColor);
       hou1.setFont(inputtext);
       hou2.setForeground(textColor);
       hou2.setFont(inputtext);
 
       JLabel atime1 = new JLabel("입실시간");
-      atime1.setBounds(30,280,80,30);
+      atime1.setBounds(30,349,80,30);
       atime1.setForeground(textColor);
       atime1.setFont(inputtext);
 
       JLabel dtime1 = new JLabel("퇴실시간");
-      dtime1.setBounds(30,340,80,30);
+      dtime1.setBounds(30,399,80,30);
       dtime1.setForeground(textColor);
       dtime1.setFont(inputtext);
 
       JLabel rating1 = new JLabel("등급");
-      rating1.setBounds(30,400,80,30);
+      rating1.setBounds(30,449,80,30);
       rating1.setForeground(textColor);
       rating1.setFont(inputtext);
 
       JTextField nametf = new JTextField(tempData[0]);
-      nametf.setBackground(wallPapers);
+      nametf.setBounds(120,195,200,40);
+      nametf.setBackground(Color.WHITE);
       nametf.setFont(inputtext);
-      nametf.setBounds(120,100,200,40);
       nametf.setForeground(textColor);
+      nametf.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+      nametf.setEditable(false);
+      
 
       JTextField phtf = new JTextField(tempData[1]);
-      phtf.setBounds(120,160,200,40);
-      phtf.setBackground(wallPapers);
+      phtf.setBounds(120,245,200,40);
+      phtf.setBackground(Color.WHITE);
       phtf.setFont(inputtext);
       phtf.setForeground(textColor);
+      phtf.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+      phtf.setEditable(false);
+      
       JTextField hou;
       int t = (int)uList.get(kd.userindex(phoneNum)).getRemainTime();
       
@@ -144,10 +156,12 @@ public class KoskMypage extends JPanel implements ActionListener{
          }
       }
 
-      hou.setBounds(120,220,200,40);
-      hou.setBackground(wallPapers);
+      hou.setBounds(120,295,200,40);
+      hou.setBackground(Color.WHITE);
       hou.setFont(inputtext);
       hou.setForeground(textColor);
+      hou.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+      hou.setEditable(false);
       
       if(!kd.toEnterInfo(phoneNum).equals("0")) {
             if(kd.myPage1(phoneNum) == 1 || kd.myPage1(phoneNum) == 2) {
@@ -176,31 +190,42 @@ public class KoskMypage extends JPanel implements ActionListener{
             dtime = new JTextField();
          }
       }
-         atime.setBounds(120,280,200,40);
-         atime.setBackground(wallPapers);
+         atime.setBounds(120,345,200,40);
+         atime.setBackground(Color.WHITE);
          atime.setFont(inputtext);
          atime.setForeground(textColor);
+         atime.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+         atime.setEditable(false);
 
-      dtime.setBounds(120,340,200,40);
-      dtime.setBackground(wallPapers);
+      dtime.setBounds(120,395,200,40);
+      dtime.setBackground(Color.WHITE);
       dtime.setFont(inputtext);
       dtime.setForeground(textColor);
+      dtime.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+      dtime.setEditable(false);
    
       JTextField rating = new JTextField(tempData[4]);
-      rating.setBounds(120,400,200,40);
-      rating.setBackground(wallPapers);
+      rating.setBounds(120,445,200,40);
+      rating.setBackground(Color.WHITE);
       rating.setFont(inputtext);
-      rating1.setForeground(textColor);
+      rating.setForeground(textColor);
+      rating.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
+      rating.setEditable(false);
       //======================================
 
       //=== 확인 버튼  ===========================
 
-      Image findimg = new ImageIcon("img/okbtnimg.png").getImage().getScaledInstance(100, 40, 0);
+//      Image findimg = new ImageIcon("img/okbtnimg.png").getImage().getScaledInstance(100, 40, 0);
 
-      find = new JButton(new ImageIcon(findimg));
-      find.setBounds(220,530,100,40);
-      find.addActionListener(this);
+      find = new JButton("Confirm");
+	  find.setBounds(25,510,300,54);
+	  find.setBackground(new Color(163, 152, 134));
+	  find.setForeground(Color.WHITE);
+	  find.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+	  find.setBorderPainted(false);
+	  find.addActionListener(this);
 
+      this.add(icon);
       this.add(ib);
       this.add(name);
       this.add(nametf);
@@ -210,6 +235,7 @@ public class KoskMypage extends JPanel implements ActionListener{
       this.add(dtime);
       this.add(rating);
       this.add(hou1);
+      this.add(hou2);
       this.add(phnumber);
       this.add(phnumber2);
       this.add(atime1);

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,11 +44,10 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 		this.mf = mf;
 		
 		ArrayList userList = new ArrayList<>();
+		
 		//======= 색상 설정 ====
-		
-		Color wallPapers = new Color(239,234,222); 
-		Color textColor = new Color(127,118,104); 
-		
+		Color wallPapers = new Color(247,244,240); 
+		Color textColor = new Color(127, 118, 104);
 		//=================
 		
 		//================ 패널 설정 ======================
@@ -58,55 +58,56 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 		
 		//============== font 폰트 설정 =========
 		
-		Font f1 = new Font("맑은 고딕",Font.BOLD,25);
+		Font f1 = new Font("맑은 고딕",Font.BOLD,32);
 		
 		//============================
 		
 		//============== 제목 설정 ========================
 		
-		JLabel title1 = new JLabel("스터디카페를 다니고");
-		JLabel title2 = new JLabel("나의 성공 시대 ");
-		JLabel title3 = new JLabel("시작됐다");
+		JLabel title1 = new JLabel("<html><p>스터디카페 다니고<br>나의 성공시대<br>시작됐다</p></html>");
 		
-		title1.setBounds(65,150,600,60);
+		title1.setBounds(41, 130, 280, 130);
 		title1.setForeground(textColor);
-		title2.setBounds(65,180,600,60);
-		title2.setForeground(textColor);
-		title3.setBounds(65,210,600,60);
-		title3.setForeground(textColor);
 		
 		// font 설정
 		title1.setFont(f1);
-		title2.setFont(f1);
-		title3.setFont(f1);
 		//=================================================
 		
 		//==================== 텍스트 필드 설정  ==============
-		
 		phoneNumber = new JTextField("Phone Number");
-		
-		phoneNumber.setBounds(65,275,230,40);
+		phoneNumber.setBounds(41,275,270,40);
+		phoneNumber.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		phoneNumber.setLayout(null);
 		
-		password = new JPasswordField("Pawd");
-		password.setBounds(65,320,230,40);
+		password = new JPasswordField("password");
+		password.setBounds(41,320,270,40);
+		password.setBorder(BorderFactory.createLineBorder(new Color(189, 177, 157)));
 		password.setLayout(null);
 		//===================================================
 		
 		//===============  제목설정 =================
+		login = new JButton("LOGIN");
+		signUp = new JButton("회원가입");
+		findPwd = new JButton("비밀번호 찾기");
 		
-		Image loginicon = new ImageIcon("img/loginimg.png").getImage().getScaledInstance(230, 50, 0);
-		Image singUpicon = new ImageIcon("img/singUpimg.png").getImage().getScaledInstance(110, 40, 0);
-		Image findPwdicon = new ImageIcon("img/findPwdimg.png").getImage().getScaledInstance(110, 40, 0);
+		login.setBounds(41,370,270,50); 
+		login.setBackground(new Color(163, 152, 134));
+		login.setForeground(Color.WHITE);
+		login.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		login.setBorderPainted(false);
 		
-		login = new JButton(new ImageIcon(loginicon));
-		signUp = new JButton(new ImageIcon(singUpicon));
-		findPwd = new JButton(new ImageIcon(findPwdicon));
+		signUp.setBounds(41,426,132,40);
+		signUp.setBackground(new Color(189, 177, 157));
+		signUp.setForeground(Color.WHITE);
+		signUp.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		signUp.setBorderPainted(false);
+		
+		findPwd.setBounds(179,426,132,40);
+		findPwd.setBackground(new Color(189, 177, 157));
+		findPwd.setForeground(Color.WHITE);
+		findPwd.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		findPwd.setBorderPainted(false);
 		
-		login.setBounds(65,365,230,50); 
-		signUp.setBounds(65,420,110,40);
-		findPwd.setBounds(185,420,110,40);
 		login.addActionListener(this);
 		findPwd.addActionListener(this);
 		signUp.addActionListener(this);
@@ -115,8 +116,6 @@ public class  KoskLogin extends JPanel implements ActionListener, MouseListener{
 		//=======================================
 				
 		this.add(title1);
-		this.add(title2);
-		this.add(title3);
 		this.add(phoneNumber);
 		this.add(password);
 		this.add(login);
