@@ -111,10 +111,13 @@ public class AdmDao {
 					// 회원 등급 체크
 					if (userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(term * (1500 - 150));
 					} else if (userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(term * (1500 - 100));
 					} else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(term * (1500 - 50));
 					}
 
 					
@@ -204,6 +207,7 @@ public class AdmDao {
 
 			for (int i = 0; i < userList.size(); i++) {
 				if (userList.get(i).getPhoneNum().equals(phoneNum)) {
+					long refundTime = userList.get(i).getRemainTime() / 3600000;
 					userList.get(i).setInTime(0);
 					userList.get(i).setOutTime(0);
 					userList.get(i).setRemainTime(0);
@@ -214,10 +218,13 @@ public class AdmDao {
 
 					if (userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(userList.get(i).getTotalSales() - (int) (refundTime * (1500 - 150)));
 					} else if (userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(userList.get(i).getTotalSales() - (int) (refundTime * (1500 - 100)));
 					} else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(userList.get(i).getTotalSales() - (int) (refundTime * (1500 - 50)));
 					}
 
 					admWrite(userList); //
@@ -295,10 +302,13 @@ public class AdmDao {
 					// 회원 등급 체크
 					if (userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(term * (1500 - 150));
 					} else if (userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(term * (1500 - 100));
 					} else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(term * (1500 - 50));
 					}
 
 
@@ -334,12 +344,14 @@ public class AdmDao {
 					// 회원 등급 체크
 					if(userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(term * (1500 - 150) * count);
 					}else if(userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(term * (1500 - 150) * count);
 					}else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(term * (1500 - 150) * count);
 					}
-
 
 					break;
 				}
@@ -370,10 +382,14 @@ public class AdmDao {
 					// 회원 등급 체크
 					if (userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(weekTerm * 24 * (1500 - 150));
+						
 					} else if (userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(weekTerm * 24 * (1500 - 150));
 					} else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(weekTerm * 24 * (1500 - 150));
 					}
 
 					break;
@@ -435,10 +451,13 @@ public class AdmDao {
 					// 회원 등급 체크
 					if (userList.get(i).getPointTime() > 360000000L) {
 						userList.get(i).setRank("gold");
+						userList.get(i).setTotalSales(term * 24 * (1500 - 150));
 					} else if (userList.get(i).getPointTime() > 180000000L) {
 						userList.get(i).setRank("silver");
+						userList.get(i).setTotalSales(term * 24 * (1500 - 150));
 					} else {
 						userList.get(i).setRank("bronze");
+						userList.get(i).setTotalSales(term * 24 * (1500 - 150));
 					}
 
 					

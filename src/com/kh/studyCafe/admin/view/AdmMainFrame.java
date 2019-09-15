@@ -69,8 +69,11 @@ public class AdmMainFrame extends JFrame implements ActionListener{
 				ac.setTotalDaySales(ac.getTotalDaySales() + Sales);
 				ac.setTotalMonthSales(ac.getTotalDaySales());
 				userList.get(i).setTotalSales(0);
+//				System.out.println();
 			}
 		}
+		ac.setTotalUserAmount(userList.size());
+		ad.writeCafe(ac);
 		ad.admWrite(userList);
 		
 		
